@@ -7,6 +7,25 @@ Tablet is a super lightweight yet powerful library that handles a complexity of 
 - iOS 8.0+
 - Xcode 7.0+
 
+## Installation
+
+### CocoaPods
+To integrate Tablet into your Xcode project using CocoaPods, specify it in your `Podfile`:
+
+```ruby
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+use_frameworks!
+
+pod 'Tablet'
+```
+
+Then, run the following command:
+
+```bash
+$ pod install
+```
+
 ## Usage
 
 ### Very basic
