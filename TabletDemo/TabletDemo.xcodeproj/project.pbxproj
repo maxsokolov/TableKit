@@ -13,6 +13,7 @@
 		DAB7EB321BEF787300D2AD5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAB7EB311BEF787300D2AD5E /* Assets.xcassets */; };
 		DAB7EB351BEF787300D2AD5E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB7EB331BEF787300D2AD5E /* LaunchScreen.storyboard */; };
 		DAB7EB3E1BEF78A400D2AD5E /* Tablet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB7EB3D1BEF78A400D2AD5E /* Tablet.swift */; settings = {ASSET_TAGS = (); }; };
+		DAB7EB401BEFD07E00D2AD5E /* ConfigurableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB7EB3F1BEFD07E00D2AD5E /* ConfigurableTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		DAB7EB341BEF787300D2AD5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DAB7EB361BEF787300D2AD5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DAB7EB3D1BEF78A400D2AD5E /* Tablet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tablet.swift; sourceTree = "<group>"; };
+		DAB7EB3F1BEFD07E00D2AD5E /* ConfigurableTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 			children = (
 				DAB7EB2A1BEF787300D2AD5E /* AppDelegate.swift */,
 				DAB7EB2C1BEF787300D2AD5E /* ViewController.swift */,
+				DAB7EB3F1BEFD07E00D2AD5E /* ConfigurableTableViewCell.swift */,
 				DAB7EB2E1BEF787300D2AD5E /* Main.storyboard */,
 				DAB7EB311BEF787300D2AD5E /* Assets.xcassets */,
 				DAB7EB331BEF787300D2AD5E /* LaunchScreen.storyboard */,
@@ -148,6 +151,7 @@
 			files = (
 				DAB7EB2D1BEF787300D2AD5E /* ViewController.swift in Sources */,
 				DAB7EB3E1BEF78A400D2AD5E /* Tablet.swift in Sources */,
+				DAB7EB401BEFD07E00D2AD5E /* ConfigurableTableViewCell.swift in Sources */,
 				DAB7EB2B1BEF787300D2AD5E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

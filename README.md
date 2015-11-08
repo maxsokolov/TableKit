@@ -29,6 +29,8 @@ director.appendSections(sectionBuilder)
 
 ### Cell actions
 
+Tablet provides a chaining approach to handle actions from your cells:
+
 ```swift
 import Tablet
 
@@ -84,9 +86,9 @@ import Tablet
 
 class UserTableViewCell : UITableViewCell {
 
-	@IBAction func shareButtonClicked(sender: UIButton) {
+	@IBAction func buttonClicked(sender: UIButton) {
 
-		Action(key: "action_key", sender: self).trigger()
+		Action(key: "action_key", sender: self, userInfo: nil).trigger()
 	}
 }
 ```
@@ -94,7 +96,7 @@ And receive this actions with your row builder:
 ```swift
 import Tablet
 
-let rowBuilder = TableRowBuilder<User, UITableViewCell>(items: users, id: "reusable_id")
+let rowBuilder = TableRowBuilder<User, UserTableViewCell>(items: users, id: "reusable_id")
 	.action(.click) { data in
 		
 	}
