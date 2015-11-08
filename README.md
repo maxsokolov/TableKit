@@ -1,6 +1,6 @@
 ![Tablet](https://raw.githubusercontent.com/maxsokolov/tablet/assets/tablet.png)
 
-Tablet is a super lightweight yet powerful library that handles a complexity of UITableView's datasource and delegate in a Swift environment.
+Tablet is a super lightweight yet powerful generic library that handles a complexity of UITableView's datasource and delegate in a Swift environment. Tablet's goal is to provide an easiest way to create complex table views. With Tablet you don't have to write a messy code of switch or if statement when you deal with bunch of different cells in different sections.
 
 ## Requirements
 
@@ -126,3 +126,7 @@ let rowBuilder = TableRowBuilder<User, UserTableViewCell>(items: users, id: "reu
 		
 	}
 ```
+
+## License
+
+Tablet is available under the MIT license. See LICENSE for details.
