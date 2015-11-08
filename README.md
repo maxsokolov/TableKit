@@ -1,6 +1,6 @@
 ![Tablet](https://raw.githubusercontent.com/maxsokolov/tablet/assets/tablet.png)
 
-Tablet is a super lightweight yet powerful library that handles a complexity of UITableView's datasource and delegate.
+Tablet is a super lightweight yet powerful library that handles a complexity of UITableView's datasource and delegate in a Swift environment.
 
 ## Requirements
 
