@@ -27,7 +27,7 @@ let director = TableDirector(tableView: tableView)
 director.appendSections(sectionBuilder)
 ```
 
-### Additional cell actions
+### Cell actions
 
 ```swift
 import Tablet
@@ -73,6 +73,35 @@ Once you follow the protocol, simply use TableConfigurableRowBuilder to build ce
 import Tablet
 
 let rowBuilder = TableConfigurableRowBuilder<User, UserTableViewCell>()
+rowBuilder.appendItems(users)
 
 tableDirector.appendSection(TableSectionBuilder(rowBuilders: [rowBuilder]))
+```
+
+### Custom cell actions
+```swift
+import Tablet
+
+class UserTableViewCell : UITableViewCell {
+
+	@IBAction func shareButtonClicked(sender: UIButton) {
+
+		Action(key: "action_key", sender: self).trigger()
+	}
+}
+```
+And receive this actions with your row builder:
+```swift
+import Tablet
+
+let rowBuilder = TableRowBuilder<User, UITableViewCell>(items: users, id: "reusable_id")
+	.action(.click) { data in
+		
+	}
+	.action(.willDisplay) { data in
+		
+	}
+	.action("action_key") { data in
+		
+	}
 ```
