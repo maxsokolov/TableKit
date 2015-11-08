@@ -1,4 +1,4 @@
-![Tablet](https://raw.githubusercontent.com/maxsokolov/tablet/develop/Tablet/Tablet.png)
+![Tablet](https://raw.githubusercontent.com/maxsokolov/tablet/assets/tablet.png)
 
 Tablet is a super lightweight yet powerful library that handles a complexity of UITableView's datasource and delegate.
 
