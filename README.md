@@ -4,7 +4,7 @@ Tablet is a super lightweight yet powerful library that handles a complexity of 
 
 ## Requirements
 
-- iOS 7.0+
+- iOS 8.0+
 - Xcode 7.0+
 
 ## Usage
@@ -30,6 +30,7 @@ director.appendSections(sectionBuilder)
 ### Additional cell actions
 
 ```swift
+import Tablet
 
 let rowBuilder = TableRowBuilder<User, UITableViewCell>(items: [user1, user2, user3], id: "reusable_id")
 	.action(.configure) { data in
@@ -41,4 +42,37 @@ let rowBuilder = TableRowBuilder<User, UITableViewCell>(items: [user1, user2, us
 	.action(.willDisplay) { data in
 		
 	}
+```
+
+### Configurable cells
+
+Let's say you want to put your cell configuration logic into cell itself. Say you want to pass your view model (or even model) to your cell.
+To provide this behaviour simply follow:
+
+```swift
+import Tablet
+
+class UserTableViewCell : UITableViewCell, ConfigurableCell {
+
+    typealias Item = User
+    
+    static func reusableIdentifier() -> String {
+        return "reusable_id"
+    }
+
+    func configureWithItem(item: Item) { // item is user here
+
+    	textLabel?.text = item.title
+		detailTextLabel?.text = item.isActive ? "Active" : "Inactive"
+    }
+}
+```
+Once you follow the protocol, simply use TableConfigurableRowBuilder to build cells:
+
+```swift
+import Tablet
+
+let rowBuilder = TableConfigurableRowBuilder<User, UserTableViewCell>()
+
+tableDirector.appendSection(TableSectionBuilder(rowBuilders: [rowBuilder]))
 ```
