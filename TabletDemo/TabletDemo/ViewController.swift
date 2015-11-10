@@ -17,10 +17,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         tableDirector = TableDirector(tableView: tableView)
-        
+
         let rowBuilder = TableRowBuilder<Int, UITableViewCell>(items: [1, 2, 3, 4], id: "cell")
             .action(.configure) { data in
-                
+
                 data.cell.textLabel?.text = "\(data.item)"
             }
 
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
             }
             .action(.shouldHighlight) { _ in
 
-                return false
+                return 90
             }
         
         let sectionBuilder = TableSectionBuilder(headerTitle: "Tablet", footerTitle: "Deal with table view like a boss.", rowBuilders: [rowBuilder, configurableRowBuilder])
