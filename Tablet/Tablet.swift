@@ -33,6 +33,9 @@ public enum ActionType : String {
     case deselect = "_deselect"
     case configure = "_configure"
     case willDisplay = "_willDisplay"
+    case shouldHighlight = "_shouldHighlight"
+    
+    
 }
 
 public struct ActionData<I, C> {
@@ -99,6 +102,7 @@ public protocol ReusableRowBuilder {
 public class TableRowBuilder<I, C where C: UITableViewCell> : ReusableRowBuilder {
 
     public typealias TableRowBuilderActionBlock = (data: ActionData<I, C>) -> Void
+    public typealias TableRowBuilderReturnValueActionBlock = (data: ActionData<I, C>) -> AnyObject
     
     private var actions = Dictionary<String, TableRowBuilderActionBlock>()
     private var items = [I]()
@@ -146,6 +150,18 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : ReusableRowBuilder
     public func action(key: ActionType, action: TableRowBuilderActionBlock) -> Self {
 
         actions[key.rawValue] = action
+        return self
+    }
+    
+    public func action(key: ActionType, action: TableRowBuilderReturnValueActionBlock) -> Self {
+        
+        
+        return self
+    }
+    
+    public func actionWithReturnValue(key: ActionType, action: (ActionData<I, C>) -> Bool) -> Self {
+        
+        
         return self
     }
     
@@ -382,5 +398,10 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
         triggerAction(.willDisplay, cell: cell, indexPath: indexPath)
+    }
+    
+    public func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+
+        return false
     }
 }

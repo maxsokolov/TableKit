@@ -30,8 +30,12 @@ class ViewController: UIViewController {
                 print("custom action indexPath: \(data.indexPath), item: \(data.item)")
             }
             .action(.click) { data in
-                
+
                 print("custom action indexPath: \(data.indexPath), item: \(data.item)")
+            }
+            .action(.shouldHighlight) { _ in
+
+                return false
             }
         
         let sectionBuilder = TableSectionBuilder(headerTitle: "Tablet", footerTitle: "Deal with table view like a boss.", rowBuilders: [rowBuilder, configurableRowBuilder])
