@@ -23,6 +23,10 @@ class ViewController: UIViewController {
 
                 data.cell.textLabel?.text = "\(data.item)"
             }
+            .action(.shouldHighlight) { _ in
+                
+                return false
+            }
 
         let configurableRowBuilder = TableConfigurableRowBuilder<String, ConfigurableTableViewCell>(items: ["5", "6", "7", "8"])
             .action(kConfigurableTableViewCellButtonClickedAction) { data in
@@ -32,10 +36,6 @@ class ViewController: UIViewController {
             .action(.click) { data in
 
                 print("custom action indexPath: \(data.indexPath), item: \(data.item)")
-            }
-            .action(.shouldHighlight) { _ in
-
-                return 90
             }
         
         let sectionBuilder = TableSectionBuilder(headerTitle: "Tablet", footerTitle: "Deal with table view like a boss.", rowBuilders: [rowBuilder, configurableRowBuilder])

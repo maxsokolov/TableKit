@@ -34,6 +34,7 @@ public enum ActionType : String {
     case configure = "_configure"
     case willDisplay = "_willDisplay"
     case shouldHighlight = "_shouldHighlight"
+    case height = "_height"
 }
 
 public struct ActionData<I, C> {
@@ -64,6 +65,15 @@ public enum ActionResult {
             return true
         case .Failure:
             return false
+        }
+    }
+    
+    public var returnValue: AnyObject? {
+        switch self {
+        case .Success(let returnValue):
+            return returnValue
+        case .Failure:
+            return nil
         }
     }
 }
@@ -117,7 +127,7 @@ public protocol ConfigurableCell {
     A protocol that every row builder should follow. 
     A certain section can only works with row builders that respect this protocol.
 */
-public protocol ReusableRowBuilder {
+public protocol RowBuilder {
 
     var numberOfRows: Int { get }
     var reusableIdentifier: String { get }
@@ -128,10 +138,12 @@ public protocol ReusableRowBuilder {
 /**
     A class that responsible for building cells of given type and passing items to them.
 */
-public class TableRowBuilder<I, C where C: UITableViewCell> : ReusableRowBuilder {
+public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
+
+    public typealias ReturnValue = AnyObject
 
     public typealias TableRowBuilderActionBlock = (data: ActionData<I, C>) -> Void
-    public typealias TableRowBuilderReturnValueActionBlock = (data: ActionData<I, C>) -> AnyObject
+    public typealias TableRowBuilderReturnValueActionBlock = (data: ActionData<I, C>) -> ReturnValue
     
     private var actions = Dictionary<String, TableRowBuilderActionBlock>()
     private var items = [I]()
@@ -188,12 +200,6 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : ReusableRowBuilder
         return self
     }
     
-    public func actionWithReturnValue(key: ActionType, action: (ActionData<I, C>) -> Bool) -> Self {
-        
-        
-        return self
-    }
-    
     // MARK: Triggers
 
     public func triggerAction(key: String, cell: UITableViewCell, indexPath: NSIndexPath, itemIndex: Int) -> ActionResult {
@@ -234,7 +240,7 @@ public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == 
 */
 public class TableSectionBuilder {
 
-    private var builders = [ReusableRowBuilder]()
+    private var builders = [RowBuilder]()
 
     public var headerTitle: String?
     public var footerTitle: String?
@@ -255,7 +261,7 @@ public class TableSectionBuilder {
         return number
     }
 
-    public init(headerTitle: String? = nil, footerTitle: String? = nil, rowBuilders: [ReusableRowBuilder]? = nil) {
+    public init(headerTitle: String? = nil, footerTitle: String? = nil, rowBuilders: [RowBuilder]? = nil) {
 
         self.headerTitle = headerTitle
         self.footerTitle = footerTitle
@@ -274,7 +280,7 @@ public class TableSectionBuilder {
         self.footerHeight = footerHeight
     }
 
-    internal func builderAtIndex(var index: Int) -> (ReusableRowBuilder, Int)? {
+    internal func builderAtIndex(var index: Int) -> (RowBuilder, Int)? {
 
         for builder in builders {
             if index < builder.numberOfRows {
@@ -330,7 +336,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     
         - Returns: A touple - (builder, builderItemIndex)
     */
-    private func builderAtIndexPath(indexPath: NSIndexPath) -> (ReusableRowBuilder, Int) {
+    private func builderAtIndexPath(indexPath: NSIndexPath) -> (RowBuilder, Int) {
 
         return sections[indexPath.section].builderAtIndex(indexPath.row)!
     }
@@ -348,8 +354,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     
     internal func didReceiveAction(notification: NSNotification) {
 
-        if let action = notification.object as? Action,
-            indexPath = tableView.indexPathForCell(action.cell) {
+        if let action = notification.object as? Action, indexPath = tableView.indexPathForCell(action.cell) {
 
             let builder = builderAtIndexPath(indexPath)
             builder.0.triggerAction(action.key, cell: action.cell, indexPath: indexPath, itemIndex: builder.1)
@@ -371,6 +376,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         let builder = builderAtIndexPath(indexPath)
+
         let cell = tableView.dequeueReusableCellWithIdentifier(builder.0.reusableIdentifier, forIndexPath: indexPath)
 
         builder.0.triggerAction(ActionType.configure.rawValue, cell: cell, indexPath: indexPath, itemIndex: builder.1)
@@ -418,20 +424,11 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
 
         let cell = tableView.cellForRowAtIndexPath(indexPath)
 
-        let a = triggerAction(.click, cell: cell, indexPath: indexPath)
-        switch a {
-        case .Success(let returnValue):
-            print(returnValue)
-        case .Failure:
-            print("")
-        }
-        
-        
-        /*if triggerAction(.click, cell: cell, indexPath: indexPath) {
+        if triggerAction(.click, cell: cell, indexPath: indexPath).isSuccess {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         } else {
             triggerAction(.select, cell: cell, indexPath: indexPath)
-        }*/
+        }
     }
 
     public func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
@@ -440,17 +437,17 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     }
 
     public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
+
         triggerAction(.willDisplay, cell: cell, indexPath: indexPath)
     }
     
     public func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
 
-        return true
+        return triggerAction(.shouldHighlight, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath).returnValue as? Bool ?? true
     }
-    
+
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 
-        return trigger() as! CGFloat
+        return triggerAction(.height, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath).returnValue as? CGFloat ?? tableView.rowHeight
     }
 }
