@@ -21,17 +21,29 @@
 import UIKit
 import Foundation
 
+internal enum ActionHandler<T, E> {
+
+    case actionBlock((data: ActionData<T, E>) -> Void)
+    case actionReturnBlock((data: ActionData<T, E>) -> AnyObject)
+    
+    func call(data: ActionData<T, E>) -> AnyObject {
+
+        switch (self) {
+        case .actionBlock(let closure):
+            closure(data: data)
+            return true
+        case .actionReturnBlock(let closure):
+            return closure(data: data)
+        }
+    }
+}
+
 /**
     Responsible for building cells of given type and passing items to them.
 */
 public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
-    
-    public typealias ReturnValue = AnyObject
-    
-    public typealias TableRowBuilderActionBlock = (data: ActionData<I, C>) -> Void
-    public typealias TableRowBuilderReturnValueActionBlock = (data: ActionData<I, C>) -> ReturnValue
-    
-    private var actions = Dictionary<String, TableRowBuilderActionBlock>()
+
+    private var actions = Dictionary<String, ActionHandler<I, C>>()
     private var items = [I]()
     
     public var reusableIdentifier: String
@@ -67,36 +79,33 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
     }
     
     // MARK: Chaining actions
-    
-    public func action(key: String, action: TableRowBuilderActionBlock) -> Self {
-        
-        actions[key] = action
+
+    public func action(key: String, action: (data: ActionData<I, C>) -> Void) -> Self {
+
+        actions[key] = .actionBlock(action)
         return self
     }
     
-    public func action(key: ActionType, action: TableRowBuilderActionBlock) -> Self {
-        
-        actions[key.rawValue] = action
+    public func action(key: ActionType, action: (data: ActionData<I, C>) -> Void) -> Self {
+
+        actions[key.rawValue] = .actionBlock(action)
         return self
     }
     
-    public func action(key: ActionType, action: TableRowBuilderReturnValueActionBlock) -> Self {
-        
-        
+    public func action(key: ActionType, action: (data: ActionData<I, C>) -> AnyObject) -> Self {
+
+        actions[key.rawValue] = .actionReturnBlock(action)
         return self
     }
     
     // MARK: Triggers
     
-    public func triggerAction(key: String, cell: UITableViewCell, indexPath: NSIndexPath, itemIndex: Int) -> ActionResult {
-        
-        let actionData = ActionData(cell: cell as! C, indexPath: indexPath, item: items[itemIndex], itemIndex: itemIndex)
-        
-        if let block = actions[key] {
-            block(data: actionData)
-            return .Failure
+    public func triggerAction(key: String, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject? {
+
+        if let action = actions[key] {
+            return action.call(ActionData(cell: cell as? C, indexPath: indexPath, item: items[itemIndex], itemIndex: itemIndex))
         }
-        return .Failure
+        return nil
     }
 }
 
@@ -112,10 +121,10 @@ public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == 
     public init(items: [I]? = nil) {
         super.init(items: items, id: C.reusableIdentifier())
     }
-    
-    public override func triggerAction(key: String, cell: UITableViewCell, indexPath: NSIndexPath, itemIndex: Int) -> ActionResult {
+
+    public override func triggerAction(key: String, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject? {
         
-        (cell as! C).configureWithItem(items[itemIndex])
+        (cell as? C)?.configureWithItem(items[itemIndex])
         
         return super.triggerAction(key, cell: cell, indexPath: indexPath, itemIndex: itemIndex)
     }

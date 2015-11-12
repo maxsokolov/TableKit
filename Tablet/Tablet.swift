@@ -39,42 +39,17 @@ public enum ActionType : String {
 
 public struct ActionData<I, C> {
 
-    public let cell: C
+    public let cell: C?
     public let item: I
     public let itemIndex: Int
     public let indexPath: NSIndexPath
     
-    init(cell: C, indexPath: NSIndexPath, item: I, itemIndex: Int) {
+    init(cell: C?, indexPath: NSIndexPath, item: I, itemIndex: Int) {
         
         self.cell = cell
         self.indexPath = indexPath
         self.item = item
         self.itemIndex = itemIndex
-    }
-}
-
-public enum ActionResult {
-
-    case Success(returnValue: AnyObject)
-    case Failure
-
-    /// Returns true if the result is a success, false otherwise.
-    public var isSuccess: Bool {
-        switch self {
-        case .Success:
-            return true
-        case .Failure:
-            return false
-        }
-    }
-    
-    public var returnValue: AnyObject? {
-        switch self {
-        case .Success(let returnValue):
-            return returnValue
-        case .Failure:
-            return nil
-        }
     }
 }
 
@@ -127,9 +102,8 @@ public protocol RowBuilder {
     var numberOfRows: Int { get }
     var reusableIdentifier: String { get }
 
-    func triggerAction(key: String, cell: UITableViewCell, indexPath: NSIndexPath, itemIndex: Int) -> ActionResult
+    func triggerAction(key: String, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject?
 }
-
 
 /**
     Responsible for table view's datasource and delegate.
@@ -179,17 +153,12 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         return sections[indexPath.section].builderAtIndex(indexPath.row)!
     }
     
-    private func triggerAction(action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath) -> ActionResult {
+    private func triggerAction(action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath) -> AnyObject? {
         
         let builder = builderAtIndexPath(indexPath)
-        return builder.0.triggerAction(action.rawValue, cell: cell!, indexPath: indexPath, itemIndex: builder.1)
+        return builder.0.triggerAction(action.rawValue, cell: cell, indexPath: indexPath, itemIndex: builder.1)
     }
-    
-    private func trigger() -> AnyObject {
 
-        return 100
-    }
-    
     internal func didReceiveAction(notification: NSNotification) {
 
         if let action = notification.object as? Action, indexPath = tableView.indexPathForCell(action.cell) {
@@ -262,7 +231,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
 
         let cell = tableView.cellForRowAtIndexPath(indexPath)
 
-        if triggerAction(.click, cell: cell, indexPath: indexPath).isSuccess {
+        if triggerAction(.click, cell: cell, indexPath: indexPath) != nil {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         } else {
             triggerAction(.select, cell: cell, indexPath: indexPath)
@@ -281,11 +250,11 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     
     public func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
 
-        return triggerAction(.shouldHighlight, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath).returnValue as? Bool ?? true
+        return triggerAction(.shouldHighlight, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? Bool ?? true
     }
 
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 
-        return triggerAction(.height, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath).returnValue as? CGFloat ?? tableView.rowHeight
+        return triggerAction(.height, cell: nil, indexPath: indexPath) as? CGFloat ?? tableView.rowHeight
     }
 }

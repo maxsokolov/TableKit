@@ -19,22 +19,28 @@ class ViewController: UIViewController {
         tableDirector = TableDirector(tableView: tableView)
 
         let rowBuilder = TableRowBuilder<Int, UITableViewCell>(items: [1, 2, 3, 4], id: "cell")
-            .action(.configure) { data in
+            .action(.configure) { data -> Void in
 
-                data.cell.textLabel?.text = "\(data.item)"
+                data.cell?.textLabel?.text = "\(data.item)"
             }
-            .action(.shouldHighlight) { _ in
+            .action(.height) { data in
+                
+                return 50
+            }
+            .action(.shouldHighlight) { data in
                 
                 return false
             }
-
+        
         let configurableRowBuilder = TableConfigurableRowBuilder<String, ConfigurableTableViewCell>(items: ["5", "6", "7", "8"])
-            .action(kConfigurableTableViewCellButtonClickedAction) { data in
+            .action(kConfigurableTableViewCellButtonClickedAction) { data -> Void in
                 
                 print("custom action indexPath: \(data.indexPath), item: \(data.item)")
             }
-            .action(.click) { data in
-
+            .action(.click) { data -> Void in
+                
+                data.cell!.textLabel?.text = ""
+                
                 print("custom action indexPath: \(data.indexPath), item: \(data.item)")
             }
         
