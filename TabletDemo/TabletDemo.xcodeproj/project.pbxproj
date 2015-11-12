@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		508B71841BF48DD300272920 /* TableSectionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508B71831BF48DD300272920 /* TableSectionBuilder.swift */; settings = {ASSET_TAGS = (); }; };
+		508B71861BF48E0D00272920 /* TableRowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508B71851BF48E0D00272920 /* TableRowBuilder.swift */; settings = {ASSET_TAGS = (); }; };
 		DAB7EB2B1BEF787300D2AD5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB7EB2A1BEF787300D2AD5E /* AppDelegate.swift */; };
 		DAB7EB2D1BEF787300D2AD5E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB7EB2C1BEF787300D2AD5E /* ViewController.swift */; };
 		DAB7EB301BEF787300D2AD5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB7EB2E1BEF787300D2AD5E /* Main.storyboard */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		508B71831BF48DD300272920 /* TableSectionBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionBuilder.swift; sourceTree = "<group>"; };
+		508B71851BF48E0D00272920 /* TableRowBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowBuilder.swift; sourceTree = "<group>"; };
 		DAB7EB271BEF787300D2AD5E /* TabletDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TabletDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAB7EB2A1BEF787300D2AD5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAB7EB2C1BEF787300D2AD5E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +78,8 @@
 			isa = PBXGroup;
 			children = (
 				DAB7EB3D1BEF78A400D2AD5E /* Tablet.swift */,
+				508B71831BF48DD300272920 /* TableSectionBuilder.swift */,
+				508B71851BF48E0D00272920 /* TableRowBuilder.swift */,
 			);
 			name = Tablet;
 			path = ../Tablet;
@@ -149,8 +155,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				508B71841BF48DD300272920 /* TableSectionBuilder.swift in Sources */,
 				DAB7EB2D1BEF787300D2AD5E /* ViewController.swift in Sources */,
 				DAB7EB3E1BEF78A400D2AD5E /* Tablet.swift in Sources */,
+				508B71861BF48E0D00272920 /* TableRowBuilder.swift in Sources */,
 				DAB7EB401BEFD07E00D2AD5E /* ConfigurableTableViewCell.swift in Sources */,
 				DAB7EB2B1BEF787300D2AD5E /* AppDelegate.swift in Sources */,
 			);
