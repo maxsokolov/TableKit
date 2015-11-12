@@ -23,6 +23,7 @@ import Foundation
 
 /**
     Responsible for building a certain table view section.
+    Can host several row builders.
 */
 public class TableSectionBuilder {
 

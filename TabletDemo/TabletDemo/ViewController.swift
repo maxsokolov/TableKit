@@ -19,7 +19,7 @@ class ViewController: UIViewController {
         tableDirector = TableDirector(tableView: tableView)
 
         let rowBuilder = TableRowBuilder<Int, UITableViewCell>(items: [1, 2, 3, 4], id: "cell")
-            .action(.configure) { data -> Void in
+            .action(.configure) { data in
 
                 data.cell?.textLabel?.text = "\(data.item)"
             }
@@ -31,15 +31,15 @@ class ViewController: UIViewController {
                 
                 return false
             }
-        
+
         let configurableRowBuilder = TableConfigurableRowBuilder<String, ConfigurableTableViewCell>(items: ["5", "6", "7", "8"])
-            .action(kConfigurableTableViewCellButtonClickedAction) { data -> Void in
-                
-                print("custom action indexPath: \(data.indexPath), item: \(data.item)")
-            }
             .action(.click) { data -> Void in
                 
                 data.cell!.textLabel?.text = ""
+                
+                print("custom action indexPath: \(data.indexPath), item: \(data.item)")
+            }
+            .action(kConfigurableTableViewCellButtonClickedAction) { data in
                 
                 print("custom action indexPath: \(data.indexPath), item: \(data.item)")
             }
