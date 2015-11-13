@@ -24,20 +24,31 @@ import Foundation
 internal let kActionPerformedNotificationKey = "_action"
 
 /**
-    Built in actions that Tablet provides.
+    The actions that Tablet provides.
 */
-public enum ActionType : String {
+public enum ActionType {
 
-    case click = "_click"
-    case select = "_select"
-    case deselect = "_deselect"
-    case configure = "_configure"
-    case willDisplay = "_willDisplay"
-    case shouldHighlight = "_shouldHighlight"
-    case height = "_height"
+    case click
+    case select
+    case deselect
+    case configure
+    case willDisplay
+    case shouldHighlight
+    case height
+    case custom(String)
+
+    var key: String {
+
+        switch (self) {
+        case .custom(let str):
+            return str
+        default:
+            return "_\(self)"
+        }
+    }
 }
 
-public struct ActionData<I, C> {
+public class ActionData<I, C> {
 
     public let cell: C?
     public let item: I
@@ -83,7 +94,7 @@ public class Action {
 
 /**
     If you want to delegate your cell configuration logic to cell itself (with your view model or even model) than
-    just provide an implementation of this protocol for your cell. Enjoy strong typisation.
+    just provide an implementation of this protocol for your cell. Enjoy safe-typisation.
 */
 public protocol ConfigurableCell {
 
@@ -102,5 +113,5 @@ public protocol RowBuilder {
     var numberOfRows: Int { get }
     var reusableIdentifier: String { get }
 
-    func triggerAction(key: String, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject?
+    func triggerAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject?
 }

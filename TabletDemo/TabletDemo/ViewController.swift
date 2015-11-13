@@ -37,7 +37,7 @@ class ViewController: UIViewController {
                 
                 data.cell!.textLabel?.text = ""
                 
-                print("custom action indexPath: \(data.indexPath), item: \(data.item)")
+                print("click action indexPath: \(data.indexPath), item: \(data.item)")
             }
             .action(kConfigurableTableViewCellButtonClickedAction) { data in
                 

@@ -25,7 +25,7 @@ import Foundation
     Responsible for table view's datasource and delegate.
  */
 public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
-    
+
     private weak var tableView: UITableView!
     private var sections = [TableSectionBuilder]()
     
@@ -72,7 +72,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     private func triggerAction(action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath) -> AnyObject? {
         
         let builder = builderAtIndexPath(indexPath)
-        return builder.0.triggerAction(action.rawValue, cell: cell, indexPath: indexPath, itemIndex: builder.1)
+        return builder.0.triggerAction(action, cell: cell, indexPath: indexPath, itemIndex: builder.1)
     }
     
     internal func didReceiveAction(notification: NSNotification) {
@@ -80,7 +80,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         if let action = notification.object as? Action, indexPath = tableView.indexPathForCell(action.cell) {
             
             let builder = builderAtIndexPath(indexPath)
-            builder.0.triggerAction(action.key, cell: action.cell, indexPath: indexPath, itemIndex: builder.1)
+            builder.0.triggerAction(.custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1)
         }
     }
     
@@ -102,7 +102,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         
         let cell = tableView.dequeueReusableCellWithIdentifier(builder.0.reusableIdentifier, forIndexPath: indexPath)
         
-        builder.0.triggerAction(ActionType.configure.rawValue, cell: cell, indexPath: indexPath, itemIndex: builder.1)
+        builder.0.triggerAction(.configure, cell: cell, indexPath: indexPath, itemIndex: builder.1)
         
         return cell
     }
@@ -144,7 +144,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     // MARK: UITableViewDelegate - actions
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         
         if triggerAction(.click, cell: cell, indexPath: indexPath) != nil {

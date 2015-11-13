@@ -21,12 +21,12 @@
 import UIKit
 import Foundation
 
-internal enum ActionHandler<T, E> {
+internal enum ActionHandler<I, C> {
 
-    case actionBlock((data: ActionData<T, E>) -> Void)
-    case actionReturnBlock((data: ActionData<T, E>) -> AnyObject)
+    case actionBlock((data: ActionData<I, C>) -> Void)
+    case actionReturnBlock((data: ActionData<I, C>) -> AnyObject)
     
-    func call(data: ActionData<T, E>) -> AnyObject {
+    func call(data: ActionData<I, C>) -> AnyObject {
 
         switch (self) {
         case .actionBlock(let closure):
@@ -67,6 +67,8 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
             self.items.appendContentsOf(items!)
         }
     }
+
+    // MARK: Items manipulation
     
     public func appendItems(items: [I]) {
         
@@ -86,23 +88,23 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
         return self
     }
     
-    public func action(key: ActionType, action: (data: ActionData<I, C>) -> Void) -> Self {
+    public func action(actionType: ActionType, action: (data: ActionData<I, C>) -> Void) -> Self {
 
-        actions[key.rawValue] = .actionBlock(action)
+        actions[actionType.key] = .actionBlock(action)
         return self
     }
     
-    public func action(key: ActionType, action: (data: ActionData<I, C>) -> AnyObject) -> Self {
+    public func action(actionType: ActionType, action: (data: ActionData<I, C>) -> AnyObject) -> Self {
 
-        actions[key.rawValue] = .actionReturnBlock(action)
+        actions[actionType.key] = .actionReturnBlock(action)
         return self
     }
     
     // MARK: Triggers
     
-    public func triggerAction(key: String, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject? {
+    public func triggerAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject? {
 
-        if let action = actions[key] {
+        if let action = actions[actionType.key] {
             return action.call(ActionData(cell: cell as? C, indexPath: indexPath, item: items[itemIndex], itemIndex: itemIndex))
         }
         return nil
@@ -122,10 +124,10 @@ public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == 
         super.init(items: items, id: C.reusableIdentifier())
     }
 
-    public override func triggerAction(key: String, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject? {
-        
+    public override func triggerAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject? {
+
         (cell as? C)?.configureWithItem(items[itemIndex])
         
-        return super.triggerAction(key, cell: cell, indexPath: indexPath, itemIndex: itemIndex)
+        return super.triggerAction(actionType, cell: cell, indexPath: indexPath, itemIndex: itemIndex)
     }
 }
