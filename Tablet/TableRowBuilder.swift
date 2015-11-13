@@ -82,21 +82,21 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
     
     // MARK: Chaining actions
 
-    public func action(key: String, action: (data: ActionData<I, C>) -> Void) -> Self {
+    public func action(key: String, closure: (data: ActionData<I, C>) -> Void) -> Self {
 
-        actions[key] = .actionBlock(action)
+        actions[key] = .actionBlock(closure)
         return self
     }
     
-    public func action(actionType: ActionType, action: (data: ActionData<I, C>) -> Void) -> Self {
+    public func action(actionType: ActionType, closure: (data: ActionData<I, C>) -> Void) -> Self {
 
-        actions[actionType.key] = .actionBlock(action)
+        actions[actionType.key] = .actionBlock(closure)
         return self
     }
     
-    public func action(actionType: ActionType, action: (data: ActionData<I, C>) -> AnyObject) -> Self {
+    public func action(actionType: ActionType, closure: (data: ActionData<I, C>) -> AnyObject) -> Self {
 
-        actions[actionType.key] = .actionReturnBlock(action)
+        actions[actionType.key] = .actionReturnBlock(closure)
         return self
     }
     
@@ -126,8 +126,11 @@ public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == 
 
     public override func triggerAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject? {
 
-        (cell as? C)?.configureWithItem(items[itemIndex])
-        
+        switch actionType {
+        case .configure:
+            (cell as? C)?.configureWithItem(items[itemIndex])
+        default: break
+        }
         return super.triggerAction(actionType, cell: cell, indexPath: indexPath, itemIndex: itemIndex)
     }
 }
