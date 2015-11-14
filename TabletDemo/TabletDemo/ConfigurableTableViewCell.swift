@@ -15,6 +15,7 @@ class ConfigurableTableViewCell: UITableViewCell, ConfigurableCell {
     typealias Item = String
 
     @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var contentLabel: UILabel!
 
     static func reusableIdentifier() -> String {
 

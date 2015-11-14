@@ -40,8 +40,8 @@ public enum ActionType {
     var key: String {
 
         switch (self) {
-        case .custom(let str):
-            return str
+        case .custom(let key):
+            return key
         default:
             return "_\(self)"
         }
@@ -112,6 +112,7 @@ public protocol RowBuilder {
 
     var numberOfRows: Int { get }
     var reusableIdentifier: String { get }
+    var estimatedRowHeight: Float { get }
 
     func triggerAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject?
 }

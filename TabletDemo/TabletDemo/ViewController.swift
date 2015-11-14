@@ -23,29 +23,39 @@ class ViewController: UIViewController {
 
                 data.cell?.textLabel?.text = "\(data.item)"
             }
-            .action(.height) { data in
-                
-                return 50
-            }
             .action(.shouldHighlight) { data in
                 
                 return false
             }
 
-        let configurableRowBuilder = TableConfigurableRowBuilder<String, ConfigurableTableViewCell>(items: ["5", "6", "7", "8"])
+        let configurableRowBuilder = TableConfigurableRowBuilder<String, ConfigurableTableViewCell>(items: ["5", "6", "7", "8"], estimatedRowHeight: 300)
             .action(.click) { data -> Void in
-                
-                data.cell!.textLabel?.text = ""
-                
+
                 print("click action indexPath: \(data.indexPath), item: \(data.item)")
             }
-            .action(kConfigurableTableViewCellButtonClickedAction) { data in
+            .action(kConfigurableTableViewCellButtonClickedAction) { data -> Void in
                 
                 print("custom action indexPath: \(data.indexPath), item: \(data.item)")
             }
-        
-        let sectionBuilder = TableSectionBuilder(headerTitle: "Tablet", footerTitle: "Deal with table view like a boss.", rowBuilders: [rowBuilder, configurableRowBuilder])
+            .action(.height) { data -> ReturnValue in
+
+                if data.item == "5" {
+                    return 70
+                }
+                return nil
+            }
+            .action(.configure) { (data) -> Void in
+            
+                data.cell!.contentLabel.text = "With iOS 8, Apple has internalized much of the work that previously had to be implemented by you prior to iOS 8. In order to allow the self-sizing cell mechanism to work, you must first set the rowHeight property on the table view to the constant UITableViewAutomaticDimension. Then, you simply need to enable row height estimation by setting the table view's estimatedRowHeight property to a nonzero value, for example"
+                
+                //data.cell!.setNeedsUpdateConstraints()
+                //data.cell!.updateConstraintsIfNeeded()
+            }
+
+        let sectionBuilder = TableSectionBuilder(headerTitle: "Tablet", footerTitle: "Deal with table view like a boss.", rowBuilders: [configurableRowBuilder])
 
         tableDirector.appendSection(sectionBuilder)
     }
 }
+
+// вход со стороны кутузовского проспекта между домами 10 14 левее чайхоны, на охране сказать кодовое слово Магия - найти клуб лабиринт

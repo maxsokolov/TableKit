@@ -35,7 +35,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         self.tableView = tableView
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
+
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveAction:", name: kActionPerformedNotificationKey, object: nil)
     }
     
@@ -43,8 +43,8 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
-    
-    // MARK: Public methods
+
+    // MARK: Sections manipulation
     
     public func appendSection(section: TableSectionBuilder) {
         sections.append(section)
@@ -69,7 +69,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         return sections[indexPath.section].builderAtIndex(indexPath.row)!
     }
     
-    private func triggerAction(action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath) -> AnyObject? {
+    public func triggerAction(action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath) -> AnyObject? {
         
         let builder = builderAtIndexPath(indexPath)
         return builder.0.triggerAction(action, cell: cell, indexPath: indexPath, itemIndex: builder.1)
@@ -103,10 +103,13 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         let cell = tableView.dequeueReusableCellWithIdentifier(builder.0.reusableIdentifier, forIndexPath: indexPath)
         
         builder.0.triggerAction(.configure, cell: cell, indexPath: indexPath, itemIndex: builder.1)
-        
+
         return cell
     }
-    
+}
+
+extension TableDirector {
+
     // MARK: UITableViewDataSource - section setup
     
     public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -140,11 +143,14 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         
         return sections[section].footerHeight
     }
+}
+
+extension TableDirector {
     
     // MARK: UITableViewDelegate - actions
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
+        
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         
         if triggerAction(.click, cell: cell, indexPath: indexPath) != nil {
@@ -169,8 +175,14 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         return triggerAction(.shouldHighlight, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? Bool ?? true
     }
     
+    public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+
+        return 300
+    }
+    
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 
-        return triggerAction(.height, cell: nil, indexPath: indexPath) as? CGFloat ?? tableView.rowHeight
+        print(indexPath)
+        return triggerAction(.height, cell: nil, indexPath: indexPath) as? CGFloat ?? UITableViewAutomaticDimension
     }
 }

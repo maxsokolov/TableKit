@@ -21,12 +21,14 @@
 import UIKit
 import Foundation
 
+public typealias ReturnValue = AnyObject?
+
 internal enum ActionHandler<I, C> {
 
     case actionBlock((data: ActionData<I, C>) -> Void)
-    case actionReturnBlock((data: ActionData<I, C>) -> AnyObject)
+    case actionReturnBlock((data: ActionData<I, C>) -> AnyObject?)
     
-    func call(data: ActionData<I, C>) -> AnyObject {
+    func call(data: ActionData<I, C>) -> AnyObject? {
 
         switch (self) {
         case .actionBlock(let closure):
@@ -45,23 +47,26 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
 
     private var actions = Dictionary<String, ActionHandler<I, C>>()
     private var items = [I]()
-    
+
     public var reusableIdentifier: String
+    public var estimatedRowHeight: Float
     public var numberOfRows: Int {
         get {
             return items.count
         }
     }
     
-    public init(item: I, id: String) {
+    public init(item: I, id: String, estimatedRowHeight: Float = 0) {
         
         reusableIdentifier = id
+        self.estimatedRowHeight = estimatedRowHeight
         items.append(item)
     }
     
-    public init(items: [I]? = nil, id: String) {
-        
+    public init(items: [I]? = nil, id: String, estimatedRowHeight: Float = 0) {
+
         reusableIdentifier = id
+        self.estimatedRowHeight = estimatedRowHeight
         
         if items != nil {
             self.items.appendContentsOf(items!)
@@ -94,7 +99,7 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
         return self
     }
     
-    public func action(actionType: ActionType, closure: (data: ActionData<I, C>) -> AnyObject) -> Self {
+    public func action(actionType: ActionType, closure: (data: ActionData<I, C>) -> ReturnValue) -> Self {
 
         actions[actionType.key] = .actionReturnBlock(closure)
         return self
@@ -116,12 +121,12 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
 */
 public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == I, C: UITableViewCell> : TableRowBuilder<I, C>  {
 
-    public init(item: I) {
-        super.init(item: item, id: C.reusableIdentifier())
+    public init(item: I, estimatedRowHeight: Float = 0) {
+        super.init(item: item, id: C.reusableIdentifier(), estimatedRowHeight: estimatedRowHeight)
     }
-    
-    public init(items: [I]? = nil) {
-        super.init(items: items, id: C.reusableIdentifier())
+
+    public init(items: [I]? = nil, estimatedRowHeight: Float = 0) {
+        super.init(items: items, id: C.reusableIdentifier(), estimatedRowHeight: estimatedRowHeight)
     }
 
     public override func triggerAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject? {
