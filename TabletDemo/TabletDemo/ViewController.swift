@@ -45,17 +45,12 @@ class ViewController: UIViewController {
                 return nil
             }
             .action(.configure) { (data) -> Void in
-            
+
                 data.cell!.contentLabel.text = "With iOS 8, Apple has internalized much of the work that previously had to be implemented by you prior to iOS 8. In order to allow the self-sizing cell mechanism to work, you must first set the rowHeight property on the table view to the constant UITableViewAutomaticDimension. Then, you simply need to enable row height estimation by setting the table view's estimatedRowHeight property to a nonzero value, for example"
-                
-                //data.cell!.setNeedsUpdateConstraints()
-                //data.cell!.updateConstraintsIfNeeded()
             }
 
-        let sectionBuilder = TableSectionBuilder(headerTitle: "Tablet", footerTitle: "Deal with table view like a boss.", rowBuilders: [configurableRowBuilder])
+        let sectionBuilder = TableSectionBuilder(headerTitle: "Tablet", footerTitle: "Deal with table view like a boss.", rowBuilders: [rowBuilder, configurableRowBuilder])
 
         tableDirector.appendSection(sectionBuilder)
     }
 }
-
-// вход со стороны кутузовского проспекта между домами 10 14 левее чайхоны, на охране сказать кодовое слово Магия - найти клуб лабиринт

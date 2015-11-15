@@ -49,21 +49,21 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
     private var items = [I]()
 
     public var reusableIdentifier: String
-    public var estimatedRowHeight: Float
+    public var estimatedRowHeight: CGFloat
     public var numberOfRows: Int {
         get {
             return items.count
         }
     }
     
-    public init(item: I, id: String, estimatedRowHeight: Float = 0) {
+    public init(item: I, id: String, estimatedRowHeight: CGFloat = UITableViewAutomaticDimension) {
         
         reusableIdentifier = id
         self.estimatedRowHeight = estimatedRowHeight
         items.append(item)
     }
     
-    public init(items: [I]? = nil, id: String, estimatedRowHeight: Float = 0) {
+    public init(items: [I]? = nil, id: String, estimatedRowHeight: CGFloat = UITableViewAutomaticDimension) {
 
         reusableIdentifier = id
         self.estimatedRowHeight = estimatedRowHeight
@@ -121,11 +121,11 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
 */
 public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == I, C: UITableViewCell> : TableRowBuilder<I, C>  {
 
-    public init(item: I, estimatedRowHeight: Float = 0) {
+    public init(item: I, estimatedRowHeight: CGFloat = UITableViewAutomaticDimension) {
         super.init(item: item, id: C.reusableIdentifier(), estimatedRowHeight: estimatedRowHeight)
     }
 
-    public init(items: [I]? = nil, estimatedRowHeight: Float = 0) {
+    public init(items: [I]? = nil, estimatedRowHeight: CGFloat = UITableViewAutomaticDimension) {
         super.init(items: items, id: C.reusableIdentifier(), estimatedRowHeight: estimatedRowHeight)
     }
 

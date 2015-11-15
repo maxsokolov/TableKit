@@ -112,7 +112,7 @@ public protocol RowBuilder {
 
     var numberOfRows: Int { get }
     var reusableIdentifier: String { get }
-    var estimatedRowHeight: Float { get }
+    var estimatedRowHeight: CGFloat { get }
 
     func triggerAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject?
 }
