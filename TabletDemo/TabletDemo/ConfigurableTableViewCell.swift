@@ -29,6 +29,6 @@ class ConfigurableTableViewCell: UITableViewCell, ConfigurableCell {
     
     @IBAction func buttonClicked(sender: UIButton) {
     
-        Action(key: kConfigurableTableViewCellButtonClickedAction, sender: self).trigger()
+        Action(key: kConfigurableTableViewCellButtonClickedAction, sender: self).perform()
     }
 }

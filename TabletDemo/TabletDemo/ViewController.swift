@@ -27,6 +27,10 @@ class ViewController: UIViewController {
                 
                 return false
             }
+            .action(kTableDirectorDidEndDisplayingCell) { data -> Void in
+
+                print("end display: \(data.indexPath)")
+            }
 
         let configurableRowBuilder = TableConfigurableRowBuilder<String, ConfigurableTableViewCell>(items: ["5", "6", "7", "8"], estimatedRowHeight: 300)
             .action(.click) { data -> Void in

@@ -107,7 +107,7 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
     
     // MARK: Triggers
     
-    public func triggerAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject? {
+    public func performAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject? {
 
         if let action = actions[actionType.key] {
             return action.call(ActionData(cell: cell as? C, indexPath: indexPath, item: items[itemIndex], itemIndex: itemIndex))
@@ -129,13 +129,13 @@ public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == 
         super.init(items: items, id: C.reusableIdentifier(), estimatedRowHeight: estimatedRowHeight)
     }
 
-    public override func triggerAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject? {
+    public override func performAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject? {
 
         switch actionType {
         case .configure:
             (cell as? C)?.configureWithItem(items[itemIndex])
         default: break
         }
-        return super.triggerAction(actionType, cell: cell, indexPath: indexPath, itemIndex: itemIndex)
+        return super.performAction(actionType, cell: cell, indexPath: indexPath, itemIndex: itemIndex)
     }
 }

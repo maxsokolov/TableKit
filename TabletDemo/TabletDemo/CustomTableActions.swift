@@ -8,3 +8,13 @@
 
 import UIKit
 import Foundation
+
+let kTableDirectorDidEndDisplayingCell = "enddisplaycell"
+
+extension TableDirector {
+    
+    public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+
+        performAction(.custom(kTableDirectorDidEndDisplayingCell), cell: cell, indexPath: indexPath)
+    }
+}

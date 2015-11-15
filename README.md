@@ -1,8 +1,9 @@
 ![Tablet](https://raw.githubusercontent.com/maxsokolov/tablet/assets/tablet.png)
 
 <p align="left">
+<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift2-compatible-4BC51D.svg?style=flat" alt="Swift 2 compatible" /></a>
 <img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
-<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift2.1-compatible-4BC51D.svg?style=flat" alt="Swift 2.1 compatible" /></a>
+<a href="https://cocoapods.org/pods/tablet"><img src="https://img.shields.io/badge/pod-0.1.0-blue.svg" alt="CocoaPods compatible" /></a>
 <a href="https://raw.githubusercontent.com/maxsokolov/tablet/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License: MIT" /></a>
 </p>
 
@@ -70,17 +71,17 @@ import Tablet
 
 class MyTableViewCell : UITableViewCell, ConfigurableCell {
 
-    typealias Item = User
-    
-    static func reusableIdentifier() -> String {
-        return "reusable_id"
-    }
+	typealias Item = User
 
-    func configureWithItem(item: Item) { // item is user here
+	static func reusableIdentifier() -> String {
+		return "reusable_id"
+	}
 
-    	textLabel?.text = item.username
+	func configureWithItem(item: Item) { // item is user here
+
+		textLabel?.text = item.username
 		detailTextLabel?.text = item.isActive ? "Active" : "Inactive"
-    }
+	}
 }
 ```
 Once you've implemented the protocol, simply use the `TableConfigurableRowBuilder` to build cells:
@@ -107,10 +108,11 @@ let rowBuilder = TableRowBuilder<User, MyTableViewCell>(items: [user1, user2, us
 
 	}
 	.action(.click) { data in
-		
+
 	}
-	.action(.willDisplay) { data in
-		
+	.action(.shouldHighlight) { data in
+
+		return false
 	}
 ```
 
@@ -124,7 +126,7 @@ class MyTableViewCell : UITableViewCell {
 
 	@IBAction func buttonClicked(sender: UIButton) {
 
-		Action(key: kMyAction, sender: self, userInfo: nil).trigger()
+		Action(key: kMyAction, sender: self, userInfo: nil).perform()
 	}
 }
 ```
@@ -141,6 +143,31 @@ let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>(items: users
 	}
 	.action(kMyAction) { data in
 		
+	}
+```
+
+## Extensibility
+
+If you find that Tablet is not provide an action you need, for example you need UITableViewDelegate's `didEndDisplayingCell` method and it's not out of the box,
+simply provide an extension for `TableDirector` as follow:
+```swift
+import Tablet
+
+let kTableDirectorDidEndDisplayingCell = "enddisplaycell"
+
+extension TableDirector {
+
+	public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+
+		performAction(.custom(kTableDirectordidEndDisplayingCell), cell: cell, indexPath: indexPath)
+	}
+}
+```
+Catch your action with row builder:
+```swift
+let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>(items: users)
+	.action(kTableDirectordidEndDisplayingCell) { data in
+
 	}
 ```
 

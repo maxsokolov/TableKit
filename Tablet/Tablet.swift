@@ -86,7 +86,7 @@ public class Action {
         self.userInfo = userInfo
     }
 
-    public func trigger() {
+    public func perform() {
 
         NSNotificationCenter.defaultCenter().postNotificationName(kActionPerformedNotificationKey, object: self)
     }
@@ -114,5 +114,5 @@ public protocol RowBuilder {
     var reusableIdentifier: String { get }
     var estimatedRowHeight: CGFloat { get }
 
-    func triggerAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject?
+    func performAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject?
 }
