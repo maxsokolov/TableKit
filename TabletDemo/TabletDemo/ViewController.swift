@@ -50,7 +50,7 @@ class ViewController: UIViewController {
             }
             .action(.configure) { (data) -> Void in
 
-                data.cell!.contentLabel.text = "With iOS 8, Apple has internalized much of the work that previously had to be implemented by you prior to iOS 8. In order to allow the self-sizing cell mechanism to work, you must first set the rowHeight property on the table view to the constant UITableViewAutomaticDimension. Then, you simply need to enable row height estimation by setting the table view's estimatedRowHeight property to a nonzero value, for example"
+                data.cell!.contentLabel.text = "Tablet is a super lightweight yet powerful generic library that handles a complexity of UITableView's datasource and delegate methods in a Swift environment. Tablet's goal is to provide an easiest way to create complex table views. With Tablet you don't have to write a messy code of switch or if statements when you deal with bunch of different cells in different sections."
             }
 
         let sectionBuilder = TableSectionBuilder(headerTitle: "Tablet", footerTitle: "Deal with table view like a boss.", rowBuilders: [rowBuilder, configurableRowBuilder])

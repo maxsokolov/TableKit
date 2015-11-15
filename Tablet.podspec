@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
     s.version               = '0.1.0'
 
     s.homepage              = 'https://github.com/maxsokolov/tablet'
-    s.summary               = 'Tablet is a super lightweight yet powerful Swift library that handles a complexity of UITableView's datasource and delegate.'
+    s.summary               = 'Powerful type-safe tool for UITableView. Swift 2.0 is required.'
 
     s.author                = { 'Max Sokolov' => 'i@maxsokolov.net' }
     s.license               = { :type => 'MIT', :file => 'LICENSE' }

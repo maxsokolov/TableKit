@@ -7,7 +7,7 @@
 <a href="https://raw.githubusercontent.com/maxsokolov/tablet/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License: MIT" /></a>
 </p>
 
-Tablet is a super lightweight yet powerful generic library that handles a complexity of UITableView's datasource and delegate methods in a Swift environment. Tablet's goal is to provide an easiest way to create complex table views. With Tablet you don't have to write a messy code of switch or if statements when you deal with bunch of different cells in different sections. 
+Tablet is a super lightweight yet powerful generic library that handles a complexity of UITableView's datasource and delegate methods in a Swift environment. Tablet's goal is to provide an easiest way to create complex table views. With Tablet you don't have to write a messy code of `switch` or `if` statements when you deal with bunch of different cells in different sections. 
 
 That's almost all you need in your controller to build a bunch of cells in a section:
 ```swift
@@ -89,7 +89,7 @@ Once you've implemented the protocol, simply use the `TableConfigurableRowBuilde
 ```swift
 import Tablet
 
-let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>()
+let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>(estimatedRowHeight: 42)
 rowBuilder.appendItems(users)
 
 director = TableDirector(tableView: tableView)
@@ -159,17 +159,18 @@ extension TableDirector {
 
 	public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
 
-		performAction(.custom(kTableDirectordidEndDisplayingCell), cell: cell, indexPath: indexPath)
+		performAction(.custom(kTableDirectorDidEndDisplayingCell), cell: cell, indexPath: indexPath)
 	}
 }
 ```
 Catch your action with row builder:
 ```swift
-let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>(items: users)
-	.action(kTableDirectordidEndDisplayingCell) { data in
+let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>(items: users, estimatedRowHeight: 42)
+	.action(kTableDirectorDidEndDisplayingCell) { data in
 
 	}
 ```
+You could also perform an action that returns a value.
 
 ## License
 
