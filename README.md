@@ -1,5 +1,11 @@
 ![Tablet](https://raw.githubusercontent.com/maxsokolov/tablet/assets/tablet.png)
 
+<p align="left">
+<img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
+<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift2.1-compatible-4BC51D.svg?style=flat" alt="Swift 2.1 compatible" /></a>
+<a href="https://raw.githubusercontent.com/maxsokolov/tablet/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License: MIT" /></a>
+</p>
+
 Tablet is a super lightweight yet powerful generic library that handles a complexity of UITableView's datasource and delegate methods in a Swift environment. Tablet's goal is to provide an easiest way to create complex table views. With Tablet you don't have to write a messy code of switch or if statements when you deal with bunch of different cells in different sections. 
 
 That's almost all you need in your controller to build a bunch of cells in a section:
@@ -50,7 +56,7 @@ let rowBuilder = TableRowBuilder<User, UITableViewCell>(items: [user1, user2, us
 
 let sectionBuilder = TableSectionBuilder(headerTitle: "Users", rowBuilders: [rowBuilder])
 
-let director = TableDirector(tableView: tableView)
+director = TableDirector(tableView: tableView)
 director.appendSections(sectionBuilder)
 ```
 
@@ -85,6 +91,7 @@ import Tablet
 let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>()
 rowBuilder.appendItems(users)
 
+director = TableDirector(tableView: tableView)
 tableDirector.appendSection(TableSectionBuilder(rowBuilders: [rowBuilder]))
 ```
 
@@ -95,7 +102,7 @@ Tablet provides a chaining approach to handle actions from your cells:
 ```swift
 import Tablet
 
-let rowBuilder = TableRowBuilder<User, UITableViewCell>(items: [user1, user2, user3], id: "reusable_id")
+let rowBuilder = TableRowBuilder<User, MyTableViewCell>(items: [user1, user2, user3], id: "reusable_id")
 	.action(.configure) { data in
 
 	}
@@ -111,11 +118,13 @@ let rowBuilder = TableRowBuilder<User, UITableViewCell>(items: [user1, user2, us
 ```swift
 import Tablet
 
-class UserTableViewCell : UITableViewCell {
+let kMyAction = "action_key"
+
+class MyTableViewCell : UITableViewCell {
 
 	@IBAction func buttonClicked(sender: UIButton) {
 
-		Action(key: "action_key", sender: self, userInfo: nil).trigger()
+		Action(key: kMyAction, sender: self, userInfo: nil).trigger()
 	}
 }
 ```
@@ -123,14 +132,14 @@ And receive this actions with your row builder:
 ```swift
 import Tablet
 
-let rowBuilder = TableRowBuilder<User, UserTableViewCell>(items: users, id: "reusable_id")
+let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>(items: users, id: "reusable_id", estimatedRowHeight: 42)
 	.action(.click) { data in
 		
 	}
 	.action(.willDisplay) { data in
 		
 	}
-	.action("action_key") { data in
+	.action(kMyAction) { data in
 		
 	}
 ```
