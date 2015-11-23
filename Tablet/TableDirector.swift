@@ -69,10 +69,10 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         return sections[indexPath.section].builderAtIndex(indexPath.row)!
     }
     
-    public func performAction(action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath) -> AnyObject? {
+    public func invokeAction(action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath) -> AnyObject? {
         
         let builder = builderAtIndexPath(indexPath)
-        return builder.0.performAction(action, cell: cell, indexPath: indexPath, itemIndex: builder.1)
+        return builder.0.invokeAction(action, cell: cell, indexPath: indexPath, itemIndex: builder.1)
     }
     
     internal func didReceiveAction(notification: NSNotification) {
@@ -80,7 +80,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         if let action = notification.object as? Action, indexPath = tableView.indexPathForCell(action.cell) {
             
             let builder = builderAtIndexPath(indexPath)
-            builder.0.performAction(.custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1)
+            builder.0.invokeAction(.custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1)
         }
     }
     
@@ -102,7 +102,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         
         let cell = tableView.dequeueReusableCellWithIdentifier(builder.0.reusableIdentifier, forIndexPath: indexPath)
         
-        builder.0.performAction(.configure, cell: cell, indexPath: indexPath, itemIndex: builder.1)
+        builder.0.invokeAction(.configure, cell: cell, indexPath: indexPath, itemIndex: builder.1)
 
         return cell
     }
@@ -156,32 +156,32 @@ extension TableDirector {
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 
-        return performAction(.height, cell: nil, indexPath: indexPath) as? CGFloat ?? UITableViewAutomaticDimension
+        return invokeAction(.height, cell: nil, indexPath: indexPath) as? CGFloat ?? UITableViewAutomaticDimension
     }
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         
-        if performAction(.click, cell: cell, indexPath: indexPath) != nil {
+        if invokeAction(.click, cell: cell, indexPath: indexPath) != nil {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         } else {
-            performAction(.select, cell: cell, indexPath: indexPath)
+            invokeAction(.select, cell: cell, indexPath: indexPath)
         }
     }
     
     public func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         
-        performAction(.deselect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath)
+        invokeAction(.deselect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath)
     }
     
     public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
 
-        performAction(.willDisplay, cell: cell, indexPath: indexPath)
+        invokeAction(.willDisplay, cell: cell, indexPath: indexPath)
     }
     
     public func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
 
-        return performAction(.shouldHighlight, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? Bool ?? true
+        return invokeAction(.shouldHighlight, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? Bool ?? true
     }
 }

@@ -49,7 +49,7 @@ You may want to setup a very basic table view, without any custom cells. In that
 import Tablet
 
 let rowBuilder = TableRowBuilder<User, UITableViewCell>(items: [user1, user2, user3], id: "reusable_id")
-	.action(.configure) { data in
+	.action(.configure) { data -> Void in
 
 		data.cell?.textLabel?.text = data.item.username
 		data.cell?.detailTextLabel?.text = data.item.isActive ? "Active" : "Inactive"
@@ -104,13 +104,13 @@ Tablet provides a chaining approach to handle actions from your cells:
 import Tablet
 
 let rowBuilder = TableRowBuilder<User, MyTableViewCell>(items: [user1, user2, user3], id: "reusable_id")
-	.action(.configure) { data in
+	.action(.configure) { data -> Void in
 
 	}
-	.action(.click) { data in
+	.action(.click) { data -> Void in
 
 	}
-	.action(.shouldHighlight) { data in
+	.action(.shouldHighlight) { data -> ReturnValue in
 
 		return false
 	}
@@ -126,7 +126,7 @@ class MyTableViewCell : UITableViewCell {
 
 	@IBAction func buttonClicked(sender: UIButton) {
 
-		Action(key: kMyAction, sender: self, userInfo: nil).perform()
+		Action(key: kMyAction, sender: self, userInfo: nil).invoke()
 	}
 }
 ```
@@ -135,13 +135,13 @@ And receive this actions with your row builder:
 import Tablet
 
 let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>(items: users, id: "reusable_id", estimatedRowHeight: 42)
-	.action(.click) { data in
+	.action(.click) { data -> Void in
 		
 	}
-	.action(.willDisplay) { data in
+	.action(.willDisplay) { data -> Void in
 		
 	}
-	.action(kMyAction) { data in
+	.action(kMyAction) { data -> Void in
 		
 	}
 ```
@@ -159,18 +159,18 @@ extension TableDirector {
 
 	public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
 
-		performAction(.custom(kTableDirectorDidEndDisplayingCell), cell: cell, indexPath: indexPath)
+		invokeAction(.custom(kTableDirectorDidEndDisplayingCell), cell: cell, indexPath: indexPath)
 	}
 }
 ```
 Catch your action with row builder:
 ```swift
 let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>(items: users, estimatedRowHeight: 42)
-	.action(kTableDirectorDidEndDisplayingCell) { data in
+	.action(kTableDirectorDidEndDisplayingCell) { data -> Void in
 
 	}
 ```
-You could also perform an action that returns a value.
+You could also invoke an action that returns a value.
 
 ## License
 

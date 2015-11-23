@@ -15,6 +15,6 @@ extension TableDirector {
     
     public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
 
-        performAction(.custom(kTableDirectorDidEndDisplayingCell), cell: cell, indexPath: indexPath)
+        invokeAction(.custom(kTableDirectorDidEndDisplayingCell), cell: cell, indexPath: indexPath)
     }
 }
