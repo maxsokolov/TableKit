@@ -185,3 +185,13 @@ extension TableDirector {
         return invokeAction(.shouldHighlight, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? Bool ?? true
     }
 }
+
+public func +=(left: TableDirector, right: RowBuilder) {
+
+    left.appendSection(TableSectionBuilder(rowBuilders: [right]))
+}
+
+public func +=(left: TableDirector, right: TableSectionBuilder) {
+
+    left.appendSection(right)
+}

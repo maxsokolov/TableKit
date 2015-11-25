@@ -28,7 +28,7 @@ internal enum ActionHandler<I, C> {
     case actionBlock((data: ActionData<I, C>) -> Void)
     case actionReturnBlock((data: ActionData<I, C>) -> AnyObject?)
     
-    func call(data: ActionData<I, C>) -> AnyObject? {
+    func invoke(data: ActionData<I, C>) -> AnyObject? {
 
         switch (self) {
         case .actionBlock(let closure):
@@ -110,7 +110,7 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
     public func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject? {
 
         if let action = actions[actionType.key] {
-            return action.call(ActionData(cell: cell as? C, indexPath: indexPath, item: items[itemIndex], itemIndex: itemIndex))
+            return action.invoke(ActionData(cell: cell as? C, indexPath: indexPath, item: items[itemIndex], itemIndex: itemIndex))
         }
         return nil
     }

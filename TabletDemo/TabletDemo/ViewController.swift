@@ -55,6 +55,6 @@ class ViewController: UIViewController {
 
         let sectionBuilder = TableSectionBuilder(headerTitle: "Tablet", footerTitle: "Deal with table view like a boss.", rowBuilders: [rowBuilder, configurableRowBuilder])
 
-        tableDirector.appendSection(sectionBuilder)
+        tableDirector += sectionBuilder
     }
 }
