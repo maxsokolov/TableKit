@@ -53,9 +53,9 @@ public class TableSectionBuilder {
             self.builders.appendContentsOf(initialRows)
         }
     }
-    
+
     public init(headerView: UIView? = nil, headerHeight: CGFloat = UITableViewAutomaticDimension, footerView: UIView? = nil, footerHeight: CGFloat = UITableViewAutomaticDimension) {
-        
+
         self.headerView = headerView
         self.headerHeight = headerHeight
         
@@ -73,5 +73,15 @@ public class TableSectionBuilder {
         }
         
         return nil
+    }
+}
+
+public extension TableSectionBuilder {
+
+    public func clear() {
+        
+        let _ = TableSectionBuilder(rowBuilders: nil)
+        
+        builders.removeAll()
     }
 }

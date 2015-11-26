@@ -72,18 +72,6 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
             self.items.appendContentsOf(items!)
         }
     }
-
-    // MARK: Items manipulation
-    
-    public func appendItems(items: [I]) {
-        
-        self.items.appendContentsOf(items)
-    }
-    
-    public func clear() {
-        
-        items.removeAll()
-    }
     
     // MARK: Chaining actions
 
@@ -119,7 +107,7 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
 /**
     Responsible for building configurable cells of given type and passing items to them.
 */
-public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == I, C: UITableViewCell> : TableRowBuilder<I, C>  {
+public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == I, C: UITableViewCell> : TableRowBuilder<I, C> {
 
     public init(item: I, estimatedRowHeight: CGFloat = UITableViewAutomaticDimension) {
         super.init(item: item, id: C.reusableIdentifier(), estimatedRowHeight: estimatedRowHeight)
@@ -137,5 +125,20 @@ public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == 
         default: break
         }
         return super.invokeAction(actionType, cell: cell, indexPath: indexPath, itemIndex: itemIndex)
+    }
+}
+
+public extension TableRowBuilder {
+
+    // MARK: Items manipulation
+    
+    public func appendItems(items: [I]) {
+        
+        self.items.appendContentsOf(items)
+    }
+    
+    public func clear() {
+        
+        items.removeAll()
     }
 }
