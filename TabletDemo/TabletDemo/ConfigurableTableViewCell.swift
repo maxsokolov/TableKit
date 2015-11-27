@@ -19,7 +19,7 @@ class ConfigurableTableViewCell: UITableViewCell, ConfigurableCell {
 
     static func reusableIdentifier() -> String {
 
-        return "configurable_cell"
+        return "ConfigurableTableViewCell"
     }
 
     func configureWithItem(item: Item) {

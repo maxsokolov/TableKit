@@ -104,6 +104,14 @@ public protocol ConfigurableCell {
     func configureWithItem(item: Item)
 }
 
+extension ConfigurableCell where Self: UITableViewCell {
+
+    static func reusableIdentifier() -> String {
+
+        return NSStringFromClass(self).componentsSeparatedByString(".").last ?? ""
+    }
+}
+
 /**
     A protocol that every row builder should follow. 
     A certain section can only works with row builders that respect this protocol.
