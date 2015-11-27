@@ -104,7 +104,7 @@ public protocol ConfigurableCell {
     func configureWithItem(item: Item)
 }
 
-extension ConfigurableCell where Self: UITableViewCell {
+public extension ConfigurableCell where Self: UITableViewCell {
 
     static func reusableIdentifier() -> String {
 
