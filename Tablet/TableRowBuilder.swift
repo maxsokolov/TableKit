@@ -142,3 +142,9 @@ public extension TableRowBuilder {
         items.removeAll()
     }
 }
+
+public func +=<T, C where C : UITableViewCell>(var left: TableRowBuilder<T, C>, right: T) -> TableRowBuilder<T, C> {
+
+    left.appendItems([right])
+    return left
+}

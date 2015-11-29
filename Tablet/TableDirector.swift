@@ -73,6 +73,20 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
             builder.0.invokeAction(.custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1)
         }
     }
+    
+    func registerNibs() {
+    
+        let bundle = NSBundle(forClass: UITableViewCell.self)
+
+        if let _ = bundle.pathForResource("cell name", ofType: "nib") { // existing cell
+
+            tableView.registerNib(UINib(nibName: "", bundle: bundle), forCellReuseIdentifier: "")
+            
+        } else {
+
+            tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "")
+        }
+    }
 }
 
 extension TableDirector {
