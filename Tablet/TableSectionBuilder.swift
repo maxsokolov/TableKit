@@ -50,7 +50,7 @@ public class TableSectionBuilder {
         self.footerTitle = footerTitle
         
         if let initialRows = rowBuilders {
-            self.builders.appendContentsOf(initialRows)
+            builders.appendContentsOf(initialRows)
         }
     }
 
@@ -83,5 +83,10 @@ public extension TableSectionBuilder {
         let _ = TableSectionBuilder(rowBuilders: nil)
         
         builders.removeAll()
+    }
+    
+    public func appendRowBuilder(rowBuilder: RowBuilder) {
+
+        builders.append(rowBuilder)
     }
 }

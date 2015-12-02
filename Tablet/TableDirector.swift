@@ -62,7 +62,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     public func invokeAction(action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath) -> AnyObject? {
         
         let builder = builderAtIndexPath(indexPath)
-        return builder.0.invokeAction(action, cell: cell, indexPath: indexPath, itemIndex: builder.1)
+        return builder.0.invokeAction(action, cell: cell, indexPath: indexPath, itemIndex: builder.1, userInfo: nil)
     }
     
     internal func didReceiveAction(notification: NSNotification) {
@@ -70,7 +70,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         if let action = notification.object as? Action, indexPath = tableView.indexPathForCell(action.cell) {
             
             let builder = builderAtIndexPath(indexPath)
-            builder.0.invokeAction(.custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1)
+            builder.0.invokeAction(.custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1, userInfo: action.userInfo)
         }
     }
     
@@ -80,7 +80,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
 
         if let _ = bundle.pathForResource("cell name", ofType: "nib") { // existing cell
 
-            tableView.registerNib(UINib(nibName: "", bundle: bundle), forCellReuseIdentifier: "")
+            tableView.registerNib(UINib(nibName: "cell", bundle: bundle), forCellReuseIdentifier: "cell id")
             
         } else {
 
@@ -122,7 +122,7 @@ public extension TableDirector {
         
         let cell = tableView.dequeueReusableCellWithIdentifier(builder.0.reusableIdentifier, forIndexPath: indexPath)
         
-        builder.0.invokeAction(.configure, cell: cell, indexPath: indexPath, itemIndex: builder.1)
+        builder.0.invokeAction(.configure, cell: cell, indexPath: indexPath, itemIndex: builder.1, userInfo: nil)
         
         return cell
     }
