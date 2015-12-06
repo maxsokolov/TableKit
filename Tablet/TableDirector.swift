@@ -44,16 +44,6 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
-    // MARK: Sections manipulation
-    
-    public func appendSection(section: TableSectionBuilder) {
-        sections.append(section)
-    }
-    
-    public func appendSections(sections: [TableSectionBuilder]) {
-        self.sections.appendContentsOf(sections)
-    }
-    
     // MARK: Private methods
     
     /**
@@ -69,10 +59,10 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         return sections[indexPath.section].builderAtIndex(indexPath.row)!
     }
     
-    public func performAction(action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath) -> AnyObject? {
+    public func invokeAction(action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath) -> AnyObject? {
         
         let builder = builderAtIndexPath(indexPath)
-        return builder.0.performAction(action, cell: cell, indexPath: indexPath, itemIndex: builder.1)
+        return builder.0.invokeAction(action, cell: cell, indexPath: indexPath, itemIndex: builder.1, userInfo: nil)
     }
     
     internal func didReceiveAction(notification: NSNotification) {
@@ -80,108 +70,146 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         if let action = notification.object as? Action, indexPath = tableView.indexPathForCell(action.cell) {
             
             let builder = builderAtIndexPath(indexPath)
-            builder.0.performAction(.custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1)
+            builder.0.invokeAction(.custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1, userInfo: action.userInfo)
         }
     }
-    
+}
+
+public extension TableDirector {
+ 
     // MARK: UITableViewDataSource - configuration
     
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
         return sections.count
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return sections[section].numberOfRowsInSection
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let builder = builderAtIndexPath(indexPath)
         
         let cell = tableView.dequeueReusableCellWithIdentifier(builder.0.reusableIdentifier, forIndexPath: indexPath)
         
-        builder.0.performAction(.configure, cell: cell, indexPath: indexPath, itemIndex: builder.1)
-
+        builder.0.invokeAction(.configure, cell: cell, indexPath: indexPath, itemIndex: builder.1, userInfo: nil)
+        
         return cell
     }
 }
 
-extension TableDirector {
+public extension TableDirector {
 
     // MARK: UITableViewDataSource - section setup
     
-    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         return sections[section].headerTitle
     }
     
-    public func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+    func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         
         return sections[section].footerTitle
     }
     
     // MARK: UITableViewDelegate - section setup
     
-    public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         return sections[section].headerView
     }
     
-    public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         return sections[section].footerView
     }
     
-    public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         return sections[section].headerHeight
     }
     
-    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
         return sections[section].footerHeight
     }
 }
 
-extension TableDirector {
+public extension TableDirector {
 
     // MARK: UITableViewDelegate - actions
 
-    public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 
         return builderAtIndexPath(indexPath).0.estimatedRowHeight
     }
     
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 
-        return performAction(.height, cell: nil, indexPath: indexPath) as? CGFloat ?? UITableViewAutomaticDimension
+        return invokeAction(.height, cell: nil, indexPath: indexPath) as? CGFloat ?? UITableViewAutomaticDimension
     }
     
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         
-        if performAction(.click, cell: cell, indexPath: indexPath) != nil {
+        if invokeAction(.click, cell: cell, indexPath: indexPath) != nil {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         } else {
-            performAction(.select, cell: cell, indexPath: indexPath)
+            invokeAction(.select, cell: cell, indexPath: indexPath)
         }
     }
     
-    public func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        performAction(.deselect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath)
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+
+        invokeAction(.deselect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath)
     }
     
-    public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
 
-        performAction(.willDisplay, cell: cell, indexPath: indexPath)
+        invokeAction(.willDisplay, cell: cell, indexPath: indexPath)
     }
     
-    public func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
 
-        return performAction(.shouldHighlight, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? Bool ?? true
+        return invokeAction(.shouldHighlight, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? Bool ?? true
     }
+}
+
+public extension TableDirector {
+
+    // MARK: Sections manipulation
+
+    public func appendSection(section: TableSectionBuilder) {
+        appendSections([section])
+    }
+    
+    public func appendSections(sections: [TableSectionBuilder]) {
+
+        sections.forEach { $0.willMoveToDirector(tableView) }
+        self.sections.appendContentsOf(sections)
+    }
+}
+
+public func +=(left: TableDirector, right: RowBuilder) {
+
+    left.appendSection(TableSectionBuilder(rowBuilders: [right]))
+}
+
+public func +=(left: TableDirector, right: [RowBuilder]) {
+    
+    left.appendSection(TableSectionBuilder(rowBuilders: right))
+}
+
+public func +=(left: TableDirector, right: TableSectionBuilder) {
+
+    left.appendSection(right)
+}
+
+public func +=(left: TableDirector, right: [TableSectionBuilder]) {
+    
+    left.appendSections(right)
 }

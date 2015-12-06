@@ -86,7 +86,7 @@ public class Action {
         self.userInfo = userInfo
     }
 
-    public func perform() {
+    public func invoke() {
 
         NSNotificationCenter.defaultCenter().postNotificationName(kActionPerformedNotificationKey, object: self)
     }
@@ -104,6 +104,14 @@ public protocol ConfigurableCell {
     func configureWithItem(item: Item)
 }
 
+public extension ConfigurableCell where Self: UITableViewCell {
+
+    static func reusableIdentifier() -> String {
+
+        return NSStringFromClass(self).componentsSeparatedByString(".").last ?? ""
+    }
+}
+
 /**
     A protocol that every row builder should follow. 
     A certain section can only works with row builders that respect this protocol.
@@ -114,5 +122,6 @@ public protocol RowBuilder {
     var reusableIdentifier: String { get }
     var estimatedRowHeight: CGFloat { get }
 
-    func performAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int) -> AnyObject?
+    func registerCell(inTableView tableView: UITableView)
+    func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject?
 }

@@ -19,7 +19,7 @@ class ConfigurableTableViewCell: UITableViewCell, ConfigurableCell {
 
     static func reusableIdentifier() -> String {
 
-        return "configurable_cell"
+        return "ConfigurableTableViewCell"
     }
 
     func configureWithItem(item: Item) {
@@ -29,6 +29,6 @@ class ConfigurableTableViewCell: UITableViewCell, ConfigurableCell {
     
     @IBAction func buttonClicked(sender: UIButton) {
     
-        Action(key: kConfigurableTableViewCellButtonClickedAction, sender: self).perform()
+        Action(key: kConfigurableTableViewCellButtonClickedAction, sender: self).invoke()
     }
 }
