@@ -56,16 +56,16 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
         }
     }
     
-    public init(item: I, id: String, estimatedRowHeight: CGFloat = UITableViewAutomaticDimension) {
+    public init(item: I, id: String? = nil, estimatedRowHeight: CGFloat = UITableViewAutomaticDimension) {
         
-        reusableIdentifier = id
+        reusableIdentifier = id ?? NSStringFromClass(C).componentsSeparatedByString(".").last ?? ""
         self.estimatedRowHeight = estimatedRowHeight
         items.append(item)
     }
     
-    public init(items: [I]? = nil, id: String, estimatedRowHeight: CGFloat = UITableViewAutomaticDimension) {
+    public init(items: [I]? = nil, id: String? = nil, estimatedRowHeight: CGFloat = UITableViewAutomaticDimension) {
 
-        reusableIdentifier = id
+        reusableIdentifier = id ?? NSStringFromClass(C).componentsSeparatedByString(".").last ?? ""
         self.estimatedRowHeight = estimatedRowHeight
         
         if items != nil {
@@ -104,6 +104,10 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
     }
 
     public func registerCell(inTableView tableView: UITableView) {
+
+        if tableView.dequeueReusableCellWithIdentifier(reusableIdentifier) != nil {
+            return
+        }
 
         guard let resource = NSStringFromClass(C).componentsSeparatedByString(".").last else { return }
 
