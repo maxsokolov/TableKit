@@ -53,10 +53,12 @@ class ViewController: UIViewController {
                 data.cell!.contentLabel.text = "Tablet is a super lightweight yet powerful generic library that handles a complexity of UITableView's datasource and delegate methods in a Swift environment. Tablet's goal is to provide an easiest way to create complex table views. With Tablet you don't have to write a messy code of switch or if statements when you deal with bunch of different cells in different sections."
             }
 
-        let sectionBuilder = TableSectionBuilder(headerTitle: "Tablet", footerTitle: "Deal with table view like a boss.", rowBuilders: [rowBuilder, configurableRowBuilder])
+        let myRowBuilder = TableRowBuilder<Int, MyTableViewCell>(item: 0, id: "cellll")
+
+        let sectionBuilder = TableSectionBuilder(headerTitle: "Tablet", footerTitle: "Deal with table view like a boss.", rowBuilders: [rowBuilder, configurableRowBuilder, myRowBuilder])
 
         tableDirector += sectionBuilder
-        
+
         sectionBuilder.appendRowBuilder(TableRowBuilder<Int, MyNibTableViewCell>(item: 0))
     }
 }

@@ -179,7 +179,7 @@ public extension TableDirector {
     }
 }
 
-extension TableDirector {
+public extension TableDirector {
 
     // MARK: Sections manipulation
 

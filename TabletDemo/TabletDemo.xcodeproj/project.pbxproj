@@ -18,6 +18,7 @@
 		DAB7EB351BEF787300D2AD5E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB7EB331BEF787300D2AD5E /* LaunchScreen.storyboard */; };
 		DAB7EB3E1BEF78A400D2AD5E /* Tablet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB7EB3D1BEF78A400D2AD5E /* Tablet.swift */; };
 		DAB7EB401BEFD07E00D2AD5E /* ConfigurableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB7EB3F1BEFD07E00D2AD5E /* ConfigurableTableViewCell.swift */; };
+		DAED08F11C14DE7E006C04D8 /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAED08F01C14DE7E006C04D8 /* MyTableViewCell.swift */; };
 		DAF003961C14DC0C0028C3D6 /* MyNibTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF003951C14DC0C0028C3D6 /* MyNibTableViewCell.swift */; };
 		DAF003981C14DC250028C3D6 /* MyNibTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAF003971C14DC250028C3D6 /* MyNibTableViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -36,6 +37,7 @@
 		DAB7EB361BEF787300D2AD5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DAB7EB3D1BEF78A400D2AD5E /* Tablet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tablet.swift; sourceTree = "<group>"; };
 		DAB7EB3F1BEFD07E00D2AD5E /* ConfigurableTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableTableViewCell.swift; sourceTree = "<group>"; };
+		DAED08F01C14DE7E006C04D8 /* MyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
 		DAF003951C14DC0C0028C3D6 /* MyNibTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNibTableViewCell.swift; sourceTree = "<group>"; };
 		DAF003971C14DC250028C3D6 /* MyNibTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyNibTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,6 +79,7 @@
 				DA1BCD101BF7388C00CC0479 /* CustomTableActions.swift */,
 				DAF003951C14DC0C0028C3D6 /* MyNibTableViewCell.swift */,
 				DAF003971C14DC250028C3D6 /* MyNibTableViewCell.xib */,
+				DAED08F01C14DE7E006C04D8 /* MyTableViewCell.swift */,
 				DAB7EB2E1BEF787300D2AD5E /* Main.storyboard */,
 				DAB7EB311BEF787300D2AD5E /* Assets.xcassets */,
 				DAB7EB331BEF787300D2AD5E /* LaunchScreen.storyboard */,
@@ -172,6 +175,7 @@
 				508B71841BF48DD300272920 /* TableSectionBuilder.swift in Sources */,
 				DAB7EB2D1BEF787300D2AD5E /* ViewController.swift in Sources */,
 				DAB7EB3E1BEF78A400D2AD5E /* Tablet.swift in Sources */,
+				DAED08F11C14DE7E006C04D8 /* MyTableViewCell.swift in Sources */,
 				DAF003961C14DC0C0028C3D6 /* MyNibTableViewCell.swift in Sources */,
 				508B71861BF48E0D00272920 /* TableRowBuilder.swift in Sources */,
 				DA1BCD0F1BF5472C00CC0479 /* TableDirector.swift in Sources */,
