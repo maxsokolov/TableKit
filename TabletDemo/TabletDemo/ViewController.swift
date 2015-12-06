@@ -18,7 +18,7 @@ class ViewController: UIViewController {
 
         tableDirector = TableDirector(tableView: tableView)
 
-        var rowBuilder = TableRowBuilder<Int, UITableViewCell>(items: [1, 2, 3, 4], id: "cell")
+        let rowBuilder = TableRowBuilder<Int, UITableViewCell>(items: [1, 2, 3, 4], id: "cell")
             .action(.configure) { data in
 
                 data.cell?.textLabel?.text = "\(data.item)"

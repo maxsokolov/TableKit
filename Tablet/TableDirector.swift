@@ -73,33 +73,6 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
             builder.0.invokeAction(.custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1, userInfo: action.userInfo)
         }
     }
-    
-    func registerNibs() {
-    
-        let bundle = NSBundle(forClass: UITableViewCell.self)
-
-        if let _ = bundle.pathForResource("cell name", ofType: "nib") { // existing cell
-
-            tableView.registerNib(UINib(nibName: "cell", bundle: bundle), forCellReuseIdentifier: "cell id")
-            
-        } else {
-
-            tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "")
-        }
-    }
-}
-
-extension TableDirector {
-    
-    // MARK: Sections manipulation
-    
-    public func appendSection(section: TableSectionBuilder) {
-        sections.append(section)
-    }
-    
-    public func appendSections(sections: [TableSectionBuilder]) {
-        self.sections.appendContentsOf(sections)
-    }
 }
 
 public extension TableDirector {
@@ -203,6 +176,21 @@ public extension TableDirector {
     func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
 
         return invokeAction(.shouldHighlight, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? Bool ?? true
+    }
+}
+
+extension TableDirector {
+
+    // MARK: Sections manipulation
+
+    public func appendSection(section: TableSectionBuilder) {
+        appendSections([section])
+    }
+    
+    public func appendSections(sections: [TableSectionBuilder]) {
+
+        sections.forEach { $0.willMoveToDirector(tableView) }
+        self.sections.appendContentsOf(sections)
     }
 }
 

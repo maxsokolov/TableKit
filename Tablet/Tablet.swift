@@ -122,5 +122,6 @@ public protocol RowBuilder {
     var reusableIdentifier: String { get }
     var estimatedRowHeight: CGFloat { get }
 
+    func registerCell(inTableView tableView: UITableView)
     func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject?
 }

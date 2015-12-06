@@ -102,6 +102,22 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
         }
         return nil
     }
+
+    public func registerCell(inTableView tableView: UITableView) {
+
+        guard let resource = NSStringFromClass(C).componentsSeparatedByString(".").last else { return }
+
+        let bundle = NSBundle(forClass: C.self)
+        
+        if let _ = bundle.pathForResource(resource, ofType: "nib") { // existing cell
+
+            tableView.registerNib(UINib(nibName: resource, bundle: bundle), forCellReuseIdentifier: reusableIdentifier)
+            
+        } else {
+
+            tableView.registerClass(C.self, forCellReuseIdentifier: reusableIdentifier)
+        }
+    }
 }
 
 /**
@@ -141,10 +157,4 @@ public extension TableRowBuilder {
         
         items.removeAll()
     }
-}
-
-public func +=<T, C where C : UITableViewCell>(var left: TableRowBuilder<T, C>, right: T) -> TableRowBuilder<T, C> {
-
-    left.appendItems([right])
-    return left
 }

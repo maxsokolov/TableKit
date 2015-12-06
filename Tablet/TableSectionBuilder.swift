@@ -27,6 +27,7 @@ import Foundation
 */
 public class TableSectionBuilder {
 
+    internal weak var tableView: UITableView?
     private var builders = [RowBuilder]()
     
     public var headerTitle: String?
@@ -45,7 +46,7 @@ public class TableSectionBuilder {
     }
     
     public init(headerTitle: String? = nil, footerTitle: String? = nil, rowBuilders: [RowBuilder]? = nil) {
-        
+
         self.headerTitle = headerTitle
         self.footerTitle = footerTitle
         
@@ -62,6 +63,9 @@ public class TableSectionBuilder {
         self.footerView = footerView
         self.footerHeight = footerHeight
     }
+}
+
+internal extension TableSectionBuilder {
     
     internal func builderAtIndex(var index: Int) -> (RowBuilder, Int)? {
         
@@ -73,6 +77,11 @@ public class TableSectionBuilder {
         }
         
         return nil
+    }
+
+    internal func willMoveToDirector(tableView: UITableView) {
+        self.tableView = tableView
+        self.builders.forEach { $0.registerCell(inTableView: tableView) }
     }
 }
 
@@ -87,6 +96,12 @@ public extension TableSectionBuilder {
     
     public func appendRowBuilder(rowBuilder: RowBuilder) {
 
-        builders.append(rowBuilder)
+        appendRowBuilders([rowBuilder])
+    }
+    
+    public func appendRowBuilders(rowBuilders: [RowBuilder]) {
+
+        if let tableView = tableView { rowBuilders.forEach { $0.registerCell(inTableView: tableView) } }
+        builders.appendContentsOf(rowBuilders)
     }
 }
