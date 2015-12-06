@@ -3,7 +3,7 @@
 <p align="left">
 <a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift2-compatible-4BC51D.svg?style=flat" alt="Swift 2 compatible" /></a>
 <img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
-<a href="https://cocoapods.org/pods/tablet"><img src="https://img.shields.io/badge/pod-0.1.0-blue.svg" alt="CocoaPods compatible" /></a>
+<a href="https://cocoapods.org/pods/tablet"><img src="https://img.shields.io/badge/pod-0.2.0-blue.svg" alt="CocoaPods compatible" /></a>
 <a href="https://raw.githubusercontent.com/maxsokolov/tablet/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License: MIT" /></a>
 </p>
 
@@ -18,7 +18,7 @@ Tablet respects cells reusability feature and it's type-safe. See the Usage sect
 ## Requirements
 
 - iOS 8.0+
-- Xcode 7.1+
+- Xcode 7.0+
 
 ## Installation
 

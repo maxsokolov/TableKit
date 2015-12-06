@@ -88,9 +88,7 @@ internal extension TableSectionBuilder {
 public extension TableSectionBuilder {
 
     public func clear() {
-        
-        let _ = TableSectionBuilder(rowBuilders: nil)
-        
+
         builders.removeAll()
     }
     
