@@ -103,3 +103,13 @@ public extension TableSectionBuilder {
         builders.appendContentsOf(rowBuilders)
     }
 }
+
+public func +=(left: TableSectionBuilder, right: RowBuilder) {
+
+    left.appendRowBuilder(right)
+}
+
+public func +=(left: TableSectionBuilder, right: [RowBuilder]) {
+
+    left.appendRowBuilders(right)
+}
