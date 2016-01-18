@@ -197,6 +197,10 @@ public extension TableDirector {
         sections.forEach { $0.willMoveToDirector(tableView) }
         self.sections.appendContentsOf(sections)
     }
+    
+    public func clearSections() {
+        sections.removeAll()
+    }
 }
 
 public func +=(left: TableDirector, right: RowBuilder) {
