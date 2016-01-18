@@ -94,6 +94,11 @@ public extension TableDirector {
         let builder = builderAtIndexPath(indexPath)
         
         let cell = tableView.dequeueReusableCellWithIdentifier(builder.0.reusableIdentifier, forIndexPath: indexPath)
+
+        if cell.frame.size.width != tableView.frame.size.width {
+            cell.frame = CGRectMake(0, 0, tableView.frame.size.width, cell.frame.size.height)
+            cell.layoutIfNeeded()
+        }
         
         builder.0.invokeAction(.configure, cell: cell, indexPath: indexPath, itemIndex: builder.1, userInfo: nil)
         
@@ -191,6 +196,10 @@ public extension TableDirector {
 
         sections.forEach { $0.willMoveToDirector(tableView) }
         self.sections.appendContentsOf(sections)
+    }
+    
+    public func clearSections() {
+        sections.removeAll()
     }
 }
 

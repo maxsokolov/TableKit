@@ -162,3 +162,13 @@ public extension TableRowBuilder {
         items.removeAll()
     }
 }
+
+public func +=<I, C>(left: TableRowBuilder<I, C>, right: I) {
+    
+    left.appendItems([right])
+}
+
+public func +=<I, C>(left: TableRowBuilder<I, C>, right: [I]) {
+
+    left.appendItems(right)
+}
