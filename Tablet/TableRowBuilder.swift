@@ -28,7 +28,7 @@ internal enum ActionHandler<I, C> {
     case actionBlock((data: ActionData<I, C>) -> Void)
     case actionReturnBlock((data: ActionData<I, C>) -> AnyObject?)
     
-    func invoke(data: ActionData<I, C>) -> AnyObject? {
+    func invoke(data: ActionData<I, C>) -> ReturnValue {
 
         switch (self) {
         case .actionBlock(let closure):
@@ -129,11 +129,11 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
 */
 public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == I, C: UITableViewCell> : TableRowBuilder<I, C> {
 
-    public init(item: I, estimatedRowHeight: CGFloat = UITableViewAutomaticDimension) {
+    public init(item: I, estimatedRowHeight: CGFloat) {
         super.init(item: item, id: C.reusableIdentifier(), estimatedRowHeight: estimatedRowHeight)
     }
 
-    public init(items: [I]? = nil, estimatedRowHeight: CGFloat = UITableViewAutomaticDimension) {
+    public init(items: [I]? = nil, estimatedRowHeight: CGFloat) {
         super.init(items: items, id: C.reusableIdentifier(), estimatedRowHeight: estimatedRowHeight)
     }
 

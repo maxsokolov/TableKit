@@ -13,6 +13,6 @@ extension TableDirector {
 
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         
-        invokeAction(.custom(""), cell: nil, indexPath: nil)
+        //invokeAction(.custom(""), cell: nil, indexPath: nil)
     }
 }
