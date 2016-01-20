@@ -56,14 +56,14 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
         }
     }
     
-    public init(item: I, id: String? = nil, estimatedRowHeight: CGFloat = UITableViewAutomaticDimension) {
+    public init(item: I, id: String? = nil, estimatedRowHeight: CGFloat) {
         
         reusableIdentifier = id ?? NSStringFromClass(C).componentsSeparatedByString(".").last ?? ""
         self.estimatedRowHeight = estimatedRowHeight
         items.append(item)
     }
     
-    public init(items: [I]? = nil, id: String? = nil, estimatedRowHeight: CGFloat = UITableViewAutomaticDimension) {
+    public init(items: [I]? = nil, id: String? = nil, estimatedRowHeight: CGFloat) {
 
         reusableIdentifier = id ?? NSStringFromClass(C).componentsSeparatedByString(".").last ?? ""
         self.estimatedRowHeight = estimatedRowHeight
