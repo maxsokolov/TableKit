@@ -109,7 +109,7 @@ public extension ConfigurableCell where Self: UITableViewCell {
 
     static func reusableIdentifier() -> String {
 
-        return String(self.dynamicType).componentsSeparatedByString(".").last ?? ""
+        return NSStringFromClass(self).componentsSeparatedByString(".").last ?? ""
     }
 }
 
