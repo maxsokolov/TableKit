@@ -31,6 +31,7 @@ public enum ActionType {
     case click
     case select
     case deselect
+    case willSelect
     case configure
     case willDisplay
     case shouldHighlight
