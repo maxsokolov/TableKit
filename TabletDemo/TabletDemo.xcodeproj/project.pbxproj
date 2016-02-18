@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		504740931C4FEEC50012132B /* TableDirectorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504740921C4FEEC50012132B /* TableDirectorExtensions.swift */; };
 		508B71841BF48DD300272920 /* TableSectionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508B71831BF48DD300272920 /* TableSectionBuilder.swift */; };
 		508B71861BF48E0D00272920 /* TableRowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508B71851BF48E0D00272920 /* TableRowBuilder.swift */; };
 		DA1BCD0F1BF5472C00CC0479 /* TableDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1BCD0E1BF5472C00CC0479 /* TableDirector.swift */; };
@@ -25,7 +24,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		504740921C4FEEC50012132B /* TableDirectorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDirectorExtensions.swift; sourceTree = "<group>"; };
 		508B71831BF48DD300272920 /* TableSectionBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionBuilder.swift; sourceTree = "<group>"; };
 		508B71851BF48E0D00272920 /* TableRowBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowBuilder.swift; sourceTree = "<group>"; };
 		DA1BCD0E1BF5472C00CC0479 /* TableDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDirector.swift; sourceTree = "<group>"; };
@@ -75,7 +73,6 @@
 		DAB7EB291BEF787300D2AD5E /* TabletDemo */ = {
 			isa = PBXGroup;
 			children = (
-				504740921C4FEEC50012132B /* TableDirectorExtensions.swift */,
 				DAB7EB2A1BEF787300D2AD5E /* AppDelegate.swift */,
 				DAB7EB2C1BEF787300D2AD5E /* ViewController.swift */,
 				DAB7EB3F1BEFD07E00D2AD5E /* ConfigurableTableViewCell.swift */,
@@ -181,7 +178,6 @@
 				DAED08F11C14DE7E006C04D8 /* MyTableViewCell.swift in Sources */,
 				DAF003961C14DC0C0028C3D6 /* MyNibTableViewCell.swift in Sources */,
 				508B71861BF48E0D00272920 /* TableRowBuilder.swift in Sources */,
-				504740931C4FEEC50012132B /* TableDirectorExtensions.swift in Sources */,
 				DA1BCD0F1BF5472C00CC0479 /* TableDirector.swift in Sources */,
 				DAB7EB401BEFD07E00D2AD5E /* ConfigurableTableViewCell.swift in Sources */,
 				DAB7EB2B1BEF787300D2AD5E /* AppDelegate.swift in Sources */,

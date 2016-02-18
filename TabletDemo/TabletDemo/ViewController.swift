@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIScrollViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     var tableDirector: TableDirector!
@@ -17,6 +17,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         tableDirector = TableDirector(tableView: tableView)
+        tableDirector.scrollDelegate = self
 
         let rowBuilder = TableRowBuilder<Int, UITableViewCell>(items: [1, 2, 3, 4], id: "cell", estimatedRowHeight: 44)
             .action(.configure) { data in
@@ -61,5 +62,9 @@ class ViewController: UIViewController {
         tableDirector += sectionBuilder
 
         sectionBuilder.appendRowBuilder(TableRowBuilder<Int, MyNibTableViewCell>(item: 0, estimatedRowHeight: 44))
+    }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        print("begin dragging")
     }
 }

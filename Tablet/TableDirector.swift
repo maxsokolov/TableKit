@@ -28,6 +28,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
 
     private weak var tableView: UITableView!
     private var sections = [TableSectionBuilder]()
+    public var scrollDelegate: UIScrollViewDelegate?
     
     public init(tableView: UITableView) {
         super.init()
@@ -72,6 +73,14 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
             let builder = builderAtIndexPath(indexPath)
             builder.0.invokeAction(.custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1, userInfo: action.userInfo)
         }
+    }
+
+    public override func respondsToSelector(selector: Selector) -> Bool {
+        return super.respondsToSelector(selector) || scrollDelegate?.respondsToSelector(selector) == true
+    }
+
+    public override func forwardingTargetForSelector(selector: Selector) -> AnyObject? {
+        return scrollDelegate?.respondsToSelector(selector) == true ? scrollDelegate : super.forwardingTargetForSelector(selector)
     }
 }
 
