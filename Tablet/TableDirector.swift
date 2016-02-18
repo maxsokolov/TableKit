@@ -28,7 +28,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
 
     private weak var tableView: UITableView!
     private var sections = [TableSectionBuilder]()
-    public var scrollDelegate: UIScrollViewDelegate?
+    public weak var scrollDelegate: UIScrollViewDelegate?
     
     public init(tableView: UITableView) {
         super.init()
