@@ -26,7 +26,7 @@ import Foundation
  */
 public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
 
-    private weak var tableView: UITableView!
+    public private(set) weak var tableView: UITableView!
     private var sections = [TableSectionBuilder]()
     public weak var scrollDelegate: UIScrollViewDelegate?
     
