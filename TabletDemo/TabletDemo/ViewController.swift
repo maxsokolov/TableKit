@@ -19,7 +19,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         tableDirector = TableDirector(tableView: tableView)
         tableDirector.scrollDelegate = self
 
-        let rowBuilder = TableRowBuilder<Int, UITableViewCell>(items: [1, 2, 3, 4], id: "cell", estimatedRowHeight: 44)
+        let rowBuilder = TableRowBuilder<Int, UITableViewCell>(items: [1, 2, 3, 4], id: "cell")
             .action(.configure) { data in
 
                 data.cell?.textLabel?.text = "\(data.item)"
@@ -34,7 +34,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             }
         
 
-        let configurableRowBuilder = TableConfigurableRowBuilder<String, ConfigurableTableViewCell>(items: ["5", "6", "7", "8"], estimatedRowHeight: 300)
+        let configurableRowBuilder = TableConfigurableRowBuilder<String, ConfigurableTableViewCell>(items: ["5", "6", "7", "8"])
             .action(.click) { data -> Void in
 
                 print("click action indexPath: \(data.indexPath), item: \(data.item)")
@@ -55,13 +55,13 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                 data.cell!.contentLabel.text = "Tablet is a super lightweight yet powerful generic library that handles a complexity of UITableView's datasource and delegate methods in a Swift environment. Tablet's goal is to provide an easiest way to create complex table views. With Tablet you don't have to write a messy code of switch or if statements when you deal with bunch of different cells in different sections."
             }
 
-        let myRowBuilder = TableRowBuilder<Int, MyTableViewCell>(item: 0, id: "cellll", estimatedRowHeight: 44)
+        let myRowBuilder = TableRowBuilder<Int, MyTableViewCell>(item: 0, id: "cellll")
 
         let sectionBuilder = TableSectionBuilder(headerTitle: "Tablet", footerTitle: "Deal with table view like a boss.", rowBuilders: [rowBuilder, configurableRowBuilder, myRowBuilder])
 
         tableDirector += sectionBuilder
 
-        sectionBuilder.appendRowBuilder(TableRowBuilder<Int, MyNibTableViewCell>(item: 0, estimatedRowHeight: 44))
+        sectionBuilder.appendRowBuilder(TableRowBuilder<Int, MyNibTableViewCell>(item: 0))
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {

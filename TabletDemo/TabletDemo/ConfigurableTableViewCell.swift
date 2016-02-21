@@ -21,12 +21,16 @@ class ConfigurableTableViewCell: UITableViewCell, ConfigurableCell {
 
         return "ConfigurableTableViewCell"
     }
+    
+    static func estimatedHeight() -> Float {
+        return 300
+    }
 
     func configureWithItem(item: Item) {
 
         button.setTitle("Button \(item)", forState: .Normal)
     }
-    
+
     @IBAction func buttonClicked(sender: UIButton) {
     
         Action(key: kConfigurableTableViewCellButtonClickedAction, sender: self).invoke()

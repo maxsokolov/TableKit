@@ -102,6 +102,7 @@ public protocol ConfigurableCell {
     typealias Item
 
     static func reusableIdentifier() -> String
+    static func estimatedHeight() -> Float
     func configureWithItem(item: Item)
 }
 
@@ -121,7 +122,7 @@ public protocol RowBuilder {
 
     var numberOfRows: Int { get }
     var reusableIdentifier: String { get }
-    var estimatedRowHeight: CGFloat { get }
+    var estimatedRowHeight: Float { get }
 
     func registerCell(inTableView tableView: UITableView)
     func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject?

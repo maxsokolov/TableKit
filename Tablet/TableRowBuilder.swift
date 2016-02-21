@@ -49,24 +49,24 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
     private var items = [I]()
 
     public var reusableIdentifier: String
-    public var estimatedRowHeight: CGFloat
+    public var estimatedRowHeight: Float {
+        return 44
+    }
     public var numberOfRows: Int {
         get {
             return items.count
         }
     }
     
-    public init(item: I, id: String? = nil, estimatedRowHeight: CGFloat) {
+    public init(item: I, id: String? = nil) {
         
         reusableIdentifier = id ?? NSStringFromClass(C).componentsSeparatedByString(".").last ?? ""
-        self.estimatedRowHeight = estimatedRowHeight
         items.append(item)
     }
     
-    public init(items: [I]? = nil, id: String? = nil, estimatedRowHeight: CGFloat) {
+    public init(items: [I]? = nil, id: String? = nil) {
 
         reusableIdentifier = id ?? NSStringFromClass(C).componentsSeparatedByString(".").last ?? ""
-        self.estimatedRowHeight = estimatedRowHeight
         
         if items != nil {
             self.items.appendContentsOf(items!)
@@ -128,13 +128,17 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
     Responsible for building configurable cells of given type and passing items to them.
 */
 public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == I, C: UITableViewCell> : TableRowBuilder<I, C> {
-
-    public init(item: I, estimatedRowHeight: CGFloat) {
-        super.init(item: item, id: C.reusableIdentifier(), estimatedRowHeight: estimatedRowHeight)
+    
+    public override var estimatedRowHeight: Float {
+        return C.estimatedHeight()
     }
 
-    public init(items: [I]? = nil, estimatedRowHeight: CGFloat) {
-        super.init(items: items, id: C.reusableIdentifier(), estimatedRowHeight: estimatedRowHeight)
+    public init(item: I) {
+        super.init(item: item, id: C.reusableIdentifier())
+    }
+
+    public init(items: [I]? = nil) {
+        super.init(items: items, id: C.reusableIdentifier())
     }
 
     public override func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]? = nil) -> AnyObject? {

@@ -158,7 +158,7 @@ public extension TableDirector {
 
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 
-        return builderAtIndexPath(indexPath).0.estimatedRowHeight
+        return CGFloat(builderAtIndexPath(indexPath).0.estimatedRowHeight)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
