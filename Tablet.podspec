@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name                  = 'Tablet'
-    s.version               = '0.2.5'
+    s.version               = '0.2.6'
 
     s.homepage              = 'https://github.com/maxsokolov/tablet'
     s.summary               = 'Powerful type-safe tool for UITableView. Swift 2.0 is required.'

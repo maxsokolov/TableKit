@@ -56,14 +56,14 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
         }
     }
     
-    public init(item: I, id: String? = nil, estimatedRowHeight: CGFloat) {
+    public init(item: I, id: String? = nil, estimatedRowHeight: CGFloat = 48) {
         
         reusableIdentifier = id ?? NSStringFromClass(C).componentsSeparatedByString(".").last ?? ""
         self.estimatedRowHeight = estimatedRowHeight
         items.append(item)
     }
     
-    public init(items: [I]? = nil, id: String? = nil, estimatedRowHeight: CGFloat) {
+    public init(items: [I]? = nil, id: String? = nil, estimatedRowHeight: CGFloat = 48) {
 
         reusableIdentifier = id ?? NSStringFromClass(C).componentsSeparatedByString(".").last ?? ""
         self.estimatedRowHeight = estimatedRowHeight
@@ -129,11 +129,11 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
 */
 public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == I, C: UITableViewCell> : TableRowBuilder<I, C> {
 
-    public init(item: I, estimatedRowHeight: CGFloat) {
+    public init(item: I, estimatedRowHeight: CGFloat = 48) {
         super.init(item: item, id: C.reusableIdentifier(), estimatedRowHeight: estimatedRowHeight)
     }
 
-    public init(items: [I]? = nil, estimatedRowHeight: CGFloat) {
+    public init(items: [I]? = nil, estimatedRowHeight: CGFloat = 48) {
         super.init(items: items, id: C.reusableIdentifier(), estimatedRowHeight: estimatedRowHeight)
     }
 
