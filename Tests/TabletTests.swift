@@ -68,9 +68,9 @@ class TabletTests: XCTestCase {
 
         testController = TestController()
     }
-    
+
     override func tearDown() {
-   
+
         testController = nil
         super.tearDown()
     }
@@ -140,5 +140,26 @@ class TabletTests: XCTestCase {
         
         XCTAssertTrue(testController.tableView.dataSource?.tableView?(testController.tableView, titleForHeaderInSection: 0) == sectionHeaderTitle)
         XCTAssertTrue(testController.tableView.dataSource?.tableView?(testController.tableView, titleForFooterInSection: 0) == sectionFooterTitle)
+    }
+    
+    func testSectionBuilderCreatesSectionWithHeaderAndFooterViews() {
+
+        let row = TableConfigurableRowBuilder<TestData, TestTableViewCell>(items: [TestData(title: "title")])
+        
+        let sectionHeaderView = UIView()
+        let sectionFooterView = UIView()
+
+        let section = TableSectionBuilder(headerView: sectionHeaderView, headerHeight: 44, footerView: sectionFooterView, footerHeight: 44)
+        section += row
+        
+        testController.view.hidden = false
+        testController.tableDirector += section
+        
+        XCTAssertTrue(testController.tableView.dataSource?.numberOfSectionsInTableView?(testController.tableView) == 1, "Table view should have a section")
+        XCTAssertTrue(testController.tableView.dataSource?.tableView(testController.tableView, numberOfRowsInSection: 0) == 1, "Table view should have certain number of rows in a section")
+        
+        XCTAssertTrue(testController.tableView.delegate?.tableView?(testController.tableView, viewForHeaderInSection: 0) == sectionHeaderView)
+        XCTAssertTrue(testController.tableView.delegate?.tableView?(testController.tableView, viewForFooterInSection: 0) == sectionFooterView)
+        
     }
 }
