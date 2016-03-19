@@ -130,14 +130,17 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
 public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == I, C: UITableViewCell> : TableRowBuilder<I, C> {
     
     public override var estimatedRowHeight: Float {
+        
         return C.estimatedHeight()
     }
 
     public init(item: I) {
+        
         super.init(item: item, id: C.reusableIdentifier())
     }
 
     public init(items: [I]? = nil) {
+        
         super.init(items: items, id: C.reusableIdentifier())
     }
 

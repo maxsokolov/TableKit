@@ -21,7 +21,9 @@
 import UIKit
 import Foundation
 
-internal let kActionPerformedNotificationKey = "_action"
+internal struct TabletNotifications {
+    static let CellAction = "_cellaction"
+}
 
 /**
     The actions that Tablet provides.
@@ -89,7 +91,7 @@ public class Action {
 
     public func invoke() {
 
-        NSNotificationCenter.defaultCenter().postNotificationName(kActionPerformedNotificationKey, object: self)
+        NSNotificationCenter.defaultCenter().postNotificationName(TabletNotifications.CellAction, object: self)
     }
 }
 

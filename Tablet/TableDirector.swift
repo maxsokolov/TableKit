@@ -37,7 +37,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         self.tableView.delegate = self
         self.tableView.dataSource = self
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveAction:", name: kActionPerformedNotificationKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveAction:", name: TabletNotifications.CellAction, object: nil)
     }
     
     deinit {
@@ -168,7 +168,7 @@ public extension TableDirector {
     
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         
-        return invokeAction(.willSelect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? NSIndexPath ?? indexPath
+        return invokeAction(.willSelect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? NSIndexPath
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -218,21 +218,17 @@ public extension TableDirector {
 }
 
 public func +=(left: TableDirector, right: RowBuilder) {
-
-    left.appendSection(TableSectionBuilder(rowBuilders: [right]))
+    left.appendSection(TableSectionBuilder(rows: [right]))
 }
 
 public func +=(left: TableDirector, right: [RowBuilder]) {
-    
-    left.appendSection(TableSectionBuilder(rowBuilders: right))
+    left.appendSection(TableSectionBuilder(rows: right))
 }
 
 public func +=(left: TableDirector, right: TableSectionBuilder) {
-
     left.appendSection(right)
 }
 
 public func +=(left: TableDirector, right: [TableSectionBuilder]) {
-    
     left.appendSections(right)
 }

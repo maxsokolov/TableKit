@@ -45,12 +45,12 @@ public class TableSectionBuilder {
         return builders.reduce(0) { $0 + $1.numberOfRows }
     }
     
-    public init(headerTitle: String? = nil, footerTitle: String? = nil, rowBuilders: [RowBuilder]? = nil) {
+    public init(headerTitle: String? = nil, footerTitle: String? = nil, rows: [RowBuilder]? = nil) {
 
         self.headerTitle = headerTitle
         self.footerTitle = footerTitle
         
-        if let initialRows = rowBuilders {
+        if let initialRows = rows {
             builders.appendContentsOf(initialRows)
         }
     }
@@ -88,16 +88,14 @@ internal extension TableSectionBuilder {
 public extension TableSectionBuilder {
 
     public func clear() {
-
         builders.removeAll()
     }
     
-    public func appendRowBuilder(rowBuilder: RowBuilder) {
-
-        appendRowBuilders([rowBuilder])
+    public func appendRow(row: RowBuilder) {
+        appendRows([row])
     }
     
-    public func appendRowBuilders(rowBuilders: [RowBuilder]) {
+    public func appendRows(rowBuilders: [RowBuilder]) {
 
         if let tableView = tableView { rowBuilders.forEach { $0.registerCell(inTableView: tableView) } }
         builders.appendContentsOf(rowBuilders)
@@ -105,11 +103,9 @@ public extension TableSectionBuilder {
 }
 
 public func +=(left: TableSectionBuilder, right: RowBuilder) {
-
-    left.appendRowBuilder(right)
+    left.appendRow(right)
 }
 
 public func +=(left: TableSectionBuilder, right: [RowBuilder]) {
-
-    left.appendRowBuilders(right)
+    left.appendRows(right)
 }
