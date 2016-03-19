@@ -1,4 +1,4 @@
-![Tablet](https://raw.githubusercontent.com/maxsokolov/tablet/assets/tablet.jpg)
+#Tablet
 
 <p align="left">
 <a href="https://travis-ci.org/maxsokolov/tablet"><img src="https://travis-ci.org/maxsokolov/tablet.svg" alt="Build Status" /></a>
