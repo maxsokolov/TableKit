@@ -10,11 +10,21 @@
 
 Tablet is a super lightweight yet powerful generic library that handles a complexity of UITableView's datasource and delegate methods in a Swift environment. Tablet's goal is to provide an easiest way to create complex table views. With Tablet you don't have to write a messy code of `switch` or `if` statements when you deal with bunch of different cells in different sections. 
 
-That's almost all you need in your controller to build a bunch of cells in a section:
+## Features
+
+- [x] Powerfull type-safe system based on generics
+- [x] Chainable cell actions
+- [x] Support cells created from code, xib, or storyboard
+- [x] Automatic xib/classes registration
+- [x] No need to subclass
+- [x] Extensibility
+- [x] Tests
+
+That's almost all you need in your controller to build a bunch of cells in a section 😘:
 ```swift
-TableConfigurableRowBuilder<String, MyTableViewCell>(items: ["1", "2", "3", "4", "5"], estimatedRowHeight: 42)
+TableConfigurableRowBuilder<String, MyTableViewCell>(items: ["1", "2", "3", "4", "5"])
 ```
-Tablet respects cells reusability feature and it's type-safe. See the Usage section to learn more.
+Tablet respects cells reusability feature and built with performace in mind. See the Usage section to learn more.
 
 ## Requirements
 
@@ -78,6 +88,10 @@ class MyTableViewCell : UITableViewCell, ConfigurableCell {
 		return "reusable_id"
 	}
 
+	static func estimatedHeight() -> Float {
+        return 255
+    }
+
 	func configureWithItem(item: Item) { // item is user here
 
 		textLabel?.text = item.username
@@ -90,7 +104,7 @@ Once you've implemented the protocol, simply use the `TableConfigurableRowBuilde
 ```swift
 import Tablet
 
-let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>(estimatedRowHeight: 42)
+let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>()
 rowBuilder.appendItems(users)
 
 director = TableDirector(tableView: tableView)
@@ -135,7 +149,7 @@ And receive this actions with your row builder:
 ```swift
 import Tablet
 
-let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>(items: users, id: "reusable_id", estimatedRowHeight: 42)
+let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>(items: users, id: "reusable_id")
 	.action(.click) { data -> Void in
 		
 	}
@@ -166,7 +180,7 @@ extension TableDirector {
 ```
 Catch your action with row builder:
 ```swift
-let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>(items: users, estimatedRowHeight: 42)
+let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>(items: users)
 	.action(kTableDirectorDidEndDisplayingCell) { data -> Void in
 
 	}
