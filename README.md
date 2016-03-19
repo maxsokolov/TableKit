@@ -14,11 +14,11 @@ Tablet is a super lightweight yet powerful generic library that handles a comple
 
 - [x] Type-safe cells based on generics
 - [x] The easiest way to map your models or view models to cells
+- [x] Correctly handles autolayout cells with multiline labels
 - [x] Chainable cell actions
 - [x] Support cells created from code, xib, or storyboard
 - [x] Automatic xib/classes registration
 - [x] No need to subclass
-- [x] Correctly handles autolayout cells with multiline labels
 - [x] Extensibility
 - [x] Tests
 
