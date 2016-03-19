@@ -57,13 +57,15 @@ public class ActionData<I, C> {
     public let item: I
     public let itemIndex: Int
     public let indexPath: NSIndexPath
-    
-    init(cell: C?, indexPath: NSIndexPath, item: I, itemIndex: Int) {
-        
+    public let userInfo: [NSObject: AnyObject]?
+
+    init(cell: C?, indexPath: NSIndexPath, item: I, itemIndex: Int, userInfo: [NSObject: AnyObject]?) {
+
         self.cell = cell
         self.indexPath = indexPath
         self.item = item
         self.itemIndex = itemIndex
+        self.userInfo = userInfo
     }
 }
 
@@ -91,7 +93,7 @@ public class Action {
 
     public func invoke() {
 
-        NSNotificationCenter.defaultCenter().postNotificationName(TabletNotifications.CellAction, object: self)
+        NSNotificationCenter.defaultCenter().postNotificationName(TabletNotifications.CellAction, object: self, userInfo: userInfo)
     }
 }
 

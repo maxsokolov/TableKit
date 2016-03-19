@@ -95,10 +95,10 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
     
     // MARK: Triggers
     
-    public func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]? = nil) -> AnyObject? {
+    public func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
 
         if let action = actions[actionType.key] {
-            return action.invoke(ActionData(cell: cell as? C, indexPath: indexPath, item: items[itemIndex], itemIndex: itemIndex))
+            return action.invoke(ActionData(cell: cell as? C, indexPath: indexPath, item: items[itemIndex], itemIndex: itemIndex, userInfo: userInfo))
         }
         return nil
     }
@@ -144,14 +144,14 @@ public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == 
         super.init(items: items, id: C.reusableIdentifier())
     }
 
-    public override func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]? = nil) -> AnyObject? {
+    public override func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
 
         switch actionType {
         case .configure:
             (cell as? C)?.configureWithItem(items[itemIndex])
         default: break
         }
-        return super.invokeAction(actionType, cell: cell, indexPath: indexPath, itemIndex: itemIndex)
+        return super.invokeAction(actionType, cell: cell, indexPath: indexPath, itemIndex: itemIndex, userInfo: userInfo)
     }
 }
 

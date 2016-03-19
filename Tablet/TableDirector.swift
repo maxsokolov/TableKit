@@ -71,7 +71,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         if let action = notification.object as? Action, indexPath = tableView.indexPathForCell(action.cell) {
             
             let builder = builderAtIndexPath(indexPath)
-            builder.0.invokeAction(.custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1, userInfo: action.userInfo)
+            builder.0.invokeAction(.custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1, userInfo: notification.userInfo)
         }
     }
 
