@@ -82,11 +82,11 @@ class TabletTests: XCTestCase {
         XCTAssertNotNil(testController.tableDirector.tableView, "TableDirector should have table view")
     }
     
-    func testSimpleRowBuilder() {
+    func testSimpleRowBuilderCreatesRowsAndSection() {
 
         let source = ["1", "2", "3"]
 
-        let row = TableRowBuilder<String, UITableViewCell>(items: source)
+        let rows = TableRowBuilder<String, UITableViewCell>(items: source)
             .action(.configure) { data -> Void in
 
                 XCTAssertNotNil(data.cell, "Action should have a cell")
@@ -94,7 +94,7 @@ class TabletTests: XCTestCase {
             }
         
         testController.view.hidden = false
-        testController.tableDirector += row
+        testController.tableDirector += rows
         testController.tableView.reloadData()
 
         XCTAssertTrue(testController.tableView.dataSource?.numberOfSectionsInTableView?(testController.tableView) == 1, "Table view should have a section")
@@ -109,7 +109,7 @@ class TabletTests: XCTestCase {
         }
     }
 
-    func testConfigurableRowBuilder() {
+    func testConfigurableRowBuilderCreatesRowsAndSection() {
 
         let testData = TestData(title: "title")
         
@@ -121,5 +121,24 @@ class TabletTests: XCTestCase {
         
         XCTAssertNotNil(cell, "Cell should exists and should be TestTableViewCell")
         XCTAssertTrue(cell?.textLabel?.text == testData.title, "Cell's textLabel.text should equal to testData's title")
+    }
+
+    func testSectionBuilderCreatesSectionWithHeaderAndFooterTitles() {
+
+        let row = TableConfigurableRowBuilder<TestData, TestTableViewCell>(items: [TestData(title: "title")])
+
+        let sectionHeaderTitle = "Header Title"
+        let sectionFooterTitle = "Footer Title"
+
+        let section = TableSectionBuilder(headerTitle: sectionHeaderTitle, footerTitle: sectionFooterTitle, rows: [row])
+
+        testController.view.hidden = false
+        testController.tableDirector += section
+
+        XCTAssertTrue(testController.tableView.dataSource?.numberOfSectionsInTableView?(testController.tableView) == 1, "Table view should have a section")
+        XCTAssertTrue(testController.tableView.dataSource?.tableView(testController.tableView, numberOfRowsInSection: 0) == 1, "Table view should have certain number of rows in a section")
+        
+        XCTAssertTrue(testController.tableView.dataSource?.tableView?(testController.tableView, titleForHeaderInSection: 0) == sectionHeaderTitle)
+        XCTAssertTrue(testController.tableView.dataSource?.tableView?(testController.tableView, titleForFooterInSection: 0) == sectionFooterTitle)
     }
 }
