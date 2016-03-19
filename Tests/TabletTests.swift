@@ -21,13 +21,41 @@
 import XCTest
 import Tablet
 
-class TestController : UITableViewController {
+class TestController: UITableViewController {
 
     var tableDirector: TableDirector!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableDirector = TableDirector(tableView: tableView)
+    }
+}
+
+struct TestData {
+
+    let title: String
+}
+
+struct TestTableViewCellOptions {
+
+    static let ReusableIdentifier: String = "ReusableIdentifier"
+    static let EstimatedHeight: Float = 255
+}
+
+class TestTableViewCell: UITableViewCell, ConfigurableCell {
+
+    typealias Item = TestData
+    
+    static func reusableIdentifier() -> String {
+        return TestTableViewCellOptions.ReusableIdentifier
+    }
+
+    static func estimatedHeight() -> Float {
+        return TestTableViewCellOptions.EstimatedHeight
+    }
+
+    func configureWithItem(item: Item) {
+        textLabel?.text = item.title
     }
 }
 
@@ -79,5 +107,19 @@ class TabletTests: XCTestCase {
             XCTAssertNotNil(cell)
             XCTAssertTrue(cell?.textLabel?.text == element)
         }
+    }
+
+    func testConfigurableRowBuilder() {
+
+        let testData = TestData(title: "title")
+        
+        testController.view.hidden = false
+        testController.tableDirector += TableConfigurableRowBuilder<TestData, TestTableViewCell>(item: testData)
+        testController.tableView.reloadData()
+
+        let cell = testController.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? TestTableViewCell
+        
+        XCTAssertNotNil(cell, "Cell should exists and should be TestTableViewCell")
+        XCTAssertTrue(cell?.textLabel?.text == testData.title, "Cell's textLabel.text should equal to testData's title")
     }
 }

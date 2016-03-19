@@ -12,11 +12,13 @@ Tablet is a super lightweight yet powerful generic library that handles a comple
 
 ## Features
 
-- [x] Powerfull type-safe system based on generics
+- [x] Type-safe cells based on generics
+- [x] The easiest way to map your models or view models to cells
 - [x] Chainable cell actions
 - [x] Support cells created from code, xib, or storyboard
 - [x] Automatic xib/classes registration
 - [x] No need to subclass
+- [x] Correctly handles autolayout cells with multiline labels
 - [x] Extensibility
 - [x] Tests
 
@@ -66,7 +68,7 @@ let rowBuilder = TableRowBuilder<User, UITableViewCell>(items: [user1, user2, us
 		data.cell?.detailTextLabel?.text = data.item.isActive ? "Active" : "Inactive"
 	}
 
-let sectionBuilder = TableSectionBuilder(headerTitle: "Users", rowBuilders: [rowBuilder])
+let sectionBuilder = TableSectionBuilder(headerTitle: "Users", rows: [rowBuilder])
 
 director = TableDirector(tableView: tableView)
 director.appendSections(sectionBuilder)
@@ -108,7 +110,7 @@ let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>()
 rowBuilder.appendItems(users)
 
 director = TableDirector(tableView: tableView)
-tableDirector.appendSection(TableSectionBuilder(rowBuilders: [rowBuilder]))
+tableDirector.appendSection(TableSectionBuilder(rows: [rowBuilder]))
 ```
 
 ### Cell actions
