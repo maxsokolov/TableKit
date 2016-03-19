@@ -23,7 +23,7 @@ import Foundation
 
 public typealias ReturnValue = AnyObject?
 
-internal enum ActionHandler<I, C> {
+enum ActionHandler<I, C> {
 
     case actionBlock((data: ActionData<I, C>) -> Void)
     case actionReturnBlock((data: ActionData<I, C>) -> AnyObject?)

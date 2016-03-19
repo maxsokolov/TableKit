@@ -27,8 +27,8 @@ import Foundation
 public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
 
     public private(set) weak var tableView: UITableView!
-    private var sections = [TableSectionBuilder]()
     public weak var scrollDelegate: UIScrollViewDelegate?
+    private var sections = [TableSectionBuilder]()
     
     public init(tableView: UITableView) {
         super.init()
@@ -166,10 +166,10 @@ public extension TableDirector {
         return invokeAction(.height, cell: nil, indexPath: indexPath) as? CGFloat ?? UITableViewAutomaticDimension
     }
     
-    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    /*func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         
         return invokeAction(.willSelect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? NSIndexPath
-    }
+    }*/
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 

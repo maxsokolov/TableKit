@@ -21,7 +21,7 @@
 import UIKit
 import Foundation
 
-internal struct TabletNotifications {
+struct TabletNotifications {
     static let CellAction = "_cellaction"
 }
 

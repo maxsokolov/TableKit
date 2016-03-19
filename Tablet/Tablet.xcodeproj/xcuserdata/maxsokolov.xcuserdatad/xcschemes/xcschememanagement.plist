@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>TabletDemo.xcscheme</key>
+		<key>Tablet.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,12 +12,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>DAB7EB261BEF787300D2AD5E</key>
+		<key>DAC2D6681C9D743D009E9C19</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DAC2D5DB1C9D6433009E9C19</key>
+		<key>DAC2D6721C9D743D009E9C19</key>
 		<dict>
 			<key>primary</key>
 			<true/>

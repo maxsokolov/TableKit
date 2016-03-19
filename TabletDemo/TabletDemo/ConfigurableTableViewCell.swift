@@ -28,6 +28,7 @@ class ConfigurableTableViewCell: UITableViewCell, ConfigurableCell {
 
     func configureWithItem(item: Item) {
 
+        accessoryType = .DisclosureIndicator
         button.setTitle("Button \(item)", forState: .Normal)
     }
 

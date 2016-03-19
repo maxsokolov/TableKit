@@ -11,17 +11,29 @@
 		508B71861BF48E0D00272920 /* TableRowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508B71851BF48E0D00272920 /* TableRowBuilder.swift */; };
 		DA1BCD0F1BF5472C00CC0479 /* TableDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1BCD0E1BF5472C00CC0479 /* TableDirector.swift */; };
 		DA1BCD111BF7388C00CC0479 /* CustomTableActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1BCD101BF7388C00CC0479 /* CustomTableActions.swift */; };
-		DAB7EB2B1BEF787300D2AD5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB7EB2A1BEF787300D2AD5E /* AppDelegate.swift */; };
 		DAB7EB2D1BEF787300D2AD5E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB7EB2C1BEF787300D2AD5E /* ViewController.swift */; };
-		DAB7EB301BEF787300D2AD5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB7EB2E1BEF787300D2AD5E /* Main.storyboard */; };
 		DAB7EB321BEF787300D2AD5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAB7EB311BEF787300D2AD5E /* Assets.xcassets */; };
-		DAB7EB351BEF787300D2AD5E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB7EB331BEF787300D2AD5E /* LaunchScreen.storyboard */; };
 		DAB7EB3E1BEF78A400D2AD5E /* Tablet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB7EB3D1BEF78A400D2AD5E /* Tablet.swift */; };
 		DAB7EB401BEFD07E00D2AD5E /* ConfigurableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB7EB3F1BEFD07E00D2AD5E /* ConfigurableTableViewCell.swift */; };
+		DAC2D5CA1C9D303E009E9C19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D5C91C9D303E009E9C19 /* AppDelegate.swift */; };
+		DAC2D5CF1C9D30A7009E9C19 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAC2D5CD1C9D30A7009E9C19 /* Main.storyboard */; };
+		DAC2D5D01C9D30A7009E9C19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAC2D5CE1C9D30A7009E9C19 /* LaunchScreen.storyboard */; };
+		DAC2D5D41C9D3118009E9C19 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D5D31C9D3118009E9C19 /* MainViewController.swift */; };
+		DAC2D5E61C9D6493009E9C19 /* TabletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D5D61C9D638F009E9C19 /* TabletTests.swift */; };
 		DAED08F11C14DE7E006C04D8 /* MyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAED08F01C14DE7E006C04D8 /* MyTableViewCell.swift */; };
 		DAF003961C14DC0C0028C3D6 /* MyNibTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF003951C14DC0C0028C3D6 /* MyNibTableViewCell.swift */; };
 		DAF003981C14DC250028C3D6 /* MyNibTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAF003971C14DC250028C3D6 /* MyNibTableViewCell.xib */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DAC2D5E11C9D6433009E9C19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAB7EB1F1BEF787300D2AD5E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DAB7EB261BEF787300D2AD5E;
+			remoteInfo = TabletDemo;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		508B71831BF48DD300272920 /* TableSectionBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionBuilder.swift; sourceTree = "<group>"; };
@@ -29,14 +41,17 @@
 		DA1BCD0E1BF5472C00CC0479 /* TableDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDirector.swift; sourceTree = "<group>"; };
 		DA1BCD101BF7388C00CC0479 /* CustomTableActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableActions.swift; sourceTree = "<group>"; };
 		DAB7EB271BEF787300D2AD5E /* TabletDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TabletDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		DAB7EB2A1BEF787300D2AD5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAB7EB2C1BEF787300D2AD5E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		DAB7EB2F1BEF787300D2AD5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DAB7EB311BEF787300D2AD5E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		DAB7EB341BEF787300D2AD5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DAB7EB361BEF787300D2AD5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DAB7EB3D1BEF78A400D2AD5E /* Tablet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tablet.swift; sourceTree = "<group>"; };
 		DAB7EB3F1BEFD07E00D2AD5E /* ConfigurableTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableTableViewCell.swift; sourceTree = "<group>"; };
+		DAC2D5C91C9D303E009E9C19 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DAC2D5CD1C9D30A7009E9C19 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		DAC2D5CE1C9D30A7009E9C19 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DAC2D5D31C9D3118009E9C19 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		DAC2D5D61C9D638F009E9C19 /* TabletTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabletTests.swift; sourceTree = "<group>"; };
+		DAC2D5DC1C9D6433009E9C19 /* TabletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TabletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAED08F01C14DE7E006C04D8 /* MyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableViewCell.swift; sourceTree = "<group>"; };
 		DAF003951C14DC0C0028C3D6 /* MyNibTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNibTableViewCell.swift; sourceTree = "<group>"; };
 		DAF003971C14DC250028C3D6 /* MyNibTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyNibTableViewCell.xib; sourceTree = "<group>"; };
@@ -50,6 +65,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DAC2D5D91C9D6433009E9C19 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -57,6 +79,9 @@
 			isa = PBXGroup;
 			children = (
 				DAB7EB3C1BEF789500D2AD5E /* Tablet */,
+				DAC2D5C61C9D2FE5009E9C19 /* Classes */,
+				DAC2D5CB1C9D3058009E9C19 /* Resources */,
+				DAC2D5D51C9D635F009E9C19 /* Tests */,
 				DAB7EB291BEF787300D2AD5E /* TabletDemo */,
 				DAB7EB281BEF787300D2AD5E /* Products */,
 			);
@@ -66,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				DAB7EB271BEF787300D2AD5E /* TabletDemo.app */,
+				DAC2D5DC1C9D6433009E9C19 /* TabletTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -73,16 +99,14 @@
 		DAB7EB291BEF787300D2AD5E /* TabletDemo */ = {
 			isa = PBXGroup;
 			children = (
-				DAB7EB2A1BEF787300D2AD5E /* AppDelegate.swift */,
+				DAC2D5C41C9D2F5C009E9C19 /* Presentation */,
 				DAB7EB2C1BEF787300D2AD5E /* ViewController.swift */,
 				DAB7EB3F1BEFD07E00D2AD5E /* ConfigurableTableViewCell.swift */,
 				DA1BCD101BF7388C00CC0479 /* CustomTableActions.swift */,
 				DAF003951C14DC0C0028C3D6 /* MyNibTableViewCell.swift */,
 				DAF003971C14DC250028C3D6 /* MyNibTableViewCell.xib */,
 				DAED08F01C14DE7E006C04D8 /* MyTableViewCell.swift */,
-				DAB7EB2E1BEF787300D2AD5E /* Main.storyboard */,
 				DAB7EB311BEF787300D2AD5E /* Assets.xcassets */,
-				DAB7EB331BEF787300D2AD5E /* LaunchScreen.storyboard */,
 				DAB7EB361BEF787300D2AD5E /* Info.plist */,
 			);
 			path = TabletDemo;
@@ -98,6 +122,80 @@
 			);
 			name = Tablet;
 			path = ../Tablet;
+			sourceTree = "<group>";
+		};
+		DAC2D5C41C9D2F5C009E9C19 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Presentation;
+			sourceTree = "<group>";
+		};
+		DAC2D5C61C9D2FE5009E9C19 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				DAC2D5C81C9D3014009E9C19 /* Application */,
+				DAC2D5C71C9D3005009E9C19 /* Presentation */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		DAC2D5C71C9D3005009E9C19 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				DAC2D5D11C9D30D8009E9C19 /* Main */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		DAC2D5C81C9D3014009E9C19 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				DAC2D5C91C9D303E009E9C19 /* AppDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		DAC2D5CB1C9D3058009E9C19 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DAC2D5CC1C9D306C009E9C19 /* Storyboards */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		DAC2D5CC1C9D306C009E9C19 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				DAC2D5CD1C9D30A7009E9C19 /* Main.storyboard */,
+				DAC2D5CE1C9D30A7009E9C19 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		DAC2D5D11C9D30D8009E9C19 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				DAC2D5D21C9D30E4009E9C19 /* ViewControllers */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		DAC2D5D21C9D30E4009E9C19 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				DAC2D5D31C9D3118009E9C19 /* MainViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		DAC2D5D51C9D635F009E9C19 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				DAC2D5D61C9D638F009E9C19 /* TabletTests.swift */,
+			);
+			name = Tests;
+			path = ../Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -120,18 +218,41 @@
 			productReference = DAB7EB271BEF787300D2AD5E /* TabletDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
+		DAC2D5DB1C9D6433009E9C19 /* TabletTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DAC2D5E31C9D6433009E9C19 /* Build configuration list for PBXNativeTarget "TabletTests" */;
+			buildPhases = (
+				DAC2D5D81C9D6433009E9C19 /* Sources */,
+				DAC2D5D91C9D6433009E9C19 /* Frameworks */,
+				DAC2D5DA1C9D6433009E9C19 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DAC2D5E21C9D6433009E9C19 /* PBXTargetDependency */,
+			);
+			name = TabletTests;
+			productName = TabletTests;
+			productReference = DAC2D5DC1C9D6433009E9C19 /* TabletTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		DAB7EB1F1BEF787300D2AD5E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Tablet;
 				TargetAttributes = {
 					DAB7EB261BEF787300D2AD5E = {
 						CreatedOnToolsVersion = 7.0.1;
 						DevelopmentTeam = Z48R734SJX;
+					};
+					DAC2D5DB1C9D6433009E9C19 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = DAB7EB261BEF787300D2AD5E;
 					};
 				};
 			};
@@ -149,6 +270,7 @@
 			projectRoot = "";
 			targets = (
 				DAB7EB261BEF787300D2AD5E /* TabletDemo */,
+				DAC2D5DB1C9D6433009E9C19 /* TabletTests */,
 			);
 		};
 /* End PBXProject section */
@@ -158,10 +280,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAB7EB351BEF787300D2AD5E /* LaunchScreen.storyboard in Resources */,
+				DAC2D5CF1C9D30A7009E9C19 /* Main.storyboard in Resources */,
+				DAC2D5D01C9D30A7009E9C19 /* LaunchScreen.storyboard in Resources */,
 				DAF003981C14DC250028C3D6 /* MyNibTableViewCell.xib in Resources */,
 				DAB7EB321BEF787300D2AD5E /* Assets.xcassets in Resources */,
-				DAB7EB301BEF787300D2AD5E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAC2D5DA1C9D6433009E9C19 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				508B71841BF48DD300272920 /* TableSectionBuilder.swift in Sources */,
+				DAC2D5D41C9D3118009E9C19 /* MainViewController.swift in Sources */,
 				DAB7EB2D1BEF787300D2AD5E /* ViewController.swift in Sources */,
 				DAB7EB3E1BEF78A400D2AD5E /* Tablet.swift in Sources */,
 				DAED08F11C14DE7E006C04D8 /* MyTableViewCell.swift in Sources */,
@@ -180,31 +310,28 @@
 				508B71861BF48E0D00272920 /* TableRowBuilder.swift in Sources */,
 				DA1BCD0F1BF5472C00CC0479 /* TableDirector.swift in Sources */,
 				DAB7EB401BEFD07E00D2AD5E /* ConfigurableTableViewCell.swift in Sources */,
-				DAB7EB2B1BEF787300D2AD5E /* AppDelegate.swift in Sources */,
+				DAC2D5CA1C9D303E009E9C19 /* AppDelegate.swift in Sources */,
 				DA1BCD111BF7388C00CC0479 /* CustomTableActions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAC2D5D81C9D6433009E9C19 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAC2D5E61C9D6493009E9C19 /* TabletTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		DAB7EB2E1BEF787300D2AD5E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DAB7EB2F1BEF787300D2AD5E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
+/* Begin PBXTargetDependency section */
+		DAC2D5E21C9D6433009E9C19 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DAB7EB261BEF787300D2AD5E /* TabletDemo */;
+			targetProxy = DAC2D5E11C9D6433009E9C19 /* PBXContainerItemProxy */;
 		};
-		DAB7EB331BEF787300D2AD5E /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DAB7EB341BEF787300D2AD5E /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		DAB7EB371BEF787300D2AD5E /* Debug */ = {
@@ -297,7 +424,7 @@
 				INFOPLIST_FILE = TabletDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tablet.TabletDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tablet.tablet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -312,9 +439,35 @@
 				INFOPLIST_FILE = TabletDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tablet.TabletDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tablet.tablet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+		DAC2D5E41C9D6433009E9C19 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = TabletTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tablet.TabletTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TabletDemo.app/TabletDemo";
+			};
+			name = Debug;
+		};
+		DAC2D5E51C9D6433009E9C19 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = TabletTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tablet.TabletTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TabletDemo.app/TabletDemo";
 			};
 			name = Release;
 		};
@@ -338,6 +491,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		DAC2D5E31C9D6433009E9C19 /* Build configuration list for PBXNativeTarget "TabletTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAC2D5E41C9D6433009E9C19 /* Debug */,
+				DAC2D5E51C9D6433009E9C19 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

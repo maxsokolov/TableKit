@@ -35,7 +35,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 
                 print("end display: \(data.indexPath)")
             }
-        
+
         let configurableRowBuilder = TableConfigurableRowBuilder<String, ConfigurableTableViewCell>(items: ["5", "6", "7", "8"])
             .action(.click) { data -> Void in
 
