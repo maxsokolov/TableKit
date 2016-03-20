@@ -85,7 +85,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
 }
 
 public extension TableDirector {
- 
+
     // MARK: UITableViewDataSource - configuration
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

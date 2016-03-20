@@ -4,4 +4,7 @@
    <FileRef
       location = "group:Tablet/Tablet.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:TabletDemo/TabletDemo.xcodeproj">
+   </FileRef>
 </Workspace>
