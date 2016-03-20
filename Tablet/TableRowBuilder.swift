@@ -24,12 +24,12 @@ import Foundation
 public typealias ReturnValue = AnyObject?
 
 enum ActionHandler<I, C> {
-
+    
     case actionBlock((data: ActionData<I, C>) -> Void)
     case actionReturnBlock((data: ActionData<I, C>) -> AnyObject?)
     
     func invoke(data: ActionData<I, C>) -> ReturnValue {
-
+        
         switch (self) {
         case .actionBlock(let closure):
             closure(data: data)
@@ -41,7 +41,7 @@ enum ActionHandler<I, C> {
 }
 
 public class RowBuilder : NSObject {
-
+    
     public private(set) var reusableIdentifier: String
     public var numberOfRows: Int {
         return 0
@@ -53,32 +53,32 @@ public class RowBuilder : NSObject {
     init(id: String) {
         reusableIdentifier = id
     }
-
+    
     // MARK: internal methods, must be overriden in subclass
-
+    
     func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
         return nil
     }
-
+    
     func registerCell(inTableView tableView: UITableView) {
     }
 }
 
 /**
-    Responsible for building cells of given type and passing items to them.
-*/
+ Responsible for building cells of given type and passing items to them.
+ */
 public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
-
+    
     private var actions = Dictionary<String, ActionHandler<I, C>>()
     private var items = [I]()
-
+    
     public override var numberOfRows: Int {
         return items.count
     }
     
     public init(item: I, id: String? = nil) {
         super.init(id: id ?? NSStringFromClass(C).componentsSeparatedByString(".").last ?? "")
-
+        
         items.append(item)
     }
     
@@ -91,75 +91,75 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
     }
     
     // MARK: Chaining actions
-
+    
     public func action(key: String, closure: (data: ActionData<I, C>) -> Void) -> Self {
-
+        
         actions[key] = .actionBlock(closure)
         return self
     }
     
     public func action(actionType: ActionType, closure: (data: ActionData<I, C>) -> Void) -> Self {
-
+        
         actions[actionType.key] = .actionBlock(closure)
         return self
     }
     
     public func action(actionType: ActionType, closure: (data: ActionData<I, C>) -> ReturnValue) -> Self {
-
+        
         actions[actionType.key] = .actionReturnBlock(closure)
         return self
     }
-
+    
     // MARK: Internal
     
     override func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
-
+        
         if let action = actions[actionType.key] {
             return action.invoke(ActionData(cell: cell as? C, indexPath: indexPath, item: items[itemIndex], itemIndex: itemIndex, userInfo: userInfo))
         }
         return nil
     }
-
+    
     override func registerCell(inTableView tableView: UITableView) {
-
+        
         if tableView.dequeueReusableCellWithIdentifier(reusableIdentifier) != nil {
             return
         }
-
+        
         guard let resource = NSStringFromClass(C).componentsSeparatedByString(".").last else { return }
-
+        
         let bundle = NSBundle(forClass: C.self)
         
         if let _ = bundle.pathForResource(resource, ofType: "nib") { // existing cell
-
+            
             tableView.registerNib(UINib(nibName: resource, bundle: bundle), forCellReuseIdentifier: reusableIdentifier)
             
         } else {
-
+            
             tableView.registerClass(C.self, forCellReuseIdentifier: reusableIdentifier)
         }
     }
 }
 
 /**
-    Responsible for building configurable cells of given type and passing items to them.
-*/
+ Responsible for building configurable cells of given type and passing items to them.
+ */
 public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == I, C: UITableViewCell> : TableRowBuilder<I, C> {
-
+    
     public override var estimatedRowHeight: Float {
         return C.estimatedHeight()
     }
-
+    
     public init(item: I) {
         super.init(item: item, id: C.reusableIdentifier())
     }
-
+    
     public init(items: [I]? = nil) {
         super.init(items: items, id: C.reusableIdentifier())
     }
-
+    
     override func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
-
+        
         switch actionType {
         case .configure:
             (cell as? C)?.configureWithItem(items[itemIndex])
@@ -170,7 +170,7 @@ public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == 
 }
 
 public extension TableRowBuilder {
-
+    
     // MARK: Items manipulation
     
     public func appendItems(items: [I]) {
