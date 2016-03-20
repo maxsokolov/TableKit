@@ -109,8 +109,8 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
         actions[actionType.key] = .actionReturnBlock(closure)
         return self
     }
-    
-    // MARK: Triggers
+
+    // MARK: Internal
     
     override func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
 
