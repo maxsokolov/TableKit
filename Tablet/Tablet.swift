@@ -21,7 +21,9 @@
 import UIKit
 import Foundation
 
-internal let kActionPerformedNotificationKey = "_action"
+struct TabletNotifications {
+    static let CellAction = "TabletNotificationsCellAction"
+}
 
 /**
     The actions that Tablet provides.
@@ -55,13 +57,15 @@ public class ActionData<I, C> {
     public let item: I
     public let itemIndex: Int
     public let indexPath: NSIndexPath
-    
-    init(cell: C?, indexPath: NSIndexPath, item: I, itemIndex: Int) {
-        
+    public let userInfo: [NSObject: AnyObject]?
+
+    init(cell: C?, indexPath: NSIndexPath, item: I, itemIndex: Int, userInfo: [NSObject: AnyObject]?) {
+
         self.cell = cell
         self.indexPath = indexPath
         self.item = item
         self.itemIndex = itemIndex
+        self.userInfo = userInfo
     }
 }
 
@@ -88,8 +92,7 @@ public class Action {
     }
 
     public func invoke() {
-
-        NSNotificationCenter.defaultCenter().postNotificationName(kActionPerformedNotificationKey, object: self)
+        NSNotificationCenter.defaultCenter().postNotificationName(TabletNotifications.CellAction, object: self, userInfo: userInfo)
     }
 }
 
@@ -102,27 +105,13 @@ public protocol ConfigurableCell {
     typealias Item
 
     static func reusableIdentifier() -> String
+    static func estimatedHeight() -> Float
     func configureWithItem(item: Item)
 }
 
 public extension ConfigurableCell where Self: UITableViewCell {
 
     static func reusableIdentifier() -> String {
-
         return NSStringFromClass(self).componentsSeparatedByString(".").last ?? ""
     }
-}
-
-/**
-    A protocol that every row builder should follow. 
-    A certain section can only works with row builders that respect this protocol.
-*/
-public protocol RowBuilder {
-
-    var numberOfRows: Int { get }
-    var reusableIdentifier: String { get }
-    var estimatedRowHeight: CGFloat { get }
-
-    func registerCell(inTableView tableView: UITableView)
-    func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject?
 }

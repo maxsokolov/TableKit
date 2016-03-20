@@ -27,7 +27,7 @@ import Foundation
 */
 public class TableSectionBuilder {
 
-    internal weak var tableView: UITableView?
+    weak var tableView: UITableView?
     private var builders = [RowBuilder]()
     
     public var headerTitle: String?
@@ -38,19 +38,18 @@ public class TableSectionBuilder {
     
     public var footerView: UIView?
     public var footerHeight: CGFloat = UITableViewAutomaticDimension
-    
+
     /// A total number of rows in section of each row builder.
     public var numberOfRowsInSection: Int {
-
         return builders.reduce(0) { $0 + $1.numberOfRows }
     }
     
-    public init(headerTitle: String? = nil, footerTitle: String? = nil, rowBuilders: [RowBuilder]? = nil) {
+    public init(headerTitle: String? = nil, footerTitle: String? = nil, rows: [RowBuilder]? = nil) {
 
         self.headerTitle = headerTitle
         self.footerTitle = footerTitle
         
-        if let initialRows = rowBuilders {
+        if let initialRows = rows {
             builders.appendContentsOf(initialRows)
         }
     }
@@ -63,11 +62,26 @@ public class TableSectionBuilder {
         self.footerView = footerView
         self.footerHeight = footerHeight
     }
-}
 
-internal extension TableSectionBuilder {
+    // MARK: Public
+
+    public func clear() {
+        builders.removeAll()
+    }
     
-    internal func builderAtIndex(var index: Int) -> (RowBuilder, Int)? {
+    public func appendRow(row: RowBuilder) {
+        appendRows([row])
+    }
+    
+    public func appendRows(rowBuilders: [RowBuilder]) {
+        
+        if let tableView = tableView { rowBuilders.forEach { $0.registerCell(inTableView: tableView) } }
+        builders.appendContentsOf(rowBuilders)
+    }
+
+    // MARK: Internal
+    
+    func builderAtIndex(var index: Int) -> (RowBuilder, Int)? {
         
         for builder in builders {
             if index < builder.numberOfRows {
@@ -78,38 +92,18 @@ internal extension TableSectionBuilder {
         
         return nil
     }
+    
+    func willMoveToDirector(tableView: UITableView) {
 
-    internal func willMoveToDirector(tableView: UITableView) {
         self.tableView = tableView
         self.builders.forEach { $0.registerCell(inTableView: tableView) }
     }
 }
 
-public extension TableSectionBuilder {
-
-    public func clear() {
-
-        builders.removeAll()
-    }
-    
-    public func appendRowBuilder(rowBuilder: RowBuilder) {
-
-        appendRowBuilders([rowBuilder])
-    }
-    
-    public func appendRowBuilders(rowBuilders: [RowBuilder]) {
-
-        if let tableView = tableView { rowBuilders.forEach { $0.registerCell(inTableView: tableView) } }
-        builders.appendContentsOf(rowBuilders)
-    }
-}
-
 public func +=(left: TableSectionBuilder, right: RowBuilder) {
-
-    left.appendRowBuilder(right)
+    left.appendRow(right)
 }
 
 public func +=(left: TableSectionBuilder, right: [RowBuilder]) {
-
-    left.appendRowBuilders(right)
+    left.appendRows(right)
 }
