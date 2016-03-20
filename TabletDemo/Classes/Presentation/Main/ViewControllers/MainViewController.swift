@@ -25,5 +25,9 @@ class MainViewController : UITableViewController {
                 data.cell?.accessoryType = .DisclosureIndicator
                 data.cell?.textLabel?.text = "\(data.item)"
             }
+            .action(.click) { data -> Void in
+                
+                
+            }
     }
 }

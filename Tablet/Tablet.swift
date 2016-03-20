@@ -22,7 +22,7 @@ import UIKit
 import Foundation
 
 struct TabletNotifications {
-    static let CellAction = "_cellaction"
+    static let CellAction = "TabletNotificationsCellAction"
 }
 
 /**
@@ -113,21 +113,6 @@ public protocol ConfigurableCell {
 public extension ConfigurableCell where Self: UITableViewCell {
 
     static func reusableIdentifier() -> String {
-
         return NSStringFromClass(self).componentsSeparatedByString(".").last ?? ""
     }
-}
-
-/**
-    A protocol that every row builder should follow. 
-    A certain section can only works with row builders that respect this protocol.
-*/
-public protocol RowBuilder {
-
-    var numberOfRows: Int { get }
-    var reusableIdentifier: String { get }
-    var estimatedRowHeight: Float { get }
-
-    func registerCell(inTableView tableView: UITableView)
-    func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject?
 }
