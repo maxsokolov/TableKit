@@ -1,11 +1,11 @@
 language: objective-c
 osx_image: xcode7.2
 branches:
-	only:
-		- master
+ only:
+ - master
 before_install:
-    - cd Tablet
+ - cd Tablet
 script:
-	- xctool clean build test -project Tablet.xcodeproj -scheme Tablet -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6' GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
+ - xctool clean build test -project Tablet.xcodeproj -scheme Tablet -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6' GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
 after_success:
-	- cd $TRAVIS_BUILD_DIR
+ - cd $TRAVIS_BUILD_DIR
