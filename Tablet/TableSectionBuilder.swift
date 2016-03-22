@@ -81,13 +81,14 @@ public class TableSectionBuilder {
 
     // MARK: Internal
     
-    func builderAtIndex(var index: Int) -> (RowBuilder, Int)? {
+    func builderAtIndex(index: Int) -> (RowBuilder, Int)? {
         
+        var builderIndex = index
         for builder in builders {
-            if index < builder.numberOfRows {
-                return (builder, index)
+            if builderIndex < builder.numberOfRows {
+                return (builder, builderIndex)
             }
-            index -= builder.numberOfRows
+            builderIndex -= builder.numberOfRows
         }
         
         return nil
