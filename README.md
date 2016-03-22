@@ -32,6 +32,7 @@ Tablet respects cells reusability feature and built with performace in mind. See
 
 - iOS 8.0+
 - Xcode 7.0+
+- Swift 2.2
 
 ## Installation
 
