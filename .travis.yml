@@ -6,4 +6,4 @@ branches:
 before_install:
  - cd Tablet
 script:
- - xctool clean build test -project Tablet.xcodeproj -scheme Tablet -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6' GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES
+ - xctool clean build test -project Tablet.xcodeproj -scheme Tablet -sdk iphonesimulator
