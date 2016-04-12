@@ -144,7 +144,7 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
 /**
  Responsible for building configurable cells of given type and passing items to them.
  */
-public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == I, C: UITableViewCell> : TableRowBuilder<I, C> {
+public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.T == I, C: UITableViewCell> : TableRowBuilder<I, C> {
     
     public override var estimatedRowHeight: Float {
         return C.estimatedHeight()
@@ -162,7 +162,7 @@ public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.Item == 
         
         switch actionType {
         case .configure:
-            (cell as? C)?.configureWithItem(items[itemIndex])
+            (cell as? C)?.configure(items[itemIndex])
         default: break
         }
         return super.invokeAction(actionType, cell: cell, indexPath: indexPath, itemIndex: itemIndex, userInfo: userInfo)
