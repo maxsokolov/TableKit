@@ -4,6 +4,7 @@ branches:
  only:
  - master
 before_install:
+ - brew install xctool
  - cd Tablet
 script:
  - xctool clean build test -project Tablet.xcodeproj -scheme Tablet -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6' GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
