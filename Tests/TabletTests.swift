@@ -47,7 +47,7 @@ struct TestTableViewCellOptions {
 
 class TestTableViewCell: UITableViewCell, ConfigurableCell {
 
-    typealias Item = TestData
+    typealias T = TestData
     
     static func reusableIdentifier() -> String {
         return TestTableViewCellOptions.ReusableIdentifier
@@ -57,7 +57,7 @@ class TestTableViewCell: UITableViewCell, ConfigurableCell {
         return TestTableViewCellOptions.EstimatedHeight
     }
 
-    func configureWithItem(item: Item) {
+    func configure(item: T) {
         textLabel?.text = item.title
     }
 

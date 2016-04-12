@@ -102,11 +102,11 @@ public class Action {
 */
 public protocol ConfigurableCell {
 
-    associatedtype Item
+    associatedtype T
 
     static func reusableIdentifier() -> String
     static func estimatedHeight() -> Float
-    func configureWithItem(item: Item)
+    func configure(_: T)
 }
 
 public extension ConfigurableCell where Self: UITableViewCell {
