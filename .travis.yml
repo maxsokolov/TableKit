@@ -4,6 +4,8 @@ branches:
  only:
  - master
 before_install:
+ - brew update
+ - brew reinstall --HEAD xctool
  - cd Tablet
 script:
  - xctool clean build test -project Tablet.xcodeproj -scheme Tablet -sdk iphonesimulator
