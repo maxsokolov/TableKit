@@ -192,33 +192,33 @@ public extension TableDirector {
 
     // MARK: Sections manipulation
 
-    public func appendSection(section: TableSectionBuilder) {
-        appendSections([section])
+    public func append(section section: TableSectionBuilder) {
+        append(sections: [section])
     }
     
-    public func appendSections(sections: [TableSectionBuilder]) {
+    public func append(sections sections: [TableSectionBuilder]) {
 
         sections.forEach { $0.willMoveToDirector(tableView) }
         self.sections.appendContentsOf(sections)
     }
     
-    public func clearSections() {
+    public func clear() {
         sections.removeAll()
     }
 }
 
 public func +=(left: TableDirector, right: RowBuilder) {
-    left.appendSection(TableSectionBuilder(rows: [right]))
+    left.append(section: TableSectionBuilder(rows: [right]))
 }
 
 public func +=(left: TableDirector, right: [RowBuilder]) {
-    left.appendSection(TableSectionBuilder(rows: right))
+    left.append(section: TableSectionBuilder(rows: right))
 }
 
 public func +=(left: TableDirector, right: TableSectionBuilder) {
-    left.appendSection(right)
+    left.append(section: right)
 }
 
 public func +=(left: TableDirector, right: [TableSectionBuilder]) {
-    left.appendSections(right)
+    left.append(sections: right)
 }
