@@ -173,7 +173,7 @@ public extension TableRowBuilder {
     
     // MARK: Items manipulation
     
-    public func appendItems(items: [I]) {
+    public func append(items items: [I]) {
         self.items.appendContentsOf(items)
     }
     
@@ -183,9 +183,9 @@ public extension TableRowBuilder {
 }
 
 public func +=<I, C>(left: TableRowBuilder<I, C>, right: I) {
-    left.appendItems([right])
+    left.append(items: [right])
 }
 
 public func +=<I, C>(left: TableRowBuilder<I, C>, right: [I]) {
-    left.appendItems(right)
+    left.append(items: right)
 }

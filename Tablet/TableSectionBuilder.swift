@@ -69,14 +69,14 @@ public class TableSectionBuilder {
         builders.removeAll()
     }
     
-    public func appendRow(row: RowBuilder) {
-        appendRows([row])
+    public func append(row row: RowBuilder) {
+        append(rows: [row])
     }
     
-    public func appendRows(rowBuilders: [RowBuilder]) {
+    public func append(rows rows: [RowBuilder]) {
         
-        if let tableView = tableView { rowBuilders.forEach { $0.registerCell(inTableView: tableView) } }
-        builders.appendContentsOf(rowBuilders)
+        if let tableView = tableView { rows.forEach { $0.registerCell(inTableView: tableView) } }
+        builders.appendContentsOf(rows)
     }
 
     // MARK: Internal
@@ -102,9 +102,9 @@ public class TableSectionBuilder {
 }
 
 public func +=(left: TableSectionBuilder, right: RowBuilder) {
-    left.appendRow(right)
+    left.append(row: right)
 }
 
 public func +=(left: TableSectionBuilder, right: [RowBuilder]) {
-    left.appendRows(right)
+    left.append(rows: right)
 }
