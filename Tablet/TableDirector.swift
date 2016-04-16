@@ -26,14 +26,14 @@ import Foundation
  */
 public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
 
-    public private(set) weak var tableView: UITableView!
+    public unowned let tableView: UITableView
     public weak var scrollDelegate: UIScrollViewDelegate?
     private var sections = [TableSectionBuilder]()
 
     public init(tableView: UITableView) {
-        super.init()
-        
+
         self.tableView = tableView
+        super.init()
         self.tableView.delegate = self
         self.tableView.dataSource = self
 
@@ -41,7 +41,6 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     }
     
     deinit {
-        
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 

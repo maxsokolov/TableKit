@@ -29,10 +29,10 @@ public class TableSectionBuilder {
 
     weak var tableView: UITableView?
     private var builders = [RowBuilder]()
-    
+
     public var headerTitle: String?
     public var footerTitle: String?
-    
+
     public var headerView: UIView?
     public var footerView: UIView?
 
@@ -41,18 +41,23 @@ public class TableSectionBuilder {
         return builders.reduce(0) { $0 + $1.numberOfRows }
     }
     
-    public init(headerTitle: String? = nil, footerTitle: String? = nil, rows: [RowBuilder]? = nil) {
-
-        self.headerTitle = headerTitle
-        self.footerTitle = footerTitle
-        
+    public init(rows: [RowBuilder]? = nil) {
+     
         if let initialRows = rows {
             builders.appendContentsOf(initialRows)
         }
     }
 
-    public init(headerView: UIView? = nil, footerView: UIView? = nil) {
+    public convenience init(headerTitle: String?, footerTitle: String?, rows: [RowBuilder]?) {
+        self.init(rows: rows)
+        
+        self.headerTitle = headerTitle
+        self.footerTitle = footerTitle
+    }
 
+    public convenience init(headerView: UIView?, footerView: UIView?, rows: [RowBuilder]?) {
+        self.init(rows: rows)
+        
         self.headerView = headerView
         self.footerView = footerView
     }
