@@ -34,10 +34,7 @@ public class TableSectionBuilder {
     public var footerTitle: String?
     
     public var headerView: UIView?
-    public var headerHeight: CGFloat = UITableViewAutomaticDimension
-    
     public var footerView: UIView?
-    public var footerHeight: CGFloat = UITableViewAutomaticDimension
 
     /// A total number of rows in section of each row builder.
     public var numberOfRowsInSection: Int {
@@ -54,13 +51,10 @@ public class TableSectionBuilder {
         }
     }
 
-    public init(headerView: UIView? = nil, headerHeight: CGFloat = UITableViewAutomaticDimension, footerView: UIView? = nil, footerHeight: CGFloat = UITableViewAutomaticDimension) {
+    public init(headerView: UIView? = nil, footerView: UIView? = nil) {
 
         self.headerView = headerView
-        self.headerHeight = headerHeight
-        
         self.footerView = footerView
-        self.footerHeight = footerHeight
     }
 
     // MARK: Public

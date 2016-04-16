@@ -139,11 +139,11 @@ public extension TableDirector {
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return sections[section].headerHeight
+        return sections[section].headerView?.frame.size.height ?? UITableViewAutomaticDimension
     }
-    
+
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return sections[section].footerHeight
+        return sections[section].footerView?.frame.size.height ?? UITableViewAutomaticDimension
     }
 }
 

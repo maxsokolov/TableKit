@@ -157,7 +157,7 @@ class TabletTests: XCTestCase {
         let sectionHeaderView = UIView()
         let sectionFooterView = UIView()
 
-        let section = TableSectionBuilder(headerView: sectionHeaderView, headerHeight: 44, footerView: sectionFooterView, footerHeight: 44)
+        let section = TableSectionBuilder(headerView: sectionHeaderView, footerView: sectionFooterView)
         section += row
         
         testController.view.hidden = false
