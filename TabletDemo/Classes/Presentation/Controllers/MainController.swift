@@ -25,6 +25,8 @@ class MainController: UIViewController {
             .action(.click) { [unowned self] data -> Void in
                 self.performSegueWithIdentifier("headerfooter", sender: nil)
             }
+        
+        print("", String(TableDirector.self))
 
         tableDirector += rows
     }

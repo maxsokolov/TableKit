@@ -67,23 +67,23 @@ public class RowBuilder : NSObject {
 /**
  Responsible for building cells of given type and passing items to them.
  */
-public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
+public class TableRowBuilder<DataType, CellType where CellType: UITableViewCell> : RowBuilder {
     
-    private var actions = Dictionary<String, ActionHandler<I, C>>()
-    private var items = [I]()
+    private var actions = Dictionary<String, ActionHandler<DataType, CellType>>()
+    private var items = [DataType]()
     
     public override var numberOfRows: Int {
         return items.count
     }
     
-    public init(item: I, id: String? = nil) {
-        super.init(id: id ?? NSStringFromClass(C).componentsSeparatedByString(".").last ?? "")
+    public init(item: DataType, id: String? = nil) {
+        super.init(id: id ?? String(CellType))
         
         items.append(item)
     }
     
-    public init(items: [I]? = nil, id: String? = nil) {
-        super.init(id: id ?? NSStringFromClass(C).componentsSeparatedByString(".").last ?? "")
+    public init(items: [DataType]? = nil, id: String? = nil) {
+        super.init(id: id ?? String(CellType))
         
         if items != nil {
             self.items.appendContentsOf(items!)
@@ -92,19 +92,19 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
     
     // MARK: Chaining actions
     
-    public func action(key: String, closure: (data: ActionData<I, C>) -> Void) -> Self {
+    public func action(key: String, closure: (data: ActionData<DataType, CellType>) -> Void) -> Self {
         
         actions[key] = .actionBlock(closure)
         return self
     }
     
-    public func action(actionType: ActionType, closure: (data: ActionData<I, C>) -> Void) -> Self {
+    public func action(actionType: ActionType, closure: (data: ActionData<DataType, CellType>) -> Void) -> Self {
         
         actions[actionType.key] = .actionBlock(closure)
         return self
     }
     
-    public func action(actionType: ActionType, closure: (data: ActionData<I, C>) -> ReturnValue) -> Self {
+    public func action(actionType: ActionType, closure: (data: ActionData<DataType, CellType>) -> ReturnValue) -> Self {
         
         actions[actionType.key] = .actionReturnBlock(closure)
         return self
@@ -115,7 +115,7 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
     override func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
         
         if let action = actions[actionType.key] {
-            return action.invoke(ActionData(cell: cell as? C, indexPath: indexPath, item: items[itemIndex], itemIndex: itemIndex, userInfo: userInfo))
+            return action.invoke(ActionData(cell: cell as? CellType, indexPath: indexPath, item: items[itemIndex], itemIndex: itemIndex, userInfo: userInfo))
         }
         return nil
     }
@@ -126,9 +126,8 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
             return
         }
         
-        guard let resource = NSStringFromClass(C).componentsSeparatedByString(".").last else { return }
-        
-        let bundle = NSBundle(forClass: C.self)
+        let resource = String(CellType)
+        let bundle = NSBundle(forClass: CellType.self)
         
         if let _ = bundle.pathForResource(resource, ofType: "nib") { // existing cell
             
@@ -136,44 +135,13 @@ public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
             
         } else {
             
-            tableView.registerClass(C.self, forCellReuseIdentifier: reusableIdentifier)
+            tableView.registerClass(CellType.self, forCellReuseIdentifier: reusableIdentifier)
         }
     }
-}
-
-/**
- Responsible for building configurable cells of given type and passing items to them.
- */
-public class TableConfigurableRowBuilder<I, C: ConfigurableCell where C.T == I, C: UITableViewCell> : TableRowBuilder<I, C> {
-    
-    public override var estimatedRowHeight: Float {
-        return C.estimatedHeight()
-    }
-    
-    public init(item: I) {
-        super.init(item: item, id: C.reusableIdentifier())
-    }
-    
-    public init(items: [I]? = nil) {
-        super.init(items: items, id: C.reusableIdentifier())
-    }
-    
-    override func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
-        
-        switch actionType {
-        case .configure:
-            (cell as? C)?.configure(items[itemIndex])
-        default: break
-        }
-        return super.invokeAction(actionType, cell: cell, indexPath: indexPath, itemIndex: itemIndex, userInfo: userInfo)
-    }
-}
-
-public extension TableRowBuilder {
     
     // MARK: Items manipulation
     
-    public func append(items items: [I]) {
+    public func append(items items: [DataType]) {
         self.items.appendContentsOf(items)
     }
     
@@ -182,10 +150,38 @@ public extension TableRowBuilder {
     }
 }
 
-public func +=<I, C>(left: TableRowBuilder<I, C>, right: I) {
+/**
+ Responsible for building configurable cells of given type and passing items to them.
+ */
+public class TableConfigurableRowBuilder<DataType, CellType: ConfigurableCell where CellType.T == DataType, CellType: UITableViewCell> : TableRowBuilder<DataType, CellType> {
+    
+    public override var estimatedRowHeight: Float {
+        return CellType.estimatedHeight()
+    }
+    
+    public init(item: DataType) {
+        super.init(item: item, id: CellType.reusableIdentifier())
+    }
+    
+    public init(items: [DataType]? = nil) {
+        super.init(items: items, id: CellType.reusableIdentifier())
+    }
+    
+    override func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
+        
+        switch actionType {
+        case .configure:
+            (cell as? CellType)?.configure(items[itemIndex])
+        default: break
+        }
+        return super.invokeAction(actionType, cell: cell, indexPath: indexPath, itemIndex: itemIndex, userInfo: userInfo)
+    }
+}
+
+public func +=<DataType, CellType>(left: TableRowBuilder<DataType, CellType>, right: DataType) {
     left.append(items: [right])
 }
 
-public func +=<I, C>(left: TableRowBuilder<I, C>, right: [I]) {
+public func +=<DataType, CellType>(left: TableRowBuilder<DataType, CellType>, right: [DataType]) {
     left.append(items: right)
 }
