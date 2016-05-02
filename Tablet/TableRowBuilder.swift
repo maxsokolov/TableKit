@@ -23,19 +23,19 @@ import Foundation
 
 public typealias ReturnValue = AnyObject?
 
-enum ActionHandler<I, C> {
-    
-    case actionBlock((data: ActionData<I, C>) -> Void)
-    case actionReturnBlock((data: ActionData<I, C>) -> AnyObject?)
-    
-    func invoke(data: ActionData<I, C>) -> ReturnValue {
-        
+enum ActionHandler<DataType, CellType> {
+
+    case Handler((data: ActionData<DataType, CellType>) -> Void)
+    case ReturnValueHandler((data: ActionData<DataType, CellType>) -> AnyObject?)
+
+    func invoke(data: ActionData<DataType, CellType>) -> ReturnValue {
+
         switch (self) {
-        case .actionBlock(let closure):
-            closure(data: data)
+        case .Handler(let handler):
+            handler(data: data)
             return true
-        case .actionReturnBlock(let closure):
-            return closure(data: data)
+        case .ReturnValueHandler(let handler):
+            return handler(data: data)
         }
     }
 }
@@ -69,7 +69,7 @@ public class RowBuilder : NSObject {
  */
 public class TableRowBuilder<DataType, CellType where CellType: UITableViewCell> : RowBuilder {
     
-    private var actions = Dictionary<String, ActionHandler<DataType, CellType>>()
+    private var actions = [String: ActionHandler<DataType, CellType>]()
     private var items = [DataType]()
     
     public override var numberOfRows: Int {
@@ -92,29 +92,29 @@ public class TableRowBuilder<DataType, CellType where CellType: UITableViewCell>
     
     // MARK: Chaining actions
     
-    public func action(key: String, closure: (data: ActionData<DataType, CellType>) -> Void) -> Self {
+    public func action(key: String, handler: (data: ActionData<DataType, CellType>) -> Void) -> Self {
         
-        actions[key] = .actionBlock(closure)
+        actions[key] = .Handler(handler)
         return self
     }
     
-    public func action(actionType: ActionType, closure: (data: ActionData<DataType, CellType>) -> Void) -> Self {
+    public func action(type: ActionType, handler: (data: ActionData<DataType, CellType>) -> Void) -> Self {
         
-        actions[actionType.key] = .actionBlock(closure)
+        actions[type.key] = .Handler(handler)
         return self
     }
     
-    public func action(actionType: ActionType, closure: (data: ActionData<DataType, CellType>) -> ReturnValue) -> Self {
+    public func action(type: ActionType, handler: (data: ActionData<DataType, CellType>) -> ReturnValue) -> Self {
         
-        actions[actionType.key] = .actionReturnBlock(closure)
+        actions[type.key] = .ReturnValueHandler(handler)
         return self
     }
     
     // MARK: Internal
     
-    override func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
+    override func invokeAction(type: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
         
-        if let action = actions[actionType.key] {
+        if let action = actions[type.key] {
             return action.invoke(ActionData(cell: cell as? CellType, indexPath: indexPath, item: items[itemIndex], itemIndex: itemIndex, userInfo: userInfo))
         }
         return nil
