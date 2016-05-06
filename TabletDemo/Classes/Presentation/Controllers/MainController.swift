@@ -22,8 +22,18 @@ class MainController: UIViewController {
         super.viewDidLoad()
 
         let rows = TableConfigurableRowBuilder<String, StoryboardTableViewCell>(items: ["1", "2", "3"])
-            .action(.click) { [unowned self] data -> Void in
+            .action(.click) { [unowned self] e in
                 self.performSegueWithIdentifier("headerfooter", sender: nil)
+            }
+            .valueAction(.click) { data in
+                return 10
+            }
+            .action(.click) { data in
+                self.performSegueWithIdentifier("headerfooter", sender: nil)
+            }
+            .action(.click) { data in
+                
+                
             }
         
         print("", String(TableDirector.self))

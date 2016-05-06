@@ -26,7 +26,7 @@ public typealias ReturnValue = AnyObject?
 enum ActionHandler<DataType, CellType> {
 
     case Handler((data: ActionData<DataType, CellType>) -> Void)
-    case ReturnValueHandler((data: ActionData<DataType, CellType>) -> AnyObject?)
+    case ValueHandler((data: ActionData<DataType, CellType>) -> AnyObject?)
 
     func invoke(data: ActionData<DataType, CellType>) -> ReturnValue {
 
@@ -34,7 +34,7 @@ enum ActionHandler<DataType, CellType> {
         case .Handler(let handler):
             handler(data: data)
             return true
-        case .ReturnValueHandler(let handler):
+        case .ValueHandler(let handler):
             return handler(data: data)
         }
     }
@@ -104,9 +104,9 @@ public class TableRowBuilder<DataType, CellType where CellType: UITableViewCell>
         return self
     }
     
-    public func action(type: ActionType, handler: (data: ActionData<DataType, CellType>) -> ReturnValue) -> Self {
+    public func valueAction(type: ActionType, handler: (data: ActionData<DataType, CellType>) -> ReturnValue) -> Self {
         
-        actions[type.key] = .ReturnValueHandler(handler)
+        actions[type.key] = .ValueHandler(handler)
         return self
     }
     
