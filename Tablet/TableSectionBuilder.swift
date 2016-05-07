@@ -33,8 +33,8 @@ public class TableSectionBuilder {
     public var headerTitle: String?
     public var footerTitle: String?
 
-    public var headerView: UIView?
-    public var footerView: UIView?
+    public private(set) var headerView: UIView?
+    public private(set) var footerView: UIView?
 
     /// A total number of rows in section of each row builder.
     public var numberOfRowsInSection: Int {
@@ -62,7 +62,7 @@ public class TableSectionBuilder {
         self.footerView = footerView
     }
 
-    // MARK: Public
+    // MARK: - Public -
 
     public func clear() {
         builders.removeAll()
@@ -78,7 +78,7 @@ public class TableSectionBuilder {
         builders.appendContentsOf(rows)
     }
 
-    // MARK: Internal
+    // MARK: - Internal -
     
     func builderAtIndex(index: Int) -> (RowBuilder, Int)? {
         

@@ -25,16 +25,6 @@ class MainController: UIViewController {
             .action(.click) { [unowned self] e in
                 self.performSegueWithIdentifier("headerfooter", sender: nil)
             }
-            .valueAction(.click) { data in
-                return 10
-            }
-            .action(.click) { data in
-                self.performSegueWithIdentifier("headerfooter", sender: nil)
-            }
-            .action(.click) { data in
-                
-                
-            }
 
         tableDirector += rows
     }

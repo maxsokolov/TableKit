@@ -74,7 +74,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         return scrollDelegate?.respondsToSelector(selector) == true ? scrollDelegate : super.forwardingTargetForSelector(selector)
     }
     
-    // MARK: Internal
+    // MARK: - Internal -
     
     func didReceiveAction(notification: NSNotification) {
         
@@ -84,26 +84,23 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
             builder.0.invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1, userInfo: notification.userInfo)
         }
     }
-}
-
-public extension TableDirector {
-
+    
     // MARK: UITableViewDataSource - configuration
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return sections.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sections[section].numberOfRowsInSection
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let builder = builderAtIndexPath(indexPath)
         
         let cell = tableView.dequeueReusableCellWithIdentifier(builder.0.reusableIdentifier, forIndexPath: indexPath)
-
+        
         if cell.frame.size.width != tableView.frame.size.width {
             cell.frame = CGRectMake(0, 0, tableView.frame.size.width, cell.frame.size.height)
             cell.layoutIfNeeded()
@@ -113,58 +110,47 @@ public extension TableDirector {
         
         return cell
     }
-}
-
-public extension TableDirector {
-
+    
     // MARK: UITableViewDataSource - section setup
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section].headerTitle
     }
     
-    func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+    public func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return sections[section].footerTitle
     }
     
     // MARK: UITableViewDelegate - section setup
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return sections[section].headerView
     }
     
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return sections[section].footerView
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return sections[section].headerView?.frame.size.height ?? UITableViewAutomaticDimension
     }
-
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    
+    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return sections[section].footerView?.frame.size.height ?? UITableViewAutomaticDimension
     }
-}
-
-public extension TableDirector {
-
+    
     // MARK: UITableViewDelegate - actions
-
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    
+    public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return CGFloat(builderAtIndexPath(indexPath).0.estimatedRowHeight)
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat ?? UITableViewAutomaticDimension
     }
     
-    /*func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        return invokeAction(.willSelect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? NSIndexPath
-    }*/
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         
         if invoke(action: .click, cell: cell, indexPath: indexPath) != nil {
@@ -174,29 +160,31 @@ public extension TableDirector {
         }
     }
     
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+    public func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         invoke(action: .deselect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath)
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         invoke(action: .willDisplay, cell: cell, indexPath: indexPath)
     }
     
-    func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    public func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return invoke(action: .shouldHighlight, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? Bool ?? true
     }
-}
-
-public extension TableDirector {
-
-    // MARK: Sections manipulation
-
+    
+    /*func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+     
+     return invokeAction(.willSelect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? NSIndexPath
+     }*/
+    
+    // MARK: - Sections manipulation -
+    
     public func append(section section: TableSectionBuilder) {
         append(sections: [section])
     }
     
     public func append(sections sections: [TableSectionBuilder]) {
-
+        
         sections.forEach { $0.willMoveToDirector(tableView) }
         self.sections.appendContentsOf(sections)
     }
