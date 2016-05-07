@@ -21,7 +21,7 @@ class MainController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let rows = TableConfigurableRowBuilder<String, StoryboardTableViewCell>(items: ["1", "2", "3"])
+        let rows = TableRowBuilder<String, StoryboardTableViewCell>(items: ["1", "2", "3"])
             .action(.click) { [unowned self] e in
                 self.performSegueWithIdentifier("headerfooter", sender: nil)
             }
@@ -35,8 +35,6 @@ class MainController: UIViewController {
                 
                 
             }
-        
-        print("", String(TableDirector.self))
 
         tableDirector += rows
     }

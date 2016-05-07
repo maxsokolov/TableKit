@@ -60,10 +60,10 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     
     // MARK: Public
     
-    public func invokeAction(action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath) -> AnyObject? {
+    public func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath) -> AnyObject? {
         
         let builder = builderAtIndexPath(indexPath)
-        return builder.0.invokeAction(action, cell: cell, indexPath: indexPath, itemIndex: builder.1, userInfo: nil)
+        return builder.0.invoke(action: action, cell: cell, indexPath: indexPath, itemIndex: builder.1, userInfo: nil)
     }
 
     public override func respondsToSelector(selector: Selector) -> Bool {
@@ -81,7 +81,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         if let action = notification.object as? Action, indexPath = tableView.indexPathForCell(action.cell) {
             
             let builder = builderAtIndexPath(indexPath)
-            builder.0.invokeAction(.custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1, userInfo: notification.userInfo)
+            builder.0.invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1, userInfo: notification.userInfo)
         }
     }
 }
@@ -109,7 +109,7 @@ public extension TableDirector {
             cell.layoutIfNeeded()
         }
         
-        builder.0.invokeAction(.configure, cell: cell, indexPath: indexPath, itemIndex: builder.1, userInfo: nil)
+        builder.0.invoke(action: .configure, cell: cell, indexPath: indexPath, itemIndex: builder.1, userInfo: nil)
         
         return cell
     }
@@ -155,7 +155,7 @@ public extension TableDirector {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return invokeAction(.height, cell: nil, indexPath: indexPath) as? CGFloat ?? UITableViewAutomaticDimension
+        return invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat ?? UITableViewAutomaticDimension
     }
     
     /*func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
@@ -167,23 +167,23 @@ public extension TableDirector {
 
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         
-        if invokeAction(.click, cell: cell, indexPath: indexPath) != nil {
+        if invoke(action: .click, cell: cell, indexPath: indexPath) != nil {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         } else {
-            invokeAction(.select, cell: cell, indexPath: indexPath)
+            invoke(action: .select, cell: cell, indexPath: indexPath)
         }
     }
     
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        invokeAction(.deselect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath)
+        invoke(action: .deselect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath)
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        invokeAction(.willDisplay, cell: cell, indexPath: indexPath)
+        invoke(action: .willDisplay, cell: cell, indexPath: indexPath)
     }
     
     func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return invokeAction(.shouldHighlight, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? Bool ?? true
+        return invoke(action: .shouldHighlight, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? Bool ?? true
     }
 }
 

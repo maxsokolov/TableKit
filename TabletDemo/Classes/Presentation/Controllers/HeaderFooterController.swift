@@ -21,7 +21,7 @@ class HeaderFooterController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let rows = TableConfigurableRowBuilder<String, StoryboardTableViewCell>(items: ["3", "4", "5"])
+        let rows = TableRowBuilder<String, StoryboardTableViewCell>(items: ["3", "4", "5"])
         
         let headerView = UIView(frame: CGRectMake(0, 0, 100, 100))
         headerView.backgroundColor = UIColor.lightGrayColor()

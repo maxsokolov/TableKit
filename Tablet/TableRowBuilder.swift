@@ -56,7 +56,7 @@ public class RowBuilder : NSObject {
     
     // MARK: internal methods, must be overriden in subclass
     
-    func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
+    func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
         return nil
     }
     
@@ -67,7 +67,7 @@ public class RowBuilder : NSObject {
 /**
  Responsible for building cells of given type and passing items to them.
  */
-public class TableRowBuilder<DataType, CellType where CellType: UITableViewCell> : RowBuilder {
+public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewCell> : RowBuilder {
     
     private var actions = [String: ActionHandler<DataType, CellType>]()
     private var items = [DataType]()
@@ -112,9 +112,9 @@ public class TableRowBuilder<DataType, CellType where CellType: UITableViewCell>
     
     // MARK: Internal
     
-    override func invokeAction(type: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
+    override func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
         
-        if let action = actions[type.key] {
+        if let action = actions[action.key] {
             return action.invoke(ActionData(cell: cell as? CellType, indexPath: indexPath, item: items[itemIndex], itemIndex: itemIndex, userInfo: userInfo))
         }
         return nil
@@ -153,7 +153,7 @@ public class TableRowBuilder<DataType, CellType where CellType: UITableViewCell>
 /**
  Responsible for building configurable cells of given type and passing items to them.
  */
-public class TableConfigurableRowBuilder<DataType, CellType: ConfigurableCell where CellType.T == DataType, CellType: UITableViewCell> : TableRowBuilder<DataType, CellType> {
+public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType.T == DataType, CellType: UITableViewCell> : TableBaseRowBuilder<DataType, CellType> {
     
     public override var estimatedRowHeight: Float {
         return CellType.estimatedHeight()
@@ -167,21 +167,21 @@ public class TableConfigurableRowBuilder<DataType, CellType: ConfigurableCell wh
         super.init(items: items, id: CellType.reusableIdentifier())
     }
     
-    override func invokeAction(actionType: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
+    override func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
         
-        switch actionType {
+        switch action {
         case .configure:
             (cell as? CellType)?.configure(items[itemIndex])
         default: break
         }
-        return super.invokeAction(actionType, cell: cell, indexPath: indexPath, itemIndex: itemIndex, userInfo: userInfo)
+        return super.invoke(action: action, cell: cell, indexPath: indexPath, itemIndex: itemIndex, userInfo: userInfo)
     }
 }
 
-public func +=<DataType, CellType>(left: TableRowBuilder<DataType, CellType>, right: DataType) {
+public func +=<DataType, CellType>(left: TableBaseRowBuilder<DataType, CellType>, right: DataType) {
     left.append(items: [right])
 }
 
-public func +=<DataType, CellType>(left: TableRowBuilder<DataType, CellType>, right: [DataType]) {
+public func +=<DataType, CellType>(left: TableBaseRowBuilder<DataType, CellType>, right: [DataType]) {
     left.append(items: right)
 }
