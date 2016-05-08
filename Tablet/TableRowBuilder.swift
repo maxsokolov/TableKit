@@ -154,7 +154,7 @@ public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType
     public init(items: [DataType]? = nil) {
         super.init(items: items, id: CellType.reusableIdentifier())
     }
-    
+
     public override func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
         
         switch action {
