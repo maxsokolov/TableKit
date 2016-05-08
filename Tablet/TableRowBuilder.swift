@@ -33,7 +33,7 @@ enum ActionHandler<DataType, CellType> {
         switch (self) {
         case .Handler(let handler):
             handler(data: data)
-            return true
+            return nil
         case .ValueHandler(let handler):
             return handler(data: data)
         }
@@ -157,10 +157,8 @@ public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType
 
     public override func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
         
-        switch action {
-        case .configure:
+        if case .configure = action {
             (cell as? CellType)?.configure(items[itemIndex])
-        default: break
         }
         return super.invoke(action: action, cell: cell, indexPath: indexPath, itemIndex: itemIndex, userInfo: userInfo)
     }
