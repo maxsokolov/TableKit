@@ -46,7 +46,7 @@ internal enum ActionHandler<I, C> {
 public class TableRowBuilder<I, C where C: UITableViewCell> : RowBuilder {
 
     private var actions = Dictionary<String, ActionHandler<I, C>>()
-    private var items = [I]()
+    public var items = [I]()
 
     public var reusableIdentifier: String
     public var estimatedRowHeight: CGFloat

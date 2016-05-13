@@ -37,7 +37,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         self.tableView.delegate = self
         self.tableView.dataSource = self
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveAction:", name: kActionPerformedNotificationKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didReceiveAction), name: kActionPerformedNotificationKey, object: nil)
     }
     
     deinit {

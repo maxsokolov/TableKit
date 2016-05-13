@@ -99,7 +99,7 @@ public class Action {
 */
 public protocol ConfigurableCell {
 
-    typealias Item
+    associatedtype Item
 
     static func reusableIdentifier() -> String
     func configureWithItem(item: Item)
