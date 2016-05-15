@@ -145,8 +145,6 @@ struct MyCellActions {
 	static let ButtonClicked = "ButtonClicked"
 }
 
-let kMyAction = "action_key"
-
 class MyTableViewCell : UITableViewCell {
 
 	@IBAction func buttonClicked(sender: UIButton) {
