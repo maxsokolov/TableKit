@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
 
     s.version               = '0.5.0'
 
-    s.homepage              = 'https://github.com/maxsokolov/tablet'
+    s.homepage              = 'https://github.com/maxsokolov/Tablet.swift'
     s.summary               = 'Powerful type-safe tool for UITableView. Swift 2.2 is required.'
 
     s.author                = { 'Max Sokolov' => 'i@maxsokolov.net' }
@@ -13,5 +13,5 @@ Pod::Spec.new do |s|
     s.ios.deployment_target = '8.0'
 
     s.source_files          = 'Tablet/*.swift'
-    s.source                = { :git => 'https://github.com/maxsokolov/tablet.git', :tag => s.version }
+    s.source                = { :git => 'https://github.com/maxsokolov/Tablet.swift.git', :tag => s.version }
 end

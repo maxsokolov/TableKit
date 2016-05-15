@@ -24,11 +24,11 @@ Tablet is a super lightweight yet powerful generic library that handles a comple
 - [x] Extensibility
 - [x] Tests
 
-That's almost all you need in your controller to build a bunch of cells in a section:
+That's almost all you need to build a bunch of cells in a section:
 ```swift
 let builder = TableRowBuilder<String, MyTableViewCell>(items: ["1", "2", "3", "4", "5"])
 ```
-Tablet respects cells reusability feature and built with performace in mind. See the Usage section to learn more.
+Tablet relies on <a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/WorkingwithSelf-SizingTableViewCells.html">self-sizing table view cells</a>, respects cells reusability feature and also built with performace in mind. You don't have to worry about anything, just create your cells, setup autolayout constraints and be happy. See the Usage section to learn more.
 
 ## Requirements
 
@@ -57,26 +57,6 @@ $ pod install
 
 ## Usage
 
-### Very basic
-
-You may want to setup a very basic table view, without any custom cells. In that case simply use the `TableBaseRowBuilder`.
-
-```swift
-import Tablet
-
-let rowBuilder = TableBaseRowBuilder<User, UITableViewCell>(items: [user1, user2, user3], id: "reusable_id")
-	.action(.configure) { (data) in
-
-		data.cell?.textLabel?.text = data.item.username
-		data.cell?.detailTextLabel?.text = data.item.isActive ? "Active" : "Inactive"
-	}
-
-let sectionBuilder = TableSectionBuilder(headerTitle: "Users", footerTitle: nil, rows: [rowBuilder])
-
-director = TableDirector(tableView: tableView)
-director += sectionBuilder
-```
-
 ### Type-safe configurable cells
 
 Let's say you want to put your cell configuration logic into cell itself. Say you want to pass your view model (or even model) to your cell.
@@ -89,6 +69,7 @@ class MyTableViewCell : UITableViewCell, ConfigurableCell {
 
 	typealias T = User
 
+	// this method is not required to be implemented if your cell's id equals to class name
 	static func reusableIdentifier() -> String {
 		return "reusable_id"
 	}
@@ -114,6 +95,26 @@ rowBuilder += users
 
 director = TableDirector(tableView: tableView)
 tableDirector += TableSectionBuilder(rows: [rowBuilder])
+```
+
+### Very basic table view
+
+You may want to setup a very basic table view, without any custom cells. In that case simply use the `TableBaseRowBuilder`.
+
+```swift
+import Tablet
+
+let rowBuilder = TableBaseRowBuilder<User, UITableViewCell>(items: [user1, user2, user3], id: "reusable_id")
+	.action(.configure) { (data) in
+
+		data.cell?.textLabel?.text = data.item.username
+		data.cell?.detailTextLabel?.text = data.item.isActive ? "Active" : "Inactive"
+	}
+
+let sectionBuilder = TableSectionBuilder(headerTitle: "Users", footerTitle: nil, rows: [rowBuilder])
+
+director = TableDirector(tableView: tableView)
+director += sectionBuilder
 ```
 
 ### Cell actions
