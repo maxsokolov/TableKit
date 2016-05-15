@@ -28,7 +28,7 @@ That's almost all you need to build a bunch of cells in a section:
 ```swift
 let builder = TableRowBuilder<String, MyTableViewCell>(items: ["1", "2", "3", "4", "5"])
 ```
-Tablet relies on <a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/WorkingwithSelf-SizingTableViewCells.html">self-sizing table view cells</a>, respects cells reusability feature and also built with performace in mind. You don't have to worry about anything, just create your cells, setup autolayout constraints and be happy. See the Usage section to learn more.
+Tablet relies on <a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/WorkingwithSelf-SizingTableViewCells.html" target="_blank">self-sizing table view cells</a>, respects cells reusability feature and also built with performace in mind. You don't have to worry about anything, just create your cells, setup autolayout constraints and be happy. See the Usage section to learn more.
 
 ## Requirements
 
@@ -141,13 +141,17 @@ let rowBuilder = TableRowBuilder<User, MyTableViewCell>(items: [user1, user2, us
 ```swift
 import Tablet
 
+struct MyCellActions {
+	static let ButtonClicked = "ButtonClicked"
+}
+
 let kMyAction = "action_key"
 
 class MyTableViewCell : UITableViewCell {
 
 	@IBAction func buttonClicked(sender: UIButton) {
 
-		Action(key: kMyAction, sender: self, userInfo: nil).invoke()
+		Action(key: MyCellActions.ButtonClicked, sender: self, userInfo: nil).invoke()
 	}
 }
 ```
@@ -155,14 +159,14 @@ And receive this actions with your row builder:
 ```swift
 import Tablet
 
-let rowBuilder = TableRowBuilder<User, MyTableViewCell>(items: users, id: "reusable_id")
+let rowBuilder = TableRowBuilder<User, MyTableViewCell>(items: users)
 	.action(.click) { (data) in
 		
 	}
 	.action(.willDisplay) { (data) in
 		
 	}
-	.action(kMyAction) { (data) in
+	.action(MyCellActions.ButtonClicked) { (data) in
 		
 	}
 ```
@@ -170,24 +174,26 @@ let rowBuilder = TableRowBuilder<User, MyTableViewCell>(items: users, id: "reusa
 ## Extensibility
 
 If you find that Tablet is not provide an action you need, for example you need UITableViewDelegate's `didEndDisplayingCell` method and it's not out of the box,
-simply provide an extension for `TableDirector` as follow:
+simply provide an extension for `TableDirector`:
 ```swift
 import Tablet
 
-let kTableDirectorDidEndDisplayingCell = "enddisplaycell"
+struct MyTableActions {
+	static let DidEndDisplayingCell = "DidEndDisplayingCell"
+}
 
 extension TableDirector {
 
 	public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
 
-		invokeAction(.custom(kTableDirectorDidEndDisplayingCell), cell: cell, indexPath: indexPath)
+		invoke(action: .custom(MyTableActions.DidEndDisplayingCell), cell: cell, indexPath: indexPath)
 	}
 }
 ```
 Catch your action with row builder:
 ```swift
-let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>(items: users)
-	.action(kTableDirectorDidEndDisplayingCell) { (data) -> Void in
+let rowBuilder = TableRowBuilder<User, MyTableViewCell>(items: users)
+	.action(MyTableActions.DidEndDisplayingCell) { (data) -> Void in
 
 	}
 ```
