@@ -1,10 +1,12 @@
-#Tablet
+![Alamofire: Elegant Networking in Swift](https://raw.githubusercontent.com/maxsokolov/tablet/assets/logo.png)
+
+#Tablet.swift
 
 <p align="left">
 <a href="https://travis-ci.org/maxsokolov/tablet"><img src="https://travis-ci.org/maxsokolov/tablet.svg" alt="Build Status" /></a>
-<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift2-compatible-4BC51D.svg?style=flat" alt="Swift 2 compatible" /></a>
+<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift_2.2-compatible-4BC51D.svg?style=flat" alt="Swift 2.2 compatible" /></a>
 <img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
-<a href="https://cocoapods.org/pods/tablet"><img src="https://img.shields.io/badge/pod-0.4.0-blue.svg" alt="CocoaPods compatible" /></a>
+<a href="https://cocoapods.org/pods/tablet"><img src="https://img.shields.io/badge/pod-0.5.0-blue.svg" alt="CocoaPods compatible" /></a>
 <a href="https://raw.githubusercontent.com/maxsokolov/tablet/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License: MIT" /></a>
 </p>
 
@@ -15,18 +17,18 @@ Tablet is a super lightweight yet powerful generic library that handles a comple
 - [x] Type-safe cells based on generics
 - [x] The easiest way to map your models or view models to cells
 - [x] Correctly handles autolayout cells with multiline labels
-- [x] Chainable cell actions
+- [x] Chainable cell actions (select/deselect etc.)
 - [x] Support cells created from code, xib, or storyboard
 - [x] Automatic xib/classes registration
 - [x] No need to subclass
 - [x] Extensibility
 - [x] Tests
 
-That's almost all you need in your controller to build a bunch of cells in a section 😘:
+That's almost all you need to build a bunch of cells in a section:
 ```swift
-TableConfigurableRowBuilder<String, MyTableViewCell>(items: ["1", "2", "3", "4", "5"])
+let builder = TableRowBuilder<String, MyTableViewCell>(items: ["1", "2", "3", "4", "5"])
 ```
-Tablet respects cells reusability feature and built with performace in mind. See the Usage section to learn more.
+Tablet relies on <a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/WorkingwithSelf-SizingTableViewCells.html" target="_blank">self-sizing table view cells</a>, respects cells reusability feature and also built with performace in mind. You don't have to worry about anything, just create your cells, setup autolayout constraints and be happy. See the Usage section to learn more.
 
 ## Requirements
 
@@ -55,30 +57,10 @@ $ pod install
 
 ## Usage
 
-### Very basic
-
-You may want to setup a very basic table view, without any custom cells. In that case simply use the `TableRowBuilder`.
-
-```swift
-import Tablet
-
-let rowBuilder = TableRowBuilder<User, UITableViewCell>(items: [user1, user2, user3], id: "reusable_id")
-	.action(.configure) { data -> Void in
-
-		data.cell?.textLabel?.text = data.item.username
-		data.cell?.detailTextLabel?.text = data.item.isActive ? "Active" : "Inactive"
-	}
-
-let sectionBuilder = TableSectionBuilder(headerTitle: "Users", rows: [rowBuilder])
-
-director = TableDirector(tableView: tableView)
-director.appendSections(sectionBuilder)
-```
-
 ### Type-safe configurable cells
 
 Let's say you want to put your cell configuration logic into cell itself. Say you want to pass your view model (or even model) to your cell.
-You could easily do this using the `TableConfigurableRowBuilder`. Your cell should respect the `ConfigurableCell` protocol as you may see in example below:
+You could easily do this using the `TableRowBuilder`. Your cell should conforms to `ConfigurableCell` protocol as you may see in example below:
 
 ```swift
 import Tablet
@@ -87,6 +69,7 @@ class MyTableViewCell : UITableViewCell, ConfigurableCell {
 
 	typealias T = User
 
+	// this method is not required to be implemented if your cell's id equals to class name
 	static func reusableIdentifier() -> String {
 		return "reusable_id"
 	}
@@ -102,16 +85,36 @@ class MyTableViewCell : UITableViewCell, ConfigurableCell {
 	}
 }
 ```
-Once you've implemented the protocol, simply use the `TableConfigurableRowBuilder` to build cells:
+Once you've implemented the protocol, simply use the `TableRowBuilder` to build cells:
 
 ```swift
 import Tablet
 
-let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>()
-rowBuilder.appendItems(users)
+let rowBuilder = TableRowBuilder<User, MyTableViewCell>()
+rowBuilder += users
 
 director = TableDirector(tableView: tableView)
-tableDirector.appendSection(TableSectionBuilder(rows: [rowBuilder]))
+tableDirector += TableSectionBuilder(rows: [rowBuilder])
+```
+
+### Very basic table view
+
+You may want to setup a very basic table view, without any custom cells. In that case simply use the `TableBaseRowBuilder`.
+
+```swift
+import Tablet
+
+let rowBuilder = TableBaseRowBuilder<User, UITableViewCell>(items: [user1, user2, user3], id: "reusable_id")
+	.action(.configure) { (data) in
+
+		data.cell?.textLabel?.text = data.item.username
+		data.cell?.detailTextLabel?.text = data.item.isActive ? "Active" : "Inactive"
+	}
+
+let sectionBuilder = TableSectionBuilder(headerTitle: "Users", footerTitle: nil, rows: [rowBuilder])
+
+director = TableDirector(tableView: tableView)
+director += sectionBuilder
 ```
 
 ### Cell actions
@@ -122,13 +125,13 @@ Tablet provides a chaining approach to handle actions from your cells:
 import Tablet
 
 let rowBuilder = TableRowBuilder<User, MyTableViewCell>(items: [user1, user2, user3], id: "reusable_id")
-	.action(.configure) { data -> Void in
+	.action(.configure) { (data) in
 
 	}
-	.action(.click) { data -> Void in
+	.action(.click) { (data) in
 
 	}
-	.action(.shouldHighlight) { data -> ReturnValue in
+	.valueAction(.shouldHighlight) { (data) in
 
 		return false
 	}
@@ -138,13 +141,15 @@ let rowBuilder = TableRowBuilder<User, MyTableViewCell>(items: [user1, user2, us
 ```swift
 import Tablet
 
-let kMyAction = "action_key"
+struct MyCellActions {
+	static let ButtonClicked = "ButtonClicked"
+}
 
 class MyTableViewCell : UITableViewCell {
 
 	@IBAction func buttonClicked(sender: UIButton) {
 
-		Action(key: kMyAction, sender: self, userInfo: nil).invoke()
+		Action(key: MyCellActions.ButtonClicked, sender: self, userInfo: nil).invoke()
 	}
 }
 ```
@@ -152,14 +157,14 @@ And receive this actions with your row builder:
 ```swift
 import Tablet
 
-let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>(items: users, id: "reusable_id")
-	.action(.click) { data -> Void in
+let rowBuilder = TableRowBuilder<User, MyTableViewCell>(items: users)
+	.action(.click) { (data) in
 		
 	}
-	.action(.willDisplay) { data -> Void in
+	.action(.willDisplay) { (data) in
 		
 	}
-	.action(kMyAction) { data -> Void in
+	.action(MyCellActions.ButtonClicked) { (data) in
 		
 	}
 ```
@@ -167,24 +172,26 @@ let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>(items: users
 ## Extensibility
 
 If you find that Tablet is not provide an action you need, for example you need UITableViewDelegate's `didEndDisplayingCell` method and it's not out of the box,
-simply provide an extension for `TableDirector` as follow:
+simply provide an extension for `TableDirector`:
 ```swift
 import Tablet
 
-let kTableDirectorDidEndDisplayingCell = "enddisplaycell"
+struct MyTableActions {
+	static let DidEndDisplayingCell = "DidEndDisplayingCell"
+}
 
 extension TableDirector {
 
 	public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
 
-		invokeAction(.custom(kTableDirectorDidEndDisplayingCell), cell: cell, indexPath: indexPath)
+		invoke(action: .custom(MyTableActions.DidEndDisplayingCell), cell: cell, indexPath: indexPath)
 	}
 }
 ```
 Catch your action with row builder:
 ```swift
-let rowBuilder = TableConfigurableRowBuilder<User, MyTableViewCell>(items: users)
-	.action(kTableDirectorDidEndDisplayingCell) { data -> Void in
+let rowBuilder = TableRowBuilder<User, MyTableViewCell>(items: users)
+	.action(MyTableActions.DidEndDisplayingCell) { (data) -> Void in
 
 	}
 ```

@@ -26,44 +26,49 @@ import Foundation
     Can host several row builders.
 */
 public class TableSectionBuilder {
-
-    weak var tableView: UITableView?
-    private var builders = [RowBuilder]()
     
+    weak var tableDirector: TableDirector? {
+        didSet {
+            guard let director = tableDirector else { return }
+            builders.forEach { $0.registerCell(inTableView: director.tableView) }
+        }
+    }
+
+    private var builders = [RowBuilder]()
+
     public var headerTitle: String?
     public var footerTitle: String?
-    
-    public var headerView: UIView?
-    public var headerHeight: CGFloat = UITableViewAutomaticDimension
-    
-    public var footerView: UIView?
-    public var footerHeight: CGFloat = UITableViewAutomaticDimension
+
+    public private(set) var headerView: UIView?
+    public private(set) var footerView: UIView?
 
     /// A total number of rows in section of each row builder.
     public var numberOfRowsInSection: Int {
         return builders.reduce(0) { $0 + $1.numberOfRows }
     }
     
-    public init(headerTitle: String? = nil, footerTitle: String? = nil, rows: [RowBuilder]? = nil) {
-
-        self.headerTitle = headerTitle
-        self.footerTitle = footerTitle
-        
+    public init(rows: [RowBuilder]? = nil) {
+     
         if let initialRows = rows {
             builders.appendContentsOf(initialRows)
         }
     }
 
-    public init(headerView: UIView? = nil, headerHeight: CGFloat = UITableViewAutomaticDimension, footerView: UIView? = nil, footerHeight: CGFloat = UITableViewAutomaticDimension) {
-
-        self.headerView = headerView
-        self.headerHeight = headerHeight
+    public convenience init(headerTitle: String?, footerTitle: String?, rows: [RowBuilder]?) {
+        self.init(rows: rows)
         
-        self.footerView = footerView
-        self.footerHeight = footerHeight
+        self.headerTitle = headerTitle
+        self.footerTitle = footerTitle
     }
 
-    // MARK: Public
+    public convenience init(headerView: UIView?, footerView: UIView?, rows: [RowBuilder]?) {
+        self.init(rows: rows)
+        
+        self.headerView = headerView
+        self.footerView = footerView
+    }
+
+    // MARK: - Public -
 
     public func clear() {
         builders.removeAll()
@@ -75,11 +80,11 @@ public class TableSectionBuilder {
     
     public func append(rows rows: [RowBuilder]) {
         
-        if let tableView = tableView { rows.forEach { $0.registerCell(inTableView: tableView) } }
+        if let tableView = tableDirector?.tableView { rows.forEach { $0.registerCell(inTableView: tableView) } }
         builders.appendContentsOf(rows)
     }
 
-    // MARK: Internal
+    // MARK: - Internal -
     
     func builderAtIndex(index: Int) -> (RowBuilder, Int)? {
         
@@ -92,12 +97,6 @@ public class TableSectionBuilder {
         }
         
         return nil
-    }
-    
-    func willMoveToDirector(tableView: UITableView) {
-
-        self.tableView = tableView
-        self.builders.forEach { $0.registerCell(inTableView: tableView) }
     }
 }
 

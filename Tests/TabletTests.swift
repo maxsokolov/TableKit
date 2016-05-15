@@ -93,7 +93,7 @@ class TabletTests: XCTestCase {
 
         let source = ["1", "2", "3"]
 
-        let rows = TableRowBuilder<String, UITableViewCell>(items: source)
+        let rows = TableBaseRowBuilder<String, UITableViewCell>(items: source)
             .action(.configure) { data -> Void in
 
                 XCTAssertNotNil(data.cell, "Action should have a cell")
@@ -121,7 +121,7 @@ class TabletTests: XCTestCase {
         let testData = TestData(title: "title")
         
         testController.view.hidden = false
-        testController.tableDirector += TableConfigurableRowBuilder<TestData, TestTableViewCell>(item: testData)
+        testController.tableDirector += TableRowBuilder<TestData, TestTableViewCell>(item: testData)
         testController.tableView.reloadData()
 
         let cell = testController.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? TestTableViewCell
@@ -132,7 +132,7 @@ class TabletTests: XCTestCase {
 
     func testSectionBuilderCreatesSectionWithHeaderAndFooterTitles() {
 
-        let row = TableConfigurableRowBuilder<TestData, TestTableViewCell>(items: [TestData(title: "title")])
+        let row = TableRowBuilder<TestData, TestTableViewCell>(items: [TestData(title: "title")])
 
         let sectionHeaderTitle = "Header Title"
         let sectionFooterTitle = "Footer Title"
@@ -152,12 +152,12 @@ class TabletTests: XCTestCase {
     
     func testSectionBuilderCreatesSectionWithHeaderAndFooterViews() {
 
-        let row = TableConfigurableRowBuilder<TestData, TestTableViewCell>(items: [TestData(title: "title")])
+        let row = TableRowBuilder<TestData, TestTableViewCell>(items: [TestData(title: "title")])
         
         let sectionHeaderView = UIView()
         let sectionFooterView = UIView()
 
-        let section = TableSectionBuilder(headerView: sectionHeaderView, headerHeight: 44, footerView: sectionFooterView, footerHeight: 44)
+        let section = TableSectionBuilder(headerView: sectionHeaderView, footerView: sectionFooterView, rows: nil)
         section += row
         
         testController.view.hidden = false
@@ -175,7 +175,7 @@ class TabletTests: XCTestCase {
 
         let expectation = expectationWithDescription("cell action")
 
-        let row = TableConfigurableRowBuilder<TestData, TestTableViewCell>(items: [TestData(title: "title")])
+        let row = TableRowBuilder<TestData, TestTableViewCell>(items: [TestData(title: "title")])
             .action(TestTableViewCellOptions.CellAction) { data -> Void in
 
                 XCTAssertNotNil(data.cell, "Action data should have a cell")

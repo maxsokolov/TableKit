@@ -51,15 +51,15 @@ public enum ActionType {
     }
 }
 
-public class ActionData<I, C> {
+public class ActionData<DataType, CellType> {
 
-    public let cell: C?
-    public let item: I
+    public let cell: CellType?
+    public let item: DataType
     public let itemIndex: Int
     public let indexPath: NSIndexPath
     public let userInfo: [NSObject: AnyObject]?
 
-    init(cell: C?, indexPath: NSIndexPath, item: I, itemIndex: Int, userInfo: [NSObject: AnyObject]?) {
+    init(cell: CellType?, indexPath: NSIndexPath, item: DataType, itemIndex: Int, userInfo: [NSObject: AnyObject]?) {
 
         self.cell = cell
         self.indexPath = indexPath
@@ -112,6 +112,6 @@ public protocol ConfigurableCell {
 public extension ConfigurableCell where Self: UITableViewCell {
 
     static func reusableIdentifier() -> String {
-        return NSStringFromClass(self).componentsSeparatedByString(".").last ?? ""
+        return String(self)
     }
 }
