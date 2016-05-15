@@ -26,8 +26,14 @@ import Foundation
     Can host several row builders.
 */
 public class TableSectionBuilder {
+    
+    weak var tableDirector: TableDirector? {
+        didSet {
+            guard let director = tableDirector else { return }
+            builders.forEach { $0.registerCell(inTableView: director.tableView) }
+        }
+    }
 
-    weak var tableView: UITableView?
     private var builders = [RowBuilder]()
 
     public var headerTitle: String?
@@ -74,7 +80,7 @@ public class TableSectionBuilder {
     
     public func append(rows rows: [RowBuilder]) {
         
-        if let tableView = tableView { rows.forEach { $0.registerCell(inTableView: tableView) } }
+        if let tableView = tableDirector?.tableView { rows.forEach { $0.registerCell(inTableView: tableView) } }
         builders.appendContentsOf(rows)
     }
 
@@ -91,12 +97,6 @@ public class TableSectionBuilder {
         }
         
         return nil
-    }
-    
-    func willMoveToDirector(tableView: UITableView) {
-
-        self.tableView = tableView
-        self.builders.forEach { $0.registerCell(inTableView: tableView) }
     }
 }
 

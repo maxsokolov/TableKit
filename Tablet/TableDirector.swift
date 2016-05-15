@@ -185,7 +185,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     
     public func append(sections sections: [TableSectionBuilder]) {
         
-        sections.forEach { $0.willMoveToDirector(tableView) }
+        sections.forEach { $0.tableDirector = self }
         self.sections.appendContentsOf(sections)
     }
     
