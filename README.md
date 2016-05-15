@@ -1,3 +1,5 @@
+![Alamofire: Elegant Networking in Swift](https://raw.githubusercontent.com/maxsokolov/tablet/assets/logo.png)
+
 #Tablet
 
 <p align="left">
