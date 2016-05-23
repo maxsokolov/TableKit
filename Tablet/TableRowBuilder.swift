@@ -44,6 +44,8 @@ public protocol RowBuilder {
     
     var reusableIdentifier: String { get }
     var numberOfRows: Int { get }
+    
+    var rowHeight: Float { get }
     var estimatedRowHeight: Float { get }
     
     func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject?
@@ -66,6 +68,10 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
     
     public var estimatedRowHeight: Float {
         return 44
+    }
+    
+    public var rowHeight: Float {
+        return 0
     }
     
     public init(item: DataType, id: String? = nil) {

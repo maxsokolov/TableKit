@@ -106,6 +106,7 @@ public protocol ConfigurableCell {
 
     static func reusableIdentifier() -> String
     static func estimatedHeight() -> Float
+    static func defaultHeight() -> Float?
     func configure(_: T)
 }
 
@@ -113,5 +114,9 @@ public extension ConfigurableCell where Self: UITableViewCell {
 
     static func reusableIdentifier() -> String {
         return String(self)
+    }
+    
+    static func defaultHeight() -> Float? {
+        return nil
     }
 }
