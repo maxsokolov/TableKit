@@ -19,9 +19,28 @@
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import UIKit
-import Foundation
 
-public class TablePrototypeRowBuilder<DataType: Hashable, CellType: ConfigurableCell where CellType.T == DataType, CellType: UITableViewCell> : TableBaseRowBuilder<DataType, CellType> {
-
+/**
+    If you want to delegate your cell configuration logic to cell itself (with your view model or even model) than
+    just provide an implementation of this protocol for your cell. Enjoy safe-typisation.
+ */
+public protocol ConfigurableCell {
     
+    associatedtype T
+    
+    static func reusableIdentifier() -> String
+    static func estimatedHeight() -> Float
+    static func defaultHeight() -> Float?
+    func configure(_: T)
+}
+
+public extension ConfigurableCell where Self: UITableViewCell {
+    
+    static func reusableIdentifier() -> String {
+        return String(self)
+    }
+    
+    static func defaultHeight() -> Float? {
+        return nil
+    }
 }

@@ -23,35 +23,6 @@ import Foundation
 
 public typealias ReturnValue = AnyObject?
 
-enum ActionHandler<DataType, CellType> {
-
-    case Handler((data: ActionData<DataType, CellType>) -> Void)
-    case ValueHandler((data: ActionData<DataType, CellType>) -> AnyObject?)
-
-    func invoke(data: ActionData<DataType, CellType>) -> ReturnValue {
-
-        switch (self) {
-        case .Handler(let handler):
-            handler(data: data)
-            return nil
-        case .ValueHandler(let handler):
-            return handler(data: data)
-        }
-    }
-}
-
-public protocol RowBuilder {
-    
-    var reusableIdentifier: String { get }
-    var numberOfRows: Int { get }
-    
-    var rowHeight: Float { get }
-    var estimatedRowHeight: Float { get }
-    
-    func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject?
-    func registerCell(inTableView tableView: UITableView)
-}
-
 /**
  Responsible for building cells of given type and passing items to them.
  */
@@ -70,10 +41,6 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
         return 44
     }
     
-    public var rowHeight: Float {
-        return 0
-    }
-    
     public init(item: DataType, id: String? = nil) {
 
         reusableIdentifier = id ?? String(CellType)
@@ -87,6 +54,10 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
         if let items = items {
             self.items.appendContentsOf(items)
         }
+    }
+    
+    public func rowHeight(index: Int) -> CGFloat {
+        return 0
     }
     
     // MARK: - Chaining actions -
@@ -167,6 +138,32 @@ public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType
             (cell as? CellType)?.configure(items[itemIndex])
         }
         return super.invoke(action: action, cell: cell, indexPath: indexPath, itemIndex: itemIndex, userInfo: userInfo)
+    }
+}
+
+public class TablePrototypeRowBuilder<DataType: Hashable, CellType: ConfigurableCell where CellType.T == DataType, CellType: UITableViewCell> : TableBaseRowBuilder<DataType, CellType> {
+
+    private var cachedHeights = [Int: CGFloat]()
+    private var prototypeCell: CellType?
+
+    public override func rowHeight(index: Int) -> CGFloat {
+
+        guard let cell = prototypeCell else { return 0 }
+        
+        let item = items[index]
+        
+        if let height = cachedHeights[item.hashValue] {
+            return height
+        }
+        
+        cell.configure(item)
+        cell.setNeedsLayout()
+        cell.layoutIfNeeded()
+        
+        let height = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height + 1
+        cachedHeights[item.hashValue] = height
+        
+        return height
     }
 }
 

@@ -146,7 +146,9 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat ?? UITableViewAutomaticDimension
+        
+        let builder = builderAtIndexPath(indexPath)
+        return builder.0.rowHeight(builder.1)
     }
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

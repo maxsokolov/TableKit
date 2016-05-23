@@ -69,6 +69,23 @@ public class ActionData<DataType, CellType> {
     }
 }
 
+enum ActionHandler<DataType, CellType> {
+    
+    case Handler((data: ActionData<DataType, CellType>) -> Void)
+    case ValueHandler((data: ActionData<DataType, CellType>) -> AnyObject?)
+    
+    func invoke(data: ActionData<DataType, CellType>) -> ReturnValue {
+        
+        switch (self) {
+        case .Handler(let handler):
+            handler(data: data)
+            return nil
+        case .ValueHandler(let handler):
+            return handler(data: data)
+        }
+    }
+}
+
 /**
     A custom action that you can trigger from your cell.
     You can eacily catch actions using a chaining manner with your row builder.
@@ -96,27 +113,3 @@ public class Action {
     }
 }
 
-/**
-    If you want to delegate your cell configuration logic to cell itself (with your view model or even model) than
-    just provide an implementation of this protocol for your cell. Enjoy safe-typisation.
-*/
-public protocol ConfigurableCell {
-
-    associatedtype T
-
-    static func reusableIdentifier() -> String
-    static func estimatedHeight() -> Float
-    static func defaultHeight() -> Float?
-    func configure(_: T)
-}
-
-public extension ConfigurableCell where Self: UITableViewCell {
-
-    static func reusableIdentifier() -> String {
-        return String(self)
-    }
-    
-    static func defaultHeight() -> Float? {
-        return nil
-    }
-}

@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		501C70391CF387090099458A /* TablePrototypeRowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C70381CF387090099458A /* TablePrototypeRowBuilder.swift */; };
+		DA08A04F1CF3AB0C00BBF1F8 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08A04E1CF3AB0C00BBF1F8 /* ConfigurableCell.swift */; };
+		DA08A0511CF3AB6100BBF1F8 /* RowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08A0501CF3AB6100BBF1F8 /* RowBuilder.swift */; };
 		DAC2D6741C9D743D009E9C19 /* Tablet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC2D6691C9D743D009E9C19 /* Tablet.framework */; };
 		DAC2D6871C9D7517009E9C19 /* Tablet.h in Headers */ = {isa = PBXBuildFile; fileRef = DAC2D6851C9D7517009E9C19 /* Tablet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DAC2D6901C9D799E009E9C19 /* TableDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D68C1C9D799E009E9C19 /* TableDirector.swift */; };
@@ -28,7 +29,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		501C70381CF387090099458A /* TablePrototypeRowBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TablePrototypeRowBuilder.swift; sourceTree = "<group>"; };
+		DA08A04E1CF3AB0C00BBF1F8 /* ConfigurableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
+		DA08A0501CF3AB6100BBF1F8 /* RowBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowBuilder.swift; sourceTree = "<group>"; };
 		DAC2D6691C9D743D009E9C19 /* Tablet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tablet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAC2D6731C9D743D009E9C19 /* TabletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TabletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAC2D6841C9D7517009E9C19 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -91,11 +93,12 @@
 		DAC2D68B1C9D7990009E9C19 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				DAC2D68F1C9D799E009E9C19 /* Tablet.swift */,
+				DA08A04E1CF3AB0C00BBF1F8 /* ConfigurableCell.swift */,
+				DA08A0501CF3AB6100BBF1F8 /* RowBuilder.swift */,
 				DAC2D68C1C9D799E009E9C19 /* TableDirector.swift */,
 				DAC2D68D1C9D799E009E9C19 /* TableRowBuilder.swift */,
 				DAC2D68E1C9D799E009E9C19 /* TableSectionBuilder.swift */,
-				501C70381CF387090099458A /* TablePrototypeRowBuilder.swift */,
+				DAC2D68F1C9D799E009E9C19 /* Tablet.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -220,8 +223,9 @@
 			files = (
 				DAC2D6901C9D799E009E9C19 /* TableDirector.swift in Sources */,
 				DAC2D6921C9D799E009E9C19 /* TableSectionBuilder.swift in Sources */,
+				DA08A0511CF3AB6100BBF1F8 /* RowBuilder.swift in Sources */,
+				DA08A04F1CF3AB0C00BBF1F8 /* ConfigurableCell.swift in Sources */,
 				DAC2D6911C9D799E009E9C19 /* TableRowBuilder.swift in Sources */,
-				501C70391CF387090099458A /* TablePrototypeRowBuilder.swift in Sources */,
 				DAC2D6931C9D799E009E9C19 /* Tablet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
