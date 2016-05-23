@@ -25,7 +25,7 @@ public protocol RowBuilder {
     var reusableIdentifier: String { get }
     var numberOfRows: Int { get }
     
-    var estimatedRowHeight: Float { get }
+    var estimatedRowHeight: CGFloat { get }
     
     func rowHeight(index: Int) -> CGFloat
     

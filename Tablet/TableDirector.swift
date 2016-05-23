@@ -142,7 +142,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     // MARK: UITableViewDelegate - actions
     
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return CGFloat(builderAtIndexPath(indexPath).0.estimatedRowHeight)
+        return builderAtIndexPath(indexPath).0.estimatedRowHeight
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

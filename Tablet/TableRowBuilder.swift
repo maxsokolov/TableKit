@@ -37,7 +37,7 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
         return items.count
     }
     
-    public var estimatedRowHeight: Float {
+    public var estimatedRowHeight: CGFloat {
         return 44
     }
     
@@ -120,8 +120,8 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
  */
 public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType.T == DataType, CellType: UITableViewCell> : TableBaseRowBuilder<DataType, CellType> {
     
-    public override var estimatedRowHeight: Float {
-        return CellType.estimatedHeight()
+    public override var estimatedRowHeight: CGFloat {
+        return CGFloat(CellType.estimatedHeight())
     }
 
     public init(item: DataType) {
