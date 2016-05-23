@@ -22,10 +22,10 @@ import UIKit
 import Foundation
 
 /**
-    Responsible for table view's datasource and delegate.
+ Responsible for table view's datasource and delegate.
  */
 public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
-
+    
     public private(set) weak var tableView: UITableView!
     private var sections = [TableSectionBuilder]()
     public weak var scrollDelegate: UIScrollViewDelegate?
@@ -36,7 +36,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         self.tableView = tableView
         self.tableView.delegate = self
         self.tableView.dataSource = self
-
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didReceiveAction), name: kActionPerformedNotificationKey, object: nil)
     }
     
@@ -44,17 +44,17 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
-
+    
     // MARK: Private methods
     
     /**
-        Find a row builder that responsible for building a row from cell with given item type.
-    
-        - Parameters:
-        - indexPath: path of cell to dequeue
-    
-        - Returns: A touple - (builder, builderItemIndex)
-    */
+     Find a row builder that responsible for building a row from cell with given item type.
+     
+     - Parameters:
+     - indexPath: path of cell to dequeue
+     
+     - Returns: A touple - (builder, builderItemIndex)
+     */
     private func builderAtIndexPath(indexPath: NSIndexPath) -> (RowBuilder, Int) {
         
         return sections[indexPath.section].builderAtIndex(indexPath.row)!
@@ -74,18 +74,18 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
             builder.0.invokeAction(.custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1, userInfo: action.userInfo)
         }
     }
-
+    
     public override func respondsToSelector(selector: Selector) -> Bool {
         return super.respondsToSelector(selector) || scrollDelegate?.respondsToSelector(selector) == true
     }
-
+    
     public override func forwardingTargetForSelector(selector: Selector) -> AnyObject? {
         return scrollDelegate?.respondsToSelector(selector) == true ? scrollDelegate : super.forwardingTargetForSelector(selector)
     }
 }
 
 public extension TableDirector {
- 
+    
     // MARK: UITableViewDataSource - configuration
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -103,7 +103,7 @@ public extension TableDirector {
         let builder = builderAtIndexPath(indexPath)
         
         let cell = tableView.dequeueReusableCellWithIdentifier(builder.0.reusableIdentifier, forIndexPath: indexPath)
-
+        
         if cell.frame.size.width != tableView.frame.size.width {
             cell.frame = CGRectMake(0, 0, tableView.frame.size.width, cell.frame.size.height)
             cell.layoutIfNeeded()
@@ -116,7 +116,7 @@ public extension TableDirector {
 }
 
 public extension TableDirector {
-
+    
     // MARK: UITableViewDataSource - section setup
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -153,16 +153,16 @@ public extension TableDirector {
 }
 
 public extension TableDirector {
-
+    
     // MARK: UITableViewDelegate - actions
-
+    
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-
+        
         return builderAtIndexPath(indexPath).0.estimatedRowHeight
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-
+        
         return invokeAction(.height, cell: nil, indexPath: indexPath) as? CGFloat ?? UITableViewAutomaticDimension
     }
     
@@ -172,7 +172,7 @@ public extension TableDirector {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
+        
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         
         if invokeAction(.click, cell: cell, indexPath: indexPath) != nil {
@@ -183,31 +183,31 @@ public extension TableDirector {
     }
     
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-
+        
         invokeAction(.deselect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath)
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-
+        
         invokeAction(.willDisplay, cell: cell, indexPath: indexPath)
     }
     
     func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-
+        
         return invokeAction(.shouldHighlight, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? Bool ?? true
     }
 }
 
 public extension TableDirector {
-
+    
     // MARK: Sections manipulation
-
+    
     public func appendSection(section: TableSectionBuilder) {
         appendSections([section])
     }
     
     public func appendSections(sections: [TableSectionBuilder]) {
-
+        
         sections.forEach { $0.willMoveToDirector(tableView) }
         self.sections.appendContentsOf(sections)
     }
@@ -217,8 +217,30 @@ public extension TableDirector {
     }
 }
 
-public func +=(left: TableDirector, right: RowBuilder) {
+public extension TableDirector {
+    
+    public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return invokeAction(.canEdit, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? Bool ?? false
+    }
+    
+    public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if editingStyle == .Delete {
+            
+            invokeAction(.clickDelete, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath)
+            
+            let builderInfo = builderAtIndexPath(indexPath)
+            builderInfo.0.removeItemAtIndex(builderInfo.1)
+            
+            tableView.beginUpdates()
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            tableView.endUpdates()
+        }
+    }
+}
 
+public func +=(left: TableDirector, right: RowBuilder) {
+    
     left.appendSection(TableSectionBuilder(rowBuilders: [right]))
 }
 
@@ -228,7 +250,7 @@ public func +=(left: TableDirector, right: [RowBuilder]) {
 }
 
 public func +=(left: TableDirector, right: TableSectionBuilder) {
-
+    
     left.appendSection(right)
 }
 
