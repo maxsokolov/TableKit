@@ -19,7 +19,6 @@
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import UIKit
-import Foundation
 
 public typealias ReturnValue = AnyObject?
 
@@ -155,6 +154,8 @@ public class TablePrototypeRowBuilder<DataType: Hashable, CellType: Configurable
         if let height = cachedHeights[item.hashValue] {
             return height
         }
+        
+        // TODO: set bounds to cell
         
         cell.configure(item)
         cell.setNeedsLayout()

@@ -19,7 +19,6 @@
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import UIKit
-import Foundation
 
 /**
     Responsible for building a certain table view section.
