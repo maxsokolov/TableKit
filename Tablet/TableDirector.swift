@@ -226,15 +226,7 @@ public extension TableDirector {
     public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
         if editingStyle == .Delete {
-            
             invokeAction(.clickDelete, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath)
-            
-            let builderInfo = builderAtIndexPath(indexPath)
-            builderInfo.0.removeItemAtIndex(builderInfo.1)
-            
-            tableView.beginUpdates()
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            tableView.endUpdates()
         }
     }
 }
