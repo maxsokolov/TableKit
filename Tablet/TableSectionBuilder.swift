@@ -29,7 +29,7 @@ public class TableSectionBuilder {
     weak var tableDirector: TableDirector? {
         didSet {
             guard let director = tableDirector else { return }
-            builders.forEach { $0.registerCell(inTableView: director.tableView) }
+            builders.forEach { $0.willUpdateDirector(director) }
         }
     }
 
@@ -79,7 +79,7 @@ public class TableSectionBuilder {
     
     public func append(rows rows: [RowBuilder]) {
         
-        if let tableView = tableDirector?.tableView { rows.forEach { $0.registerCell(inTableView: tableView) } }
+        if let director = tableDirector { rows.forEach { $0.willUpdateDirector(director) } }
         builders.appendContentsOf(rows)
     }
 

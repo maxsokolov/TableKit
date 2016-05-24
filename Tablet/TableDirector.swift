@@ -25,16 +25,16 @@ import UIKit
  */
 public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
 
-    public unowned let tableView: UITableView
+    public private(set) weak var tableView: UITableView?
     public weak var scrollDelegate: UIScrollViewDelegate?
     private var sections = [TableSectionBuilder]()
 
     public init(tableView: UITableView) {
+        super.init()
 
         self.tableView = tableView
-        super.init()
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+        self.tableView?.delegate = self
+        self.tableView?.dataSource = self
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didReceiveAction), name: TabletNotifications.CellAction, object: nil)
     }
@@ -77,7 +77,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     
     func didReceiveAction(notification: NSNotification) {
         
-        if let action = notification.object as? Action, indexPath = tableView.indexPathForCell(action.cell) {
+        if let action = notification.object as? Action, indexPath = tableView?.indexPathForCell(action.cell) {
             
             let builder = builderAtIndexPath(indexPath)
             builder.0.invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1, userInfo: notification.userInfo)
@@ -145,7 +145,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
+
         let builder = builderAtIndexPath(indexPath)
         return builder.0.rowHeight(builder.1)
     }

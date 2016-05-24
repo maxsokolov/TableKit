@@ -22,13 +22,15 @@ import UIKit
 
 public protocol RowBuilder {
     
-    var reusableIdentifier: String { get }
-    var numberOfRows: Int { get }
+    var tableDirector: TableDirector? { get }
     
+    var reusableIdentifier: String { get }
+    
+    var numberOfRows: Int { get }
     var estimatedRowHeight: CGFloat { get }
     
-    func rowHeight(index: Int) -> CGFloat
+    func willUpdateDirector(director: TableDirector?)
     
+    func rowHeight(index: Int) -> CGFloat
     func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject?
-    func registerCell(inTableView tableView: UITableView)
 }

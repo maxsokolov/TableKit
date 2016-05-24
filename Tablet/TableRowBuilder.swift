@@ -27,6 +27,8 @@ public typealias ReturnValue = AnyObject?
  */
 public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewCell> : RowBuilder {
     
+    public private(set) weak var tableDirector: TableDirector?
+    
     private var actions = [String: ActionHandler<DataType, CellType>]()
     private var items = [DataType]()
     
@@ -56,7 +58,7 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
     }
     
     public func rowHeight(index: Int) -> CGFloat {
-        return 0
+        return UITableViewAutomaticDimension
     }
     
     // MARK: - Chaining actions -
@@ -86,8 +88,8 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
         }
         return nil
     }
-    
-    public func registerCell(inTableView tableView: UITableView) {
+
+    private func registerCell(inTableView tableView: UITableView) {
         
         if tableView.dequeueReusableCellWithIdentifier(reusableIdentifier) != nil {
             return
@@ -101,6 +103,12 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
         } else {
             tableView.registerClass(CellType.self, forCellReuseIdentifier: reusableIdentifier)
         }
+    }
+
+    public func willUpdateDirector(director: TableDirector?) {
+        tableDirector = director
+
+        
     }
     
     // MARK: - Items manipulation -
@@ -144,6 +152,14 @@ public class TablePrototypeRowBuilder<DataType: Hashable, CellType: Configurable
 
     private var cachedHeights = [Int: CGFloat]()
     private var prototypeCell: CellType?
+    
+    public init(item: DataType) {
+        super.init(item: item, id: CellType.reusableIdentifier())
+    }
+    
+    public init(items: [DataType]? = nil) {
+        super.init(items: items, id: CellType.reusableIdentifier())
+    }
 
     public override func rowHeight(index: Int) -> CGFloat {
 
@@ -154,8 +170,8 @@ public class TablePrototypeRowBuilder<DataType: Hashable, CellType: Configurable
         if let height = cachedHeights[item.hashValue] {
             return height
         }
-        
-        // TODO: set bounds to cell
+
+        cell.bounds = CGRectMake(0, 0, tableDirector?.tableView?.bounds.size.width ?? 0, cell.bounds.height)
         
         cell.configure(item)
         cell.setNeedsLayout()
@@ -163,8 +179,24 @@ public class TablePrototypeRowBuilder<DataType: Hashable, CellType: Configurable
         
         let height = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height + 1
         cachedHeights[item.hashValue] = height
-        
+
         return height
+    }
+    
+    public override func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
+        
+        if case .configure = action {
+            (cell as? CellType)?.configure(items[itemIndex])
+        }
+        return super.invoke(action: action, cell: cell, indexPath: indexPath, itemIndex: itemIndex, userInfo: userInfo)
+    }
+    
+    public override func willUpdateDirector(director: TableDirector?) {
+
+        tableDirector = director
+        if let tableView = director?.tableView, cell = tableView.dequeueReusableCellWithIdentifier(reusableIdentifier) as? CellType {
+            prototypeCell = cell
+        }
     }
 }
 
