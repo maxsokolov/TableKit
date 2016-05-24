@@ -37,11 +37,7 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
     public var numberOfRows: Int {
         return items.count
     }
-    
-    public var estimatedRowHeight: CGFloat {
-        return 44
-    }
-    
+
     public init(item: DataType, id: String? = nil) {
 
         reusableIdentifier = id ?? String(CellType)
@@ -59,6 +55,10 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
     
     public func rowHeight(index: Int) -> CGFloat {
         return UITableViewAutomaticDimension
+    }
+    
+    public func estimatedRowHeight() -> CGFloat {
+        return 44
     }
     
     // MARK: - Chaining actions -
@@ -127,10 +127,6 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
  */
 public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType.T == DataType, CellType: UITableViewCell> : TableBaseRowBuilder<DataType, CellType> {
     
-    public override var estimatedRowHeight: CGFloat {
-        return CGFloat(CellType.estimatedHeight())
-    }
-
     public init(item: DataType) {
         super.init(item: item, id: CellType.reusableIdentifier())
     }
@@ -146,19 +142,27 @@ public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType
         }
         return super.invoke(action: action, cell: cell, indexPath: indexPath, itemIndex: itemIndex, userInfo: userInfo)
     }
+
+    public override func estimatedRowHeight() -> CGFloat {
+        return CGFloat(CellType.estimatedHeight())
+    }
 }
 
 public class TablePrototypeRowBuilder<DataType: Hashable, CellType: ConfigurableCell where CellType.T == DataType, CellType: UITableViewCell> : TableBaseRowBuilder<DataType, CellType> {
 
     private var cachedHeights = [Int: CGFloat]()
     private var prototypeCell: CellType?
-    
+
     public init(item: DataType) {
         super.init(item: item, id: CellType.reusableIdentifier())
     }
     
     public init(items: [DataType]? = nil) {
         super.init(items: items, id: CellType.reusableIdentifier())
+    }
+    
+    public override func estimatedRowHeight() -> CGFloat {
+        return UITableViewAutomaticDimension
     }
 
     public override func rowHeight(index: Int) -> CGFloat {
@@ -168,17 +172,25 @@ public class TablePrototypeRowBuilder<DataType: Hashable, CellType: Configurable
         let item = items[index]
         
         if let height = cachedHeights[item.hashValue] {
-            return height
+            //return height
         }
-
-        cell.bounds = CGRectMake(0, 0, tableDirector?.tableView?.bounds.size.width ?? 0, cell.bounds.height)
         
+        
+        
+
+        
+        cell.bounds = CGRectMake(0, 0, tableDirector?.tableView?.bounds.size.width ?? 0, cell.bounds.height)
+
         cell.configure(item)
+        
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
         
         let height = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height + 1
+        
         cachedHeights[item.hashValue] = height
+        
+        print(tableDirector?.tableView?.bounds.size.width, cell.bounds.height, height)
 
         return height
     }

@@ -39,8 +39,54 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StoryboardImageTableViewCell" rowHeight="141" id="IBY-tW-SgU" customClass="StoryboardImageTableViewCell" customModule="TabletDemo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="92" width="600" height="141"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IBY-tW-SgU" id="UNZ-nz-200">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="140"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" placeholderIntrinsicWidth="172" placeholderIntrinsicHeight="21" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YnK-4H-0SS">
+                                                    <rect key="frame" x="128" y="20" width="452" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" placeholderIntrinsicWidth="172" placeholderIntrinsicHeight="18" text="Subtitle" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oPO-9F-UcX">
+                                                    <rect key="frame" x="128" y="44" width="452" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="il6-0T-Sfb">
+                                                    <rect key="frame" x="20" y="20" width="100" height="100"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" priority="999" constant="100" id="Ryh-cg-Q69"/>
+                                                        <constraint firstAttribute="height" priority="999" constant="100" id="cjb-Sw-psw"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="oPO-9F-UcX" secondAttribute="bottom" constant="20" id="3wD-H5-3wL"/>
+                                                <constraint firstAttribute="trailing" secondItem="oPO-9F-UcX" secondAttribute="trailing" constant="20" id="4ns-lI-pTV"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="il6-0T-Sfb" secondAttribute="bottom" priority="999" constant="20" id="CQQ-43-LmG"/>
+                                                <constraint firstItem="il6-0T-Sfb" firstAttribute="top" secondItem="UNZ-nz-200" secondAttribute="top" constant="20" id="F5Q-jP-iQ0"/>
+                                                <constraint firstItem="YnK-4H-0SS" firstAttribute="leading" secondItem="il6-0T-Sfb" secondAttribute="trailing" constant="8" id="Qwz-5H-QFk"/>
+                                                <constraint firstItem="oPO-9F-UcX" firstAttribute="leading" secondItem="il6-0T-Sfb" secondAttribute="trailing" constant="8" id="VNa-5R-BEy"/>
+                                                <constraint firstItem="il6-0T-Sfb" firstAttribute="leading" secondItem="UNZ-nz-200" secondAttribute="leading" constant="20" id="dIx-cj-H8P"/>
+                                                <constraint firstItem="YnK-4H-0SS" firstAttribute="top" secondItem="UNZ-nz-200" secondAttribute="top" constant="20" id="h4u-Nr-cGF"/>
+                                                <constraint firstItem="oPO-9F-UcX" firstAttribute="top" secondItem="YnK-4H-0SS" secondAttribute="bottom" constant="3" id="j6U-hX-Z6k"/>
+                                                <constraint firstAttribute="trailing" secondItem="YnK-4H-0SS" secondAttribute="trailing" constant="20" id="ulW-hU-AJG"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="customImageView" destination="il6-0T-Sfb" id="Ufi-6Y-Vuf"/>
+                                            <outlet property="subtitleLabel" destination="oPO-9F-UcX" id="RIK-1t-nVt"/>
+                                            <outlet property="titleLabel" destination="YnK-4H-0SS" id="ilA-7H-pq7"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StoryboardTableViewCell" id="nE5-Y5-OFf" customClass="StoryboardTableViewCell" customModule="TabletDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="233" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nE5-Y5-OFf" id="3yF-sl-yNq">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>

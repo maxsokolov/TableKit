@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA08A0531CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08A0521CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift */; };
 		DAC2D5CA1C9D303E009E9C19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D5C91C9D303E009E9C19 /* AppDelegate.swift */; };
 		DAC2D5CF1C9D30A7009E9C19 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAC2D5CD1C9D30A7009E9C19 /* Main.storyboard */; };
 		DAC2D5D01C9D30A7009E9C19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAC2D5CE1C9D30A7009E9C19 /* LaunchScreen.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA08A0521CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardImageTableViewCell.swift; sourceTree = "<group>"; };
 		DAB7EB271BEF787300D2AD5E /* TabletDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TabletDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAC2D5C91C9D303E009E9C19 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAC2D5CD1C9D30A7009E9C19 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -39,11 +41,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA539C871CF50B1800368ACB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DAB7EB1E1BEF787300D2AD5E = {
 			isa = PBXGroup;
 			children = (
 				DAC2D5C61C9D2FE5009E9C19 /* Classes */,
 				DAC2D5CB1C9D3058009E9C19 /* Resources */,
+				DA539C871CF50B1800368ACB /* Frameworks */,
 				DAB7EB281BEF787300D2AD5E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -122,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				DACB71771CC2D6ED00432BD3 /* StoryboardTableViewCell.swift */,
+				DA08A0521CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -202,6 +213,7 @@
 				DACB71761CC2D63D00432BD3 /* MainController.swift in Sources */,
 				DAC2D5CA1C9D303E009E9C19 /* AppDelegate.swift in Sources */,
 				DACB717A1CC2D89D00432BD3 /* HeaderFooterController.swift in Sources */,
+				DA08A0531CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,7 +310,7 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tablet.tablet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tablet.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -313,7 +325,7 @@
 				INFOPLIST_FILE = Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tablet.tablet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tablet.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
