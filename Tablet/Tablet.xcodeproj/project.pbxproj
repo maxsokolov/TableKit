@@ -97,13 +97,13 @@
 		DAC2D68B1C9D7990009E9C19 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				DA08A04E1CF3AB0C00BBF1F8 /* ConfigurableCell.swift */,
-				DA08A0501CF3AB6100BBF1F8 /* RowBuilder.swift */,
 				DAC2D68C1C9D799E009E9C19 /* TableDirector.swift */,
+				DA08A0501CF3AB6100BBF1F8 /* RowBuilder.swift */,
 				DAC2D68D1C9D799E009E9C19 /* TableBaseRowBuilder.swift */,
 				5058386D1CF62B0700224C58 /* TableRowBuilder.swift */,
 				5058386F1CF62B1300224C58 /* TablePrototypeRowBuilder.swift */,
 				DAC2D68E1C9D799E009E9C19 /* TableSectionBuilder.swift */,
+				DA08A04E1CF3AB0C00BBF1F8 /* ConfigurableCell.swift */,
 				DAC2D68F1C9D799E009E9C19 /* Tablet.swift */,
 			);
 			name = Classes;

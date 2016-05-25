@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5058386B1CF6189D00224C58 /* Tablet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5058386A1CF6189D00224C58 /* Tablet.framework */; };
-		5058386C1CF6189D00224C58 /* Tablet.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5058386A1CF6189D00224C58 /* Tablet.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA08A0531CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08A0521CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift */; };
+		DA539C941CF6610400368ACB /* Tablet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA539C931CF6610400368ACB /* Tablet.framework */; };
 		DAC2D5CA1C9D303E009E9C19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D5C91C9D303E009E9C19 /* AppDelegate.swift */; };
 		DAC2D5CF1C9D30A7009E9C19 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAC2D5CD1C9D30A7009E9C19 /* Main.storyboard */; };
 		DAC2D5D01C9D30A7009E9C19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAC2D5CE1C9D30A7009E9C19 /* LaunchScreen.storyboard */; };
@@ -19,23 +18,9 @@
 		DACB717A1CC2D89D00432BD3 /* HeaderFooterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB71791CC2D89D00432BD3 /* HeaderFooterController.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		DA539C921CF50E9900368ACB /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				5058386C1CF6189D00224C58 /* Tablet.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		5058386A1CF6189D00224C58 /* Tablet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Tablet.framework; path = "/Users/max/Library/Developer/Xcode/DerivedData/Tablet-bomgsgklcxthxkeamvdbfmrhqnno/Build/Products/Debug-iphonesimulator/Tablet.framework"; sourceTree = "<absolute>"; };
 		DA08A0521CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardImageTableViewCell.swift; sourceTree = "<group>"; };
+		DA539C931CF6610400368ACB /* Tablet.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tablet.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/Tablet-hgommdyxtgxijceamltarpblrbwc/Build/Products/Debug-iphoneos/Tablet.framework"; sourceTree = "<group>"; };
 		DAB7EB271BEF787300D2AD5E /* TabletDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TabletDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAC2D5C91C9D303E009E9C19 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAC2D5CD1C9D30A7009E9C19 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -52,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5058386B1CF6189D00224C58 /* Tablet.framework in Frameworks */,
+				DA539C941CF6610400368ACB /* Tablet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +47,7 @@
 		DA539C871CF50B1800368ACB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DA539C931CF6610400368ACB /* Tablet.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -69,7 +55,6 @@
 		DAB7EB1E1BEF787300D2AD5E = {
 			isa = PBXGroup;
 			children = (
-				5058386A1CF6189D00224C58 /* Tablet.framework */,
 				DAC2D5C61C9D2FE5009E9C19 /* Classes */,
 				DAC2D5CB1C9D3058009E9C19 /* Resources */,
 				DA539C871CF50B1800368ACB /* Frameworks */,
@@ -166,7 +151,6 @@
 				DAB7EB231BEF787300D2AD5E /* Sources */,
 				DAB7EB241BEF787300D2AD5E /* Frameworks */,
 				DAB7EB251BEF787300D2AD5E /* Resources */,
-				DA539C921CF50E9900368ACB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

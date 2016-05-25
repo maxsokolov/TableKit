@@ -111,4 +111,3 @@ public class Action {
         NSNotificationCenter.defaultCenter().postNotificationName(TabletNotifications.CellAction, object: self, userInfo: userInfo)
     }
 }
-

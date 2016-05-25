@@ -31,7 +31,7 @@ public protocol RowBuilder {
     func willUpdateDirector(director: TableDirector?)
     
     func rowHeight(index: Int) -> CGFloat
-    func estimatedRowHeight() -> CGFloat
+    func estimatedRowHeight(index: Int) -> CGFloat
     
     func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject?
 }

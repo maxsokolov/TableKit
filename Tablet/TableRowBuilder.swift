@@ -41,7 +41,7 @@ public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType
         return super.invoke(action: action, cell: cell, indexPath: indexPath, itemIndex: itemIndex, userInfo: userInfo)
     }
     
-    public override func estimatedRowHeight() -> CGFloat {
+    public override func estimatedRowHeight(index: Int) -> CGFloat {
         return CGFloat(CellType.estimatedHeight())
     }
 }

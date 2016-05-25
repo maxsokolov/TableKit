@@ -25,7 +25,7 @@ import UIKit
     Can host several row builders.
 */
 public class TableSectionBuilder {
-    
+
     weak var tableDirector: TableDirector? {
         didSet {
             guard let director = tableDirector else { return }

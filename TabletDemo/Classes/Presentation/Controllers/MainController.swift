@@ -21,7 +21,7 @@ class MainController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let rows = TablePrototypeRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
+        let rows = TableRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
             .action(.click) { [unowned self] e in
                 self.performSegueWithIdentifier("headerfooter", sender: nil)
             }

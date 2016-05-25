@@ -57,7 +57,7 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
         return UITableViewAutomaticDimension
     }
     
-    public func estimatedRowHeight() -> CGFloat {
+    public func estimatedRowHeight(index: Int) -> CGFloat {
         return 44
     }
     

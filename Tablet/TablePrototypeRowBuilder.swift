@@ -33,7 +33,7 @@ public class TablePrototypeRowBuilder<DataType: Hashable, CellType: Configurable
         super.init(items: items, id: CellType.reusableIdentifier())
     }
     
-    public override func estimatedRowHeight() -> CGFloat {
+    public override func estimatedRowHeight(index: Int) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
@@ -72,25 +72,6 @@ public class TablePrototypeRowBuilder<DataType: Hashable, CellType: Configurable
         print(tableDirector?.tableView?.bounds.size.width, cell.bounds.height, height)
         
         return height
-    }
-    
-    public func preheat(item: DataType) {
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            
-            let height = self.heightCall(item, width: 0)
-            
-            // check if actual height exists
-            // calc height
-            
-            //let heights = self.items.map { self.heightZ($0) }
-            
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                
-                // check if table width is actual
-                // store height in cache
-            }
-        }
     }
     
     public override func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
