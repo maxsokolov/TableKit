@@ -30,7 +30,7 @@ class StoryboardImageTableViewCell: UITableViewCell, ConfigurableCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        //contentView.layoutIfNeeded()
+        contentView.layoutIfNeeded()
         
         subtitleLabel.preferredMaxLayoutWidth = subtitleLabel.bounds.size.width
     }

@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5058386B1CF6189D00224C58 /* Tablet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5058386A1CF6189D00224C58 /* Tablet.framework */; };
+		5058386C1CF6189D00224C58 /* Tablet.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5058386A1CF6189D00224C58 /* Tablet.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA08A0531CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08A0521CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift */; };
-		DA539C901CF50E9900368ACB /* Tablet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA539C8F1CF50E9900368ACB /* Tablet.framework */; };
-		DA539C911CF50E9900368ACB /* Tablet.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA539C8F1CF50E9900368ACB /* Tablet.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DAC2D5CA1C9D303E009E9C19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D5C91C9D303E009E9C19 /* AppDelegate.swift */; };
 		DAC2D5CF1C9D30A7009E9C19 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAC2D5CD1C9D30A7009E9C19 /* Main.storyboard */; };
 		DAC2D5D01C9D30A7009E9C19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAC2D5CE1C9D30A7009E9C19 /* LaunchScreen.storyboard */; };
@@ -26,7 +26,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				DA539C911CF50E9900368ACB /* Tablet.framework in Embed Frameworks */,
+				5058386C1CF6189D00224C58 /* Tablet.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -34,8 +34,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5058386A1CF6189D00224C58 /* Tablet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Tablet.framework; path = "/Users/max/Library/Developer/Xcode/DerivedData/Tablet-bomgsgklcxthxkeamvdbfmrhqnno/Build/Products/Debug-iphonesimulator/Tablet.framework"; sourceTree = "<absolute>"; };
 		DA08A0521CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardImageTableViewCell.swift; sourceTree = "<group>"; };
-		DA539C8F1CF50E9900368ACB /* Tablet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Tablet.framework; path = "/Users/maxsokolov/Library/Developer/Xcode/DerivedData/Tablet-hgommdyxtgxijceamltarpblrbwc/Build/Products/Debug-iphoneos/Tablet.framework"; sourceTree = "<absolute>"; };
 		DAB7EB271BEF787300D2AD5E /* TabletDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TabletDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAC2D5C91C9D303E009E9C19 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAC2D5CD1C9D30A7009E9C19 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -52,7 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA539C901CF50E9900368ACB /* Tablet.framework in Frameworks */,
+				5058386B1CF6189D00224C58 /* Tablet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,7 +69,7 @@
 		DAB7EB1E1BEF787300D2AD5E = {
 			isa = PBXGroup;
 			children = (
-				DA539C8F1CF50E9900368ACB /* Tablet.framework */,
+				5058386A1CF6189D00224C58 /* Tablet.framework */,
 				DAC2D5C61C9D2FE5009E9C19 /* Classes */,
 				DAC2D5CB1C9D3058009E9C19 /* Resources */,
 				DA539C871CF50B1800368ACB /* Frameworks */,

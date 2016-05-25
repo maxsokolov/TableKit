@@ -164,6 +164,24 @@ public class TablePrototypeRowBuilder<DataType: Hashable, CellType: Configurable
     public override func estimatedRowHeight() -> CGFloat {
         return UITableViewAutomaticDimension
     }
+    
+    func heightCall(item: DataType, width: CGFloat) -> CGFloat {
+        
+        guard let cell = prototypeCell else { return 0 }
+        
+        cell.bounds = CGRectMake(0, 0, width, cell.bounds.height)
+        
+        cell.configure(item)
+        
+        cell.setNeedsLayout()
+        cell.layoutIfNeeded()
+        
+        return cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height + 1
+    }
+    
+    // прехит по мере скроллинга в бэк
+    // прехит не должен прехитить то что уже есть (показанное)
+    // по мере скроллинга уметь отменять перхит ()
 
     public override func rowHeight(index: Int) -> CGFloat {
 
@@ -172,27 +190,35 @@ public class TablePrototypeRowBuilder<DataType: Hashable, CellType: Configurable
         let item = items[index]
         
         if let height = cachedHeights[item.hashValue] {
-            //return height
+            return height
         }
-        
-        
-        
 
-        
-        cell.bounds = CGRectMake(0, 0, tableDirector?.tableView?.bounds.size.width ?? 0, cell.bounds.height)
+        let height = heightCall(item, width: tableDirector?.tableView?.bounds.size.width ?? 0)
 
-        cell.configure(item)
-        
-        cell.setNeedsLayout()
-        cell.layoutIfNeeded()
-        
-        let height = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height + 1
-        
         cachedHeights[item.hashValue] = height
         
         print(tableDirector?.tableView?.bounds.size.width, cell.bounds.height, height)
 
         return height
+    }
+    
+    public func preheat(item: DataType) {
+
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            
+            let height = self.heightCall(item, width: 0)
+            
+            // check if actual height exists
+            // calc height
+            
+            //let heights = self.items.map { self.heightZ($0) }
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            
+                // check if table width is actual
+                // store height in cache
+            }
+        }
     }
     
     public override func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
