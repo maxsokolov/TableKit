@@ -84,8 +84,8 @@ public class TablePrototypeRowBuilder<DataType: Hashable, CellType: Configurable
     }
     
     public override func willUpdateDirector(director: TableDirector?) {
+        super.willUpdateDirector(director)
         
-        //tableDirector = director
         if let tableView = director?.tableView, cell = tableView.dequeueReusableCellWithIdentifier(reusableIdentifier) as? CellType {
             prototypeCell = cell
         }

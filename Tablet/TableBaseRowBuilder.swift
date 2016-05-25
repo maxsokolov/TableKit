@@ -113,6 +113,11 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
     
     // MARK: - Items manipulation -
     
+    public func remove(index index: Int, animated: UITableViewRowAnimation) {
+        
+        //tableDirector?.tableView?.deleteRowsAtIndexPaths(<#T##indexPaths: [NSIndexPath]##[NSIndexPath]#>, withRowAnimation: <#T##UITableViewRowAnimation#>)
+    }
+    
     public func item(index index: Int) -> DataType {
         return items[index]
     }

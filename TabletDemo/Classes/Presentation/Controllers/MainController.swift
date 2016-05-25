@@ -21,11 +21,16 @@ class MainController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let rows = TableRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
+        let rows = TablePrototypeRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
             .action(.click) { [unowned self] e in
                 self.performSegueWithIdentifier("headerfooter", sender: nil)
             }
+        
+        let rows2 = TablePrototypeRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
+        
+        rows.remove(index: 0, animated: .None)
 
         tableDirector += rows
+        tableDirector += rows2
     }
 }
