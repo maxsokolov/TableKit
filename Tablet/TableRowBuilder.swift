@@ -20,108 +20,6 @@
 
 import UIKit
 
-public typealias ReturnValue = AnyObject?
-
-/**
- Responsible for building cells of given type and passing items to them.
- */
-public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewCell> : RowBuilder {
-    
-    public private(set) weak var tableDirector: TableDirector?
-    
-    private var actions = [String: ActionHandler<DataType, CellType>]()
-    private var items = [DataType]()
-    
-    public let reusableIdentifier: String
-    
-    public var numberOfRows: Int {
-        return items.count
-    }
-
-    public init(item: DataType, id: String? = nil) {
-
-        reusableIdentifier = id ?? String(CellType)
-        items.append(item)
-    }
-    
-    public init(items: [DataType]? = nil, id: String? = nil) {
-
-        reusableIdentifier = id ?? String(CellType)
-
-        if let items = items {
-            self.items.appendContentsOf(items)
-        }
-    }
-    
-    public func rowHeight(index: Int) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
-    
-    public func estimatedRowHeight() -> CGFloat {
-        return 44
-    }
-    
-    // MARK: - Chaining actions -
-    
-    public func action(key: String, handler: (data: ActionData<DataType, CellType>) -> Void) -> Self {
-        
-        actions[key] = .Handler(handler)
-        return self
-    }
-    
-    public func action(type: ActionType, handler: (data: ActionData<DataType, CellType>) -> Void) -> Self {
-
-        actions[type.key] = .Handler(handler)
-        return self
-    }
-    
-    public func valueAction(type: ActionType, handler: (data: ActionData<DataType, CellType>) -> ReturnValue) -> Self {
-        
-        actions[type.key] = .ValueHandler(handler)
-        return self
-    }
-
-    public func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
-        
-        if let action = actions[action.key] {
-            return action.invoke(ActionData(cell: cell as? CellType, indexPath: indexPath, item: items[itemIndex], itemIndex: itemIndex, userInfo: userInfo))
-        }
-        return nil
-    }
-
-    private func registerCell(inTableView tableView: UITableView) {
-        
-        if tableView.dequeueReusableCellWithIdentifier(reusableIdentifier) != nil {
-            return
-        }
-        
-        let resource = String(CellType)
-        let bundle = NSBundle(forClass: CellType.self)
-        
-        if let _ = bundle.pathForResource(resource, ofType: "nib") { // existing cell
-            tableView.registerNib(UINib(nibName: resource, bundle: bundle), forCellReuseIdentifier: reusableIdentifier)
-        } else {
-            tableView.registerClass(CellType.self, forCellReuseIdentifier: reusableIdentifier)
-        }
-    }
-
-    public func willUpdateDirector(director: TableDirector?) {
-        tableDirector = director
-
-        
-    }
-    
-    // MARK: - Items manipulation -
-    
-    public func append(items items: [DataType]) {
-        self.items.appendContentsOf(items)
-    }
-    
-    public func clear() {
-        items.removeAll()
-    }
-}
-
 /**
  Responsible for building configurable cells of given type and passing items to them.
  */
@@ -130,118 +28,20 @@ public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType
     public init(item: DataType) {
         super.init(item: item, id: CellType.reusableIdentifier())
     }
-
+    
     public init(items: [DataType]? = nil) {
         super.init(items: items, id: CellType.reusableIdentifier())
     }
-
+    
     public override func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
         
         if case .configure = action {
-            (cell as? CellType)?.configure(items[itemIndex])
+            (cell as? CellType)?.configure(item(index: itemIndex))
         }
         return super.invoke(action: action, cell: cell, indexPath: indexPath, itemIndex: itemIndex, userInfo: userInfo)
     }
-
+    
     public override func estimatedRowHeight() -> CGFloat {
         return CGFloat(CellType.estimatedHeight())
     }
-}
-
-public class TablePrototypeRowBuilder<DataType: Hashable, CellType: ConfigurableCell where CellType.T == DataType, CellType: UITableViewCell> : TableBaseRowBuilder<DataType, CellType> {
-
-    private var cachedHeights = [Int: CGFloat]()
-    private var prototypeCell: CellType?
-
-    public init(item: DataType) {
-        super.init(item: item, id: CellType.reusableIdentifier())
-    }
-    
-    public init(items: [DataType]? = nil) {
-        super.init(items: items, id: CellType.reusableIdentifier())
-    }
-    
-    public override func estimatedRowHeight() -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
-    
-    func heightCall(item: DataType, width: CGFloat) -> CGFloat {
-        
-        guard let cell = prototypeCell else { return 0 }
-        
-        cell.bounds = CGRectMake(0, 0, width, cell.bounds.height)
-        
-        cell.configure(item)
-        
-        cell.setNeedsLayout()
-        cell.layoutIfNeeded()
-        
-        return cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height + 1
-    }
-    
-    // прехит по мере скроллинга в бэк
-    // прехит не должен прехитить то что уже есть (показанное)
-    // по мере скроллинга уметь отменять перхит ()
-
-    public override func rowHeight(index: Int) -> CGFloat {
-
-        guard let cell = prototypeCell else { return 0 }
-        
-        let item = items[index]
-        
-        if let height = cachedHeights[item.hashValue] {
-            return height
-        }
-
-        let height = heightCall(item, width: tableDirector?.tableView?.bounds.size.width ?? 0)
-
-        cachedHeights[item.hashValue] = height
-        
-        print(tableDirector?.tableView?.bounds.size.width, cell.bounds.height, height)
-
-        return height
-    }
-    
-    public func preheat(item: DataType) {
-
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            
-            let height = self.heightCall(item, width: 0)
-            
-            // check if actual height exists
-            // calc height
-            
-            //let heights = self.items.map { self.heightZ($0) }
-            
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            
-                // check if table width is actual
-                // store height in cache
-            }
-        }
-    }
-    
-    public override func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
-        
-        if case .configure = action {
-            (cell as? CellType)?.configure(items[itemIndex])
-        }
-        return super.invoke(action: action, cell: cell, indexPath: indexPath, itemIndex: itemIndex, userInfo: userInfo)
-    }
-    
-    public override func willUpdateDirector(director: TableDirector?) {
-
-        tableDirector = director
-        if let tableView = director?.tableView, cell = tableView.dequeueReusableCellWithIdentifier(reusableIdentifier) as? CellType {
-            prototypeCell = cell
-        }
-    }
-}
-
-public func +=<DataType, CellType>(left: TableBaseRowBuilder<DataType, CellType>, right: DataType) {
-    left.append(items: [right])
-}
-
-public func +=<DataType, CellType>(left: TableBaseRowBuilder<DataType, CellType>, right: [DataType]) {
-    left.append(items: right)
 }

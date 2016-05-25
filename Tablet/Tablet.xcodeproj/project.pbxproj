@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5058386E1CF62B0700224C58 /* TableRowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058386D1CF62B0700224C58 /* TableRowBuilder.swift */; };
+		505838701CF62B1300224C58 /* TablePrototypeRowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058386F1CF62B1300224C58 /* TablePrototypeRowBuilder.swift */; };
 		DA08A04F1CF3AB0C00BBF1F8 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08A04E1CF3AB0C00BBF1F8 /* ConfigurableCell.swift */; };
 		DA08A0511CF3AB6100BBF1F8 /* RowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08A0501CF3AB6100BBF1F8 /* RowBuilder.swift */; };
 		DAC2D6741C9D743D009E9C19 /* Tablet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC2D6691C9D743D009E9C19 /* Tablet.framework */; };
 		DAC2D6871C9D7517009E9C19 /* Tablet.h in Headers */ = {isa = PBXBuildFile; fileRef = DAC2D6851C9D7517009E9C19 /* Tablet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DAC2D6901C9D799E009E9C19 /* TableDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D68C1C9D799E009E9C19 /* TableDirector.swift */; };
-		DAC2D6911C9D799E009E9C19 /* TableRowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D68D1C9D799E009E9C19 /* TableRowBuilder.swift */; };
+		DAC2D6911C9D799E009E9C19 /* TableBaseRowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D68D1C9D799E009E9C19 /* TableBaseRowBuilder.swift */; };
 		DAC2D6921C9D799E009E9C19 /* TableSectionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D68E1C9D799E009E9C19 /* TableSectionBuilder.swift */; };
 		DAC2D6931C9D799E009E9C19 /* Tablet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D68F1C9D799E009E9C19 /* Tablet.swift */; };
 		DAC2D6991C9D7A3F009E9C19 /* TabletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D6961C9D7A3B009E9C19 /* TabletTests.swift */; };
@@ -29,6 +31,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5058386D1CF62B0700224C58 /* TableRowBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowBuilder.swift; sourceTree = "<group>"; };
+		5058386F1CF62B1300224C58 /* TablePrototypeRowBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TablePrototypeRowBuilder.swift; sourceTree = "<group>"; };
 		DA08A04E1CF3AB0C00BBF1F8 /* ConfigurableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
 		DA08A0501CF3AB6100BBF1F8 /* RowBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowBuilder.swift; sourceTree = "<group>"; };
 		DAC2D6691C9D743D009E9C19 /* Tablet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tablet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -36,7 +40,7 @@
 		DAC2D6841C9D7517009E9C19 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DAC2D6851C9D7517009E9C19 /* Tablet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tablet.h; sourceTree = "<group>"; };
 		DAC2D68C1C9D799E009E9C19 /* TableDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDirector.swift; sourceTree = "<group>"; };
-		DAC2D68D1C9D799E009E9C19 /* TableRowBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowBuilder.swift; sourceTree = "<group>"; };
+		DAC2D68D1C9D799E009E9C19 /* TableBaseRowBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableBaseRowBuilder.swift; sourceTree = "<group>"; };
 		DAC2D68E1C9D799E009E9C19 /* TableSectionBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionBuilder.swift; sourceTree = "<group>"; };
 		DAC2D68F1C9D799E009E9C19 /* Tablet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tablet.swift; sourceTree = "<group>"; };
 		DAC2D6951C9D7A3B009E9C19 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -96,7 +100,9 @@
 				DA08A04E1CF3AB0C00BBF1F8 /* ConfigurableCell.swift */,
 				DA08A0501CF3AB6100BBF1F8 /* RowBuilder.swift */,
 				DAC2D68C1C9D799E009E9C19 /* TableDirector.swift */,
-				DAC2D68D1C9D799E009E9C19 /* TableRowBuilder.swift */,
+				DAC2D68D1C9D799E009E9C19 /* TableBaseRowBuilder.swift */,
+				5058386D1CF62B0700224C58 /* TableRowBuilder.swift */,
+				5058386F1CF62B1300224C58 /* TablePrototypeRowBuilder.swift */,
 				DAC2D68E1C9D799E009E9C19 /* TableSectionBuilder.swift */,
 				DAC2D68F1C9D799E009E9C19 /* Tablet.swift */,
 			);
@@ -225,7 +231,9 @@
 				DAC2D6921C9D799E009E9C19 /* TableSectionBuilder.swift in Sources */,
 				DA08A0511CF3AB6100BBF1F8 /* RowBuilder.swift in Sources */,
 				DA08A04F1CF3AB0C00BBF1F8 /* ConfigurableCell.swift in Sources */,
-				DAC2D6911C9D799E009E9C19 /* TableRowBuilder.swift in Sources */,
+				DAC2D6911C9D799E009E9C19 /* TableBaseRowBuilder.swift in Sources */,
+				5058386E1CF62B0700224C58 /* TableRowBuilder.swift in Sources */,
+				505838701CF62B1300224C58 /* TablePrototypeRowBuilder.swift in Sources */,
 				DAC2D6931C9D799E009E9C19 /* Tablet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
