@@ -9,6 +9,19 @@
 import UIKit
 import Tablet
 
+class LolCell: UITableViewCell, ConfigurableCell {
+    
+    typealias T = String
+    
+    func configure(str: T) {
+        
+    }
+    
+    static func estimatedHeight() -> Float {
+        return 44
+    }
+}
+
 class MainController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView! {
@@ -28,9 +41,14 @@ class MainController: UIViewController {
         
         let rows2 = TablePrototypeRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
         
+        // animation task
         rows.remove(index: 0, animated: .None)
 
         tableDirector += rows
         tableDirector += rows2
+        
+        let lolBuilder = LolRowBuilder()
+        
+        lolBuilder.append(["1", "2", "3"], cellType: LolCell.self)
     }
 }

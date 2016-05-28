@@ -45,3 +45,15 @@ public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType
         return CGFloat(CellType.estimatedHeight())
     }
 }
+
+public class LolRowBuilder {
+    
+    public init() {
+        
+    }
+    
+    public func append<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>(items: [ItemType], cellType: CellType.Type) {
+        
+        
+    }
+}
