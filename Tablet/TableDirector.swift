@@ -52,11 +52,6 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         
         
     }
-    
-    public func row<T>(row: T) -> T {
-        
-        return row
-    }
 
     // MARK: Private methods
 
