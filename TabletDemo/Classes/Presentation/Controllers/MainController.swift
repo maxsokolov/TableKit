@@ -9,19 +9,6 @@
 import UIKit
 import Tablet
 
-class LolCell: UITableViewCell, ConfigurableCell {
-    
-    typealias T = String
-    
-    func configure(str: T) {
-        
-    }
-    
-    static func estimatedHeight() -> Float {
-        return 44
-    }
-}
-
 class MainController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView! {
@@ -34,21 +21,36 @@ class MainController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let rows = TablePrototypeRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
+        let rowBuilder = TableRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
             .action(.click) { [unowned self] e in
                 self.performSegueWithIdentifier("headerfooter", sender: nil)
             }
         
-        let rows2 = TablePrototypeRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
+        let rows2 = TableRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
         
-        // animation task
-        rows.remove(index: 0, animated: .None)
 
-        tableDirector += rows
+        
+        let section = TableSectionBuilder(headerTitle: "", footerTitle: "", rows: [rowBuilder])
+        
+        //tableView.moveSection(0, toSection: 0)
+        //tableView.reloadSections([], withRowAnimation: .None)
+        //tableView.deleteSections([], withRowAnimation: .None)
+        //tableView.insertSections([], withRowAnimation: .None)
+        
+        
+        
+        tableDirector.performBatchUpdates {
+            
+            rowBuilder
+                .delete(indexes: [0], animated: .None)
+                .insert(["2"], atIndex: 0, animated: .None)
+                .update(index: 0, item: "", animated: .None)
+                .move([1, 2], toIndexes: [3, 4])
+        }
+        
+        tableDirector.append(section: section)
+
+        tableDirector += rowBuilder
         tableDirector += rows2
-        
-        let lolBuilder = LolRowBuilder()
-        
-        lolBuilder.append(["1", "2", "3"], cellType: LolCell.self)
     }
 }

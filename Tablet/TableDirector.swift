@@ -43,17 +43,23 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
+    
+    public func reload() {
+        tableView?.reloadData()
+    }
+    
+    public func performBatchUpdates(handler: () -> Void) {
+        
+        
+    }
+    
+    public func row<T>(row: T) -> T {
+        
+        return row
+    }
 
     // MARK: Private methods
-    
-    /**
-        Find a row builder that responsible for building a row from cell with given item type.
-    
-        - Parameters:
-        - indexPath: path of cell to dequeue
-    
-        - Returns: A touple - (builder, builderItemIndex)
-    */
+
     private func builderAtIndexPath(indexPath: NSIndexPath) -> (RowBuilder, Int) {
         return sections[indexPath.section].builderAtIndex(indexPath.row)!
     }
@@ -194,20 +200,4 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     public func clear() {
         sections.removeAll()
     }
-}
-
-public func +=(left: TableDirector, right: RowBuilder) {
-    left.append(section: TableSectionBuilder(rows: [right]))
-}
-
-public func +=(left: TableDirector, right: [RowBuilder]) {
-    left.append(section: TableSectionBuilder(rows: right))
-}
-
-public func +=(left: TableDirector, right: TableSectionBuilder) {
-    left.append(section: right)
-}
-
-public func +=(left: TableDirector, right: [TableSectionBuilder]) {
-    left.append(sections: right)
 }

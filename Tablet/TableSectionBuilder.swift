@@ -98,11 +98,3 @@ public class TableSectionBuilder {
         return nil
     }
 }
-
-public func +=(left: TableSectionBuilder, right: RowBuilder) {
-    left.append(row: right)
-}
-
-public func +=(left: TableSectionBuilder, right: [RowBuilder]) {
-    left.append(rows: right)
-}

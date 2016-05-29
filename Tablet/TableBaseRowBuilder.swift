@@ -113,9 +113,26 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
     
     // MARK: - Items manipulation -
     
-    public func remove(index index: Int, animated: UITableViewRowAnimation) {
+    public func delete(indexes indexes: [Int], animated: UITableViewRowAnimation) -> Self {
         
-        //tableDirector?.tableView?.deleteRowsAtIndexPaths(<#T##indexPaths: [NSIndexPath]##[NSIndexPath]#>, withRowAnimation: <#T##UITableViewRowAnimation#>)
+        return self
+    }
+    
+    public func insert(items: [DataType], atIndex index: Int, animated: UITableViewRowAnimation) -> Self {
+        
+        self.items.insertContentsOf(items, at: index)
+        
+        return self
+    }
+    
+    public func move(indexes: [Int], toIndexes: [Int]) -> Self {
+        
+        return self
+    }
+    
+    public func update(index index: Int, item: DataType, animated: UITableViewRowAnimation) -> Self {
+        
+        return self
     }
     
     public func item(index index: Int) -> DataType {
@@ -129,12 +146,4 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
     public func clear() {
         items.removeAll()
     }
-}
-
-public func +=<DataType, CellType>(left: TableBaseRowBuilder<DataType, CellType>, right: DataType) {
-    left.append(items: [right])
-}
-
-public func +=<DataType, CellType>(left: TableBaseRowBuilder<DataType, CellType>, right: [DataType]) {
-    left.append(items: right)
 }

@@ -18,30 +18,37 @@
 //    IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import UIKit
+// -
+public func +=(left: TableDirector, right: RowBuilder) {
+    left.append(section: TableSectionBuilder(rows: [right]))
+}
 
-/**
- Responsible for building configurable cells of given type and passing items to them.
- */
-public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType.T == DataType, CellType: UITableViewCell> : TableBaseRowBuilder<DataType, CellType> {
-    
-    public init(item: DataType) {
-        super.init(item: item, id: CellType.reusableIdentifier())
-    }
-    
-    public init(items: [DataType]? = nil) {
-        super.init(items: items, id: CellType.reusableIdentifier())
-    }
-    
-    public override func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
-        
-        if case .configure = action {
-            (cell as? CellType)?.configure(item(index: itemIndex))
-        }
-        return super.invoke(action: action, cell: cell, indexPath: indexPath, itemIndex: itemIndex, userInfo: userInfo)
-    }
-    
-    public override func estimatedRowHeight(index: Int) -> CGFloat {
-        return CGFloat(CellType.estimatedHeight())
-    }
+public func +=(left: TableDirector, right: [RowBuilder]) {
+    left.append(section: TableSectionBuilder(rows: right))
+}
+
+public func +=(left: TableDirector, right: TableSectionBuilder) {
+    left.append(section: right)
+}
+
+public func +=(left: TableDirector, right: [TableSectionBuilder]) {
+    left.append(sections: right)
+}
+
+// -
+public func +=<DataType, CellType>(left: TableBaseRowBuilder<DataType, CellType>, right: DataType) {
+    left.append(items: [right])
+}
+
+public func +=<DataType, CellType>(left: TableBaseRowBuilder<DataType, CellType>, right: [DataType]) {
+    left.append(items: right)
+}
+
+// -
+public func +=(left: TableSectionBuilder, right: RowBuilder) {
+    left.append(row: right)
+}
+
+public func +=(left: TableSectionBuilder, right: [RowBuilder]) {
+    left.append(rows: right)
 }
