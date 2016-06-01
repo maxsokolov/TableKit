@@ -33,6 +33,14 @@ class MainController: UIViewController {
         
         let rows2 = TableRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
         
+
+        
+        rowBuilder
+            .addAction(TableRowAction(type: .Click) { (data) in
+            
+                
+            })
+        
         rowBuilder
             .delete(indexes: [0], animated: .None)
             .insert(["2"], atIndex: 0, animated: .None)

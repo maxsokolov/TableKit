@@ -22,6 +22,21 @@ import UIKit
 
 public typealias ReturnValue = AnyObject?
 
+public enum TableActionType {
+
+    case Click
+    case Custom(String)
+}
+
+public class TableRowAction<DataType, CellType> {
+    
+    let type: TableActionType
+    
+    public init(type: TableActionType, handler: (data: ActionData<DataType, CellType>) -> Void) {
+        self.type = type
+    }
+}
+
 /**
  Responsible for building cells of given type and passing items to them.
  */
@@ -62,6 +77,10 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
     }
     
     // MARK: - Chaining actions -
+    
+    public func addAction(action: TableRowAction<DataType, CellType>) {
+        
+    }
     
     public func action(key: String, handler: (data: ActionData<DataType, CellType>) -> Void) -> Self {
         
