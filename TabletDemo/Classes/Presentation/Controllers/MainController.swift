@@ -14,6 +14,43 @@ class TableUpdateTask {
 
 }
 
+protocol CellItemable {
+    
+    func configure(cell: UITableViewCell)
+}
+
+class CellItem<DataType, CellType: ConfigurableCell where CellType.T == DataType>: CellItemable {
+    
+    let item: DataType
+    
+    init(item: DataType) {
+        self.item = item
+    }
+    
+    func configure(cell: UITableViewCell) {
+        (cell as? CellType)?.configure(item)
+    }
+}
+
+
+class BUILDER {
+    
+    var cellItems = [CellItemable]()
+    
+    init(cellItems: [CellItemable]) {
+        self.cellItems = cellItems
+        
+    }
+    
+    func configure(cell: UITableViewCell, itemIndex: Int) {
+        
+        let cellItem = cellItems[itemIndex]
+        
+        cellItem.configure(cell)
+    }
+}
+
+
 class MainController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView! {
@@ -33,7 +70,22 @@ class MainController: UIViewController {
         
         let rows2 = TableRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
         
+        
+        
+        
+        let cellItem = CellItem<String, StoryboardImageTableViewCell>(item: "1")
+        
+        let cellItem2 = CellItem<String, StoryboardImageTableViewCell>(item: "1")
+        
+        let cellItem3 = CellItem<String, StoryboardImageTableViewCell>(item: "1")
+       
+        
+        
+        
+        let b = BUILDER(cellItems: [cellItem, cellItem2, cellItem3])
 
+
+        
         
         rowBuilder
             .addAction(TableRowAction(type: .Click) { (data) in
