@@ -47,7 +47,10 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
     private var actions = [String: ActionHandler<DataType, CellType>]()
     private var items = [DataType]()
     
-    public let reusableIdentifier: String
+    
+    public func reusableIdentifier(_: Int) -> String {
+        return String(CellType)
+    }
     
     public var numberOfRows: Int {
         return items.count
@@ -55,13 +58,13 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
 
     public init(item: DataType, id: String? = nil) {
 
-        reusableIdentifier = id ?? String(CellType)
+        //reusableIdentifier = id ?? String(CellType)
         items.append(item)
     }
     
     public init(items: [DataType]? = nil, id: String? = nil) {
 
-        reusableIdentifier = id ?? String(CellType)
+        //reusableIdentifier = id ?? String(CellType)
 
         if let items = items {
             self.items.appendContentsOf(items)
@@ -110,7 +113,7 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
 
     private func registerCell(inTableView tableView: UITableView) {
         
-        if tableView.dequeueReusableCellWithIdentifier(reusableIdentifier) != nil {
+        if tableView.dequeueReusableCellWithIdentifier(reusableIdentifier(0)) != nil {
             return
         }
         
@@ -118,9 +121,9 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
         let bundle = NSBundle(forClass: CellType.self)
         
         if let _ = bundle.pathForResource(resource, ofType: "nib") { // existing cell
-            tableView.registerNib(UINib(nibName: resource, bundle: bundle), forCellReuseIdentifier: reusableIdentifier)
+            tableView.registerNib(UINib(nibName: resource, bundle: bundle), forCellReuseIdentifier: reusableIdentifier(0))
         } else {
-            tableView.registerClass(CellType.self, forCellReuseIdentifier: reusableIdentifier)
+            tableView.registerClass(CellType.self, forCellReuseIdentifier: reusableIdentifier(0))
         }
     }
 

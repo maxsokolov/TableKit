@@ -20,18 +20,37 @@
 
 import UIKit
 
-public protocol RowBuilder {
+public protocol RowItemable {
     
-    var tableDirector: TableDirector? { get }
+    func configure(cell: UITableViewCell)
+}
 
-    var numberOfRows: Int { get }
+public class RowItem<DataType, CellType: ConfigurableCell where CellType.T == DataType>: RowItemable {
     
-    func willUpdateDirector(director: TableDirector?)
+    public let item: DataType
     
-    func reusableIdentifier(index: Int) -> String
+    public init(item: DataType) {
+        self.item = item
+    }
     
-    func rowHeight(index: Int) -> CGFloat
-    func estimatedRowHeight(index: Int) -> CGFloat
+    public func configure(cell: UITableViewCell) {
+        (cell as? CellType)?.configure(item)
+    }
+}
+
+public class TableDynamicRowBuilder {
     
-    func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject?
+    var items = [RowItemable]()
+    
+    public init(items: [RowItemable]) {
+        self.items = items
+        
+    }
+
+    func configure(cell: UITableViewCell, itemIndex: Int) {
+        
+        let cellItem = items[itemIndex]
+        
+        cellItem.configure(cell)
+    }
 }

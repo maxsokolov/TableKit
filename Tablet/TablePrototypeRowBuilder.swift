@@ -68,9 +68,7 @@ public class TablePrototypeRowBuilder<DataType: Hashable, CellType: Configurable
         let height = heightCall(itemz, width: tableDirector?.tableView?.bounds.size.width ?? 0)
         
         cachedHeights[itemz.hashValue] = height
-        
-        print(tableDirector?.tableView?.bounds.size.width, cell.bounds.height, height)
-        
+
         return height
     }
     
@@ -86,7 +84,7 @@ public class TablePrototypeRowBuilder<DataType: Hashable, CellType: Configurable
     public override func willUpdateDirector(director: TableDirector?) {
         super.willUpdateDirector(director)
         
-        if let tableView = director?.tableView, cell = tableView.dequeueReusableCellWithIdentifier(reusableIdentifier) as? CellType {
+        if let tableView = director?.tableView, cell = tableView.dequeueReusableCellWithIdentifier(reusableIdentifier(0)) as? CellType {
             prototypeCell = cell
         }
     }
