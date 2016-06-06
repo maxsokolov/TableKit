@@ -21,12 +21,10 @@
 import UIKit
 
 public protocol HeightStrategy {
-    
+
     var tableView: UITableView? { get set }
 
     func height<Item, Cell: ConfigurableCell where Cell.T == Item, Cell: UITableViewCell>(item: Item, indexPath: NSIndexPath, cell: Cell.Type) -> CGFloat
-    
-    func estimatedHeight() -> CGFloat
 }
 
 public class PrototypeHeightStrategy: HeightStrategy {
@@ -46,9 +44,5 @@ public class PrototypeHeightStrategy: HeightStrategy {
         cell.layoutIfNeeded()
         
         return cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height + 1
-    }
-    
-    public func estimatedHeight() -> CGFloat {
-        return UITableViewAutomaticDimension
     }
 }

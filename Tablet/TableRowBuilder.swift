@@ -33,7 +33,6 @@ public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType
     private var actions = [String: ActionHandler<DataType, CellType>]()
     private var items = [DataType]()
     
-    
     public func reusableIdentifier(_: Int) -> String {
         return CellType.reusableIdentifier()
     }
@@ -41,6 +40,8 @@ public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType
     public var numberOfRows: Int {
         return items.count
     }
+    
+    // MARK: - Initializers -
 
     public init(item: DataType) {
         items.append(item)
@@ -56,7 +57,7 @@ public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType
     // MARK: - RowHeightCalculatable -
     
     public func rowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat {
-        return heightStrategy?.height(item(index: index), indexPath: indexPath, cell: CellType.self) ?? 0
+        return CellType.defaultHeight() ?? heightStrategy?.height(item(index: index), indexPath: indexPath, cell: CellType.self) ?? UITableViewAutomaticDimension
     }
     
     public func estimatedRowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat {
