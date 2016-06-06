@@ -74,7 +74,5 @@ class MainController: UIViewController {
         //}
         
         tableDirector.append(section: section)
-
-        tableDirector += rowBuilder
     }
 }

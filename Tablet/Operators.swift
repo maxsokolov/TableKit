@@ -36,11 +36,11 @@ public func +=(left: TableDirector, right: [TableSectionBuilder]) {
 }
 
 // -
-public func +=<DataType, CellType>(left: TableBaseRowBuilder<DataType, CellType>, right: DataType) {
+public func +=<DataType, CellType>(left: TableRowBuilder<DataType, CellType>, right: DataType) {
     left.append(items: [right])
 }
 
-public func +=<DataType, CellType>(left: TableBaseRowBuilder<DataType, CellType>, right: [DataType]) {
+public func +=<DataType, CellType>(left: TableRowBuilder<DataType, CellType>, right: [DataType]) {
     left.append(items: right)
 }
 

@@ -20,43 +20,141 @@
 
 import UIKit
 
+public typealias ReturnValue = AnyObject?
+
 /**
- Responsible for building configurable cells of given type and passing items to them.
+ Responsible for building cells of given type and passing items to them.
  */
-public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType.T == DataType, CellType: UITableViewCell> : TableBaseRowBuilder<DataType, CellType> {
-    
+public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType.T == DataType, CellType: UITableViewCell> : RowBuilder {
+
+    public private(set) weak var tableDirector: TableDirector?
     private var heightStrategy: HeightStrategy?
     
+    private var actions = [String: ActionHandler<DataType, CellType>]()
+    private var items = [DataType]()
+    
+    
+    public func reusableIdentifier(_: Int) -> String {
+        return CellType.reusableIdentifier()
+    }
+    
+    public var numberOfRows: Int {
+        return items.count
+    }
+
     public init(item: DataType) {
-        super.init(item: item, id: CellType.reusableIdentifier())
+        items.append(item)
     }
     
     public init(items: [DataType]? = nil) {
-        super.init(items: items, id: CellType.reusableIdentifier())
+
+        if let items = items {
+            self.items.appendContentsOf(items)
+        }
+    }
+
+    // MARK: - RowHeightCalculatable -
+    
+    public func rowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat {
+        return heightStrategy?.height(item(index: index), indexPath: indexPath, cell: CellType.self) ?? 0
     }
     
-    public override func willUpdateDirector(director: TableDirector?) {
-        super.willUpdateDirector(director)
+    public func estimatedRowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat {
+        return CellType.estimatedHeight()
+    }
+    
+    // MARK: - Chaining actions -
+    
+    public func addAction(action: TableRowAction<DataType, CellType>) {
         
-        heightStrategy = PrototypeHeightStrategy()
-        heightStrategy?.tableView = director?.tableView
     }
     
-    public override func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
+    public func action(key: String, handler: (data: ActionData<DataType, CellType>) -> Void) -> Self {
+        
+        actions[key] = .Handler(handler)
+        return self
+    }
+    
+    public func action(type: ActionType, handler: (data: ActionData<DataType, CellType>) -> Void) -> Self {
+
+        actions[type.key] = .Handler(handler)
+        return self
+    }
+    
+    public func valueAction(type: ActionType, handler: (data: ActionData<DataType, CellType>) -> ReturnValue) -> Self {
+        
+        actions[type.key] = .ValueHandler(handler)
+        return self
+    }
+
+    public func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
         
         if case .configure = action {
             (cell as? CellType)?.configure(item(index: itemIndex))
         }
-        return super.invoke(action: action, cell: cell, indexPath: indexPath, itemIndex: itemIndex, userInfo: userInfo)
-    }
-    
-    // MARK: - RowHeightCalculatable -
-    
-    public override func rowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat {
-        return heightStrategy?.height(item(index: index), indexPath: indexPath, cell: CellType.self) ?? 0
+        
+        if let action = actions[action.key] {
+            return action.invoke(ActionData(cell: cell as? CellType, indexPath: indexPath, item: items[itemIndex], itemIndex: itemIndex, userInfo: userInfo))
+        }
+        return nil
     }
 
-    public override func estimatedRowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat {
-        return CellType.estimatedHeight()
+    private func registerCell(inTableView tableView: UITableView) {
+        
+        if tableView.dequeueReusableCellWithIdentifier(reusableIdentifier(0)) != nil {
+            return
+        }
+        
+        let resource = String(CellType)
+        let bundle = NSBundle(forClass: CellType.self)
+        
+        if let _ = bundle.pathForResource(resource, ofType: "nib") { // existing cell
+            tableView.registerNib(UINib(nibName: resource, bundle: bundle), forCellReuseIdentifier: reusableIdentifier(0))
+        } else {
+            tableView.registerClass(CellType.self, forCellReuseIdentifier: reusableIdentifier(0))
+        }
+    }
+
+    public func willUpdateDirector(director: TableDirector?) {
+        tableDirector = director
+
+        heightStrategy = PrototypeHeightStrategy()
+        heightStrategy?.tableView = director?.tableView
+    }
+    
+    // MARK: - Items manipulation -
+    
+    public func delete(indexes indexes: [Int], animated: UITableViewRowAnimation) -> Self {
+        
+        return self
+    }
+    
+    public func insert(items: [DataType], atIndex index: Int, animated: UITableViewRowAnimation) -> Self {
+        
+        self.items.insertContentsOf(items, at: index)
+        
+        return self
+    }
+    
+    public func move(indexes: [Int], toIndexes: [Int]) -> Self {
+        
+        return self
+    }
+    
+    public func update(index index: Int, item: DataType, animated: UITableViewRowAnimation) -> Self {
+        
+        return self
+    }
+    
+    public func item(index index: Int) -> DataType {
+        return items[index]
+    }
+    
+    public func append(items items: [DataType]) {
+        self.items.appendContentsOf(items)
+    }
+    
+    public func clear() {
+        items.removeAll()
     }
 }
