@@ -9,15 +9,6 @@
 import UIKit
 import Tablet
 
-
-
-
-
-
-
-
-
-
 class MainController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView! {

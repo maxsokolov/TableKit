@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5058386E1CF62B0700224C58 /* TableRowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058386D1CF62B0700224C58 /* TableRowBuilder.swift */; };
-		505838701CF62B1300224C58 /* TablePrototypeRowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058386F1CF62B1300224C58 /* TablePrototypeRowBuilder.swift */; };
 		DA08A04F1CF3AB0C00BBF1F8 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08A04E1CF3AB0C00BBF1F8 /* ConfigurableCell.swift */; };
 		DA08A0511CF3AB6100BBF1F8 /* RowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08A0501CF3AB6100BBF1F8 /* RowBuilder.swift */; };
 		DA539C9F1CFB025C00368ACB /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA539C9E1CFB025C00368ACB /* Operators.swift */; };
@@ -35,7 +34,6 @@
 
 /* Begin PBXFileReference section */
 		5058386D1CF62B0700224C58 /* TableRowBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowBuilder.swift; sourceTree = "<group>"; };
-		5058386F1CF62B1300224C58 /* TablePrototypeRowBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TablePrototypeRowBuilder.swift; sourceTree = "<group>"; };
 		DA08A04E1CF3AB0C00BBF1F8 /* ConfigurableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
 		DA08A0501CF3AB6100BBF1F8 /* RowBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowBuilder.swift; sourceTree = "<group>"; };
 		DA539C9E1CFB025C00368ACB /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
@@ -107,7 +105,6 @@
 				DA08A0501CF3AB6100BBF1F8 /* RowBuilder.swift */,
 				DAC2D68D1C9D799E009E9C19 /* TableBaseRowBuilder.swift */,
 				5058386D1CF62B0700224C58 /* TableRowBuilder.swift */,
-				5058386F1CF62B1300224C58 /* TablePrototypeRowBuilder.swift */,
 				DA539CC51D01D44500368ACB /* TableDynamicRowBuilder.swift */,
 				DAC2D68E1C9D799E009E9C19 /* TableSectionBuilder.swift */,
 				DA08A04E1CF3AB0C00BBF1F8 /* ConfigurableCell.swift */,
@@ -244,7 +241,6 @@
 				DA08A04F1CF3AB0C00BBF1F8 /* ConfigurableCell.swift in Sources */,
 				DAC2D6911C9D799E009E9C19 /* TableBaseRowBuilder.swift in Sources */,
 				5058386E1CF62B0700224C58 /* TableRowBuilder.swift in Sources */,
-				505838701CF62B1300224C58 /* TablePrototypeRowBuilder.swift in Sources */,
 				DAC2D6931C9D799E009E9C19 /* Tablet.swift in Sources */,
 				DA539C9F1CFB025C00368ACB /* Operators.swift in Sources */,
 			);
