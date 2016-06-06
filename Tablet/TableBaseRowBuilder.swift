@@ -22,26 +22,11 @@ import UIKit
 
 public typealias ReturnValue = AnyObject?
 
-public enum TableActionType {
-
-    case Click
-    case Custom(String)
-}
-
-public class TableRowAction<DataType, CellType> {
-    
-    let type: TableActionType
-    
-    public init(type: TableActionType, handler: (data: ActionData<DataType, CellType>) -> Void) {
-        self.type = type
-    }
-}
-
 /**
  Responsible for building cells of given type and passing items to them.
  */
 public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewCell> : RowBuilder {
-    
+
     public private(set) weak var tableDirector: TableDirector?
     
     private var actions = [String: ActionHandler<DataType, CellType>]()
@@ -71,11 +56,13 @@ public class TableBaseRowBuilder<DataType, CellType where CellType: UITableViewC
         }
     }
     
-    public func rowHeight(index: Int) -> CGFloat {
+    // MARK: - RowHeightCalculatable -
+    
+    public func rowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
-    public func estimatedRowHeight(index: Int) -> CGFloat {
+    public func estimatedRowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat {
         return 44
     }
     

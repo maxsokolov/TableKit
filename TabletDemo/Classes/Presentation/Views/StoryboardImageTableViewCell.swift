@@ -22,11 +22,7 @@ class StoryboardImageTableViewCell: UITableViewCell, ConfigurableCell {
         titleLabel.text = "Test"
         subtitleLabel.text = "Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.1"
     }
-    
-    static func estimatedHeight() -> Float {
-        return 140
-    }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         

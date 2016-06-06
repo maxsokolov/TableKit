@@ -20,7 +20,13 @@
 
 import UIKit
 
-public protocol RowBuilder {
+public protocol RowHeightCalculatable {
+
+    func rowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat
+    func estimatedRowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat
+}
+
+public protocol RowBuilder: RowHeightCalculatable {
     
     var tableDirector: TableDirector? { get }
 
@@ -29,9 +35,6 @@ public protocol RowBuilder {
     func willUpdateDirector(director: TableDirector?)
     
     func reusableIdentifier(index: Int) -> String
-    
-    func rowHeight(index: Int) -> CGFloat
-    func estimatedRowHeight(index: Int) -> CGFloat
     
     func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject?
 }

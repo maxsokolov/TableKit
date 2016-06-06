@@ -16,8 +16,4 @@ class StoryboardTableViewCell: UITableViewCell, ConfigurableCell {
     func configure(value: T) {
         textLabel?.text = value
     }
-
-    static func estimatedHeight() -> Float {
-        return 44
-    }
 }

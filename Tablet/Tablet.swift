@@ -24,6 +24,21 @@ struct TabletNotifications {
     static let CellAction = "TabletNotificationsCellAction"
 }
 
+public enum TableActionType {
+    
+    case Click
+    case Custom(String)
+}
+
+public class TableRowAction<DataType, CellType> {
+    
+    let type: TableActionType
+    
+    public init(type: TableActionType, handler: (data: ActionData<DataType, CellType>) -> Void) {
+        self.type = type
+    }
+}
+
 /**
     The actions that Tablet provides.
 */

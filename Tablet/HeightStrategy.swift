@@ -22,31 +22,19 @@ import UIKit
 
 public protocol HeightStrategy {
     
-    func height<Item: Hashable, Cell: ConfigurableCell where Cell.T == Item, Cell: UITableViewCell>(item: Item, cell: Cell.Type) -> CGFloat
+    var tableView: UITableView? { get set }
+
+    func height<Item, Cell: ConfigurableCell where Cell.T == Item, Cell: UITableViewCell>(item: Item, indexPath: NSIndexPath, cell: Cell.Type) -> CGFloat
     
     func estimatedHeight() -> CGFloat
 }
 
-public class AutolayoutHeightStrategy: HeightStrategy {
-    
-    public func height<Item, Cell: ConfigurableCell where Cell.T == Item, Cell: UITableViewCell>(item: Item, cell: Cell.Type) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
-    
-    public func estimatedHeight() -> CGFloat {
-        return 0
-    }
-}
-
 public class PrototypeHeightStrategy: HeightStrategy {
+
+    public weak var tableView: UITableView?
+    private var cachedHeights = [Int: CGFloat]()
     
-    private weak var tableView: UITableView?
-    
-    public init(tableView: UITableView) {
-        self.tableView = tableView
-    }
-    
-    public func height<Item: Hashable, Cell: ConfigurableCell where Cell.T == Item, Cell: UITableViewCell>(item: Item, cell: Cell.Type) -> CGFloat {
+    public func height<Item, Cell: ConfigurableCell where Cell.T == Item, Cell: UITableViewCell>(item: Item, indexPath: NSIndexPath, cell: Cell.Type) -> CGFloat {
         
         guard let cell = tableView?.dequeueReusableCellWithIdentifier(Cell.reusableIdentifier()) as? Cell else { return 0 }
         

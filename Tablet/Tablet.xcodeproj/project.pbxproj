@@ -103,6 +103,7 @@
 			children = (
 				DAC2D68C1C9D799E009E9C19 /* TableDirector.swift */,
 				DA08A0501CF3AB6100BBF1F8 /* RowBuilder.swift */,
+				DA9EA7341D06155E0021F650 /* HeightStrategy.swift */,
 				DAC2D68D1C9D799E009E9C19 /* TableBaseRowBuilder.swift */,
 				5058386D1CF62B0700224C58 /* TableRowBuilder.swift */,
 				DA539CC51D01D44500368ACB /* TableDynamicRowBuilder.swift */,
@@ -110,7 +111,6 @@
 				DA08A04E1CF3AB0C00BBF1F8 /* ConfigurableCell.swift */,
 				DAC2D68F1C9D799E009E9C19 /* Tablet.swift */,
 				DA539C9E1CFB025C00368ACB /* Operators.swift */,
-				DA9EA7341D06155E0021F650 /* HeightStrategy.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";

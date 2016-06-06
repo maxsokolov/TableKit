@@ -29,7 +29,7 @@ public protocol ConfigurableCell {
     associatedtype T
     
     static func reusableIdentifier() -> String
-    static func estimatedHeight() -> Float
+    static func estimatedHeight() -> CGFloat
     static func defaultHeight() -> Float?
     func configure(_: T)
 }
@@ -42,5 +42,9 @@ public extension ConfigurableCell where Self: UITableViewCell {
     
     static func defaultHeight() -> Float? {
         return nil
+    }
+    
+    static func estimatedHeight() -> CGFloat {
+        return UITableViewAutomaticDimension
     }
 }

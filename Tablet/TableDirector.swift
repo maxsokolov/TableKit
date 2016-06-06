@@ -90,12 +90,12 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let builder = builderAtIndexPath(indexPath)
-        return builder.0.estimatedRowHeight(builder.1)
+        return builder.0.estimatedRowHeight(builder.1, indexPath: indexPath)
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let builder = builderAtIndexPath(indexPath)
-        return builder.0.rowHeight(builder.1)
+        return builder.0.rowHeight(builder.1, indexPath: indexPath)
     }
     
     // MARK: UITableViewDataSource - configuration
@@ -111,8 +111,6 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let builder = builderAtIndexPath(indexPath)
-        
-        
         
         let cell = tableView.dequeueReusableCellWithIdentifier(builder.0.reusableIdentifier(builder.1), forIndexPath: indexPath)
         

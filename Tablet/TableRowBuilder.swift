@@ -25,12 +25,21 @@ import UIKit
  */
 public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType.T == DataType, CellType: UITableViewCell> : TableBaseRowBuilder<DataType, CellType> {
     
+    private var heightStrategy: HeightStrategy?
+    
     public init(item: DataType) {
         super.init(item: item, id: CellType.reusableIdentifier())
     }
     
     public init(items: [DataType]? = nil) {
         super.init(items: items, id: CellType.reusableIdentifier())
+    }
+    
+    public override func willUpdateDirector(director: TableDirector?) {
+        super.willUpdateDirector(director)
+        
+        heightStrategy = PrototypeHeightStrategy()
+        heightStrategy?.tableView = director?.tableView
     }
     
     public override func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject: AnyObject]?) -> AnyObject? {
@@ -41,7 +50,13 @@ public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType
         return super.invoke(action: action, cell: cell, indexPath: indexPath, itemIndex: itemIndex, userInfo: userInfo)
     }
     
-    public override func estimatedRowHeight(index: Int) -> CGFloat {
-        return CGFloat(CellType.estimatedHeight())
+    // MARK: - RowHeightCalculatable -
+    
+    public override func rowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat {
+        return heightStrategy?.height(item(index: index), indexPath: indexPath, cell: CellType.self) ?? 0
+    }
+
+    public override func estimatedRowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat {
+        return CellType.estimatedHeight()
     }
 }
