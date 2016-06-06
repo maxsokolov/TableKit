@@ -9,10 +9,12 @@
 import UIKit
 import Tablet
 
-class TableUpdateTask {
-    
 
-}
+
+
+
+
+
 
 
 
@@ -28,6 +30,9 @@ class MainController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let h = PrototypeHeightStrategy(tableView: tableView)
+        h.height("123", cell: StoryboardImageTableViewCell.self)
+        
         let rowBuilder = TableRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
             .action(.click) { [unowned self] e in
                 self.performSegueWithIdentifier("headerfooter", sender: nil)

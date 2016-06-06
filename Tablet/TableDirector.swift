@@ -86,6 +86,18 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         }
     }
     
+    // MARK: - Height
+    
+    public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let builder = builderAtIndexPath(indexPath)
+        return builder.0.estimatedRowHeight(builder.1)
+    }
+    
+    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let builder = builderAtIndexPath(indexPath)
+        return builder.0.rowHeight(builder.1)
+    }
+    
     // MARK: UITableViewDataSource - configuration
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -143,16 +155,6 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     }
     
     // MARK: UITableViewDelegate - actions
-    
-    public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let builder = builderAtIndexPath(indexPath)
-        return builder.0.estimatedRowHeight(builder.1)
-    }
-    
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let builder = builderAtIndexPath(indexPath)
-        return builder.0.rowHeight(builder.1)
-    }
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
