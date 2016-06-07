@@ -26,7 +26,12 @@ public protocol RowHeightCalculatable {
     func estimatedRowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat
 }
 
-public protocol RowBuilder: RowHeightCalculatable {
+public protocol RowConfigurable {
+
+    func configure(cell: UITableViewCell, path: NSIndexPath, index: Int)
+}
+
+public protocol RowBuilder: RowConfigurable, RowHeightCalculatable {
     
     var tableDirector: TableDirector? { get }
 

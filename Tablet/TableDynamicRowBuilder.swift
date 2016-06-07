@@ -22,12 +22,18 @@ import UIKit
 
 public protocol RowItemable {
     
+    var reusableIdentifier: String { get }
+    
     func configure(cell: UITableViewCell)
 }
 
 public class RowItem<DataType, CellType: ConfigurableCell where CellType.T == DataType>: RowItemable {
     
     public let item: DataType
+
+    public var reusableIdentifier: String {
+        return CellType.reusableIdentifier()
+    }
     
     public init(item: DataType) {
         self.item = item
@@ -38,7 +44,7 @@ public class RowItem<DataType, CellType: ConfigurableCell where CellType.T == Da
     }
 }
 
-public class TableDynamicRowBuilder {
+public class TableDynamicRowBuilder: RowBuilder {
     
     var items = [RowItemable]()
     
@@ -52,5 +58,42 @@ public class TableDynamicRowBuilder {
         let cellItem = items[itemIndex]
         
         cellItem.configure(cell)
+    }
+    
+    // MARK: - RowConfigurable -
+    
+    public func configure(cell: UITableViewCell, path: NSIndexPath, index: Int) {
+        
+    }
+    
+    // MARK: - RowBuilder -
+    
+    public private(set) weak var tableDirector: TableDirector?
+
+    public var numberOfRows: Int {
+        return items.count
+    }
+
+    public func reusableIdentifier(index: Int) -> String {
+        return items[index].reusableIdentifier
+    }
+    
+    public func willUpdateDirector(director: TableDirector?) {
+        
+    }
+    
+    public func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject : AnyObject]?) -> AnyObject? {
+        
+        return nil
+    }
+    
+    // MARK: - RowHeightCalculatable -
+    
+    public func rowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+    public func estimatedRowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat {
+        return 0 //CellType.estimatedHeight()
     }
 }

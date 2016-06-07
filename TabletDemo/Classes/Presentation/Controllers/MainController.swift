@@ -26,17 +26,15 @@ class MainController: UIViewController {
                 self.performSegueWithIdentifier("headerfooter", sender: nil)
             }
         
+        
         let section = TableSectionBuilder(headerTitle: "", footerTitle: "", rows: [rowBuilder])
         
         
         
         
-        /*let rows2 = TableRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
-
-        let cellItem = RowItem<String, StoryboardImageTableViewCell>(item: "1")
         
+        let cellItem  = RowItem<String, StoryboardImageTableViewCell>(item: "1")
         let cellItem2 = RowItem<String, StoryboardImageTableViewCell>(item: "1")
-        
         let cellItem3 = RowItem<String, StoryboardImageTableViewCell>(item: "1")
        
         
@@ -45,7 +43,7 @@ class MainController: UIViewController {
         let b = TableDynamicRowBuilder(items: [cellItem, cellItem2, cellItem3])
         
         
-        rowBuilder
+        /*rowBuilder
             .addAction(TableRowAction(type: .Click) { (data) in
             
                 
@@ -55,8 +53,7 @@ class MainController: UIViewController {
             .delete(indexes: [0], animated: .None)
             .insert(["2"], atIndex: 0, animated: .None)
             .update(index: 0, item: "", animated: .None)
-            .move([1, 2], toIndexes: [3, 4])*/
-
+            .move([1, 2], toIndexes: [3, 4])
         
         
         
@@ -71,7 +68,7 @@ class MainController: UIViewController {
         //tableView.insertSections([], withRowAnimation: .None)
         
         //tableDirector.performBatchUpdates {
-        //}
+        //}*/
         
         tableDirector.append(section: section)
     }

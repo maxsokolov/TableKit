@@ -64,6 +64,13 @@ public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType
         return CellType.estimatedHeight()
     }
     
+    // MARK: - RowConfigurable -
+    
+    public func configure(cell: UITableViewCell, path: NSIndexPath, index: Int) {
+
+        (cell as? CellType)?.configure(items[index])
+    }
+    
     // MARK: - Chaining actions -
     
     public func addAction(action: TableRowAction<DataType, CellType>) {

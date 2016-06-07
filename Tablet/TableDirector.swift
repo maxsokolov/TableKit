@@ -119,8 +119,8 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
             cell.layoutIfNeeded()
         }
         
-        builder.0.invoke(action: .configure, cell: cell, indexPath: indexPath, itemIndex: builder.1, userInfo: nil)
-        
+        builder.0.configure(cell, path: indexPath, index: builder.1)
+
         return cell
     }
     
