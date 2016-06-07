@@ -39,6 +39,7 @@ class MainController: UIViewController {
         let cellItem3 = RowItem<String, StoryboardImageTableViewCell>(item: "3")
        
         
+       
         
         
         let b = TableDynamicRowBuilder(items: [cellItem, cellItem2, cellItem3])

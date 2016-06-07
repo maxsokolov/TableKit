@@ -28,7 +28,7 @@ public protocol RowItemable {
     func configure(cell: UITableViewCell)
 }
 
-public class RowItem<DataType, CellType: ConfigurableCell where CellType.T == DataType>: RowItemable {
+public class RowItem<DataType, CellType: ConfigurableCell where CellType.T == DataType, CellType: UITableViewCell>: RowItemable {
     
     public let item: DataType
 
