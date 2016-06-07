@@ -19,7 +19,7 @@ class StoryboardImageTableViewCell: UITableViewCell, ConfigurableCell {
     
     func configure(string: T) {
         
-        titleLabel.text = "Test"
+        titleLabel.text = string
         subtitleLabel.text = "Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.1"
     }
 

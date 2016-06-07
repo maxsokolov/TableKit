@@ -23,6 +23,7 @@ import UIKit
 public protocol RowItemable {
     
     var reusableIdentifier: String { get }
+    var estimatedHeight: CGFloat { get }
     
     func configure(cell: UITableViewCell)
 }
@@ -35,6 +36,10 @@ public class RowItem<DataType, CellType: ConfigurableCell where CellType.T == Da
         return CellType.reusableIdentifier()
     }
     
+    public var estimatedHeight: CGFloat {
+        return CellType.estimatedHeight()
+    }
+    
     public init(item: DataType) {
         self.item = item
     }
@@ -45,30 +50,21 @@ public class RowItem<DataType, CellType: ConfigurableCell where CellType.T == Da
 }
 
 public class TableDynamicRowBuilder: RowBuilder {
-    
-    var items = [RowItemable]()
+
+    public private(set) weak var tableDirector: TableDirector?
+    private var items = [RowItemable]()
     
     public init(items: [RowItemable]) {
         self.items = items
-        
     }
 
-    func configure(cell: UITableViewCell, itemIndex: Int) {
-        
-        let cellItem = items[itemIndex]
-        
-        cellItem.configure(cell)
-    }
-    
     // MARK: - RowConfigurable -
     
     public func configure(cell: UITableViewCell, path: NSIndexPath, index: Int) {
-        
+        items[index].configure(cell)
     }
     
     // MARK: - RowBuilder -
-    
-    public private(set) weak var tableDirector: TableDirector?
 
     public var numberOfRows: Int {
         return items.count
@@ -87,6 +83,11 @@ public class TableDynamicRowBuilder: RowBuilder {
         return nil
     }
     
+    public func action(handler: (item: RowItemable, path: NSIndexPath) -> Void) -> Self {
+        
+        return self
+    }
+    
     // MARK: - RowHeightCalculatable -
     
     public func rowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat {
@@ -94,6 +95,6 @@ public class TableDynamicRowBuilder: RowBuilder {
     }
     
     public func estimatedRowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat {
-        return 0 //CellType.estimatedHeight()
+        return items[index].estimatedHeight
     }
 }

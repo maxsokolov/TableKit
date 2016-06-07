@@ -22,7 +22,8 @@ class MainController: UIViewController {
         super.viewDidLoad()
         
         let rowBuilder = TableRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
-            .action(.click) { [unowned self] e in
+            .action(.click) { [unowned self] data in
+                
                 self.performSegueWithIdentifier("headerfooter", sender: nil)
             }
         
@@ -34,13 +35,33 @@ class MainController: UIViewController {
         
         
         let cellItem  = RowItem<String, StoryboardImageTableViewCell>(item: "1")
-        let cellItem2 = RowItem<String, StoryboardImageTableViewCell>(item: "1")
-        let cellItem3 = RowItem<String, StoryboardImageTableViewCell>(item: "1")
+        let cellItem2 = RowItem<String, StoryboardImageTableViewCell>(item: "2")
+        let cellItem3 = RowItem<String, StoryboardImageTableViewCell>(item: "3")
        
         
         
         
         let b = TableDynamicRowBuilder(items: [cellItem, cellItem2, cellItem3])
+            .action { (item, path) in
+                
+                if let x = item as? RowItem<String, StoryboardImageTableViewCell> {
+                    
+                }
+            }
+            .action { (item, path) in
+                
+                
+            }
+        
+        
+        
+        tableDirector += b
+        
+        
+        
+        
+        
+        
         
         
         /*rowBuilder
@@ -70,6 +91,6 @@ class MainController: UIViewController {
         //tableDirector.performBatchUpdates {
         //}*/
         
-        tableDirector.append(section: section)
+        //tableDirector.append(section: section)
     }
 }
