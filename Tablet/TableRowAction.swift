@@ -20,43 +20,21 @@
 
 import UIKit
 
-public protocol Row {
+public enum TableActionType {
     
-    var reusableIdentifier: String { get }
-    var estimatedHeight: CGFloat { get }
-    var defaultHeight: CGFloat { get }
-    
-    func configure(cell: UITableViewCell)
+    case Click
+    case Custom(String)
 }
 
-public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>: Row {
+protocol RowAction {
+    
+}
 
-    public let item: ItemType
-    private var actions = [RowAction]()
+public class TableRowAction<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>: RowAction {
 
-    public var reusableIdentifier: String {
-        return CellType.reusableIdentifier()
-    }
-    
-    public var estimatedHeight: CGFloat {
-        return CellType.estimatedHeight()
-    }
-
-    public var defaultHeight: CGFloat {
-        return CellType.defaultHeight() ?? UITableViewAutomaticDimension
-    }
-    
-    public init(item: ItemType, actions: [TableRowAction<ItemType, CellType>]? = nil) {
-        self.item = item
-    }
-    
-    public func configure(cell: UITableViewCell) {
-        (cell as? CellType)?.configure(item)
-    }
-    
-    // MARK: - actions -
-    
-    public func addAction(action: TableRowAction<ItemType, CellType>) {
+    public init(_ action: TableActionType, handler: (row: TableRow<ItemType, CellType>) -> Void) {
+        
+        
         
         
     }
