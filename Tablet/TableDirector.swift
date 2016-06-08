@@ -27,7 +27,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
 
     public private(set) weak var tableView: UITableView?
     private weak var scrollDelegate: UIScrollViewDelegate?
-    private var sections = [TableSectionBuilder]()
+    public private(set) var sections = [TableSection]()
 
     public init(tableView: UITableView, scrollDelegate: UIScrollViewDelegate? = nil) {
         super.init()
@@ -47,24 +47,12 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     public func reload() {
         tableView?.reloadData()
     }
-    
-    public func performBatchUpdates(handler: () -> Void) {
-        
-        
-    }
 
-    // MARK: Private methods
-
-    private func builderAtIndexPath(indexPath: NSIndexPath) -> (RowBuilder, Int) {
-        return sections[indexPath.section].builderAtIndex(indexPath.row)!
-    }
-    
     // MARK: Public
     
     public func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath) -> AnyObject? {
         
-        let builder = builderAtIndexPath(indexPath)
-        return builder.0.invoke(action: action, cell: cell, indexPath: indexPath, itemIndex: builder.1, userInfo: nil)
+        return nil
     }
 
     public override func respondsToSelector(selector: Selector) -> Bool {
@@ -81,21 +69,20 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         
         if let action = notification.object as? Action, indexPath = tableView?.indexPathForCell(action.cell) {
             
-            let builder = builderAtIndexPath(indexPath)
-            builder.0.invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1, userInfo: notification.userInfo)
+            //let builder = builderAtIndexPath(indexPath)
+            //builder.0.invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1, userInfo: notification.userInfo)
         }
     }
     
     // MARK: - Height
     
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let builder = builderAtIndexPath(indexPath)
-        return builder.0.estimatedRowHeight(builder.1, indexPath: indexPath)
+        return sections[indexPath.section].items[indexPath.row].estimatedHeight
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let builder = builderAtIndexPath(indexPath)
-        return builder.0.rowHeight(builder.1, indexPath: indexPath)
+
+        return UITableViewAutomaticDimension
     }
     
     // MARK: UITableViewDataSource - configuration
@@ -109,17 +96,17 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        let builder = builderAtIndexPath(indexPath)
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier(builder.0.reusableIdentifier(builder.1), forIndexPath: indexPath)
+
+        let row = sections[indexPath.section].items[indexPath.row]
+
+        let cell = tableView.dequeueReusableCellWithIdentifier(row.reusableIdentifier, forIndexPath: indexPath)
         
         if cell.frame.size.width != tableView.frame.size.width {
             cell.frame = CGRectMake(0, 0, tableView.frame.size.width, cell.frame.size.height)
             cell.layoutIfNeeded()
         }
-        
-        builder.0.configure(cell, path: indexPath, index: builder.1)
+
+        row.configure(cell)
 
         return cell
     }
@@ -184,11 +171,11 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     
     // MARK: - Sections manipulation -
     
-    public func append(section section: TableSectionBuilder) {
+    public func append(section section: TableSection) {
         append(sections: [section])
     }
     
-    public func append(sections sections: [TableSectionBuilder]) {
+    public func append(sections sections: [TableSection]) {
         
         sections.forEach { $0.tableDirector = self }
         self.sections.appendContentsOf(sections)

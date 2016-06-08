@@ -20,7 +20,7 @@
 
 import UIKit
 
-public protocol RowItemable {
+public protocol Row {
     
     var reusableIdentifier: String { get }
     var estimatedHeight: CGFloat { get }
@@ -28,9 +28,9 @@ public protocol RowItemable {
     func configure(cell: UITableViewCell)
 }
 
-public class RowItem<DataType, CellType: ConfigurableCell where CellType.T == DataType, CellType: UITableViewCell>: RowItemable {
+public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>: Row {
     
-    public let item: DataType
+    public let item: ItemType
 
     public var reusableIdentifier: String {
         return CellType.reusableIdentifier()
@@ -40,61 +40,11 @@ public class RowItem<DataType, CellType: ConfigurableCell where CellType.T == Da
         return CellType.estimatedHeight()
     }
     
-    public init(item: DataType) {
+    public init(item: ItemType) {
         self.item = item
     }
     
     public func configure(cell: UITableViewCell) {
         (cell as? CellType)?.configure(item)
-    }
-}
-
-public class TableDynamicRowBuilder: RowBuilder {
-
-    public private(set) weak var tableDirector: TableDirector?
-    private var items = [RowItemable]()
-    
-    public init(items: [RowItemable]) {
-        self.items = items
-    }
-
-    // MARK: - RowConfigurable -
-    
-    public func configure(cell: UITableViewCell, path: NSIndexPath, index: Int) {
-        items[index].configure(cell)
-    }
-    
-    // MARK: - RowBuilder -
-
-    public var numberOfRows: Int {
-        return items.count
-    }
-
-    public func reusableIdentifier(index: Int) -> String {
-        return items[index].reusableIdentifier
-    }
-    
-    public func willUpdateDirector(director: TableDirector?) {
-        
-    }
-    
-    public func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath, itemIndex: Int, userInfo: [NSObject : AnyObject]?) -> AnyObject? {
-        
-        return nil
-    }
-    
-    public func action(handler: (item: RowItemable, path: NSIndexPath) -> Void) -> Self {
-        
-        return self
-    }
-    
-    // MARK: - RowHeightCalculatable -
-    
-    public func rowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
-    
-    public func estimatedRowHeight(index: Int, indexPath: NSIndexPath) -> CGFloat {
-        return items[index].estimatedHeight
     }
 }

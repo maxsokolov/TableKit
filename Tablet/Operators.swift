@@ -19,7 +19,7 @@
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // -
-public func +=(left: TableDirector, right: RowBuilder) {
+/*public func +=(left: TableDirector, right: RowBuilder) {
     left.append(section: TableSectionBuilder(rows: [right]))
 }
 
@@ -51,4 +51,4 @@ public func +=(left: TableSectionBuilder, right: RowBuilder) {
 
 public func +=(left: TableSectionBuilder, right: [RowBuilder]) {
     left.append(rows: right)
-}
+}*/

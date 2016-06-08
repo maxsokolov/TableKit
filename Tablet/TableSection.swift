@@ -24,16 +24,17 @@ import UIKit
     Responsible for building a certain table view section.
     Can host several row builders.
 */
-public class TableSectionBuilder {
+public class TableSection {
 
     weak var tableDirector: TableDirector? {
         didSet {
-            guard let director = tableDirector else { return }
-            builders.forEach { $0.willUpdateDirector(director) }
+            
+            //guard let director = tableDirector else { return }
+            //builders.forEach { $0.willUpdateDirector(director) }
         }
     }
 
-    private var builders = [RowBuilder]()
+    public private(set) var items = [Row]()
 
     public var headerTitle: String?
     public var footerTitle: String?
@@ -43,24 +44,24 @@ public class TableSectionBuilder {
 
     /// A total number of rows in section of each row builder.
     public var numberOfRowsInSection: Int {
-        return builders.reduce(0) { $0 + $1.numberOfRows }
+        return items.count
     }
     
-    public init(rows: [RowBuilder]? = nil) {
+    public init(rows: [Row]? = nil) {
      
         if let initialRows = rows {
-            builders.appendContentsOf(initialRows)
+            items.appendContentsOf(initialRows)
         }
     }
 
-    public convenience init(headerTitle: String?, footerTitle: String?, rows: [RowBuilder]?) {
+    public convenience init(headerTitle: String?, footerTitle: String?, rows: [Row]?) {
         self.init(rows: rows)
         
         self.headerTitle = headerTitle
         self.footerTitle = footerTitle
     }
 
-    public convenience init(headerView: UIView?, footerView: UIView?, rows: [RowBuilder]?) {
+    public convenience init(headerView: UIView?, footerView: UIView?, rows: [Row]?) {
         self.init(rows: rows)
         
         self.headerView = headerView
@@ -70,31 +71,16 @@ public class TableSectionBuilder {
     // MARK: - Public -
 
     public func clear() {
-        builders.removeAll()
+        items.removeAll()
     }
     
-    public func append(row row: RowBuilder) {
+    public func append(row row: Row) {
         append(rows: [row])
     }
     
-    public func append(rows rows: [RowBuilder]) {
+    public func append(rows rows: [Row]) {
         
-        if let director = tableDirector { rows.forEach { $0.willUpdateDirector(director) } }
-        builders.appendContentsOf(rows)
-    }
-
-    // MARK: - Internal -
-    
-    func builderAtIndex(index: Int) -> (RowBuilder, Int)? {
-        
-        var builderIndex = index
-        for builder in builders {
-            if builderIndex < builder.numberOfRows {
-                return (builder, builderIndex)
-            }
-            builderIndex -= builder.numberOfRows
-        }
-        
-        return nil
+        //if let director = tableDirector { rows.forEach { $0.willUpdateDirector(director) } }
+        //builders.appendContentsOf(rows)
     }
 }

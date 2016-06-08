@@ -21,44 +21,32 @@ class MainController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let rowBuilder = TableRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
+        /*let rowBuilder = TableRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
             .action(.click) { [unowned self] data in
                 
                 self.performSegueWithIdentifier("headerfooter", sender: nil)
-            }
-        
-        
-        let section = TableSectionBuilder(headerTitle: "", footerTitle: "", rows: [rowBuilder])
+            }*/
         
         
         
         
         
-        let cellItem  = RowItem<String, StoryboardImageTableViewCell>(item: "1")
-        let cellItem2 = RowItem<String, StoryboardImageTableViewCell>(item: "2")
-        let cellItem3 = RowItem<String, StoryboardImageTableViewCell>(item: "3")
+        
+        
+        
+        let row1 = TableRow<String, StoryboardImageTableViewCell>(item: "1")
+        let row2 = TableRow<String, StoryboardImageTableViewCell>(item: "2")
+        let row3 = TableRow<String, StoryboardImageTableViewCell>(item: "3")
        
         
-       
         
         
-        let b = TableDynamicRowBuilder(items: [cellItem, cellItem2, cellItem3])
-            .action { (item, path) in
-                
-                if let x = item as? RowItem<String, StoryboardImageTableViewCell> {
-                    
-                }
-            }
-            .action { (item, path) in
-                
-                
-            }
+
+        let section = TableSection(headerTitle: "", footerTitle: "", rows: [row1, row2, row3])
         
         
         
-        tableDirector += b
-        
-        
+        tableDirector.append(section: section)
         
         
         

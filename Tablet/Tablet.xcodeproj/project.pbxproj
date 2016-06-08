@@ -8,15 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		DA08A04F1CF3AB0C00BBF1F8 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08A04E1CF3AB0C00BBF1F8 /* ConfigurableCell.swift */; };
-		DA08A0511CF3AB6100BBF1F8 /* RowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08A0501CF3AB6100BBF1F8 /* RowBuilder.swift */; };
 		DA539C9F1CFB025C00368ACB /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA539C9E1CFB025C00368ACB /* Operators.swift */; };
-		DA539CC61D01D44500368ACB /* TableDynamicRowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA539CC51D01D44500368ACB /* TableDynamicRowBuilder.swift */; };
+		DA539CC61D01D44500368ACB /* TableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA539CC51D01D44500368ACB /* TableRow.swift */; };
 		DA9EA7351D06155E0021F650 /* HeightStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7341D06155E0021F650 /* HeightStrategy.swift */; };
 		DAC2D6741C9D743D009E9C19 /* Tablet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC2D6691C9D743D009E9C19 /* Tablet.framework */; };
 		DAC2D6871C9D7517009E9C19 /* Tablet.h in Headers */ = {isa = PBXBuildFile; fileRef = DAC2D6851C9D7517009E9C19 /* Tablet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DAC2D6901C9D799E009E9C19 /* TableDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D68C1C9D799E009E9C19 /* TableDirector.swift */; };
 		DAC2D6911C9D799E009E9C19 /* TableRowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D68D1C9D799E009E9C19 /* TableRowBuilder.swift */; };
-		DAC2D6921C9D799E009E9C19 /* TableSectionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D68E1C9D799E009E9C19 /* TableSectionBuilder.swift */; };
+		DAC2D6921C9D799E009E9C19 /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D68E1C9D799E009E9C19 /* TableSection.swift */; };
 		DAC2D6931C9D799E009E9C19 /* Tablet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D68F1C9D799E009E9C19 /* Tablet.swift */; };
 		DAC2D6991C9D7A3F009E9C19 /* TabletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D6961C9D7A3B009E9C19 /* TabletTests.swift */; };
 /* End PBXBuildFile section */
@@ -33,9 +32,8 @@
 
 /* Begin PBXFileReference section */
 		DA08A04E1CF3AB0C00BBF1F8 /* ConfigurableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
-		DA08A0501CF3AB6100BBF1F8 /* RowBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowBuilder.swift; sourceTree = "<group>"; };
 		DA539C9E1CFB025C00368ACB /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
-		DA539CC51D01D44500368ACB /* TableDynamicRowBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDynamicRowBuilder.swift; sourceTree = "<group>"; };
+		DA539CC51D01D44500368ACB /* TableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRow.swift; sourceTree = "<group>"; };
 		DA9EA7341D06155E0021F650 /* HeightStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightStrategy.swift; sourceTree = "<group>"; };
 		DAC2D6691C9D743D009E9C19 /* Tablet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tablet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAC2D6731C9D743D009E9C19 /* TabletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TabletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -43,7 +41,7 @@
 		DAC2D6851C9D7517009E9C19 /* Tablet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tablet.h; sourceTree = "<group>"; };
 		DAC2D68C1C9D799E009E9C19 /* TableDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDirector.swift; sourceTree = "<group>"; };
 		DAC2D68D1C9D799E009E9C19 /* TableRowBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowBuilder.swift; sourceTree = "<group>"; };
-		DAC2D68E1C9D799E009E9C19 /* TableSectionBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionBuilder.swift; sourceTree = "<group>"; };
+		DAC2D68E1C9D799E009E9C19 /* TableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
 		DAC2D68F1C9D799E009E9C19 /* Tablet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tablet.swift; sourceTree = "<group>"; };
 		DAC2D6951C9D7A3B009E9C19 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DAC2D6961C9D7A3B009E9C19 /* TabletTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabletTests.swift; sourceTree = "<group>"; };
@@ -100,11 +98,10 @@
 			isa = PBXGroup;
 			children = (
 				DAC2D68C1C9D799E009E9C19 /* TableDirector.swift */,
-				DA08A0501CF3AB6100BBF1F8 /* RowBuilder.swift */,
-				DA9EA7341D06155E0021F650 /* HeightStrategy.swift */,
+				DA539CC51D01D44500368ACB /* TableRow.swift */,
+				DAC2D68E1C9D799E009E9C19 /* TableSection.swift */,
 				DAC2D68D1C9D799E009E9C19 /* TableRowBuilder.swift */,
-				DA539CC51D01D44500368ACB /* TableDynamicRowBuilder.swift */,
-				DAC2D68E1C9D799E009E9C19 /* TableSectionBuilder.swift */,
+				DA9EA7341D06155E0021F650 /* HeightStrategy.swift */,
 				DA08A04E1CF3AB0C00BBF1F8 /* ConfigurableCell.swift */,
 				DAC2D68F1C9D799E009E9C19 /* Tablet.swift */,
 				DA539C9E1CFB025C00368ACB /* Operators.swift */,
@@ -231,10 +228,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAC2D6901C9D799E009E9C19 /* TableDirector.swift in Sources */,
-				DAC2D6921C9D799E009E9C19 /* TableSectionBuilder.swift in Sources */,
+				DAC2D6921C9D799E009E9C19 /* TableSection.swift in Sources */,
 				DA9EA7351D06155E0021F650 /* HeightStrategy.swift in Sources */,
-				DA08A0511CF3AB6100BBF1F8 /* RowBuilder.swift in Sources */,
-				DA539CC61D01D44500368ACB /* TableDynamicRowBuilder.swift in Sources */,
+				DA539CC61D01D44500368ACB /* TableRow.swift in Sources */,
 				DA08A04F1CF3AB0C00BBF1F8 /* ConfigurableCell.swift in Sources */,
 				DAC2D6911C9D799E009E9C19 /* TableRowBuilder.swift in Sources */,
 				DAC2D6931C9D799E009E9C19 /* Tablet.swift in Sources */,

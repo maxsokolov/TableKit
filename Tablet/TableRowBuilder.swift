@@ -25,7 +25,7 @@ public typealias ReturnValue = AnyObject?
 /**
  Responsible for building cells of given type and passing items to them.
  */
-public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType.T == DataType, CellType: UITableViewCell> : RowBuilder {
+/*public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType.T == DataType, CellType: UITableViewCell> : RowBuilder {
 
     public private(set) weak var tableDirector: TableDirector?
     private var heightStrategy: HeightStrategy?
@@ -165,4 +165,4 @@ public class TableRowBuilder<DataType, CellType: ConfigurableCell where CellType
     public func clear() {
         items.removeAll()
     }
-}
+}*/

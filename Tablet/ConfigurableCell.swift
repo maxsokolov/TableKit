@@ -20,10 +20,6 @@
 
 import UIKit
 
-/**
-    If you want to delegate your cell configuration logic to cell itself (with your view model or even model) than
-    just provide an implementation of this protocol for your cell. Enjoy safe-typisation.
- */
 public protocol ConfigurableCell {
     
     associatedtype T
