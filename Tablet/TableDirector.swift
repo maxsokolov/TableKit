@@ -81,8 +81,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-
-        return UITableViewAutomaticDimension
+        return sections[indexPath.section].items[indexPath.row].defaultHeight
     }
     
     // MARK: UITableViewDataSource - configuration
@@ -92,13 +91,12 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].numberOfRowsInSection
+        return sections[section].numberOfRows
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         let row = sections[indexPath.section].items[indexPath.row]
-
         let cell = tableView.dequeueReusableCellWithIdentifier(row.reusableIdentifier, forIndexPath: indexPath)
         
         if cell.frame.size.width != tableView.frame.size.width {

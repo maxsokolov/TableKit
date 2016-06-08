@@ -26,13 +26,7 @@ import UIKit
 */
 public class TableSection {
 
-    weak var tableDirector: TableDirector? {
-        didSet {
-            
-            //guard let director = tableDirector else { return }
-            //builders.forEach { $0.willUpdateDirector(director) }
-        }
-    }
+    weak var tableDirector: TableDirector?
 
     public private(set) var items = [Row]()
 
@@ -43,7 +37,7 @@ public class TableSection {
     public private(set) var footerView: UIView?
 
     /// A total number of rows in section of each row builder.
-    public var numberOfRowsInSection: Int {
+    public var numberOfRows: Int {
         return items.count
     }
     

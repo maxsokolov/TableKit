@@ -24,6 +24,7 @@ public protocol Row {
     
     var reusableIdentifier: String { get }
     var estimatedHeight: CGFloat { get }
+    var defaultHeight: CGFloat { get }
     
     func configure(cell: UITableViewCell)
 }
@@ -38,6 +39,10 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
     
     public var estimatedHeight: CGFloat {
         return CellType.estimatedHeight()
+    }
+
+    public var defaultHeight: CGFloat {
+        return CellType.defaultHeight() ?? UITableViewAutomaticDimension
     }
     
     public init(item: ItemType) {
