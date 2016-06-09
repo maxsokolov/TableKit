@@ -28,6 +28,7 @@ public protocol RowConfigurable {
 public protocol RowActionable {
 
     func invoke(action: TableRowActionType, cell: UITableViewCell?, path: NSIndexPath) -> Any?
+    func hasAction(action: TableRowActionType) -> Bool
 }
 
 public protocol Row: RowConfigurable, RowActionable {
@@ -40,7 +41,7 @@ public protocol Row: RowConfigurable, RowActionable {
 public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>: Row {
 
     public let item: ItemType
-    private var actions = [RowAction]()
+    private var actions = [String: RowAction]()
 
     public var reusableIdentifier: String {
         return CellType.reusableIdentifier()
@@ -67,14 +68,18 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
     // MARK: - RowActionable -
 
     public func invoke(action: TableRowActionType, cell: UITableViewCell?, path: NSIndexPath) -> Any? {
-        
-        return nil
+        return actions[action.key]?.invoke()
+    }
+
+    public func hasAction(action: TableRowActionType) -> Bool {
+        return actions[action.key] != nil
     }
     
     // MARK: - actions -
     
     public func action(action: TableRowAction<ItemType, CellType>) -> Self {
-        
+
+        actions[action.type.key] = action
         return self
     }
 }

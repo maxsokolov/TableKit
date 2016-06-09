@@ -24,31 +24,6 @@ struct TabletNotifications {
     static let CellAction = "TabletNotificationsCellAction"
 }
 
-/**
-    The actions that Tablet provides.
-*/
-public enum ActionType {
-
-    case click
-    case select
-    case deselect
-    case willSelect
-    case configure
-    case willDisplay
-    case shouldHighlight
-    case height
-    case custom(String)
-
-    var key: String {
-
-        switch (self) {
-        case .custom(let key):
-            return key
-        default:
-            return "_\(self)"
-        }
-    }
-}
 
 public class ActionData<DataType, CellType> {
 
@@ -68,22 +43,6 @@ public class ActionData<DataType, CellType> {
     }
 }
 
-enum ActionHandler<DataType, CellType> {
-    
-    case Handler((data: ActionData<DataType, CellType>) -> Void)
-    case ValueHandler((data: ActionData<DataType, CellType>) -> AnyObject?)
-    
-    func invoke(data: ActionData<DataType, CellType>) -> ReturnValue {
-        
-        switch (self) {
-        case .Handler(let handler):
-            handler(data: data)
-            return nil
-        case .ValueHandler(let handler):
-            return handler(data: data)
-        }
-    }
-}
 
 /**
     A custom action that you can trigger from your cell.

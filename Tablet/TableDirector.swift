@@ -50,9 +50,8 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
 
     // MARK: Public
     
-    public func invoke(action action: ActionType, cell: UITableViewCell?, indexPath: NSIndexPath) -> AnyObject? {
-        
-        return nil
+    public func invoke(action action: TableRowActionType, cell: UITableViewCell?, indexPath: NSIndexPath) -> Any? {
+        return sections[indexPath.section].items[indexPath.row].invoke(action, cell: cell, path: indexPath)
     }
 
     public override func respondsToSelector(selector: Selector) -> Bool {

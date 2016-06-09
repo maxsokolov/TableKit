@@ -33,6 +33,7 @@ class MainController: UIViewController {
         let a = TableRowAction<String, StoryboardImageTableViewCell>(.click) {
             (row) in
             
+            print("3")
         }
         
         
@@ -42,12 +43,15 @@ class MainController: UIViewController {
         let row3 = TableRow<String, StoryboardImageTableViewCell>(item: "3", actions: [a])
        
         
+        
         row1
             .action(TableRowAction(.click) { (row) in
             
-                
+                print("1")
             })
             .action(TableRowAction(.click) { (row) -> String in
+                
+                print("2")
                 
                 return ""
             })
