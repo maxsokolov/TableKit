@@ -30,7 +30,7 @@ class MainController: UIViewController {
         
         
         
-        let a = TableRowAction<String, StoryboardImageTableViewCell>(.Click) {
+        let a = TableRowAction<String, StoryboardImageTableViewCell>(.click) {
             (row) in
             
         }
@@ -41,10 +41,15 @@ class MainController: UIViewController {
         let row2 = TableRow<String, StoryboardImageTableViewCell>(item: "2")
         let row3 = TableRow<String, StoryboardImageTableViewCell>(item: "3", actions: [a])
        
+        
         row1
+            .action(TableRowAction(.click) { (row) in
             
-            .addAction(TableRowAction(.Click) { (row) in
-            
+                
+            })
+            .action(TableRowAction(.click) { (row) -> String in
+                
+                return ""
             })
         
         

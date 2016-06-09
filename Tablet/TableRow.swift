@@ -20,13 +20,21 @@
 
 import UIKit
 
-public protocol Row {
-    
+public protocol RowConfigurable {
+
+    func configure(cell: UITableViewCell)
+}
+
+public protocol RowActionable {
+
+    func invoke(action: TableRowActionType, cell: UITableViewCell?, path: NSIndexPath) -> Any?
+}
+
+public protocol Row: RowConfigurable, RowActionable {
+
     var reusableIdentifier: String { get }
     var estimatedHeight: CGFloat { get }
     var defaultHeight: CGFloat { get }
-    
-    func configure(cell: UITableViewCell)
 }
 
 public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>: Row {
@@ -50,14 +58,23 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
         self.item = item
     }
     
+    // MARK: - RowConfigurable -
+    
     public func configure(cell: UITableViewCell) {
         (cell as? CellType)?.configure(item)
     }
     
+    // MARK: - RowActionable -
+
+    public func invoke(action: TableRowActionType, cell: UITableViewCell?, path: NSIndexPath) -> Any? {
+        
+        return nil
+    }
+    
     // MARK: - actions -
     
-    public func addAction(action: TableRowAction<ItemType, CellType>) {
+    public func action(action: TableRowAction<ItemType, CellType>) -> Self {
         
-        
+        return self
     }
 }

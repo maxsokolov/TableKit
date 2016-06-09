@@ -20,7 +20,7 @@
 
 import UIKit
 
-public enum TableActionType {
+public enum TableRowActionType {
     
     case Click
     case Custom(String)
@@ -32,10 +32,11 @@ protocol RowAction {
 
 public class TableRowAction<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>: RowAction {
 
-    public init(_ action: TableActionType, handler: (row: TableRow<ItemType, CellType>) -> Void) {
-        
-        
-        
-        
+    public init(_ action: ActionType, handler: (row: TableRow<ItemType, CellType>) -> Void) {
+
+    }
+    
+    public init<T>(_ action: ActionType, handler: (row: TableRow<ItemType, CellType>) -> T) {
+
     }
 }
