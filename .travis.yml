@@ -8,4 +8,4 @@ before_install:
  - brew reinstall --HEAD xctool
  - cd Tablet
 script:
- - xctool clean build test -project Tablet.xcodeproj -scheme Tablet -sdk iphonesimulator
+ - xctool clean build test -project TableKit.xcodeproj -scheme TableKit -sdk iphonesimulator
