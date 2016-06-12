@@ -26,8 +26,8 @@ import UIKit
 public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
 
     public private(set) weak var tableView: UITableView?
-    private weak var scrollDelegate: UIScrollViewDelegate?
     public private(set) var sections = [TableSection]()
+    private weak var scrollDelegate: UIScrollViewDelegate?
 
     public init(tableView: UITableView, scrollDelegate: UIScrollViewDelegate? = nil) {
         super.init()

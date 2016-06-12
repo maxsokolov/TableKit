@@ -31,7 +31,7 @@ public enum TableRowActionType {
     case shouldHighlight
     case height
     case custom(String)
-    
+
     var key: String {
         
         switch (self) {
@@ -43,26 +43,42 @@ public enum TableRowActionType {
     }
 }
 
-protocol RowAction {
+public class TableRowActionData<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell> {
 
-    func invoke() -> Any?
+    public let item: ItemType
+    public let cell: CellType?
+    public let path: NSIndexPath
+    public let userInfo: [NSObject: AnyObject]?
+
+    init(item: ItemType, cell: CellType?, path: NSIndexPath, userInfo: [NSObject: AnyObject]?) {
+
+        self.item = item
+        self.cell = cell
+        self.path = path
+        self.userInfo = userInfo
+    }
 }
 
-public class TableRowAction<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>: RowAction {
+public class TableRowAction<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell> {
 
     public let type: TableRowActionType
+    private let handler: ((data: TableRowActionData<ItemType, CellType>) -> Any?)
 
-    public init(_ type: TableRowActionType, handler: (row: TableRow<ItemType, CellType>) -> Void) {
+    public init(_ type: TableRowActionType, handler: (data: TableRowActionData<ItemType, CellType>) -> Void) {
+
         self.type = type
+        self.handler = handler
     }
     
-    public init<T>(_ type: TableRowActionType, handler: (row: TableRow<ItemType, CellType>) -> T) {
+    public init<T>(_ type: TableRowActionType, handler: (data: TableRowActionData<ItemType, CellType>) -> T) {
+
         self.type = type
+        self.handler = handler
     }
     
     // MARK: - RowAction -
     
-    func invoke() -> Any? {
-        return nil
+    func invoke(item item: ItemType, cell: UITableViewCell?, path: NSIndexPath) -> Any? {
+        return handler(data: TableRowActionData(item: item, cell: cell as? CellType, path: path, userInfo: nil))
     }
 }

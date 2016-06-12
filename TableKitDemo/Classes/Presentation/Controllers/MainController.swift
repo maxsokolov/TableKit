@@ -45,15 +45,17 @@ class MainController: UIViewController {
         
         
         row1
-            .action(TableRowAction(.click) { (row) in
+            .action(TableRowAction(.shouldHighlight) { (data) -> Bool in
             
                 print("1")
+                
+                return false
             })
-            .action(TableRowAction(.click) { (row) -> String in
+            .action(TableRowAction(.click) { (data) in
                 
                 print("2")
                 
-                return ""
+                
             })
         
         

@@ -25,24 +25,6 @@ struct TabletNotifications {
 }
 
 
-public class ActionData<DataType, CellType> {
-
-    public let cell: CellType?
-    public let item: DataType
-    public let itemIndex: Int
-    public let indexPath: NSIndexPath
-    public let userInfo: [NSObject: AnyObject]?
-
-    init(cell: CellType?, indexPath: NSIndexPath, item: DataType, itemIndex: Int, userInfo: [NSObject: AnyObject]?) {
-
-        self.cell = cell
-        self.indexPath = indexPath
-        self.item = item
-        self.itemIndex = itemIndex
-        self.userInfo = userInfo
-    }
-}
-
 
 /**
     A custom action that you can trigger from your cell.

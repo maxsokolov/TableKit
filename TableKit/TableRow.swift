@@ -41,7 +41,7 @@ public protocol Row: RowConfigurable, RowActionable {
 public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>: Row {
 
     public let item: ItemType
-    private var actions = [String: RowAction]()
+    private lazy var actions = [String: TableRowAction<ItemType, CellType>]()
 
     public var reusableIdentifier: String {
         return CellType.reusableIdentifier()
@@ -56,7 +56,9 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
     }
     
     public init(item: ItemType, actions: [TableRowAction<ItemType, CellType>]? = nil) {
+        
         self.item = item
+        actions?.forEach { self.actions[$0.type.key] = $0 }
     }
     
     // MARK: - RowConfigurable -
@@ -68,7 +70,7 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
     // MARK: - RowActionable -
 
     public func invoke(action: TableRowActionType, cell: UITableViewCell?, path: NSIndexPath) -> Any? {
-        return actions[action.key]?.invoke()
+        return actions[action.key]?.invoke(item: item, cell: cell, path: path)
     }
 
     public func hasAction(action: TableRowActionType) -> Bool {

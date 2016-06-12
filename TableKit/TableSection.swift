@@ -74,7 +74,6 @@ public class TableSection {
     
     public func append(rows rows: [Row]) {
         
-        //if let director = tableDirector { rows.forEach { $0.willUpdateDirector(director) } }
-        //builders.appendContentsOf(rows)
+        
     }
 }
