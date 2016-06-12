@@ -64,7 +64,7 @@ class MainController: UIViewController {
         
         tableDirector += [section]
         
-        tableDirector.append(section: section)
+        //tableDirector.append(section: section)
         
         
         

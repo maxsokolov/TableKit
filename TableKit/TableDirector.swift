@@ -64,6 +64,10 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     
     // MARK: - Internal -
     
+    func hasAction(action: TableRowActionType, atIndexPath indexPath: NSIndexPath) -> Bool {
+        return sections[indexPath.section].items[indexPath.row].hasAction(action)
+    }
+    
     func didReceiveAction(notification: NSNotification) {
         
         if let action = notification.object as? Action, indexPath = tableView?.indexPathForCell(action.cell) {
@@ -160,11 +164,14 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     public func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return invoke(action: .shouldHighlight, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? Bool ?? true
     }
-    
-    /*func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-     
-     return invokeAction(.willSelect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? NSIndexPath
-     }*/
+
+    public func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+
+        if hasAction(.willSelect, atIndexPath: indexPath) {
+            return invoke(action: .willSelect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? NSIndexPath
+        }
+        return indexPath
+    }
     
     // MARK: - Sections manipulation -
     
