@@ -29,11 +29,7 @@ class MainController: UIViewController {
         }
         
         
-        let b = TableRowBuilder<String, StoryboardImageTableViewCell> {
-
-            $0.items = ["1", "2", "3"]
-            $0.actions = [a]
-        }
+        let b = TableRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "2", "3"], actions: [a])
         
         
         let row1 = TableRow<String, StoryboardImageTableViewCell>(item: "1")

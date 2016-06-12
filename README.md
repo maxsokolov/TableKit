@@ -8,7 +8,8 @@
 <a href="https://raw.githubusercontent.com/maxsokolov/tablekit/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License: MIT" /></a>
 </p>
 
-TableKit is a super lightweight yet powerful generic library that handles a complexity of UITableView's datasource and delegate methods in a Swifty way. TableKit's goal is to provide the easiest way to create complex table views. With TableKit you don't have to write a messy code of `switch` or `if` statements when you deal with bunch of different cells in different sections.
+TableKit is a super lightweight yet powerful generic library that allows you to build complex table views in a declarative type-safe manner.
+It hides a complexity of `UITableViewDataSource` and `UITableViewDelegate` methods behind the scene, so your code will be look clean, easy to read and nice to maintain.
 
 ## Features
 
@@ -32,14 +33,14 @@ let row3 = TableRow<String, FloatTableViewCell>(item: 3.0)
 ```
 Put rows into section:
 ```swift
-let s = TableSection(rows: [row1, row2, row3])
+let section = TableSection(rows: [row1, row2, row3])
 ```
-And configure your table:
+And setup your table:
 ```swift
 let tableDirector = TableDirector(tableView: tableView)
 tableDirector += section
 ```
-Done. Your table is ready. You may want to look at your cell. It has to conform to ConfigurableCell protocol:
+Done. Your table is ready. You may want to look at your cell. It has to conform to `ConfigurableCell` protocol:
 ```swift
 class StringTableViewCell: UITableViewCell, ConfigurableCell {
 
@@ -54,7 +55,49 @@ class StringTableViewCell: UITableViewCell, ConfigurableCell {
     }
 }
 ```
+You could have as many rows and sections as you need.
 
+## Row actions
+
+It nice to have some actions that related to your cells:
+```swift
+let action = TableRowAction<String, StringTableViewCell>(.click) { (data) in
+
+}
+
+let row = TableRow<String, StringTableViewCell>(item: "some", actions: [action])
+```
+Or, using nice chaining approach:
+```swift
+let row = TableRow<String, StringTableViewCell>(item: "some")
+
+row
+	.addAction(TableRowAction(.click) { (data) in
+	
+	})
+	.addAction(TableRowAction(.shouldHighlight) { (data) -> Bool in
+		return false
+	})
+```
+
+## Batch rows
+You could have a situation when you need a lot of cells with the same type. In that case it's better to use `TableRowBuilder`:
+```swift
+let builder = TableRowBuilder<String, StringTableViewCell> {
+
+	// do some additional setup here
+	$0.items = ["1", "2", "3"]
+	$0.actions = [action]
+}
+
+section.append(builder: builder)
+```
+Or if you don't need to do some additional setup for your data, just use standart init:
+```swift
+let builder = TableRowBuilder<String, StringTableViewCell>(items: ["1", "2", "3"], actions: [actions])
+
+section.append(builder: builder)
+```
 
 ## License
 
