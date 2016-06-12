@@ -92,12 +92,30 @@ let builder = TableRowBuilder<String, StringTableViewCell> {
 
 section.append(builder: builder)
 ```
-Or if you don't need to do some additional setup for your data, just use standart init:
+Or if you don't need an additional setup for your data, just use standart init:
 ```swift
 let builder = TableRowBuilder<String, StringTableViewCell>(items: ["1", "2", "3"], actions: [actions])
 
 section.append(builder: builder)
 ```
+
+## Installation
+
+### CocoaPods
+To integrate TableKit into your Xcode project using CocoaPods, specify it in your `Podfile`:
+
+```ruby
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+use_frameworks!
+
+pod 'TableKit'
+```
+
+## Requirements
+
+- iOS 8.0+
+- Xcode 7.0+
 
 ## License
 

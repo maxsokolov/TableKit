@@ -20,10 +20,6 @@
 
 import UIKit
 
-/**
-    Responsible for building a certain table view section.
-    Can host several row builders.
-*/
 public class TableSection {
 
     weak var tableDirector: TableDirector?
@@ -36,7 +32,6 @@ public class TableSection {
     public private(set) var headerView: UIView?
     public private(set) var footerView: UIView?
 
-    /// A total number of rows in section of each row builder.
     public var numberOfRows: Int {
         return items.count
     }
