@@ -21,21 +21,19 @@ class MainController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /*let rowBuilder = TableRowBuilder<String, StoryboardImageTableViewCell>(items: ["1", "1", "1", "1"])
-            .action(.click) { [unowned self] data in
-                
-                self.performSegueWithIdentifier("headerfooter", sender: nil)
-            }*/
-        
-        
-        
         
         let a = TableRowAction<String, StoryboardImageTableViewCell>(.click) {
-            (row) in
+            (data) in
             
-            print("3")
+            print("3", data.item)
         }
         
+        
+        let b = TableRowBuilder<String, StoryboardImageTableViewCell> {
+
+            $0.items = ["1", "2", "3"]
+            $0.actions = [a]
+        }
         
         
         let row1 = TableRow<String, StoryboardImageTableViewCell>(item: "1")
@@ -45,13 +43,13 @@ class MainController: UIViewController {
         
         
         row1
-            .action(TableRowAction(.shouldHighlight) { (data) -> Bool in
+            .addAction(TableRowAction(.shouldHighlight) { (data) -> Bool in
             
                 print("1")
                 
                 return false
             })
-            .action(TableRowAction(.click) { (data) in
+            .addAction(TableRowAction(.click) { (data) in
                 
                 print("2")
                 
@@ -59,7 +57,10 @@ class MainController: UIViewController {
             })
         
     
-        let section = TableSection(headerTitle: "", footerTitle: "", rows: [row1, row2, row3])
+        let section = TableSection()
+        section.append(builder: b)
+
+        //let section = TableSection(headerTitle: "", footerTitle: "", rows: [row1, row2, row3])
         
         tableDirector += [section]
         

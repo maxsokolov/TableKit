@@ -48,14 +48,14 @@ public class TableSection {
         }
     }
 
-    public convenience init(headerTitle: String?, footerTitle: String?, rows: [Row]?) {
+    public convenience init(headerTitle: String?, footerTitle: String?, rows: [Row]? = nil) {
         self.init(rows: rows)
         
         self.headerTitle = headerTitle
         self.footerTitle = footerTitle
     }
 
-    public convenience init(headerView: UIView?, footerView: UIView?, rows: [Row]?) {
+    public convenience init(headerView: UIView?, footerView: UIView?, rows: [Row]? = nil) {
         self.init(rows: rows)
         
         self.headerView = headerView
