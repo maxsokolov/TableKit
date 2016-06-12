@@ -24,14 +24,18 @@ public protocol RowBuilder {
 }
 
 public class TableRowBuilder<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>: RowBuilder {
-    
-    public typealias BuilderHandler = (TableRowBuilder) -> ()
-    
+
     public var items: [ItemType]?
     public var actions: [TableRowAction<ItemType, CellType>]?
     
-    public init(handler: BuilderHandler) {
+    public init(handler: (TableRowBuilder) -> ()) {
         handler(self)
+    }
+    
+    public init(items: [ItemType], actions: [TableRowAction<ItemType, CellType>]? = nil) {
+
+        self.items = items
+        self.actions = actions
     }
     
     // MARK: - RowBuilder -
