@@ -71,9 +71,8 @@ public class TableSection {
     public func append(row row: Row) {
         append(rows: [row])
     }
-    
+
     public func append(rows rows: [Row]) {
-        
-        
+        items.appendContentsOf(rows)
     }
 }

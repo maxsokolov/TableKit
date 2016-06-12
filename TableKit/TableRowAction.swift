@@ -75,9 +75,7 @@ public class TableRowAction<ItemType, CellType: ConfigurableCell where CellType.
         self.type = type
         self.handler = handler
     }
-    
-    // MARK: - RowAction -
-    
+
     func invoke(item item: ItemType, cell: UITableViewCell?, path: NSIndexPath) -> Any? {
         return handler(data: TableRowActionData(item: item, cell: cell as? CellType, path: path, userInfo: nil))
     }

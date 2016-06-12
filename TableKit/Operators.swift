@@ -18,37 +18,20 @@
 //    IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-// -
-/*public func +=(left: TableDirector, right: RowBuilder) {
-    left.append(section: TableSectionBuilder(rows: [right]))
-}
-
-public func +=(left: TableDirector, right: [RowBuilder]) {
-    left.append(section: TableSectionBuilder(rows: right))
-}
-
-public func +=(left: TableDirector, right: TableSectionBuilder) {
+// --
+public func +=(left: TableDirector, right: TableSection) {
     left.append(section: right)
 }
 
-public func +=(left: TableDirector, right: [TableSectionBuilder]) {
+public func +=(left: TableDirector, right: [TableSection]) {
     left.append(sections: right)
 }
 
-// -
-public func +=<DataType, CellType>(left: TableRowBuilder<DataType, CellType>, right: DataType) {
-    left.append(items: [right])
-}
-
-public func +=<DataType, CellType>(left: TableRowBuilder<DataType, CellType>, right: [DataType]) {
-    left.append(items: right)
-}
-
-// -
-public func +=(left: TableSectionBuilder, right: RowBuilder) {
+// --
+public func +=(left: TableSection, right: Row) {
     left.append(row: right)
 }
 
-public func +=(left: TableSectionBuilder, right: [RowBuilder]) {
+public func +=(left: TableSection, right: [Row]) {
     left.append(rows: right)
-}*/
+}
