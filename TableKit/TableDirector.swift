@@ -70,11 +70,11 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     
     func didReceiveAction(notification: NSNotification) {
         
-        if let action = notification.object as? Action, indexPath = tableView?.indexPathForCell(action.cell) {
+        //if let action = notification.object as? Action, indexPath = tableView?.indexPathForCell(action.cell) {
             
             //let builder = builderAtIndexPath(indexPath)
             //builder.0.invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1, userInfo: notification.userInfo)
-        }
+        //}
     }
     
     // MARK: - Height
@@ -175,17 +175,22 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     
     // MARK: - Sections manipulation -
     
-    public func append(section section: TableSection) {
+    public func append(section section: TableSection) -> Self {
+
         append(sections: [section])
+        return self
     }
     
-    public func append(sections sections: [TableSection]) {
+    public func append(sections sections: [TableSection]) -> Self {
         
         sections.forEach { $0.tableDirector = self }
         self.sections.appendContentsOf(sections)
+        return self
     }
     
-    public func clear() {
+    public func clear() -> Self {
+
         sections.removeAll()
+        return self
     }
 }

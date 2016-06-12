@@ -30,7 +30,7 @@ struct TabletNotifications {
     A custom action that you can trigger from your cell.
     You can eacily catch actions using a chaining manner with your row builder.
 */
-public class Action {
+public class TableCellAction {
 
     /// The cell that triggers an action.
     public let cell: UITableViewCell

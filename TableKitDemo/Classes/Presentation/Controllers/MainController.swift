@@ -58,8 +58,7 @@ class MainController: UIViewController {
                 
             })
         
-        
-
+    
         let section = TableSection(headerTitle: "", footerTitle: "", rows: [row1, row2, row3])
         
         tableDirector += [section]
