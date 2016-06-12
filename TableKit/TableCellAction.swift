@@ -20,11 +20,9 @@
 
 import UIKit
 
-struct TabletNotifications {
-    static let CellAction = "TabletNotificationsCellAction"
+struct TableKitNotifications {
+    static let CellAction = "TableKitNotificationsCellAction"
 }
-
-
 
 /**
     A custom action that you can trigger from your cell.
@@ -49,6 +47,6 @@ public class TableCellAction {
     }
 
     public func invoke() {
-        NSNotificationCenter.defaultCenter().postNotificationName(TabletNotifications.CellAction, object: self, userInfo: userInfo)
+        NSNotificationCenter.defaultCenter().postNotificationName(TableKitNotifications.CellAction, object: self, userInfo: userInfo)
     }
 }
