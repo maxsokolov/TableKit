@@ -20,10 +20,6 @@
 
 import UIKit
 
-/**
-    Responsible for building a certain table view section.
-    Can host several row builders.
-*/
 public class TableSection {
 
     weak var tableDirector: TableDirector?
@@ -36,7 +32,6 @@ public class TableSection {
     public private(set) var headerView: UIView?
     public private(set) var footerView: UIView?
 
-    /// A total number of rows in section of each row builder.
     public var numberOfRows: Int {
         return items.count
     }
@@ -48,14 +43,14 @@ public class TableSection {
         }
     }
 
-    public convenience init(headerTitle: String?, footerTitle: String?, rows: [Row]?) {
+    public convenience init(headerTitle: String?, footerTitle: String?, rows: [Row]? = nil) {
         self.init(rows: rows)
         
         self.headerTitle = headerTitle
         self.footerTitle = footerTitle
     }
 
-    public convenience init(headerView: UIView?, footerView: UIView?, rows: [Row]?) {
+    public convenience init(headerView: UIView?, footerView: UIView?, rows: [Row]? = nil) {
         self.init(rows: rows)
         
         self.headerView = headerView
@@ -71,10 +66,8 @@ public class TableSection {
     public func append(row row: Row) {
         append(rows: [row])
     }
-    
+
     public func append(rows rows: [Row]) {
-        
-        //if let director = tableDirector { rows.forEach { $0.willUpdateDirector(director) } }
-        //builders.appendContentsOf(rows)
+        items.appendContentsOf(rows)
     }
 }

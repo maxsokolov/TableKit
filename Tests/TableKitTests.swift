@@ -19,7 +19,7 @@
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import XCTest
-import Tablet
+import TableKit
 
 class TestController: UITableViewController {
 
@@ -45,7 +45,7 @@ struct TestTableViewCellOptions {
     static let EstimatedHeight: Float = 255
 }
 
-class TestTableViewCell: UITableViewCell, ConfigurableCell {
+/*class TestTableViewCell: UITableViewCell, ConfigurableCell {
 
     typealias T = TestData
     
@@ -197,4 +197,4 @@ class TabletTests: XCTestCase {
 
         waitForExpectationsWithTimeout(1.0, handler: nil)
     }
-}
+}*/

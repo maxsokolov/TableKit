@@ -26,8 +26,8 @@ import UIKit
 public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
 
     public private(set) weak var tableView: UITableView?
-    private weak var scrollDelegate: UIScrollViewDelegate?
     public private(set) var sections = [TableSection]()
+    private weak var scrollDelegate: UIScrollViewDelegate?
 
     public init(tableView: UITableView, scrollDelegate: UIScrollViewDelegate? = nil) {
         super.init()
@@ -37,7 +37,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         self.tableView?.delegate = self
         self.tableView?.dataSource = self
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didReceiveAction), name: TabletNotifications.CellAction, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didReceiveAction), name: TableKitNotifications.CellAction, object: nil)
     }
     
     deinit {
@@ -64,13 +64,14 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     
     // MARK: - Internal -
     
+    func hasAction(action: TableRowActionType, atIndexPath indexPath: NSIndexPath) -> Bool {
+        return sections[indexPath.section].items[indexPath.row].hasAction(action)
+    }
+    
     func didReceiveAction(notification: NSNotification) {
-        
-        if let action = notification.object as? Action, indexPath = tableView?.indexPathForCell(action.cell) {
-            
-            //let builder = builderAtIndexPath(indexPath)
-            //builder.0.invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath, itemIndex: builder.1, userInfo: notification.userInfo)
-        }
+
+        guard let action = notification.object as? TableCellAction, indexPath = tableView?.indexPathForCell(action.cell) else { return }
+        invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath)
     }
     
     // MARK: - Height
@@ -160,25 +161,33 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     public func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return invoke(action: .shouldHighlight, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? Bool ?? true
     }
-    
-    /*func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-     
-     return invokeAction(.willSelect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? NSIndexPath
-     }*/
+
+    public func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+
+        if hasAction(.willSelect, atIndexPath: indexPath) {
+            return invoke(action: .willSelect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? NSIndexPath
+        }
+        return indexPath
+    }
     
     // MARK: - Sections manipulation -
     
-    public func append(section section: TableSection) {
+    public func append(section section: TableSection) -> Self {
+
         append(sections: [section])
+        return self
     }
     
-    public func append(sections sections: [TableSection]) {
+    public func append(sections sections: [TableSection]) -> Self {
         
         sections.forEach { $0.tableDirector = self }
         self.sections.appendContentsOf(sections)
+        return self
     }
     
-    public func clear() {
+    public func clear() -> Self {
+
         sections.removeAll()
+        return self
     }
 }

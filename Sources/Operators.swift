@@ -18,51 +18,20 @@
 //    IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import UIKit
-
-public enum TableRowActionType {
-    
-    case click
-    case select
-    case deselect
-    case willSelect
-    case configure
-    case willDisplay
-    case shouldHighlight
-    case height
-    case custom(String)
-    
-    var key: String {
-        
-        switch (self) {
-        case .custom(let key):
-            return key
-        default:
-            return "_\(self)"
-        }
-    }
+// --
+public func +=(left: TableDirector, right: TableSection) {
+    left.append(section: right)
 }
 
-protocol RowAction {
-
-    func invoke() -> Any?
+public func +=(left: TableDirector, right: [TableSection]) {
+    left.append(sections: right)
 }
 
-public class TableRowAction<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>: RowAction {
+// --
+public func +=(left: TableSection, right: Row) {
+    left.append(row: right)
+}
 
-    public let type: TableRowActionType
-
-    public init(_ type: TableRowActionType, handler: (row: TableRow<ItemType, CellType>) -> Void) {
-        self.type = type
-    }
-    
-    public init<T>(_ type: TableRowActionType, handler: (row: TableRow<ItemType, CellType>) -> T) {
-        self.type = type
-    }
-    
-    // MARK: - RowAction -
-    
-    func invoke() -> Any? {
-        return nil
-    }
+public func +=(left: TableSection, right: [Row]) {
+    left.append(rows: right)
 }

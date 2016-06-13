@@ -20,27 +20,39 @@
 
 import UIKit
 
-public protocol ConfigurableCell {
-    
-    associatedtype T
-    
-    static func reusableIdentifier() -> String
-    static func estimatedHeight() -> CGFloat
-    static func defaultHeight() -> CGFloat?
-    func configure(_: T)
+public protocol RowBuilder {
+
+    func rowItems() -> [Row]?
 }
 
-public extension ConfigurableCell where Self: UITableViewCell {
+public class TableRowBuilder<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>: RowBuilder {
+
+    public var items: [ItemType]?
+    public var actions: [TableRowAction<ItemType, CellType>]?
     
-    static func reusableIdentifier() -> String {
-        return String(self)
+    public init(handler: (TableRowBuilder) -> ()) {
+        handler(self)
     }
     
-    static func estimatedHeight() -> CGFloat {
-        return UITableViewAutomaticDimension
+    public init(items: [ItemType], actions: [TableRowAction<ItemType, CellType>]? = nil) {
+
+        self.items = items
+        self.actions = actions
     }
     
-    static func defaultHeight() -> CGFloat? {
-        return nil
+    // MARK: - RowBuilder -
+    
+    public func rowItems() -> [Row]? {
+        return items?.map { TableRow<ItemType, CellType>(item: $0, actions: actions) }
+    }
+}
+
+public extension TableSection {
+    
+    public func append(builder builder: RowBuilder) {
+
+        if let rows = builder.rowItems() {
+            append(rows: rows)
+        }
     }
 }

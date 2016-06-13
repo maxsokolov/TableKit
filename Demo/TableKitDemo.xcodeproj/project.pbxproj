@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		DA08A0531CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08A0521CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift */; };
-		DA9EA7821D0B6B070021F650 /* TableKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9EA7811D0B6B070021F650 /* TableKit.framework */; };
+		DA9EA7D91D0EC65B0021F650 /* TableKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9EA7D61D0EC5C60021F650 /* TableKit.framework */; };
+		DA9EA7DA1D0EC65B0021F650 /* TableKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA9EA7D61D0EC5C60021F650 /* TableKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DAC2D5CA1C9D303E009E9C19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D5C91C9D303E009E9C19 /* AppDelegate.swift */; };
 		DAC2D5CF1C9D30A7009E9C19 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAC2D5CD1C9D30A7009E9C19 /* Main.storyboard */; };
 		DAC2D5D01C9D30A7009E9C19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAC2D5CE1C9D30A7009E9C19 /* LaunchScreen.storyboard */; };
@@ -18,9 +19,47 @@
 		DACB717A1CC2D89D00432BD3 /* HeaderFooterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB71791CC2D89D00432BD3 /* HeaderFooterController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		DA9EA7D51D0EC5C60021F650 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA9EA7D01D0EC5C50021F650 /* TableKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DA9EA7561D0B679A0021F650;
+			remoteInfo = TableKit;
+		};
+		DA9EA7D71D0EC5C60021F650 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA9EA7D01D0EC5C50021F650 /* TableKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DA9EA7C41D0EC45F0021F650;
+			remoteInfo = TableKitTests;
+		};
+		DA9EA7DB1D0EC65B0021F650 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA9EA7D01D0EC5C50021F650 /* TableKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = DA9EA7551D0B679A0021F650;
+			remoteInfo = TableKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DA9EA7DD1D0EC65B0021F650 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DA9EA7DA1D0EC65B0021F650 /* TableKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		DA08A0521CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardImageTableViewCell.swift; sourceTree = "<group>"; };
-		DA9EA7811D0B6B070021F650 /* TableKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TableKit.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/TableKit-blgxvmkyvpocltgadmpliruugomo/Build/Products/Debug-iphonesimulator/TableKit.framework"; sourceTree = "<group>"; };
+		DA9EA7D01D0EC5C50021F650 /* TableKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TableKit.xcodeproj; path = ../TableKit.xcodeproj; sourceTree = "<group>"; };
 		DAB7EB271BEF787300D2AD5E /* TableKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TableKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAC2D5C91C9D303E009E9C19 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAC2D5CD1C9D30A7009E9C19 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -37,7 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA9EA7821D0B6B070021F650 /* TableKit.framework in Frameworks */,
+				DA9EA7D91D0EC65B0021F650 /* TableKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,14 +86,23 @@
 		DA539C871CF50B1800368ACB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DA9EA7811D0B6B070021F650 /* TableKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DA9EA7D11D0EC5C50021F650 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DA9EA7D61D0EC5C60021F650 /* TableKit.framework */,
+				DA9EA7D81D0EC5C60021F650 /* TableKitTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		DAB7EB1E1BEF787300D2AD5E = {
 			isa = PBXGroup;
 			children = (
+				DA9EA7D01D0EC5C50021F650 /* TableKit.xcodeproj */,
 				DAC2D5C61C9D2FE5009E9C19 /* Classes */,
 				DAC2D5CB1C9D3058009E9C19 /* Resources */,
 				DA539C871CF50B1800368ACB /* Frameworks */,
@@ -151,10 +199,12 @@
 				DAB7EB231BEF787300D2AD5E /* Sources */,
 				DAB7EB241BEF787300D2AD5E /* Frameworks */,
 				DAB7EB251BEF787300D2AD5E /* Resources */,
+				DA9EA7DD1D0EC65B0021F650 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				DA9EA7DC1D0EC65B0021F650 /* PBXTargetDependency */,
 			);
 			name = TableKitDemo;
 			productName = TabletDemo;
@@ -188,12 +238,35 @@
 			mainGroup = DAB7EB1E1BEF787300D2AD5E;
 			productRefGroup = DAB7EB281BEF787300D2AD5E /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = DA9EA7D11D0EC5C50021F650 /* Products */;
+					ProjectRef = DA9EA7D01D0EC5C50021F650 /* TableKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				DAB7EB261BEF787300D2AD5E /* TableKitDemo */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		DA9EA7D61D0EC5C60021F650 /* TableKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = TableKit.framework;
+			remoteRef = DA9EA7D51D0EC5C60021F650 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DA9EA7D81D0EC5C60021F650 /* TableKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TableKitTests.xctest;
+			remoteRef = DA9EA7D71D0EC5C60021F650 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		DAB7EB251BEF787300D2AD5E /* Resources */ = {
@@ -222,6 +295,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DA9EA7DC1D0EC65B0021F650 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TableKit;
+			targetProxy = DA9EA7DB1D0EC65B0021F650 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		DAB7EB371BEF787300D2AD5E /* Debug */ = {
@@ -311,6 +392,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -326,6 +408,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

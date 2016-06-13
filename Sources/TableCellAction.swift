@@ -20,35 +20,15 @@
 
 import UIKit
 
-struct TabletNotifications {
-    static let CellAction = "TabletNotificationsCellAction"
+struct TableKitNotifications {
+    static let CellAction = "TableKitNotificationsCellAction"
 }
-
-
-public class ActionData<DataType, CellType> {
-
-    public let cell: CellType?
-    public let item: DataType
-    public let itemIndex: Int
-    public let indexPath: NSIndexPath
-    public let userInfo: [NSObject: AnyObject]?
-
-    init(cell: CellType?, indexPath: NSIndexPath, item: DataType, itemIndex: Int, userInfo: [NSObject: AnyObject]?) {
-
-        self.cell = cell
-        self.indexPath = indexPath
-        self.item = item
-        self.itemIndex = itemIndex
-        self.userInfo = userInfo
-    }
-}
-
 
 /**
     A custom action that you can trigger from your cell.
     You can eacily catch actions using a chaining manner with your row builder.
 */
-public class Action {
+public class TableCellAction {
 
     /// The cell that triggers an action.
     public let cell: UITableViewCell
@@ -67,6 +47,6 @@ public class Action {
     }
 
     public func invoke() {
-        NSNotificationCenter.defaultCenter().postNotificationName(TabletNotifications.CellAction, object: self, userInfo: userInfo)
+        NSNotificationCenter.defaultCenter().postNotificationName(TableKitNotifications.CellAction, object: self, userInfo: userInfo)
     }
 }

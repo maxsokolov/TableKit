@@ -18,37 +18,29 @@
 //    IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-// -
-/*public func +=(left: TableDirector, right: RowBuilder) {
-    left.append(section: TableSectionBuilder(rows: [right]))
+import UIKit
+
+public protocol ConfigurableCell {
+
+    associatedtype T
+
+    static func reusableIdentifier() -> String
+    static func estimatedHeight() -> CGFloat
+    static func defaultHeight() -> CGFloat?
+    func configure(_: T)
 }
 
-public func +=(left: TableDirector, right: [RowBuilder]) {
-    left.append(section: TableSectionBuilder(rows: right))
-}
+public extension ConfigurableCell where Self: UITableViewCell {
 
-public func +=(left: TableDirector, right: TableSectionBuilder) {
-    left.append(section: right)
-}
+    static func reusableIdentifier() -> String {
+        return String(self)
+    }
 
-public func +=(left: TableDirector, right: [TableSectionBuilder]) {
-    left.append(sections: right)
-}
+    static func estimatedHeight() -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
 
-// -
-public func +=<DataType, CellType>(left: TableRowBuilder<DataType, CellType>, right: DataType) {
-    left.append(items: [right])
+    static func defaultHeight() -> CGFloat? {
+        return nil
+    }
 }
-
-public func +=<DataType, CellType>(left: TableRowBuilder<DataType, CellType>, right: [DataType]) {
-    left.append(items: right)
-}
-
-// -
-public func +=(left: TableSectionBuilder, right: RowBuilder) {
-    left.append(row: right)
-}
-
-public func +=(left: TableSectionBuilder, right: [RowBuilder]) {
-    left.append(rows: right)
-}*/
