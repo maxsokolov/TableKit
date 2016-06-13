@@ -26,7 +26,6 @@ public enum TableRowActionType {
     case select
     case deselect
     case willSelect
-    case configure
     case willDisplay
     case shouldHighlight
     case height
