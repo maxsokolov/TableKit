@@ -64,6 +64,10 @@ It nice to have some actions that related to your cells:
 ```swift
 let action = TableRowAction<String, StringTableViewCell>(.click) { (data) in
 
+	// you could access any useful information that relates to the action
+	// data.cell - StringTableViewCell?
+	// data.item - String
+	// data.path - NSIndexPath
 }
 
 let row = TableRow<String, StringTableViewCell>(item: "some", actions: [action])
@@ -113,7 +117,7 @@ use_frameworks!
 pod 'TableKit'
 ```
 #### Carthage
-Add the line `github "maxsokolov/tablekit"` to your `Cartfile`
+Add the line `github "maxsokolov/tablekit"` to your `Cartfile`.
 #### Manual
 Clone the repo and drag files from `Sources` folder into your Xcode project.
 

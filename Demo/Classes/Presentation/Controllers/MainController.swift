@@ -41,6 +41,10 @@ class MainController: UIViewController {
         row1
             .addAction(TableRowAction(.shouldHighlight) { (data) -> Bool in
             
+                data.cell
+                data.item
+                data.path
+                
                 print("1")
                 
                 return false
