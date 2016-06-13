@@ -112,7 +112,7 @@ use_frameworks!
 pod 'TableKit'
 ```
 #### Carthage
-Add the line `github "johnsundell/unbox"` to your `Cartfile`
+Add the line `github "maxsokolov/tablekit"` to your `Cartfile`
 
 ## Requirements
 
