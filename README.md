@@ -101,7 +101,7 @@ section.append(builder: builder)
 
 ## Installation
 
-### CocoaPods
+#### CocoaPods
 To integrate TableKit into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
@@ -111,6 +111,8 @@ use_frameworks!
 
 pod 'TableKit'
 ```
+#### Carthage
+Add the line `github "johnsundell/unbox"` to your `Cartfile`
 
 ## Requirements
 
