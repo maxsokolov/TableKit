@@ -22,15 +22,14 @@ It hides a complexity of `UITableViewDataSource` and `UITableViewDelegate` metho
 - [x] Automatic xib/classes registration
 - [x] No need to subclass
 - [x] Extensibility
-- [x] Tests
 
-## Usage
+## Getting Started
 
 Create your rows:
 ```swift
 let row1 = TableRow<String, StringTableViewCell>(item: "1")
-let row2 = TableRow<String, IntTableViewCell>(item: 2)
-let row3 = TableRow<String, FloatTableViewCell>(item: 3.0)
+let row2 = TableRow<Int, IntTableViewCell>(item: 2)
+let row3 = TableRow<Float, FloatTableViewCell>(item: 3.0)
 ```
 Put rows into section:
 ```swift
