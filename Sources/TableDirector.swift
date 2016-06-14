@@ -27,8 +27,17 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
 
     public private(set) weak var tableView: UITableView?
     public private(set) var sections = [TableSection]()
+    
     private weak var scrollDelegate: UIScrollViewDelegate?
-    private var heightStrategy: HeightCalculatingStrategy?
+    private var heightStrategy: CellHeightCalculatable?
+
+    public var shouldUsePrototypeCellHeightCalculation: Bool = false {
+        didSet {
+            if shouldUsePrototypeCellHeightCalculation {
+                heightStrategy = PrototypeHeightStrategy(tableView: tableView)
+            }
+        }
+    }
 
     public init(tableView: UITableView, scrollDelegate: UIScrollViewDelegate? = nil) {
         super.init()
@@ -78,16 +87,15 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     // MARK: - Height
     
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return sections[indexPath.section].items[indexPath.row].estimatedHeight
+
+        let row = sections[indexPath.section].items[indexPath.row]
+        return heightStrategy?.estimatedHeight(row, path: indexPath) ?? row.estimatedHeight
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 
         let row = sections[indexPath.section].items[indexPath.row]
-
-        return heightStrategy?.height(indexPath, reusableIdentifier: row.reusableIdentifier, configure: { (cell) in
-            row.configure(cell)
-        }) ?? sections[indexPath.section].items[indexPath.row].defaultHeight
+        return heightStrategy?.height(row, path: indexPath) ?? row.defaultHeight
     }
     
     // MARK: UITableViewDataSource - configuration

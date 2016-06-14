@@ -14,6 +14,7 @@ class MainController: UIViewController {
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableDirector = TableDirector(tableView: tableView)
+            tableDirector.shouldUsePrototypeCellHeightCalculation = true
         }
     }
     var tableDirector: TableDirector!
