@@ -27,7 +27,7 @@ public protocol HeightCalculatingStrategy {
     func height(indexPath: NSIndexPath, reusableIdentifier: String, configure: (cell: UITableViewCell) -> Void) -> CGFloat
 }
 
-public class PrototypeHeightStrategy {
+public class PrototypeHeightStrategy: HeightCalculatingStrategy {
 
     public weak var tableView: UITableView?
     private var cachedHeights = [Int: CGFloat]()

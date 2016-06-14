@@ -35,9 +35,7 @@ class MainController: UIViewController {
         let row1 = TableRow<String, StoryboardImageTableViewCell>(item: "1")
         let row2 = TableRow<String, StoryboardImageTableViewCell>(item: "2")
         let row3 = TableRow<String, StoryboardImageTableViewCell>(item: "3", actions: [a])
-       
-        
-        
+
         row1
             .addAction(TableRowAction(.shouldHighlight) { (data) -> Bool in
 

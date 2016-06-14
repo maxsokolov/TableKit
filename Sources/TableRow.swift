@@ -31,7 +31,12 @@ public protocol RowActionable {
     func hasAction(action: TableRowActionType) -> Bool
 }
 
-public protocol Row: RowConfigurable, RowActionable {
+public protocol RowHashable {
+    
+    var hashValue: Int { get }
+}
+
+public protocol Row: RowConfigurable, RowActionable, RowHashable {
 
     var reusableIdentifier: String { get }
     var estimatedHeight: CGFloat { get }
@@ -42,6 +47,10 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
 
     public let item: ItemType
     private lazy var actions = [String: TableRowAction<ItemType, CellType>]()
+    
+    public var hashValue: Int {
+        return ObjectIdentifier(self).hashValue
+    }
 
     public var reusableIdentifier: String {
         return CellType.reusableIdentifier()
