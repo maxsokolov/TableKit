@@ -20,25 +20,25 @@
 
 import UIKit
 
-public protocol HeightStrategy {
+public protocol HeightCalculatingStrategy {
 
     var tableView: UITableView? { get set }
 
-    func height<Item, Cell: ConfigurableCell where Cell.T == Item, Cell: UITableViewCell>(item: Item, indexPath: NSIndexPath, cell: Cell.Type) -> CGFloat
+    func height(indexPath: NSIndexPath, reusableIdentifier: String, configure: (cell: UITableViewCell) -> Void) -> CGFloat
 }
 
-public class PrototypeHeightStrategy: HeightStrategy {
+public class PrototypeHeightStrategy {
 
     public weak var tableView: UITableView?
     private var cachedHeights = [Int: CGFloat]()
     
-    public func height<Item, Cell: ConfigurableCell where Cell.T == Item, Cell: UITableViewCell>(item: Item, indexPath: NSIndexPath, cell: Cell.Type) -> CGFloat {
+    public func height(indexPath: NSIndexPath, reusableIdentifier: String, configure: (cell: UITableViewCell) -> Void) -> CGFloat {
         
-        guard let cell = tableView?.dequeueReusableCellWithIdentifier(Cell.reusableIdentifier()) as? Cell else { return 0 }
+        guard let cell = tableView?.dequeueReusableCellWithIdentifier(reusableIdentifier) else { return 0 }
         
         cell.bounds = CGRectMake(0, 0, tableView?.bounds.size.width ?? 0, cell.bounds.height)
         
-        cell.configure(item)
+        configure(cell: cell)
         
         cell.setNeedsLayout()
         cell.layoutIfNeeded()

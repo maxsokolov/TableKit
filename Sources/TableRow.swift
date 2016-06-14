@@ -60,7 +60,7 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
         self.item = item
         actions?.forEach { self.actions[$0.type.key] = $0 }
     }
-    
+
     // MARK: - RowConfigurable -
     
     public func configure(cell: UITableViewCell) {
