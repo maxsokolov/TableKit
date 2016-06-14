@@ -19,7 +19,7 @@ It hides a complexity of `UITableViewDataSource` and `UITableViewDelegate` metho
 - [x] Correctly handles autolayout cells with multiline labels
 - [x] Chainable cell actions (select/deselect etc.)
 - [x] Support cells created from code, xib, or storyboard
-- [x] Automatic xib/classes registration
+- [x] Support different cells height calculation strategies
 - [x] No need to subclass
 - [x] Extensibility
 

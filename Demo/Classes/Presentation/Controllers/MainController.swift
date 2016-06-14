@@ -21,8 +21,7 @@ class MainController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+
         let a = TableRowAction<String, StoryboardImageTableViewCell>(.click) {
             (data) in
             

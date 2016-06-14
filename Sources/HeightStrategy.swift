@@ -32,6 +32,7 @@ public class PrototypeHeightStrategy: CellHeightCalculatable {
 
     public weak var tableView: UITableView?
     private var cachedHeights = [Int: CGFloat]()
+    private var separatorHeight = 1 / UIScreen.mainScreen().scale
     
     init(tableView: UITableView?) {
         self.tableView = tableView
@@ -51,8 +52,8 @@ public class PrototypeHeightStrategy: CellHeightCalculatable {
         
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
-        
-        let height = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height + 1
+
+        let height = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height + (tableView?.separatorStyle != .None ? separatorHeight : 0)
 
         cachedHeights[row.hashValue] = height
 
