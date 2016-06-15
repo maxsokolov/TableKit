@@ -26,6 +26,8 @@ public protocol CellHeightCalculatable {
 
     func height(row: Row, path: NSIndexPath) -> CGFloat
     func estimatedHeight(row: Row, path: NSIndexPath) -> CGFloat
+    
+    func invalidate()
 }
 
 public class PrototypeHeightStrategy: CellHeightCalculatable {
@@ -62,5 +64,9 @@ public class PrototypeHeightStrategy: CellHeightCalculatable {
 
     public func estimatedHeight(row: Row, path: NSIndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
+    }
+
+    public func invalidate() {
+        cachedHeights.removeAll()
     }
 }
