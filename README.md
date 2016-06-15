@@ -20,6 +20,7 @@ It hides a complexity of `UITableViewDataSource` and `UITableViewDelegate` metho
 - [x] Chainable cell actions (select/deselect etc.)
 - [x] Support cells created from code, xib, or storyboard
 - [x] Support different cells height calculation strategies
+- [x] Support portrait and landscape orientations
 - [x] No need to subclass
 - [x] Extensibility
 
