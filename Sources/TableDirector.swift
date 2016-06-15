@@ -118,7 +118,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
             cell.layoutIfNeeded()
         }
 
-        row.configure(cell)
+        row.configure(cell, isPrototype: false)
 
         return cell
     }

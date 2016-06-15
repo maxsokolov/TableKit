@@ -17,7 +17,7 @@ class StoryboardImageTableViewCell: UITableViewCell, ConfigurableCell {
     @IBOutlet var subtitleLabel: UILabel!
     @IBOutlet var customImageView: UIImageView!
     
-    func configure(string: T) {
+    func configure(string: T, isPrototype: Bool) {
         
         titleLabel.text = string
         subtitleLabel.text = "Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.Copyright © 2016 Tablet. All rights reserved.1"

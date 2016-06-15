@@ -27,7 +27,7 @@ public protocol ConfigurableCell {
     static func reusableIdentifier() -> String
     static func estimatedHeight() -> CGFloat
     static func defaultHeight() -> CGFloat?
-    func configure(_: T)
+    func configure(_: T, isPrototype: Bool)
 }
 
 public extension ConfigurableCell where Self: UITableViewCell {

@@ -48,7 +48,7 @@ public class PrototypeHeightStrategy: CellHeightCalculatable {
         
         cell.bounds = CGRectMake(0, 0, tableView?.bounds.size.width ?? 0, cell.bounds.height)
 
-        row.configure(cell)
+        row.configure(cell, isPrototype: true)
         
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
