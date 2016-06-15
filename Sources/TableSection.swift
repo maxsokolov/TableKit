@@ -66,8 +66,16 @@ public class TableSection {
     public func append(row row: Row) {
         append(rows: [row])
     }
-
+    
     public func append(rows rows: [Row]) {
         items.appendContentsOf(rows)
+    }
+
+    public func insert(row row: Row, atIndex index: Int) {
+        items.insert(row, atIndex: index)
+    }
+
+    public func delete(index: Int) {
+        items.removeAtIndex(index)
     }
 }
