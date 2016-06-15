@@ -124,11 +124,11 @@ class StringTableViewCell: UITableViewCell, ConfigurableCell {
     }
 }
 ```
-It's enough for most cases. But you may not be happy with this. So you could use
+It's enough for most cases. But you may be not happy with this. So you could use a prototype cell to calculate cell's heights. To enable this feature simply use this property:
 ```swift
 tableDirector.shouldUsePrototypeCellHeightCalculation = true
 ```
-It does all dirty work with prototypes <a href="https://github.com/maxsokolov/TableKit/blob/master/Sources/HeightStrategy.swift" target="_blank">behind the scene</a>, so you don't have to worry about anything except of your cell configuration:
+It does all dirty work with prototypes for you <a href="https://github.com/maxsokolov/TableKit/blob/master/Sources/HeightStrategy.swift" target="_blank">behind the scene</a>, so you don't have to worry about anything except of your cell configuration:
 ```swift
 class ImageTableViewCell: UITableViewCell, ConfigurableCell {
 
@@ -138,10 +138,16 @@ class ImageTableViewCell: UITableViewCell, ConfigurableCell {
 			loadImageAsync(url: url, imageView: imageView)
 		}
 	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+        
+		contentView.layoutIfNeeded()
+		multilineLabel.preferredMaxLayoutWidth = multilineLabel.bounds.size.width
+    }
 }
 ```
-As you can see you don't have to load any remote images to your cell, cause it's not visible. It's a prototype cell, just to calculate apropriate height.
-
+First of all you have to set `preferredMaxLayoutWidth` for all your multiline labels. And check if a configuring cell is a prototype cell. If it is, you don't have to do any additional work that not actually affect cell's height. For example you don't have to load remote image for a prototype cell.
 
 ## Installation
 
