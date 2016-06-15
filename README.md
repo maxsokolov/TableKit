@@ -46,7 +46,7 @@ class StringTableViewCell: UITableViewCell, ConfigurableCell {
 
 	typealias T = String
 
-	func configure(string: T) {
+	func configure(string: T, isPrototype: Bool) {
 		titleLabel.text = string
 	}
 
