@@ -26,6 +26,10 @@ It hides a complexity of `UITableViewDataSource` and `UITableViewDelegate` metho
 
 ## Getting Started
 
+An example app is included demonstrating TableKit's functionality.
+
+#### Basic usage
+
 Create your rows:
 ```swift
 let row1 = TableRow<String, StringTableViewCell>(item: "1")
@@ -58,7 +62,9 @@ class StringTableViewCell: UITableViewCell, ConfigurableCell {
 ```
 You could have as many rows and sections as you need.
 
-## Row actions
+## Advanced
+
+#### Row actions
 
 It nice to have some actions that related to your cells:
 ```swift
@@ -85,7 +91,7 @@ row
 	})
 ```
 
-## Batch rows
+#### Batch rows
 You could have a situation when you need a lot of cells with the same type. In that case it's better to use `TableRowBuilder`:
 ```swift
 let builder = TableRowBuilder<String, StringTableViewCell> {
