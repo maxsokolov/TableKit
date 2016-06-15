@@ -71,6 +71,7 @@ It nice to have some actions that related to your cells:
 let action = TableRowAction<String, StringTableViewCell>(.click) { (data) in
 
 	// you could access any useful information that relates to the action
+
 	// data.cell - StringTableViewCell?
 	// data.item - String
 	// data.path - NSIndexPath
@@ -90,6 +91,7 @@ row
 		return false
 	})
 ```
+You could find all available actions <a href="https://github.com/maxsokolov/TableKit/blob/master/Sources/TableRowAction.swift" target="_blank">here</a>.
 
 #### Batch rows
 You could have a situation when you need a lot of cells with the same type. In that case it's better to use `TableRowBuilder`:
@@ -109,6 +111,37 @@ let builder = TableRowBuilder<String, StringTableViewCell>(items: ["1", "2", "3"
 
 section.append(builder: builder)
 ```
+
+#### Cell height calculating strategy
+By default TableKit relies on <a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/WorkingwithSelf-SizingTableViewCells.html" target="_blank">self-sizing cells</a>. In that case you have to provide an estimated height for your cells:
+```swift
+class StringTableViewCell: UITableViewCell, ConfigurableCell {
+
+	// ...
+
+	static func estimatedHeight() -> CGFloat {
+        return 44
+    }
+}
+```
+It's enough for most cases. But you may not be happy with this. So you could use
+```swift
+tableDirector.shouldUsePrototypeCellHeightCalculation = true
+```
+It does all dirty work with prototypes <a href="https://github.com/maxsokolov/TableKit/blob/master/Sources/HeightStrategy.swift" target="_blank">behind the scene</a>, so you don't have to worry about anything except of your cell configuration:
+```swift
+class ImageTableViewCell: UITableViewCell, ConfigurableCell {
+
+	func configure(url: NSURL, isPrototype: Bool) {
+		
+		if !isPrototype {
+			loadImageAsync(url: url, imageView: imageView)
+		}
+	}
+}
+```
+As you can see you don't have to load any remote images to your cell, cause it's not visible. It's a prototype cell, just to calculate apropriate height.
+
 
 ## Installation
 
