@@ -41,23 +41,27 @@ public class PrototypeHeightStrategy: CellHeightCalculatable {
     }
     
     public func height(row: Row, path: NSIndexPath) -> CGFloat {
-        
-        if let height = cachedHeights[row.hashValue] {
+
+        guard let tableView = tableView else { return 0 }
+
+        let hash = row.hashValue ^ Int(tableView.bounds.size.width).hashValue
+
+        if let height = cachedHeights[hash] {
             return height
         }
 
-        guard let cell = tableView?.dequeueReusableCellWithIdentifier(row.reusableIdentifier) else { return 0 }
-        
-        cell.bounds = CGRectMake(0, 0, tableView?.bounds.size.width ?? 0, cell.bounds.height)
+        guard let cell = tableView.dequeueReusableCellWithIdentifier(row.reusableIdentifier) else { return 0 }
+
+        cell.bounds = CGRectMake(0, 0, tableView.bounds.size.width, cell.bounds.height)
 
         row.configure(cell, isPrototype: true)
-        
+
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
 
-        let height = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height + (tableView?.separatorStyle != .None ? separatorHeight : 0)
+        let height = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height + (tableView.separatorStyle != .None ? separatorHeight : 0)
 
-        cachedHeights[row.hashValue] = height
+        cachedHeights[hash] = height
 
         return height
     }
