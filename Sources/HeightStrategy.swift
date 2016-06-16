@@ -33,6 +33,7 @@ public protocol CellHeightCalculatable {
 public class PrototypeHeightStrategy: CellHeightCalculatable {
 
     public weak var tableView: UITableView?
+    private var prototypes = [String: UITableViewCell]()
     private var cachedHeights = [Int: CGFloat]()
     private var separatorHeight = 1 / UIScreen.mainScreen().scale
     

@@ -88,7 +88,7 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
     
     // MARK: - actions -
     
-    public func addAction(action: TableRowAction<ItemType, CellType>) -> Self {
+    public func action(action: TableRowAction<ItemType, CellType>) -> Self {
 
         actions[action.type.key] = action
         return self

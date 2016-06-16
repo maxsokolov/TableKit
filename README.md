@@ -82,12 +82,10 @@ let row = TableRow<String, StringTableViewCell>(item: "some", actions: [action])
 Or, using nice chaining approach:
 ```swift
 let row = TableRow<String, StringTableViewCell>(item: "some")
-
-row
-	.addAction(TableRowAction(.click) { (data) in
+	.action(TableRowAction(.click) { (data) in
 	
 	})
-	.addAction(TableRowAction(.shouldHighlight) { (data) -> Bool in
+	.action(TableRowAction(.shouldHighlight) { (data) -> Bool in
 		return false
 	})
 ```

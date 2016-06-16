@@ -37,13 +37,13 @@ class MainController: UIViewController {
         let row3 = TableRow<String, StoryboardImageTableViewCell>(item: "3", actions: [a])
 
         row1
-            .addAction(TableRowAction(.shouldHighlight) { (data) -> Bool in
+            .action(TableRowAction(.shouldHighlight) { (data) -> Bool in
 
                 print("1")
                 
                 return false
             })
-            .addAction(TableRowAction(.click) { (data) in
+            .action(TableRowAction(.click) { (data) in
                 
                 print("2")
             })
