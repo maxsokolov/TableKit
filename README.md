@@ -62,8 +62,6 @@ class StringTableViewCell: UITableViewCell, ConfigurableCell {
 ```
 You could have as many rows and sections as you need.
 
-## Advanced
-
 #### Row actions
 
 It nice to have some actions that related to your cells:
@@ -109,6 +107,8 @@ let builder = TableRowBuilder<String, StringTableViewCell>(items: ["1", "2", "3"
 
 section.append(builder: builder)
 ```
+
+## Advanced
 
 #### Cell height calculating strategy
 By default TableKit relies on <a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/WorkingwithSelf-SizingTableViewCells.html" target="_blank">self-sizing cells</a>. In that case you have to provide an estimated height for your cells:
