@@ -154,7 +154,9 @@ It's never been so easy to deal with table views.
 ```swift
 let users = /* some users array */
 
-tableDirector += users.filter({ $0.state == .active }).map({ TableRow<String, UserTableViewCell>(item: $0.username) })
+let rows: [Row] = users.filter({ $0.state == .active }).map({ TableRow<String, UserTableViewCell>(item: $0.username) })
+
+tableDirector += rows
 ```
 Done, your table is ready. It's just awesome!
 
