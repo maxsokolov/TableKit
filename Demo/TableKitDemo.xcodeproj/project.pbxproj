@@ -7,7 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DA08A0531CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08A0521CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift */; };
+		DA08A0531CF4E9B500BBF1F8 /* AutolayoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08A0521CF4E9B500BBF1F8 /* AutolayoutTableViewCell.swift */; };
+		DA55465D1D1569CC00AA83EE /* AutolayoutCellsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA55465C1D1569CC00AA83EE /* AutolayoutCellsController.swift */; };
+		DA5546601D156A4F00AA83EE /* ConfigurableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA55465F1D156A4F00AA83EE /* ConfigurableTableViewCell.swift */; };
+		DA5546621D1573D300AA83EE /* RowBuilderCellsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5546611D1573D300AA83EE /* RowBuilderCellsController.swift */; };
+		DA5546641D15762000AA83EE /* NibTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5546631D15762000AA83EE /* NibTableViewCell.swift */; };
+		DA5546661D15765900AA83EE /* NibTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA5546651D15765900AA83EE /* NibTableViewCell.xib */; };
+		DA5546681D15771D00AA83EE /* NibCellsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5546671D15771D00AA83EE /* NibCellsController.swift */; };
 		DA9EA7D91D0EC65B0021F650 /* TableKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9EA7D61D0EC5C60021F650 /* TableKit.framework */; };
 		DA9EA7DA1D0EC65B0021F650 /* TableKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA9EA7D61D0EC5C60021F650 /* TableKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DAC2D5CA1C9D303E009E9C19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC2D5C91C9D303E009E9C19 /* AppDelegate.swift */; };
@@ -15,8 +21,6 @@
 		DAC2D5D01C9D30A7009E9C19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAC2D5CE1C9D30A7009E9C19 /* LaunchScreen.storyboard */; };
 		DAC2D69C1C9E75E3009E9C19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAC2D69B1C9E75E3009E9C19 /* Assets.xcassets */; };
 		DACB71761CC2D63D00432BD3 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB71751CC2D63D00432BD3 /* MainController.swift */; };
-		DACB71781CC2D6ED00432BD3 /* StoryboardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB71771CC2D6ED00432BD3 /* StoryboardTableViewCell.swift */; };
-		DACB717A1CC2D89D00432BD3 /* HeaderFooterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB71791CC2D89D00432BD3 /* HeaderFooterController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,7 +62,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		DA08A0521CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardImageTableViewCell.swift; sourceTree = "<group>"; };
+		DA08A0521CF4E9B500BBF1F8 /* AutolayoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutolayoutTableViewCell.swift; sourceTree = "<group>"; };
+		DA55465C1D1569CC00AA83EE /* AutolayoutCellsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutolayoutCellsController.swift; sourceTree = "<group>"; };
+		DA55465F1D156A4F00AA83EE /* ConfigurableTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableTableViewCell.swift; sourceTree = "<group>"; };
+		DA5546611D1573D300AA83EE /* RowBuilderCellsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowBuilderCellsController.swift; sourceTree = "<group>"; };
+		DA5546631D15762000AA83EE /* NibTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibTableViewCell.swift; sourceTree = "<group>"; };
+		DA5546651D15765900AA83EE /* NibTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NibTableViewCell.xib; sourceTree = "<group>"; };
+		DA5546671D15771D00AA83EE /* NibCellsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibCellsController.swift; sourceTree = "<group>"; };
 		DA9EA7D01D0EC5C50021F650 /* TableKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TableKit.xcodeproj; path = ../TableKit.xcodeproj; sourceTree = "<group>"; };
 		DAB7EB271BEF787300D2AD5E /* TableKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TableKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAC2D5C91C9D303E009E9C19 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,8 +77,6 @@
 		DAC2D69B1C9E75E3009E9C19 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DAC2D69D1C9E78B5009E9C19 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DACB71751CC2D63D00432BD3 /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
-		DACB71771CC2D6ED00432BD3 /* StoryboardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardTableViewCell.swift; sourceTree = "<group>"; };
-		DACB71791CC2D89D00432BD3 /* HeaderFooterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderFooterController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,7 +183,9 @@
 			isa = PBXGroup;
 			children = (
 				DACB71751CC2D63D00432BD3 /* MainController.swift */,
-				DACB71791CC2D89D00432BD3 /* HeaderFooterController.swift */,
+				DA55465C1D1569CC00AA83EE /* AutolayoutCellsController.swift */,
+				DA5546611D1573D300AA83EE /* RowBuilderCellsController.swift */,
+				DA5546671D15771D00AA83EE /* NibCellsController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -183,8 +193,10 @@
 		DACB71741CC2D5FD00432BD3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DACB71771CC2D6ED00432BD3 /* StoryboardTableViewCell.swift */,
-				DA08A0521CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift */,
+				DA55465F1D156A4F00AA83EE /* ConfigurableTableViewCell.swift */,
+				DA08A0521CF4E9B500BBF1F8 /* AutolayoutTableViewCell.swift */,
+				DA5546631D15762000AA83EE /* NibTableViewCell.swift */,
+				DA5546651D15765900AA83EE /* NibTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -274,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAC2D5CF1C9D30A7009E9C19 /* Main.storyboard in Resources */,
+				DA5546661D15765900AA83EE /* NibTableViewCell.xib in Resources */,
 				DAC2D5D01C9D30A7009E9C19 /* LaunchScreen.storyboard in Resources */,
 				DAC2D69C1C9E75E3009E9C19 /* Assets.xcassets in Resources */,
 			);
@@ -286,11 +299,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DACB71781CC2D6ED00432BD3 /* StoryboardTableViewCell.swift in Sources */,
 				DACB71761CC2D63D00432BD3 /* MainController.swift in Sources */,
+				DA5546621D1573D300AA83EE /* RowBuilderCellsController.swift in Sources */,
+				DA55465D1D1569CC00AA83EE /* AutolayoutCellsController.swift in Sources */,
+				DA5546681D15771D00AA83EE /* NibCellsController.swift in Sources */,
 				DAC2D5CA1C9D303E009E9C19 /* AppDelegate.swift in Sources */,
-				DACB717A1CC2D89D00432BD3 /* HeaderFooterController.swift in Sources */,
-				DA08A0531CF4E9B500BBF1F8 /* StoryboardImageTableViewCell.swift in Sources */,
+				DA5546641D15762000AA83EE /* NibTableViewCell.swift in Sources */,
+				DA5546601D156A4F00AA83EE /* ConfigurableTableViewCell.swift in Sources */,
+				DA08A0531CF4E9B500BBF1F8 /* AutolayoutTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
