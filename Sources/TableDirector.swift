@@ -61,15 +61,24 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     public func register<T: UITableViewCell where T: ReusableCell>(cells: T.Type...) {
 
         for cell in cells {
+            
             if let nib = cell.nib() {
+                
                 tableView?.registerNib(nib, forCellReuseIdentifier: cell.reusableIdentifier())
+                return
+            
             } else {
-                if let nib = NSBundle(forClass: cell).loadNibNamed(cell.reusableIdentifier(), owner: nil, options: nil).first as? UINib {
-                    tableView?.registerNib(nib, forCellReuseIdentifier: cell.reusableIdentifier())
-                } else {
-                    tableView?.registerClass(cell, forCellReuseIdentifier: cell.reusableIdentifier())
+                
+                let resource = cell.reusableIdentifier()
+                let bundle = NSBundle(forClass: cell)
+                
+                if let _ = bundle.pathForResource(resource, ofType: "nib") {
+                    tableView?.registerNib(UINib(nibName: resource, bundle: bundle), forCellReuseIdentifier: cell.reusableIdentifier())
+                    return
                 }
             }
+
+            tableView?.registerClass(cell, forCellReuseIdentifier: cell.reusableIdentifier())
         }
     }
 

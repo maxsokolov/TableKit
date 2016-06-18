@@ -28,7 +28,7 @@ class TestController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableDirector = TableDirector(tableView: tableView)
-        tableDirector.register([TestTableViewCell.self])
+        tableDirector.register(TestTableViewCell.self)
     }
 }
 
@@ -75,7 +75,7 @@ class TabletTests: XCTestCase {
         super.setUp()
 
         testController = TestController()
-        let _ = testController.view
+        testController.view.hidden = false
     }
 
     override func tearDown() {
@@ -91,20 +91,46 @@ class TabletTests: XCTestCase {
         XCTAssertNotNil(testController.tableDirector.tableView, "TableDirector should have table view")
     }
     
-    func testRow() {
+    func testRowInSection() {
         
         let data = TestData(title: "title")
 
         let row = TableRow<TestData, TestTableViewCell>(item: data)
         
         testController.tableDirector += row
+        testController.tableView.reloadData()
         
         XCTAssertTrue(testController.tableView.dataSource?.numberOfSectionsInTableView?(testController.tableView) == 1, "Table view should have a section")
         XCTAssertTrue(testController.tableView.dataSource?.tableView(testController.tableView, numberOfRowsInSection: 0) == 1, "Table view should have certain number of rows in a section")
         
         let cell = testController.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? TestTableViewCell
         XCTAssertNotNil(cell)
+        XCTAssertTrue(cell?.textLabel?.text == data.title)
     }
+    
+    func testManyRowsInSection() {
+        
+        let data = [TestData(title: "1"), TestData(title: "2"), TestData(title: "3")]
+        
+        let rows: [TableRow<TestData, TestTableViewCell>] = data.map { TableRow<TestData, TestTableViewCell>(item: $0) }
+        
+        testController.tableDirector += rows
+        testController.tableView.reloadData()
+        
+        XCTAssertTrue(testController.tableView.dataSource?.numberOfSectionsInTableView?(testController.tableView) == 1, "Table view should have a section")
+        XCTAssertTrue(testController.tableView.dataSource?.tableView(testController.tableView, numberOfRowsInSection: 0) == data.count, "Table view should have certain number of rows in a section")
+        
+        for (index, element) in data.enumerate() {
+            
+            let cell = testController.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as? TestTableViewCell
+            XCTAssertNotNil(cell)
+            XCTAssertTrue(cell?.textLabel?.text == element.title)
+        }
+    }
+    
+    
+    
+    
     
     /*func testSimpleRowBuilderCreatesRowsAndSection() {
 
