@@ -57,6 +57,21 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     public func reload() {
         tableView?.reloadData()
     }
+    
+    public func register<T: UITableViewCell where T: ReusableCell>(cells: T.Type...) {
+
+        for cell in cells {
+            if let nib = cell.nib() {
+                tableView?.registerNib(nib, forCellReuseIdentifier: cell.reusableIdentifier())
+            } else {
+                if let nib = NSBundle(forClass: cell).loadNibNamed(cell.reusableIdentifier(), owner: nil, options: nil).first as? UINib {
+                    tableView?.registerNib(nib, forCellReuseIdentifier: cell.reusableIdentifier())
+                } else {
+                    tableView?.registerClass(cell, forCellReuseIdentifier: cell.reusableIdentifier())
+                }
+            }
+        }
+    }
 
     // MARK: Public
     

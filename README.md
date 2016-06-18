@@ -44,6 +44,7 @@ let section = TableSection(rows: [row1, row2, row3])
 And setup your table:
 ```swift
 let tableDirector = TableDirector(tableView: tableView)
+tableDirector.register(StringTableViewCell.self, IntTableViewCell.self, FloatTableViewCell.self)
 tableDirector += section
 ```
 Done. Your table is ready. You may want to look at your cell. It has to conform to `ConfigurableCell` protocol:
