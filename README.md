@@ -27,7 +27,7 @@ It hides a complexity of `UITableViewDataSource` and `UITableViewDelegate` metho
 
 ## Getting Started
 
-An example app is included demonstrating TableKit's functionality.
+An [example app](Demo) is included demonstrating TableKit's functionality.
 
 #### Basic usage
 
@@ -89,7 +89,7 @@ let row = TableRow<String, StringTableViewCell>(item: "some")
 		return false
 	})
 ```
-You could find all available actions <a href="https://github.com/maxsokolov/TableKit/blob/master/Sources/TableRowAction.swift" target="_blank">here</a>.
+You could find all available actions [here](Sources/TableRowAction.swift).
 
 #### Batch rows
 You could have a situation when you need a lot of cells with the same type. In that case it's better to use `TableRowBuilder`:
@@ -128,7 +128,7 @@ It's enough for most cases. But you may be not happy with this. So you could use
 ```swift
 tableDirector.shouldUsePrototypeCellHeightCalculation = true
 ```
-It does all dirty work with prototypes for you <a href="https://github.com/maxsokolov/TableKit/blob/master/Sources/HeightStrategy.swift" target="_blank">behind the scene</a>, so you don't have to worry about anything except of your cell configuration:
+It does all dirty work with prototypes for you [behind the scene](Sources/HeightStrategy.swift), so you don't have to worry about anything except of your cell configuration:
 ```swift
 class ImageTableViewCell: UITableViewCell, ConfigurableCell {
 
