@@ -15,6 +15,7 @@ It hides a complexity of `UITableViewDataSource` and `UITableViewDelegate` metho
 ## Features
 
 - [x] Type-safe generic cells
+- [x] Functional programming style friendly
 - [x] The easiest way to map your models or view models to cells
 - [x] Correctly handles autolayout cells with multiline labels
 - [x] Chainable cell actions (select/deselect etc.)
@@ -146,6 +147,15 @@ class ImageTableViewCell: UITableViewCell, ConfigurableCell {
 }
 ```
 First of all you have to set `preferredMaxLayoutWidth` for all your multiline labels. And check if a configuring cell is a prototype cell. If it is, you don't have to do any additional work that not actually affect cell's height. For example you don't have to load remote image for a prototype cell.
+
+#### Functional programming
+It's never been so easy to deal with table views.
+```swift
+let users = /* some users array */
+
+tableDirector += users.filter({ $0.state == .active }).map({ TableRow<String, UserTableViewCell>(item: $0.username) })
+```
+Done, your table is ready. It's just awesome!
 
 ## Installation
 
