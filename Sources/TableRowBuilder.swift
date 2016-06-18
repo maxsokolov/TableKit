@@ -22,7 +22,7 @@ import UIKit
 
 public protocol RowBuilder {
 
-    func rowItems() -> [Row]?
+    func rows() -> [Row]?
 }
 
 public class TableRowBuilder<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>: RowBuilder {
@@ -42,7 +42,7 @@ public class TableRowBuilder<ItemType, CellType: ConfigurableCell where CellType
     
     // MARK: - RowBuilder -
     
-    public func rowItems() -> [Row]? {
+    public func rows() -> [Row]? {
         return items?.map { TableRow<ItemType, CellType>(item: $0, actions: actions) }
     }
 }
@@ -51,7 +51,7 @@ public extension TableSection {
     
     public func append(builder builder: RowBuilder) {
 
-        if let rows = builder.rowItems() {
+        if let rows = builder.rows() {
             append(rows: rows)
         }
     }

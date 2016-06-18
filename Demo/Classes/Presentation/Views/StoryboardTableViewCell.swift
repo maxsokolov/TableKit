@@ -13,7 +13,7 @@ class StoryboardTableViewCell: UITableViewCell, ConfigurableCell {
 
     typealias T = String
 
-    func configure(value: T) {
+    func configure(value: T, isPrototype: Bool) {
         textLabel?.text = value
     }
 }

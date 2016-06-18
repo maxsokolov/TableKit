@@ -6,6 +6,5 @@ branches:
 before_install:
  - brew update
  - brew reinstall --HEAD xctool
- - cd Tablet
 script:
  - xctool clean build test -project TableKit.xcodeproj -scheme TableKit -sdk iphonesimulator

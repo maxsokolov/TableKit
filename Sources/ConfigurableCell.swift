@@ -20,21 +20,33 @@
 
 import UIKit
 
-public protocol ConfigurableCell {
+public protocol ReusableCell {
+    
+    static func reusableIdentifier() -> String
+    static func nib() -> UINib?
+}
+
+public protocol ConfigurableCell: ReusableCell {
 
     associatedtype T
 
-    static func reusableIdentifier() -> String
     static func estimatedHeight() -> CGFloat
     static func defaultHeight() -> CGFloat?
-    func configure(_: T)
+    func configure(_: T, isPrototype: Bool)
 }
 
-public extension ConfigurableCell where Self: UITableViewCell {
-
+public extension ReusableCell where Self: UITableViewCell {
+    
     static func reusableIdentifier() -> String {
         return String(self)
     }
+    
+    static func nib() -> UINib? {
+        return nil
+    }
+}
+
+public extension ConfigurableCell where Self: UITableViewCell {
 
     static func estimatedHeight() -> CGFloat {
         return UITableViewAutomaticDimension

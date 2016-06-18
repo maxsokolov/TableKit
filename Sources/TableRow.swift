@@ -22,7 +22,7 @@ import UIKit
 
 public protocol RowConfigurable {
 
-    func configure(cell: UITableViewCell)
+    func configure(cell: UITableViewCell, isPrototype: Bool)
 }
 
 public protocol RowActionable {
@@ -31,7 +31,12 @@ public protocol RowActionable {
     func hasAction(action: TableRowActionType) -> Bool
 }
 
-public protocol Row: RowConfigurable, RowActionable {
+public protocol RowHashable {
+    
+    var hashValue: Int { get }
+}
+
+public protocol Row: RowConfigurable, RowActionable, RowHashable {
 
     var reusableIdentifier: String { get }
     var estimatedHeight: CGFloat { get }
@@ -42,6 +47,10 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
 
     public let item: ItemType
     private lazy var actions = [String: TableRowAction<ItemType, CellType>]()
+    
+    public var hashValue: Int {
+        return ObjectIdentifier(self).hashValue
+    }
 
     public var reusableIdentifier: String {
         return CellType.reusableIdentifier()
@@ -60,11 +69,11 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
         self.item = item
         actions?.forEach { self.actions[$0.type.key] = $0 }
     }
-    
+
     // MARK: - RowConfigurable -
     
-    public func configure(cell: UITableViewCell) {
-        (cell as? CellType)?.configure(item)
+    public func configure(cell: UITableViewCell, isPrototype: Bool) {
+        (cell as? CellType)?.configure(item, isPrototype: isPrototype)
     }
     
     // MARK: - RowActionable -
@@ -79,7 +88,7 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
     
     // MARK: - actions -
     
-    public func addAction(action: TableRowAction<ItemType, CellType>) -> Self {
+    public func action(action: TableRowAction<ItemType, CellType>) -> Self {
 
         actions[action.type.key] = action
         return self
