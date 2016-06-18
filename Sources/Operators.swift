@@ -28,6 +28,15 @@ public func +=(left: TableDirector, right: [TableSection]) {
 }
 
 // --
+public func +=(left: TableDirector, right: Row) {
+    left.append(sections: [TableSection(rows: [right])])
+}
+
+public func +=(left: TableDirector, right: [Row]) {
+    left.append(sections: [TableSection(rows: right)])
+}
+
+// --
 public func +=(left: TableSection, right: Row) {
     left.append(row: right)
 }

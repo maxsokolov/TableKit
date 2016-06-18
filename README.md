@@ -14,7 +14,7 @@ It hides a complexity of `UITableViewDataSource` and `UITableViewDelegate` metho
 
 ## Features
 
-- [x] Type-safe cells based on generics
+- [x] Type-safe generic cells
 - [x] The easiest way to map your models or view models to cells
 - [x] Correctly handles autolayout cells with multiline labels
 - [x] Chainable cell actions (select/deselect etc.)

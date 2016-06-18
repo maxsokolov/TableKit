@@ -45,7 +45,7 @@ struct TestTableViewCellOptions {
     static let EstimatedHeight: Float = 255
 }
 
-/*class TestTableViewCell: UITableViewCell, ConfigurableCell {
+class TestTableViewCell: UITableViewCell, ConfigurableCell {
 
     typealias T = TestData
     
@@ -57,12 +57,12 @@ struct TestTableViewCellOptions {
         return TestTableViewCellOptions.EstimatedHeight
     }
 
-    func configure(item: T) {
+    func configure(item: T, isPrototype: Bool) {
         textLabel?.text = item.title
     }
 
     func raiseAction() {
-        Action(key: TestTableViewCellOptions.CellAction, sender: self, userInfo: [TestTableViewCellOptions.CellActionUserInfoKey: TestTableViewCellOptions.CellActionUserInfoValue]).invoke()
+        //Action(key: TestTableViewCellOptions.CellAction, sender: self, userInfo: [TestTableViewCellOptions.CellActionUserInfoKey: TestTableViewCellOptions.CellActionUserInfoValue]).invoke()
     }
 }
 
@@ -74,6 +74,7 @@ class TabletTests: XCTestCase {
         super.setUp()
 
         testController = TestController()
+        let _ = testController.view
     }
 
     override func tearDown() {
@@ -89,7 +90,22 @@ class TabletTests: XCTestCase {
         XCTAssertNotNil(testController.tableDirector.tableView, "TableDirector should have table view")
     }
     
-    func testSimpleRowBuilderCreatesRowsAndSection() {
+    func testRow() {
+        
+        let data = TestData(title: "title")
+
+        let row = TableRow<TestData, TestTableViewCell>(item: data)
+        
+        testController.tableDirector += row
+        
+        XCTAssertTrue(testController.tableView.dataSource?.numberOfSectionsInTableView?(testController.tableView) == 1, "Table view should have a section")
+        XCTAssertTrue(testController.tableView.dataSource?.tableView(testController.tableView, numberOfRowsInSection: 0) == 1, "Table view should have certain number of rows in a section")
+        
+        let cell = testController.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? TestTableViewCell
+        XCTAssertNotNil(cell)
+    }
+    
+    /*func testSimpleRowBuilderCreatesRowsAndSection() {
 
         let source = ["1", "2", "3"]
 
@@ -196,5 +212,5 @@ class TabletTests: XCTestCase {
         cell?.raiseAction()
 
         waitForExpectationsWithTimeout(1.0, handler: nil)
-    }
-}*/
+    }*/
+}
