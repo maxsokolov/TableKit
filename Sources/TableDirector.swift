@@ -223,6 +223,12 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         return self
     }
     
+    public func append(rows rows: [Row]) -> Self {
+        
+        append(section: TableSection(rows: rows))
+        return self
+    }
+    
     public func clear() -> Self {
 
         sections.removeAll()

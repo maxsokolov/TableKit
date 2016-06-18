@@ -63,7 +63,7 @@ class TestTableViewCell: UITableViewCell, ConfigurableCell {
     }
 
     func raiseAction() {
-        //Action(key: TestTableViewCellOptions.CellAction, sender: self, userInfo: [TestTableViewCellOptions.CellActionUserInfoKey: TestTableViewCellOptions.CellActionUserInfoValue]).invoke()
+        TableCellAction(key: TestTableViewCellOptions.CellAction, sender: self, userInfo: nil).invoke()
     }
 }
 
@@ -112,7 +112,7 @@ class TabletTests: XCTestCase {
         
         let data = [TestData(title: "1"), TestData(title: "2"), TestData(title: "3")]
         
-        let rows: [TableRow<TestData, TestTableViewCell>] = data.map { TableRow<TestData, TestTableViewCell>(item: $0) }
+        let rows: [Row] = data.map({ TableRow<TestData, TestTableViewCell>(item: $0) })
         
         testController.tableDirector += rows
         testController.tableView.reloadData()
@@ -128,64 +128,18 @@ class TabletTests: XCTestCase {
         }
     }
     
-    
-    
-    
-    
-    /*func testSimpleRowBuilderCreatesRowsAndSection() {
-
-        let source = ["1", "2", "3"]
-
-        let rows = TableBaseRowBuilder<String, UITableViewCell>(items: source)
-            .action(.configure) { data -> Void in
-
-                XCTAssertNotNil(data.cell, "Action should have a cell")
-                data.cell?.textLabel?.text = "\(data.item)"
-            }
+    func testTableSectionCreatesSectionWithHeaderAndFooterTitles() {
         
-        testController.view.hidden = false
-        testController.tableDirector += rows
-        testController.tableView.reloadData()
-
-        XCTAssertTrue(testController.tableView.dataSource?.numberOfSectionsInTableView?(testController.tableView) == 1, "Table view should have a section")
-        XCTAssertTrue(testController.tableView.dataSource?.tableView(testController.tableView, numberOfRowsInSection: 0) == source.count, "Table view should have certain number of rows in a section")
+        let row = TableRow<TestData, TestTableViewCell>(item: TestData(title: "title"))
         
-        for (index, element) in source.enumerate() {
-            
-            let cell = testController.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0))
-            
-            XCTAssertNotNil(cell)
-            XCTAssertTrue(cell?.textLabel?.text == element)
-        }
-    }
-
-    func testConfigurableRowBuilderCreatesRowsAndSection() {
-
-        let testData = TestData(title: "title")
-        
-        testController.view.hidden = false
-        testController.tableDirector += TableRowBuilder<TestData, TestTableViewCell>(item: testData)
-        testController.tableView.reloadData()
-
-        let cell = testController.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? TestTableViewCell
-        
-        XCTAssertNotNil(cell, "Cell should exists and should be TestTableViewCell")
-        XCTAssertTrue(cell?.textLabel?.text == testData.title, "Cell's textLabel.text should equal to testData's title")
-    }
-
-    func testSectionBuilderCreatesSectionWithHeaderAndFooterTitles() {
-
-        let row = TableRowBuilder<TestData, TestTableViewCell>(items: [TestData(title: "title")])
-
         let sectionHeaderTitle = "Header Title"
         let sectionFooterTitle = "Footer Title"
-
-        let section = TableSectionBuilder(headerTitle: sectionHeaderTitle, footerTitle: sectionFooterTitle, rows: [row])
-
-        testController.view.hidden = false
+        
+        let section = TableSection(headerTitle: sectionHeaderTitle, footerTitle: sectionFooterTitle, rows: [row])
+        
         testController.tableDirector += section
         testController.tableView.reloadData()
-
+        
         XCTAssertTrue(testController.tableView.dataSource?.numberOfSectionsInTableView?(testController.tableView) == 1, "Table view should have a section")
         XCTAssertTrue(testController.tableView.dataSource?.tableView(testController.tableView, numberOfRowsInSection: 0) == 1, "Table view should have certain number of rows in a section")
         
@@ -193,17 +147,16 @@ class TabletTests: XCTestCase {
         XCTAssertTrue(testController.tableView.dataSource?.tableView?(testController.tableView, titleForFooterInSection: 0) == sectionFooterTitle)
     }
     
-    func testSectionBuilderCreatesSectionWithHeaderAndFooterViews() {
-
-        let row = TableRowBuilder<TestData, TestTableViewCell>(items: [TestData(title: "title")])
+    func testTableSectionCreatesSectionWithHeaderAndFooterViews() {
+        
+        let row = TableRow<TestData, TestTableViewCell>(item: TestData(title: "title"))
         
         let sectionHeaderView = UIView()
         let sectionFooterView = UIView()
-
-        let section = TableSectionBuilder(headerView: sectionHeaderView, footerView: sectionFooterView, rows: nil)
+        
+        let section = TableSection(headerView: sectionHeaderView, footerView: sectionFooterView, rows: nil)
         section += row
         
-        testController.view.hidden = false
         testController.tableDirector += section
         testController.tableView.reloadData()
         
@@ -213,20 +166,18 @@ class TabletTests: XCTestCase {
         XCTAssertTrue(testController.tableView.delegate?.tableView?(testController.tableView, viewForHeaderInSection: 0) == sectionHeaderView)
         XCTAssertTrue(testController.tableView.delegate?.tableView?(testController.tableView, viewForFooterInSection: 0) == sectionFooterView)
     }
-    
+
     func testRowBuilderCustomActionInvokedAndSentUserInfo() {
 
         let expectation = expectationWithDescription("cell action")
 
-        let row = TableRowBuilder<TestData, TestTableViewCell>(items: [TestData(title: "title")])
-            .action(TestTableViewCellOptions.CellAction) { data -> Void in
-
+        let row = TableRow<TestData, TestTableViewCell>(item: TestData(title: "title"))
+            .action(TableRowAction(.custom(TestTableViewCellOptions.CellAction)) { (data) in
+                
                 XCTAssertNotNil(data.cell, "Action data should have a cell")
-                XCTAssertNotNil(data.userInfo, "Action data should have a user info dictionary")
-                XCTAssertTrue(data.userInfo?[TestTableViewCellOptions.CellActionUserInfoKey] as? String == TestTableViewCellOptions.CellActionUserInfoValue, "UserInfo should have correct value for key")
-
+                
                 expectation.fulfill()
-            }
+            })
 
         testController.view.hidden = false
         testController.tableDirector += row
@@ -239,5 +190,5 @@ class TabletTests: XCTestCase {
         cell?.raiseAction()
 
         waitForExpectationsWithTimeout(1.0, handler: nil)
-    }*/
+    }
 }
