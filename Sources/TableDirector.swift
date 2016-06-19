@@ -235,6 +235,12 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         return self
     }
     
+    public func delete(index index: Int) -> Self {
+
+        sections.removeAtIndex(index)
+        return self
+    }
+    
     public func clear() -> Self {
 
         sections.removeAll()
