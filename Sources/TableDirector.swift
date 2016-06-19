@@ -229,6 +229,12 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         return self
     }
     
+    public func insert(section section: TableSection, atIndex index: Int) -> Self {
+        
+        sections.insert(section, atIndex: index)
+        return self
+    }
+    
     public func clear() -> Self {
 
         sections.removeAll()
