@@ -22,8 +22,6 @@ import UIKit
 
 public protocol CellHeightCalculatable {
 
-    var tableView: UITableView? { get set }
-
     func height(row: Row, path: NSIndexPath) -> CGFloat
     func estimatedHeight(row: Row, path: NSIndexPath) -> CGFloat
     
@@ -32,7 +30,7 @@ public protocol CellHeightCalculatable {
 
 public class PrototypeHeightStrategy: CellHeightCalculatable {
 
-    public weak var tableView: UITableView?
+    private weak var tableView: UITableView?
     private var prototypes = [String: UITableViewCell]()
     private var cachedHeights = [Int: CGFloat]()
     private var separatorHeight = 1 / UIScreen.mainScreen().scale
