@@ -26,12 +26,9 @@ class RowBuilderCellsController: UIViewController {
         
         let numbers = ["1", "2", "3", "4", "5"]
         
-        let clickAction = TableRowAction<String, ConfigurableTableViewCell>(.click) { [weak self] (data) in
+        let clickAction = TableRowAction<String, ConfigurableTableViewCell>(.click) { (data) in
             
-            let alert = UIAlertController(title: nil, message: data.item, preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-
-            self?.presentViewController(alert, animated: true, completion: nil)
+            print(data.item)
         }
         
         let rowBuilder = TableRowBuilder<String, ConfigurableTableViewCell>(items: numbers, actions: [clickAction])

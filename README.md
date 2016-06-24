@@ -166,10 +166,6 @@ Done, your table is ready. It's just awesome!
 To integrate TableKit into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
-use_frameworks!
-
 pod 'TableKit'
 ```
 #### Carthage
@@ -179,7 +175,7 @@ Clone the repo and drag files from `Sources` folder into your Xcode project.
 
 ## Requirements
 
-- iOS 8.0+
+- iOS 7.0+
 - Xcode 7.0+
 
 ## License
