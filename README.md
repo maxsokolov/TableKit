@@ -175,7 +175,7 @@ Clone the repo and drag files from `Sources` folder into your Xcode project.
 
 ## Requirements
 
-- iOS 7.0+
+- iOS 8.0+
 - Xcode 7.0+
 
 ## License
