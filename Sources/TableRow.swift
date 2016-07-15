@@ -93,4 +93,10 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
         actions[action.type.key] = action
         return self
     }
+    
+    public func action<T>(type: TableRowActionType, handler: (data: TableRowActionData<ItemType, CellType>) -> T) -> Self {
+        
+        actions[type.key] = TableRowAction(type, handler: handler)
+        return self
+    }
 }
