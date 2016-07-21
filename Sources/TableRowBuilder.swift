@@ -25,16 +25,16 @@ public protocol RowBuilder {
     func rows() -> [Row]?
 }
 
-public class TableRowBuilder<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>: RowBuilder {
-
+public class TableRowBuilder<CellType: ConfigurableCell where CellType: UITableViewCell>: RowBuilder {
+    typealias ItemType = CellType.T
     public var items: [ItemType]?
-    public var actions: [TableRowAction<ItemType, CellType>]?
+    public var actions: [TableRowAction<CellType>]?
     
     public init(handler: (TableRowBuilder) -> ()) {
         handler(self)
     }
     
-    public init(items: [ItemType], actions: [TableRowAction<ItemType, CellType>]? = nil) {
+    public init(items: [ItemType], actions: [TableRowAction<CellType>]? = nil) {
 
         self.items = items
         self.actions = actions
@@ -43,7 +43,7 @@ public class TableRowBuilder<ItemType, CellType: ConfigurableCell where CellType
     // MARK: - RowBuilder -
     
     public func rows() -> [Row]? {
-        return items?.map { TableRow<ItemType, CellType>(item: $0, actions: actions) }
+        return items?.map { TableRow<CellType>(item: $0, actions: actions) }
     }
 }
 
