@@ -26,12 +26,12 @@ class RowBuilderCellsController: UIViewController {
         
         let numbers = ["1", "2", "3", "4", "5"]
         
-        let clickAction = TableRowAction<String, ConfigurableTableViewCell>(.click) { (data) in
+        let clickAction = TableRowAction<ConfigurableTableViewCell>(.click) { (data) in
             
             print(data.item)
         }
         
-        let rowBuilder = TableRowBuilder<String, ConfigurableTableViewCell>(items: numbers, actions: [clickAction])
+        let rowBuilder = TableRowBuilder<ConfigurableTableViewCell>(items: numbers, actions: [clickAction])
         
         let section = TableSection(headerTitle: "Header title", footerTitle: "Footer title")
         

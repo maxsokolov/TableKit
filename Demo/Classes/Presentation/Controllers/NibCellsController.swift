@@ -23,11 +23,11 @@ class NibCellsController: UITableViewController {
         
         let numbers = [1000, 2000, 3000, 4000, 5000]
         
-        let shouldHighlightAction = TableRowAction<Int, NibTableViewCell>(.shouldHighlight) { (_) -> Bool in
+        let shouldHighlightAction = TableRowAction<NibTableViewCell>(.shouldHighlight) { (_) -> Bool in
             return false
         }
         
-        let rows: [Row] = numbers.map { TableRow<Int, NibTableViewCell>(item: $0, actions: [shouldHighlightAction]) }
+        let rows: [Row] = numbers.map { TableRow<NibTableViewCell>(item: $0, actions: [shouldHighlightAction]) }
         
         tableDirector.append(rows: rows)
     }

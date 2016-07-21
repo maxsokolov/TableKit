@@ -43,10 +43,10 @@ public protocol Row: RowConfigurable, RowActionable, RowHashable {
     var defaultHeight: CGFloat { get }
 }
 
-public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>: Row {
-
+public class TableRow<CellType: ConfigurableCell where CellType: UITableViewCell>: Row {
+    typealias ItemType = CellType.T
     public let item: ItemType
-    private lazy var actions = [String: TableRowAction<ItemType, CellType>]()
+    private lazy var actions = [String: TableRowAction<CellType>]()
     
     public var hashValue: Int {
         return ObjectIdentifier(self).hashValue
@@ -64,7 +64,7 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
         return CellType.defaultHeight() ?? UITableViewAutomaticDimension
     }
     
-    public init(item: ItemType, actions: [TableRowAction<ItemType, CellType>]? = nil) {
+    public init(item: ItemType, actions: [TableRowAction<CellType>]? = nil) {
         
         self.item = item
         actions?.forEach { self.actions[$0.type.key] = $0 }
@@ -88,13 +88,13 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
     
     // MARK: - actions -
     
-    public func action(action: TableRowAction<ItemType, CellType>) -> Self {
+    public func action(action: TableRowAction<CellType>) -> Self {
 
         actions[action.type.key] = action
         return self
     }
     
-    public func action<T>(type: TableRowActionType, handler: (data: TableRowActionData<ItemType, CellType>) -> T) -> Self {
+    public func action<T>(type: TableRowActionType, handler: (data: TableRowActionData<CellType>) -> T) -> Self {
         
         actions[type.key] = TableRowAction(type, handler: handler)
         return self

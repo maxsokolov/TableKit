@@ -42,8 +42,8 @@ public enum TableRowActionType {
     }
 }
 
-public class TableRowActionData<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell> {
-
+public class TableRowActionData<CellType: ConfigurableCell where CellType: UITableViewCell> {
+    typealias ItemType = CellType.T
     public let item: ItemType
     public let cell: CellType?
     public let path: NSIndexPath
@@ -58,18 +58,18 @@ public class TableRowActionData<ItemType, CellType: ConfigurableCell where CellT
     }
 }
 
-public class TableRowAction<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell> {
-
+public class TableRowAction<CellType: ConfigurableCell where CellType: UITableViewCell> {
+    typealias ItemType = CellType.T
     public let type: TableRowActionType
-    private let handler: ((data: TableRowActionData<ItemType, CellType>) -> Any?)
+    private let handler: ((data: TableRowActionData<CellType>) -> Any?)
 
-    public init(_ type: TableRowActionType, handler: (data: TableRowActionData<ItemType, CellType>) -> Void) {
+    public init(_ type: TableRowActionType, handler: (data: TableRowActionData<CellType>) -> Void) {
 
         self.type = type
         self.handler = handler
     }
     
-    public init<T>(_ type: TableRowActionType, handler: (data: TableRowActionData<ItemType, CellType>) -> T) {
+    public init<T>(_ type: TableRowActionType, handler: (data: TableRowActionData<CellType>) -> T) {
 
         self.type = type
         self.handler = handler
