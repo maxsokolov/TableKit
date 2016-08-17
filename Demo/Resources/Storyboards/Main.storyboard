@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dOU-ON-YYD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dOU-ON-YYD">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -43,7 +43,7 @@
                                         <rect key="frame" x="0.0" y="92" width="600" height="141"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IBY-tW-SgU" id="UNZ-nz-200">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="140"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="141"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" placeholderIntrinsicWidth="172" placeholderIntrinsicHeight="21" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YnK-4H-0SS">
@@ -139,47 +139,12 @@
                     <connections>
                         <outlet property="tableView" destination="lVS-GW-taC" id="C28-ml-ARU"/>
                         <segue destination="grv-aL-Qbb" kind="show" identifier="autolayoutcells" id="YrM-qz-6Kd"/>
-                        <segue destination="sSs-TX-Ch0" kind="show" identifier="rowbuildercells" id="bRQ-rh-ksD"/>
                         <segue destination="apk-bL-6NO" kind="show" identifier="nibcells" id="gXD-XZ-oBm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i96-Zo-Wfg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1046" y="287"/>
-        </scene>
-        <!--Row Builder Cells Controller-->
-        <scene sceneID="Jd0-of-RF9">
-            <objects>
-                <viewController id="sSs-TX-Ch0" customClass="RowBuilderCellsController" customModule="TableKitDemo" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="s9s-Gu-3M6"/>
-                        <viewControllerLayoutGuide type="bottom" id="Tux-up-dnH"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="CB5-10-J2D">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="uLr-Ff-utK">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Tux-up-dnH" firstAttribute="top" secondItem="uLr-Ff-utK" secondAttribute="bottom" id="0jr-6S-PFB"/>
-                            <constraint firstItem="uLr-Ff-utK" firstAttribute="top" secondItem="CB5-10-J2D" secondAttribute="top" id="KYu-01-hlH"/>
-                            <constraint firstAttribute="trailing" secondItem="uLr-Ff-utK" secondAttribute="trailing" id="TKR-R1-lBY"/>
-                            <constraint firstItem="uLr-Ff-utK" firstAttribute="leading" secondItem="CB5-10-J2D" secondAttribute="leading" id="aG6-R3-QUr"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="ogA-Id-clb"/>
-                    <connections>
-                        <outlet property="tableView" destination="uLr-Ff-utK" id="olP-LV-VmT"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Gim-O8-I3d" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1762" y="648"/>
         </scene>
         <!--Nib Cells Controller-->
         <scene sceneID="DHa-3S-OkR">
@@ -197,7 +162,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oWG-DK-A9C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1762" y="1366"/>
+            <point key="canvasLocation" x="1762" y="671"/>
         </scene>
     </scenes>
 </document>
