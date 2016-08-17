@@ -26,7 +26,7 @@ class NibCellsController: UITableViewController {
         let shouldHighlightAction = TableRowAction<Int, NibTableViewCell>(.shouldHighlight) { (_) -> Bool in
             return false
         }
-        
+
         let rows: [Row] = numbers.map { TableRow<Int, NibTableViewCell>(item: $0, actions: [shouldHighlightAction]) }
         
         tableDirector.append(rows: rows)

@@ -30,8 +30,6 @@ class MainController: UIViewController {
             case 0:
                 self?.performSegueWithIdentifier("autolayoutcells", sender: nil)
             case 1:
-                self?.performSegueWithIdentifier("rowbuildercells", sender: nil)
-            case 2:
                 self?.performSegueWithIdentifier("nibcells", sender: nil)
             default:
                 break
@@ -41,7 +39,6 @@ class MainController: UIViewController {
         let rows: [Row] = [
 
             TableRow<String, ConfigurableTableViewCell>(item: "Autolayout cells", actions: [clickAction]),
-            TableRow<String, ConfigurableTableViewCell>(item: "Row builder cells", actions: [clickAction]),
             TableRow<String, ConfigurableTableViewCell>(item: "Nib cells", actions: [clickAction])
         ]
 
