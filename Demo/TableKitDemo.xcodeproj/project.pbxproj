@@ -10,7 +10,6 @@
 		DA08A0531CF4E9B500BBF1F8 /* AutolayoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08A0521CF4E9B500BBF1F8 /* AutolayoutTableViewCell.swift */; };
 		DA55465D1D1569CC00AA83EE /* AutolayoutCellsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA55465C1D1569CC00AA83EE /* AutolayoutCellsController.swift */; };
 		DA5546601D156A4F00AA83EE /* ConfigurableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA55465F1D156A4F00AA83EE /* ConfigurableTableViewCell.swift */; };
-		DA5546621D1573D300AA83EE /* RowBuilderCellsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5546611D1573D300AA83EE /* RowBuilderCellsController.swift */; };
 		DA5546641D15762000AA83EE /* NibTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5546631D15762000AA83EE /* NibTableViewCell.swift */; };
 		DA5546661D15765900AA83EE /* NibTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA5546651D15765900AA83EE /* NibTableViewCell.xib */; };
 		DA5546681D15771D00AA83EE /* NibCellsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5546671D15771D00AA83EE /* NibCellsController.swift */; };
@@ -65,7 +64,6 @@
 		DA08A0521CF4E9B500BBF1F8 /* AutolayoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutolayoutTableViewCell.swift; sourceTree = "<group>"; };
 		DA55465C1D1569CC00AA83EE /* AutolayoutCellsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutolayoutCellsController.swift; sourceTree = "<group>"; };
 		DA55465F1D156A4F00AA83EE /* ConfigurableTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableTableViewCell.swift; sourceTree = "<group>"; };
-		DA5546611D1573D300AA83EE /* RowBuilderCellsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowBuilderCellsController.swift; sourceTree = "<group>"; };
 		DA5546631D15762000AA83EE /* NibTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibTableViewCell.swift; sourceTree = "<group>"; };
 		DA5546651D15765900AA83EE /* NibTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NibTableViewCell.xib; sourceTree = "<group>"; };
 		DA5546671D15771D00AA83EE /* NibCellsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibCellsController.swift; sourceTree = "<group>"; };
@@ -184,7 +182,6 @@
 			children = (
 				DACB71751CC2D63D00432BD3 /* MainController.swift */,
 				DA55465C1D1569CC00AA83EE /* AutolayoutCellsController.swift */,
-				DA5546611D1573D300AA83EE /* RowBuilderCellsController.swift */,
 				DA5546671D15771D00AA83EE /* NibCellsController.swift */,
 			);
 			path = Controllers;
@@ -300,7 +297,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DACB71761CC2D63D00432BD3 /* MainController.swift in Sources */,
-				DA5546621D1573D300AA83EE /* RowBuilderCellsController.swift in Sources */,
 				DA55465D1D1569CC00AA83EE /* AutolayoutCellsController.swift in Sources */,
 				DA5546681D15771D00AA83EE /* NibCellsController.swift in Sources */,
 				DAC2D5CA1C9D303E009E9C19 /* AppDelegate.swift in Sources */,

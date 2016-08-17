@@ -119,7 +119,9 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 
         let row = sections[indexPath.section].items[indexPath.row]
-        return heightStrategy?.height(row, path: indexPath) ?? row.defaultHeight
+        let rowHeight = invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat
+        
+        return rowHeight ?? heightStrategy?.height(row, path: indexPath) ?? row.defaultHeight
     }
     
     // MARK: UITableViewDataSource - configuration

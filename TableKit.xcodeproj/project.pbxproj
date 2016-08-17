@@ -14,7 +14,6 @@
 		DA9EA7B31D0EC2C90021F650 /* TableDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7AA1D0EC2C90021F650 /* TableDirector.swift */; };
 		DA9EA7B41D0EC2C90021F650 /* TableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7AB1D0EC2C90021F650 /* TableRow.swift */; };
 		DA9EA7B51D0EC2C90021F650 /* TableRowAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7AC1D0EC2C90021F650 /* TableRowAction.swift */; };
-		DA9EA7B61D0EC2C90021F650 /* TableRowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7AD1D0EC2C90021F650 /* TableRowBuilder.swift */; };
 		DA9EA7B71D0EC2C90021F650 /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7AE1D0EC2C90021F650 /* TableSection.swift */; };
 		DA9EA7C91D0EC45F0021F650 /* TableKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9EA7561D0B679A0021F650 /* TableKit.framework */; };
 		DA9EA7CF1D0EC4930021F650 /* TableKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7BE1D0EC41D0021F650 /* TableKitTests.swift */; };
@@ -39,7 +38,6 @@
 		DA9EA7AA1D0EC2C90021F650 /* TableDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDirector.swift; sourceTree = "<group>"; };
 		DA9EA7AB1D0EC2C90021F650 /* TableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRow.swift; sourceTree = "<group>"; };
 		DA9EA7AC1D0EC2C90021F650 /* TableRowAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowAction.swift; sourceTree = "<group>"; };
-		DA9EA7AD1D0EC2C90021F650 /* TableRowBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowBuilder.swift; sourceTree = "<group>"; };
 		DA9EA7AE1D0EC2C90021F650 /* TableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
 		DA9EA7B91D0EC34E0021F650 /* TableKit.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TableKit.plist; sourceTree = "<group>"; };
 		DA9EA7BA1D0EC34E0021F650 /* TableKitTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TableKitTests.plist; sourceTree = "<group>"; };
@@ -90,7 +88,6 @@
 			children = (
 				DA9EA7AA1D0EC2C90021F650 /* TableDirector.swift */,
 				DA9EA7AB1D0EC2C90021F650 /* TableRow.swift */,
-				DA9EA7AD1D0EC2C90021F650 /* TableRowBuilder.swift */,
 				DA9EA7AC1D0EC2C90021F650 /* TableRowAction.swift */,
 				DA9EA7AE1D0EC2C90021F650 /* TableSection.swift */,
 				DA9EA7A91D0EC2C90021F650 /* TableCellAction.swift */,
@@ -233,7 +230,6 @@
 				DA9EA7B21D0EC2C90021F650 /* TableCellAction.swift in Sources */,
 				DA9EA7B11D0EC2C90021F650 /* Operators.swift in Sources */,
 				DA9EA7B41D0EC2C90021F650 /* TableRow.swift in Sources */,
-				DA9EA7B61D0EC2C90021F650 /* TableRowBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

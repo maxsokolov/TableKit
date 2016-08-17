@@ -4,7 +4,7 @@
 	<a href="https://travis-ci.org/maxsokolov/TableKit"><img src="https://api.travis-ci.org/maxsokolov/TableKit.svg" alt="Build Status" /></a>
 	<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift_2.2-compatible-4BC51D.svg?style=flat" alt="Swift 2.2 compatible" /></a>
 	<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible" /></a>
-	<a href="https://cocoapods.org/pods/tablekit"><img src="https://img.shields.io/badge/pod-0.8.2-blue.svg" alt="CocoaPods compatible" /></a>
+	<a href="https://cocoapods.org/pods/tablekit"><img src="https://img.shields.io/badge/pod-0.9.0-blue.svg" alt="CocoaPods compatible" /></a>
 	<img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
 	<a href="https://raw.githubusercontent.com/maxsokolov/tablekit/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License: MIT" /></a>
 </p>
@@ -90,25 +90,6 @@ let row = TableRow<String, StringTableViewCell>(item: "some")
 	})
 ```
 You could find all available actions [here](Sources/TableRowAction.swift).
-
-#### Batch rows
-You could have a situation when you need a lot of cells with the same type. In that case it's better to use `TableRowBuilder`:
-```swift
-let builder = TableRowBuilder<String, StringTableViewCell> {
-
-	// do some additional setup here
-	$0.items = ["1", "2", "3"]
-	$0.actions = [action]
-}
-
-section.append(builder: builder)
-```
-Or if you don't need an additional setup for your data, just use standart init:
-```swift
-let builder = TableRowBuilder<String, StringTableViewCell>(items: ["1", "2", "3"], actions: [actions])
-
-section.append(builder: builder)
-```
 
 ## Advanced
 
