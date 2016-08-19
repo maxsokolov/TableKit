@@ -27,10 +27,10 @@ public protocol ReusableCell {
 }
 
 public protocol ConfigurableCell: ReusableCell {
-
+    
     associatedtype T
-
-    static func estimatedHeight() -> CGFloat
+    
+    static func estimatedHeight() -> CGFloat?
     static func defaultHeight() -> CGFloat?
     func configure(_: T, isPrototype: Bool)
 }
@@ -47,11 +47,11 @@ public extension ReusableCell where Self: UITableViewCell {
 }
 
 public extension ConfigurableCell where Self: UITableViewCell {
-
-    static func estimatedHeight() -> CGFloat {
+    
+    static func estimatedHeight() -> CGFloat? {
         return UITableViewAutomaticDimension
     }
-
+    
     static func defaultHeight() -> CGFloat? {
         return nil
     }

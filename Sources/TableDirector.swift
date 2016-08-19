@@ -24,13 +24,14 @@ import UIKit
     Responsible for table view's datasource and delegate.
  */
 public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
-
+    
     public private(set) weak var tableView: UITableView?
     public private(set) var sections = [TableSection]()
     
     private weak var scrollDelegate: UIScrollViewDelegate?
     private var heightStrategy: CellHeightCalculatable?
-
+    private var cellManager: TableCellManager?
+    
     public var shouldUsePrototypeCellHeightCalculation: Bool = false {
         didSet {
             if shouldUsePrototypeCellHeightCalculation {
@@ -38,15 +39,23 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
             }
         }
     }
-
-    public init(tableView: UITableView, scrollDelegate: UIScrollViewDelegate? = nil) {
+    
+    public var isEmpty: Bool {
+        return sections.isEmpty
+    }
+    
+    public init(tableView: UITableView, scrollDelegate: UIScrollViewDelegate? = nil, shouldUseAutomaticCellRegistration: Bool = true) {
         super.init()
-
+        
+        if shouldUseAutomaticCellRegistration {
+            self.cellManager = TableCellManager(tableView: tableView)
+        }
+        
         self.scrollDelegate = scrollDelegate
         self.tableView = tableView
         self.tableView?.delegate = self
         self.tableView?.dataSource = self
-
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didReceiveAction), name: TableKitNotifications.CellAction, object: nil)
     }
     
@@ -58,40 +67,16 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         tableView?.reloadData()
     }
     
-    public func register<T: UITableViewCell where T: ReusableCell>(cells: T.Type...) {
-
-        for cell in cells {
-            
-            if let nib = cell.nib() {
-                
-                tableView?.registerNib(nib, forCellReuseIdentifier: cell.reusableIdentifier())
-                return
-            
-            } else {
-                
-                let resource = cell.reusableIdentifier()
-                let bundle = NSBundle(forClass: cell)
-                
-                if let _ = bundle.pathForResource(resource, ofType: "nib") {
-                    tableView?.registerNib(UINib(nibName: resource, bundle: bundle), forCellReuseIdentifier: cell.reusableIdentifier())
-                    return
-                }
-            }
-
-            tableView?.registerClass(cell, forCellReuseIdentifier: cell.reusableIdentifier())
-        }
-    }
-
     // MARK: Public
     
     public func invoke(action action: TableRowActionType, cell: UITableViewCell?, indexPath: NSIndexPath) -> Any? {
         return sections[indexPath.section].items[indexPath.row].invoke(action, cell: cell, path: indexPath)
     }
-
+    
     public override func respondsToSelector(selector: Selector) -> Bool {
         return super.respondsToSelector(selector) || scrollDelegate?.respondsToSelector(selector) == true
     }
-
+    
     public override func forwardingTargetForSelector(selector: Selector) -> AnyObject? {
         return scrollDelegate?.respondsToSelector(selector) == true ? scrollDelegate : super.forwardingTargetForSelector(selector)
     }
@@ -103,7 +88,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     }
     
     func didReceiveAction(notification: NSNotification) {
-
+        
         guard let action = notification.object as? TableCellAction, indexPath = tableView?.indexPathForCell(action.cell) else { return }
         invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath)
     }
@@ -111,17 +96,17 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     // MARK: - Height
     
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-
+        
         let row = sections[indexPath.section].items[indexPath.row]
-        return heightStrategy?.estimatedHeight(row, path: indexPath) ?? row.estimatedHeight
+        return row.estimatedHeight ?? heightStrategy?.estimatedHeight(row, path: indexPath) ?? UITableViewAutomaticDimension
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-
+        
         let row = sections[indexPath.section].items[indexPath.row]
         let rowHeight = invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat
         
-        return rowHeight ?? heightStrategy?.height(row, path: indexPath) ?? row.defaultHeight
+        return rowHeight ?? row.defaultHeight ?? heightStrategy?.height(row, path: indexPath) ?? UITableViewAutomaticDimension
     }
     
     // MARK: UITableViewDataSource - configuration
@@ -135,17 +120,21 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-
+        
         let row = sections[indexPath.section].items[indexPath.row]
+        
+        cellManager?.register(cellType: row.cellType, forReusableCellIdentifier: row.reusableIdentifier)
+        
         let cell = tableView.dequeueReusableCellWithIdentifier(row.reusableIdentifier, forIndexPath: indexPath)
         
         if cell.frame.size.width != tableView.frame.size.width {
             cell.frame = CGRectMake(0, 0, tableView.frame.size.width, cell.frame.size.height)
             cell.layoutIfNeeded()
         }
-
+        
         row.configure(cell, isPrototype: false)
-
+        invoke(action: .configure, cell: cell, indexPath: indexPath)
+        
         return cell
     }
     
@@ -170,11 +159,15 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return sections[section].headerView?.frame.size.height ?? UITableViewAutomaticDimension
+        
+        let section = sections[section]
+        return section.headerHeight ?? section.headerView?.frame.size.height ?? 0
     }
     
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return sections[section].footerView?.frame.size.height ?? UITableViewAutomaticDimension
+        
+        let section = sections[section]
+        return section.footerHeight ?? section.footerView?.frame.size.height ?? 0
     }
     
     // MARK: UITableViewDelegate - actions
@@ -201,9 +194,9 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     public func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return invoke(action: .shouldHighlight, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? Bool ?? true
     }
-
+    
     public func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-
+        
         if hasAction(.willSelect, atIndexPath: indexPath) {
             return invoke(action: .willSelect, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath) as? NSIndexPath
         }
@@ -213,7 +206,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     // MARK: - Sections manipulation -
     
     public func append(section section: TableSection) -> Self {
-
+        
         append(sections: [section])
         return self
     }
@@ -238,13 +231,13 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     }
     
     public func delete(index index: Int) -> Self {
-
+        
         sections.removeAtIndex(index)
         return self
     }
     
     public func clear() -> Self {
-
+        
         sections.removeAll()
         return self
     }

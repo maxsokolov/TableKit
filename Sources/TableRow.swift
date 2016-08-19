@@ -21,12 +21,12 @@
 import UIKit
 
 public protocol RowConfigurable {
-
+    
     func configure(cell: UITableViewCell, isPrototype: Bool)
 }
 
 public protocol RowActionable {
-
+    
     func invoke(action: TableRowActionType, cell: UITableViewCell?, path: NSIndexPath) -> Any?
     func hasAction(action: TableRowActionType) -> Bool
 }
@@ -37,31 +37,37 @@ public protocol RowHashable {
 }
 
 public protocol Row: RowConfigurable, RowActionable, RowHashable {
-
+    
     var reusableIdentifier: String { get }
-    var estimatedHeight: CGFloat { get }
-    var defaultHeight: CGFloat { get }
+    var cellType: AnyClass { get }
+    
+    var estimatedHeight: CGFloat? { get }
+    var defaultHeight: CGFloat? { get }
 }
 
 public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>: Row {
-
+    
     public let item: ItemType
     private lazy var actions = [String: TableRowAction<ItemType, CellType>]()
     
     public var hashValue: Int {
         return ObjectIdentifier(self).hashValue
     }
-
+    
     public var reusableIdentifier: String {
         return CellType.reusableIdentifier()
     }
     
-    public var estimatedHeight: CGFloat {
+    public var estimatedHeight: CGFloat? {
         return CellType.estimatedHeight()
     }
-
-    public var defaultHeight: CGFloat {
-        return CellType.defaultHeight() ?? UITableViewAutomaticDimension
+    
+    public var defaultHeight: CGFloat? {
+        return CellType.defaultHeight()
+    }
+    
+    public var cellType: AnyClass {
+        return CellType.self
     }
     
     public init(item: ItemType, actions: [TableRowAction<ItemType, CellType>]? = nil) {
@@ -69,7 +75,7 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
         self.item = item
         actions?.forEach { self.actions[$0.type.key] = $0 }
     }
-
+    
     // MARK: - RowConfigurable -
     
     public func configure(cell: UITableViewCell, isPrototype: Bool) {
@@ -77,11 +83,11 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
     }
     
     // MARK: - RowActionable -
-
+    
     public func invoke(action: TableRowActionType, cell: UITableViewCell?, path: NSIndexPath) -> Any? {
         return actions[action.key]?.invoke(item: item, cell: cell, path: path)
     }
-
+    
     public func hasAction(action: TableRowActionType) -> Bool {
         return actions[action.key] != nil
     }
@@ -89,7 +95,7 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
     // MARK: - actions -
     
     public func action(action: TableRowAction<ItemType, CellType>) -> Self {
-
+        
         actions[action.type.key] = action
         return self
     }
