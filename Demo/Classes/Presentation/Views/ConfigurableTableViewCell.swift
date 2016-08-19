@@ -11,7 +11,7 @@ import TableKit
 
 class ConfigurableTableViewCell: UITableViewCell, ConfigurableCell {
     
-    func configure(text: String, isPrototype: Bool) {
+    func configure(with text: String, isPrototype: Bool) {
 
         accessoryType = .DisclosureIndicator
         textLabel?.text = text
