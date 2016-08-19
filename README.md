@@ -4,7 +4,7 @@
 	<a href="https://travis-ci.org/maxsokolov/TableKit"><img src="https://api.travis-ci.org/maxsokolov/TableKit.svg" alt="Build Status" /></a>
 	<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift_2.2-compatible-4BC51D.svg?style=flat" alt="Swift 2.2 compatible" /></a>
 	<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible" /></a>
-	<a href="https://cocoapods.org/pods/tablekit"><img src="https://img.shields.io/badge/pod-0.9.0-blue.svg" alt="CocoaPods compatible" /></a>
+	<a href="https://cocoapods.org/pods/tablekit"><img src="https://img.shields.io/badge/pod-0.9.1-blue.svg" alt="CocoaPods compatible" /></a>
 	<img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
 	<a href="https://raw.githubusercontent.com/maxsokolov/tablekit/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License: MIT" /></a>
 </p>
@@ -17,6 +17,7 @@ It hides a complexity of `UITableViewDataSource` and `UITableViewDelegate` metho
 - [x] Type-safe generic cells
 - [x] Functional programming style friendly
 - [x] The easiest way to map your models or view models to cells
+- [x] Automatic cell registration
 - [x] Correctly handles autolayout cells with multiline labels
 - [x] Chainable cell actions (select/deselect etc.)
 - [x] Support cells created from code, xib, or storyboard
@@ -44,7 +45,6 @@ let section = TableSection(rows: [row1, row2, row3])
 And setup your table:
 ```swift
 let tableDirector = TableDirector(tableView: tableView)
-tableDirector.register(StringTableViewCell.self, IntTableViewCell.self, FloatTableViewCell.self)
 tableDirector += section
 ```
 Done. Your table is ready. You may want to look at your cell. It has to conform to `ConfigurableCell` protocol:
