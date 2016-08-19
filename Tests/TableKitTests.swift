@@ -28,7 +28,6 @@ class TestController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableDirector = TableDirector(tableView: tableView)
-        tableDirector.register(TestTableViewCell.self)
     }
 }
 

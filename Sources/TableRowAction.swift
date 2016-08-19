@@ -29,8 +29,9 @@ public enum TableRowActionType {
     case willDisplay
     case shouldHighlight
     case height
+    case configure
     case custom(String)
-
+    
     var key: String {
         
         switch (self) {

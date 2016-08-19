@@ -14,7 +14,6 @@ class AutolayoutCellsController: UIViewController {
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableDirector = TableDirector(tableView: tableView)
-            tableDirector.register(ConfigurableTableViewCell.self)
         }
     }
     var tableDirector: TableDirector!

@@ -21,44 +21,51 @@
 import UIKit
 
 public class TableSection {
-
+    
     weak var tableDirector: TableDirector?
-
+    
     public private(set) var items = [Row]()
-
+    
     public var headerTitle: String?
     public var footerTitle: String?
-
-    public private(set) var headerView: UIView?
-    public private(set) var footerView: UIView?
-
+    
+    public var headerView: UIView?
+    public var footerView: UIView?
+    
+    public var headerHeight: CGFloat? = nil
+    public var footerHeight: CGFloat? = nil
+    
     public var numberOfRows: Int {
         return items.count
     }
     
+    public var isEmpty: Bool {
+        return items.isEmpty
+    }
+    
     public init(rows: [Row]? = nil) {
-     
+        
         if let initialRows = rows {
             items.appendContentsOf(initialRows)
         }
     }
-
+    
     public convenience init(headerTitle: String?, footerTitle: String?, rows: [Row]? = nil) {
         self.init(rows: rows)
         
         self.headerTitle = headerTitle
         self.footerTitle = footerTitle
     }
-
+    
     public convenience init(headerView: UIView?, footerView: UIView?, rows: [Row]? = nil) {
         self.init(rows: rows)
         
         self.headerView = headerView
         self.footerView = footerView
     }
-
+    
     // MARK: - Public -
-
+    
     public func clear() {
         items.removeAll()
     }
@@ -70,12 +77,12 @@ public class TableSection {
     public func append(rows rows: [Row]) {
         items.appendContentsOf(rows)
     }
-
+    
     public func insert(row row: Row, atIndex index: Int) {
         items.insert(row, atIndex: index)
     }
-
-    public func delete(index: Int) {
+    
+    public func delete(index index: Int) {
         items.removeAtIndex(index)
     }
 }
