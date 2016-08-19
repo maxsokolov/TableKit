@@ -57,7 +57,7 @@ class TestTableViewCell: UITableViewCell, ConfigurableCell {
         return TestTableViewCellOptions.EstimatedHeight
     }
 
-    func configure(with item: T, isPrototype: Bool) {
+    func configure(with item: T) {
         textLabel?.text = item.title
     }
 
