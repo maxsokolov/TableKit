@@ -19,7 +19,7 @@ class AutolayoutTableViewCell: UITableViewCell, ConfigurableCell {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subtitleLabel: UILabel!
     
-    func configure(with string: T, isPrototype: Bool) {
+    func configure(with string: T) {
         
         titleLabel.text = LoremIpsumTitle
         subtitleLabel.text = LoremIpsumBody

@@ -132,7 +132,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
             cell.layoutIfNeeded()
         }
         
-        row.configure(cell, isPrototype: false)
+        row.configure(cell)
         invoke(action: .configure, cell: cell, indexPath: indexPath)
         
         return cell

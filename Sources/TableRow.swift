@@ -22,7 +22,7 @@ import UIKit
 
 public protocol RowConfigurable {
     
-    func configure(cell: UITableViewCell, isPrototype: Bool)
+    func configure(cell: UITableViewCell)
 }
 
 public protocol RowActionable {
@@ -78,8 +78,8 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
     
     // MARK: - RowConfigurable -
     
-    public func configure(cell: UITableViewCell, isPrototype: Bool) {
-        (cell as? CellType)?.configure(with: item, isPrototype: isPrototype)
+    public func configure(cell: UITableViewCell) {
+        (cell as? CellType)?.configure(with: item)
     }
     
     // MARK: - RowActionable -
