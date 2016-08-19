@@ -32,7 +32,7 @@ public protocol ConfigurableCell: ReusableCell {
     
     static func estimatedHeight() -> CGFloat?
     static func defaultHeight() -> CGFloat?
-    func configure(_: T, isPrototype: Bool)
+    func configure(with _: T, isPrototype: Bool)
 }
 
 public extension ReusableCell where Self: UITableViewCell {

@@ -13,7 +13,7 @@ class NibTableViewCell: UITableViewCell, ConfigurableCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     
-    func configure(number: Int, isPrototype: Bool) {
+    func configure(with number: Int, isPrototype: Bool) {
         titleLabel.text = "\(number)"
     }
     

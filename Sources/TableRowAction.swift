@@ -47,14 +47,14 @@ public class TableRowActionData<ItemType, CellType: ConfigurableCell where CellT
 
     public let item: ItemType
     public let cell: CellType?
-    public let path: NSIndexPath
+    public let indexPath: NSIndexPath
     public let userInfo: [NSObject: AnyObject]?
 
     init(item: ItemType, cell: CellType?, path: NSIndexPath, userInfo: [NSObject: AnyObject]?) {
 
         self.item = item
         self.cell = cell
-        self.path = path
+        self.indexPath = path
         self.userInfo = userInfo
     }
 }
