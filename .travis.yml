@@ -25,4 +25,4 @@ script:
   - set -o pipefail
   - xcodebuild -version
   - xcodebuild -showsdks
-  - xcodebuild clean build test -project "$PROJECT_FRAMEWORK" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" xcpretty -c;
+  - xcodebuild -project "$PROJECT_FRAMEWORK" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=YES test | xcpretty -c;
