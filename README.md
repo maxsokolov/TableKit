@@ -4,7 +4,7 @@
 	<a href="https://travis-ci.org/maxsokolov/TableKit"><img src="https://api.travis-ci.org/maxsokolov/TableKit.svg" alt="Build Status" /></a>
 	<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift_2.2-compatible-4BC51D.svg?style=flat" alt="Swift 2.2 compatible" /></a>
 	<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible" /></a>
-	<a href="https://cocoapods.org/pods/tablekit"><img src="https://img.shields.io/badge/pod-0.9.3-blue.svg" alt="CocoaPods compatible" /></a>
+	<a href="https://cocoapods.org/pods/tablekit"><img src="https://img.shields.io/badge/pod-1.0.0-blue.svg" alt="CocoaPods compatible" /></a>
 	<img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
 	<a href="https://raw.githubusercontent.com/maxsokolov/tablekit/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License: MIT" /></a>
 </p>
@@ -12,12 +12,12 @@
 TableKit is a super lightweight yet powerful generic library that allows you to build complex table views in a declarative type-safe manner.
 It hides a complexity of `UITableViewDataSource` and `UITableViewDelegate` methods behind the scene, so your code will be look clean, easy to read and nice to maintain.
 
-## Features
+# Features
 
 - [x] Type-safe generic cells
 - [x] Functional programming style friendly
 - [x] The easiest way to map your models or view models to cells
-- [x] Automatic cell registration
+- [x] Automatic cell registration*
 - [x] Correctly handles autolayout cells with multiline labels
 - [x] Chainable cell actions (select/deselect etc.)
 - [x] Support cells created from code, xib, or storyboard
@@ -26,17 +26,19 @@ It hides a complexity of `UITableViewDataSource` and `UITableViewDelegate` metho
 - [x] No need to subclass
 - [x] Extensibility
 
-## Getting Started
+# Getting Started
 
 An [example app](Demo) is included demonstrating TableKit's functionality.
 
-#### Basic usage
+## Basic usage
 
 Create your rows:
 ```swift
+import TableKit
+
 let row1 = TableRow<String, StringTableViewCell>(item: "1")
 let row2 = TableRow<Int, IntTableViewCell>(item: 2)
-let row3 = TableRow<Float, FloatTableViewCell>(item: 3.0)
+let row3 = TableRow<User, UserTableViewCell>(item: User(name: "John Doe", rating: 5))
 ```
 Put rows into section:
 ```swift
@@ -47,24 +49,38 @@ And setup your table:
 let tableDirector = TableDirector(tableView: tableView)
 tableDirector += section
 ```
-Done. Your table is ready. You may want to look at your cell. It has to conform to `ConfigurableCell` protocol:
+Done. Your table is ready. Your cells have to conform to `ConfigurableCell` protocol:
 ```swift
 class StringTableViewCell: UITableViewCell, ConfigurableCell {
 
-	typealias T = String
+	func configure(with string: String) {
+		
+		textLabel?.text = string
+	}
+}
 
-	func configure(string: T, isPrototype: Bool) {
-		titleLabel.text = string
+class UserTableViewCell: UITableViewCell, ConfigurableCell {
+
+	static var estimatedHeight: CGFloat? {
+		return 100
 	}
 
-	static func estimatedHeight() -> CGFloat {
-        return 44
+	// is not required to be implemented
+	// by default reuse id is equal to cell's class name
+	static var reuseIdentifier: String {
+		return "my id"
     }
+
+	func configure(with user: User) {
+		
+		textLabel?.text = user.name
+		detailTextLabel?.text = "Rating: \(user.rating)"
+	}
 }
 ```
 You could have as many rows and sections as you need.
 
-#### Row actions
+## Row actions
 
 It nice to have some actions that related to your cells:
 ```swift
@@ -74,7 +90,7 @@ let action = TableRowAction<String, StringTableViewCell>(.click) { (data) in
 
 	// data.cell - StringTableViewCell?
 	// data.item - String
-	// data.path - NSIndexPath
+	// data.indexPath - NSIndexPath
 }
 
 let row = TableRow<String, StringTableViewCell>(item: "some", actions: [action])
@@ -82,30 +98,54 @@ let row = TableRow<String, StringTableViewCell>(item: "some", actions: [action])
 Or, using nice chaining approach:
 ```swift
 let row = TableRow<String, StringTableViewCell>(item: "some")
-	.action(TableRowAction(.click) { (data) in
+	.action(.click) { (data) in
 	
-	})
-	.action(TableRowAction(.shouldHighlight) { (data) -> Bool in
+	}
+	.action(.shouldHighlight) { (data) -> Bool in
 		return false
-	})
+	}
 ```
 You could find all available actions [here](Sources/TableRowAction.swift).
 
-## Advanced
+## Custom row actions
 
-#### Cell height calculating strategy
+You are able to define your own actions:
+```swift
+struct MyActions {
+    
+    static let ButtonClicked = "ButtonClicked"
+}
+
+class MyTableViewCell: UITableViewCell, ConfigurableCell {
+
+	@IBAction func myButtonClicked(sender: UIButton) {
+	
+		TableCellAction(key: MyActions.ButtonClicked, sender: self).invoke()
+	}
+}
+```
+And handle them accordingly:
+```swift
+let myAction = TableRowAction<Void, MyTableViewCell>(.custom(MyActions.ButtonClicked)) { (data) in
+
+}
+```
+
+# Advanced
+
+## Cell height calculating strategy
 By default TableKit relies on <a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/WorkingwithSelf-SizingTableViewCells.html" target="_blank">self-sizing cells</a>. In that case you have to provide an estimated height for your cells:
 ```swift
 class StringTableViewCell: UITableViewCell, ConfigurableCell {
 
 	// ...
 
-	static func estimatedHeight() -> CGFloat {
-        return 44
+	static var estimatedHeight: CGFloat? {
+        return 255
     }
 }
 ```
-It's enough for most cases. But you may be not happy with this. So you could use a prototype cell to calculate cell's heights. To enable this feature simply use this property:
+It's enough for most cases. But you may be not happy with this. So you could use a prototype cell to calculate cells heights. To enable this feature simply use this property:
 ```swift
 tableDirector.shouldUsePrototypeCellHeightCalculation = true
 ```
@@ -113,11 +153,9 @@ It does all dirty work with prototypes for you [behind the scene](Sources/Height
 ```swift
 class ImageTableViewCell: UITableViewCell, ConfigurableCell {
 
-	func configure(url: NSURL, isPrototype: Bool) {
+	func configure(with url: NSURL) {
 		
-		if !isPrototype {
-			loadImageAsync(url: url, imageView: imageView)
-		}
+		loadImageAsync(url: url, imageView: imageView)
 	}
 
 	override func layoutSubviews() {
@@ -128,37 +166,55 @@ class ImageTableViewCell: UITableViewCell, ConfigurableCell {
     }
 }
 ```
-First of all you have to set `preferredMaxLayoutWidth` for all your multiline labels. And check if a configuring cell is a prototype cell. If it is, you don't have to do any additional work that not actually affect cell's height. For example you don't have to load remote image for a prototype cell.
+You have to additionally set `preferredMaxLayoutWidth` for all your multiline labels.
 
-#### Functional programming
+## Functional programming
 It's never been so easy to deal with table views.
 ```swift
 let users = /* some users array */
 
-let rows: [Row] = users.filter({ $0.state == .active }).map({ TableRow<String, UserTableViewCell>(item: $0.username) })
+let click = TableRowAction<String, UserTableViewCell>(.click) {
+
+}
+
+let rows: [Row] = users.filter({ $0.state == .active }).map({ TableRow<String, UserTableViewCell>(item: $0.name, actions: [click]) })
 
 tableDirector += rows
 ```
-Done, your table is ready. It's just awesome!
+Done, your table is ready.
+## Automatic cell registration
 
-## Installation
+TableKit can register your cells in table view automatically. In case if your reusable cell id mathces cell's xib name:
 
-#### CocoaPods
+```ruby
+MyTableViewCell.swift
+MyTableViewCell.xib
+
+```
+You can also turn off this behaviour:
+```swift
+let tableDirector = TableDirector(tableView: tableView, shouldUseAutomaticCellRegistration: false)
+```
+and register your cell manually.
+
+# Installation
+
+## CocoaPods
 To integrate TableKit into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
 pod 'TableKit'
 ```
-#### Carthage
+## Carthage
 Add the line `github "maxsokolov/tablekit"` to your `Cartfile`.
-#### Manual
+## Manual
 Clone the repo and drag files from `Sources` folder into your Xcode project.
 
-## Requirements
+# Requirements
 
 - iOS 8.0+
 - Xcode 7.0+
 
-## License
+# License
 
 TableKit is available under the MIT license. See LICENSE for details.

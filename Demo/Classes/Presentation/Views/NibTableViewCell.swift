@@ -13,11 +13,11 @@ class NibTableViewCell: UITableViewCell, ConfigurableCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     
-    func configure(with number: Int) {
-        titleLabel.text = "\(number)"
+    static var defaultHeight: CGFloat? {
+        return 100
     }
     
-    static func defaultHeight() -> CGFloat? {
-        return 100
+    func configure(with number: Int) {
+        titleLabel.text = "\(number)"
     }
 }

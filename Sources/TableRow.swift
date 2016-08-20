@@ -38,7 +38,7 @@ public protocol RowHashable {
 
 public protocol Row: RowConfigurable, RowActionable, RowHashable {
     
-    var reusableIdentifier: String { get }
+    var reuseIdentifier: String { get }
     var cellType: AnyClass { get }
     
     var estimatedHeight: CGFloat? { get }
@@ -54,16 +54,16 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
         return ObjectIdentifier(self).hashValue
     }
     
-    public var reusableIdentifier: String {
-        return CellType.reusableIdentifier()
+    public var reuseIdentifier: String {
+        return CellType.reuseIdentifier
     }
     
     public var estimatedHeight: CGFloat? {
-        return CellType.estimatedHeight()
+        return CellType.estimatedHeight
     }
     
     public var defaultHeight: CGFloat? {
-        return CellType.defaultHeight()
+        return CellType.defaultHeight
     }
     
     public var cellType: AnyClass {

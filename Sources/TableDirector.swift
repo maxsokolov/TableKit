@@ -123,9 +123,9 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         
         let row = sections[indexPath.section].items[indexPath.row]
         
-        cellManager?.register(cellType: row.cellType, forReusableCellIdentifier: row.reusableIdentifier)
+        cellManager?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(row.reusableIdentifier, forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier(row.reuseIdentifier, forIndexPath: indexPath)
         
         if cell.frame.size.width != tableView.frame.size.width {
             cell.frame = CGRectMake(0, 0, tableView.frame.size.width, cell.frame.size.height)
