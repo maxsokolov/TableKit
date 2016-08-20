@@ -138,16 +138,34 @@ class ImageTableViewCell: UITableViewCell, ConfigurableCell {
 ```
 First of all you have to set `preferredMaxLayoutWidth` for all your multiline labels. And check if a configuring cell is a prototype cell. If it is, you don't have to do any additional work that not actually affect cell's height. For example you don't have to load remote image for a prototype cell.
 
-#### Functional programming
+## Functional programming
 It's never been so easy to deal with table views.
 ```swift
 let users = /* some users array */
 
-let rows: [Row] = users.filter({ $0.state == .active }).map({ TableRow<String, UserTableViewCell>(item: $0.username) })
+	let click = TableRowAction<String, UserTableViewCell>(.click) {
+
+	}
+
+let rows: [Row] = users.filter({ $0.state == .active }).map({ TableRow<String, UserTableViewCell>(item: $0.name, actions: [click]) })
 
 tableDirector += rows
 ```
-Done, your table is ready. It's just awesome!
+Done, your table is ready.
+## Automatic cell registration
+
+TableKit can register your cells in table view automatically. In case if your reusable cell id mathces cell's xib name:
+
+```ruby
+MyTableViewCell.swift
+MyTableViewCell.xib
+
+```
+But you can turn off this behaviour:
+```swift
+let tableDirector = TableDirector(tableView: tableView, shouldUseAutomaticCellRegistration: false)
+```
+and register your cell manually.
 
 # Installation
 
