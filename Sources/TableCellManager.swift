@@ -20,16 +20,16 @@
 
 import UIKit
 
-public class TableCellManager {
+class TableCellManager {
     
     private var registeredIds = Set<String>()
     private weak var tableView: UITableView?
     
-    public init(tableView: UITableView?) {
+    init(tableView: UITableView?) {
         self.tableView = tableView
     }
     
-    public func register(cellType cellType: AnyClass, forCellReuseIdentifier reuseIdentifier: String) {
+    func register(cellType cellType: AnyClass, forCellReuseIdentifier reuseIdentifier: String) {
         
         if registeredIds.contains(reuseIdentifier) {
             return
