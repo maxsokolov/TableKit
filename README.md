@@ -44,6 +44,8 @@ let section = TableSection(rows: [row1, row2, row3])
 ```
 And setup your table:
 ```swift
+import TableKit
+
 let tableDirector = TableDirector(tableView: tableView)
 tableDirector += section
 ```
@@ -64,7 +66,7 @@ class UserTableViewCell: UITableViewCell, ConfigurableCell {
 	}
 
 	// is not required to be implemented
-	// by default reuse id is equal to class name
+	// by default reuse id is equal to cell's class name
 	static var reuseIdentifier: String {
 		return "my id"
     }
@@ -105,6 +107,30 @@ let row = TableRow<String, StringTableViewCell>(item: "some")
 ```
 You could find all available actions [here](Sources/TableRowAction.swift).
 
+## Custom row actions
+
+You are able to define your own actions:
+```swift
+struct MyActions {
+    
+    static let ButtonClicked = "ButtonClicked"
+}
+
+class MyTableViewCell: UITableViewCell, ConfigurableCell {
+
+	@IBAction func lol(sender: UIButton) {
+	
+		TableCellAction(key: MyActions.ButtonClicked, sender: self).invoke()
+	}
+}
+```
+And handle them accordingly:
+```swift
+let myAction = TableRowAction<String, StringTableViewCell>(.custom(MyActions.ButtonClicked)) { (data) in
+
+}
+```
+
 # Advanced
 
 ## Cell height calculating strategy
@@ -127,7 +153,7 @@ It does all dirty work with prototypes for you [behind the scene](Sources/Height
 ```swift
 class ImageTableViewCell: UITableViewCell, ConfigurableCell {
 
-	func configure(with url: NSURL, isPrototype: Bool) {
+	func configure(with url: NSURL) {
 		
 		loadImageAsync(url: url, imageView: imageView)
 	}
