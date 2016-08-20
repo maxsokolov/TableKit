@@ -42,19 +42,19 @@ struct TestTableViewCellOptions {
     static let CellAction: String = "CellAction"
     static let CellActionUserInfoKey: String = "CellActionUserInfoKey"
     static let CellActionUserInfoValue: String = "CellActionUserInfoValue"
-    static let EstimatedHeight: Float = 255
+    static let EstimatedHeight: CGFloat = 255
 }
 
 class TestTableViewCell: UITableViewCell, ConfigurableCell {
 
     typealias T = TestData
     
+    static var estimatedHeight: CGFloat? {
+        return TestTableViewCellOptions.EstimatedHeight
+    }
+    
     static func reusableIdentifier() -> String {
         return TestTableViewCellOptions.ReusableIdentifier
-    }
-
-    static func estimatedHeight() -> Float {
-        return TestTableViewCellOptions.EstimatedHeight
     }
 
     func configure(with item: T) {
