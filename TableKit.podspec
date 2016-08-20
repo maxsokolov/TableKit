@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
     s.name                  = 'TableKit'
     s.module_name           = 'TableKit'
 
-    s.version               = '0.9.3'
+    s.version               = '1.0.0'
 
     s.homepage              = 'https://github.com/maxsokolov/TableKit'
     s.summary               = 'Type-safe declarative table views. Swift 2.2 is required.'
