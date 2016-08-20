@@ -20,34 +20,25 @@
 
 import UIKit
 
-public protocol ReusableCell {
-
-    static func reusableIdentifier() -> String
-    static func nib() -> UINib?
-}
-
-public protocol ConfigurableCell: ReusableCell {
+public protocol ConfigurableCell {
 
     associatedtype T
 
+    static var reuseIdentifier: String { get }
     static var estimatedHeight: CGFloat? { get }
     static var defaultHeight: CGFloat? { get }
 
     func configure(with _: T)
 }
 
-public extension ReusableCell where Self: UITableViewCell {
-    
-    static func reusableIdentifier() -> String {
-        return String(self)
-    }
-    
-    static func nib() -> UINib? {
-        return nil
-    }
-}
-
 public extension ConfigurableCell where Self: UITableViewCell {
+    
+    static var reuseIdentifier: String {
+        get {
+            return String(self)
+        }
+        
+    }
     
     static var estimatedHeight: CGFloat? {
         get {

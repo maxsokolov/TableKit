@@ -49,7 +49,7 @@ public class PrototypeHeightStrategy: CellHeightCalculatable {
             return height
         }
 
-        guard let cell = tableView.dequeueReusableCellWithIdentifier(row.reusableIdentifier) else { return 0 }
+        guard let cell = tableView.dequeueReusableCellWithIdentifier(row.reuseIdentifier) else { return 0 }
 
         cell.bounds = CGRectMake(0, 0, tableView.bounds.size.width, cell.bounds.height)
 

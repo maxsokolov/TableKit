@@ -29,16 +29,16 @@ public class TableCellManager {
         self.tableView = tableView
     }
     
-    public func register(cellType cellType: AnyClass, forReusableCellIdentifier reusableIdentifier: String) {
+    public func register(cellType cellType: AnyClass, forCellReuseIdentifier reuseIdentifier: String) {
         
-        if registeredIds.contains(reusableIdentifier) {
+        if registeredIds.contains(reuseIdentifier) {
             return
         }
         
         // check if cell is already registered, probably cell has been registered by storyboard
-        if tableView?.dequeueReusableCellWithIdentifier(reusableIdentifier) != nil {
+        if tableView?.dequeueReusableCellWithIdentifier(reuseIdentifier) != nil {
             
-            registeredIds.insert(reusableIdentifier)
+            registeredIds.insert(reuseIdentifier)
             return
         }
         
@@ -46,13 +46,13 @@ public class TableCellManager {
         
         // we hope that cell's xib file has name that equals to cell's class name
         // in that case we could register nib
-        if let _ = bundle.pathForResource(reusableIdentifier, ofType: "nib") {
-            tableView?.registerNib(UINib(nibName: reusableIdentifier, bundle: bundle), forCellReuseIdentifier: reusableIdentifier)
+        if let _ = bundle.pathForResource(reuseIdentifier, ofType: "nib") {
+            tableView?.registerNib(UINib(nibName: reuseIdentifier, bundle: bundle), forCellReuseIdentifier: reuseIdentifier)
             // otherwise, register cell class
         } else {
-            tableView?.registerClass(cellType, forCellReuseIdentifier: reusableIdentifier)
+            tableView?.registerClass(cellType, forCellReuseIdentifier: reuseIdentifier)
         }
         
-        registeredIds.insert(reusableIdentifier)
+        registeredIds.insert(reuseIdentifier)
     }
 }

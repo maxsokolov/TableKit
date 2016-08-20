@@ -53,7 +53,7 @@ class TestTableViewCell: UITableViewCell, ConfigurableCell {
         return TestTableViewCellOptions.EstimatedHeight
     }
     
-    static func reusableIdentifier() -> String {
+    static var reuseIdentifier: String {
         return TestTableViewCellOptions.ReusableIdentifier
     }
 
