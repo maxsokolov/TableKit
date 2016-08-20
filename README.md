@@ -63,6 +63,12 @@ class UserTableViewCell: UITableViewCell, ConfigurableCell {
 		return 100
 	}
 
+	// is not required to be implemented
+	// by default reuse id is equal to class name
+	static var reuseIdentifier: String {
+		return "my id"
+    }
+
 	func configure(with user: User) {
 		
 		textLabel?.text = user.name
@@ -121,11 +127,9 @@ It does all dirty work with prototypes for you [behind the scene](Sources/Height
 ```swift
 class ImageTableViewCell: UITableViewCell, ConfigurableCell {
 
-	func configure(url: NSURL, isPrototype: Bool) {
+	func configure(with url: NSURL, isPrototype: Bool) {
 		
-		if !isPrototype {
-			loadImageAsync(url: url, imageView: imageView)
-		}
+		loadImageAsync(url: url, imageView: imageView)
 	}
 
 	override func layoutSubviews() {
@@ -136,16 +140,16 @@ class ImageTableViewCell: UITableViewCell, ConfigurableCell {
     }
 }
 ```
-First of all you have to set `preferredMaxLayoutWidth` for all your multiline labels. And check if a configuring cell is a prototype cell. If it is, you don't have to do any additional work that not actually affect cell's height. For example you don't have to load remote image for a prototype cell.
+You have to additionally set `preferredMaxLayoutWidth` for all your multiline labels.
 
 ## Functional programming
 It's never been so easy to deal with table views.
 ```swift
 let users = /* some users array */
 
-	let click = TableRowAction<String, UserTableViewCell>(.click) {
+let click = TableRowAction<String, UserTableViewCell>(.click) {
 
-	}
+}
 
 let rows: [Row] = users.filter({ $0.state == .active }).map({ TableRow<String, UserTableViewCell>(item: $0.name, actions: [click]) })
 
@@ -161,7 +165,7 @@ MyTableViewCell.swift
 MyTableViewCell.xib
 
 ```
-But you can turn off this behaviour:
+You can also turn off this behaviour:
 ```swift
 let tableDirector = TableDirector(tableView: tableView, shouldUseAutomaticCellRegistration: false)
 ```
