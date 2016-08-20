@@ -34,6 +34,8 @@ An [example app](Demo) is included demonstrating TableKit's functionality.
 
 Create your rows:
 ```swift
+import TableKit
+
 let row1 = TableRow<String, StringTableViewCell>(item: "1")
 let row2 = TableRow<Int, IntTableViewCell>(item: 2)
 let row3 = TableRow<User, UserTableViewCell>(item: User(name: "John Doe", rating: 5))
@@ -44,8 +46,6 @@ let section = TableSection(rows: [row1, row2, row3])
 ```
 And setup your table:
 ```swift
-import TableKit
-
 let tableDirector = TableDirector(tableView: tableView)
 tableDirector += section
 ```
@@ -118,7 +118,7 @@ struct MyActions {
 
 class MyTableViewCell: UITableViewCell, ConfigurableCell {
 
-	@IBAction func lol(sender: UIButton) {
+	@IBAction func myButtonClicked(sender: UIButton) {
 	
 		TableCellAction(key: MyActions.ButtonClicked, sender: self).invoke()
 	}
@@ -126,7 +126,7 @@ class MyTableViewCell: UITableViewCell, ConfigurableCell {
 ```
 And handle them accordingly:
 ```swift
-let myAction = TableRowAction<String, StringTableViewCell>(.custom(MyActions.ButtonClicked)) { (data) in
+let myAction = TableRowAction<Void, MyTableViewCell>(.custom(MyActions.ButtonClicked)) { (data) in
 
 }
 ```
@@ -145,7 +145,7 @@ class StringTableViewCell: UITableViewCell, ConfigurableCell {
     }
 }
 ```
-It's enough for most cases. But you may be not happy with this. So you could use a prototype cell to calculate cell's heights. To enable this feature simply use this property:
+It's enough for most cases. But you may be not happy with this. So you could use a prototype cell to calculate cells heights. To enable this feature simply use this property:
 ```swift
 tableDirector.shouldUsePrototypeCellHeightCalculation = true
 ```
