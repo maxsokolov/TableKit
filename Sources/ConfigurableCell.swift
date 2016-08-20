@@ -21,17 +21,18 @@
 import UIKit
 
 public protocol ReusableCell {
-    
+
     static func reusableIdentifier() -> String
     static func nib() -> UINib?
 }
 
 public protocol ConfigurableCell: ReusableCell {
-    
+
     associatedtype T
-    
-    static func estimatedHeight() -> CGFloat?
-    static func defaultHeight() -> CGFloat?
+
+    static var estimatedHeight: CGFloat? { get }
+    static var defaultHeight: CGFloat? { get }
+
     func configure(with _: T)
 }
 
@@ -48,11 +49,16 @@ public extension ReusableCell where Self: UITableViewCell {
 
 public extension ConfigurableCell where Self: UITableViewCell {
     
-    static func estimatedHeight() -> CGFloat? {
-        return UITableViewAutomaticDimension
+    static var estimatedHeight: CGFloat? {
+        get {
+            return UITableViewAutomaticDimension
+        }
+        
     }
     
-    static func defaultHeight() -> CGFloat? {
-        return nil
+    static var defaultHeight: CGFloat? {
+        get {
+            return nil
+        }
     }
 }

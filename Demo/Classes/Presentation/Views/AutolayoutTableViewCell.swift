@@ -19,13 +19,13 @@ class AutolayoutTableViewCell: UITableViewCell, ConfigurableCell {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subtitleLabel: UILabel!
     
+    static var estimatedHeight: CGFloat? {
+        return 500
+    }
+    
     func configure(with string: T) {
         
         titleLabel.text = LoremIpsumTitle
         subtitleLabel.text = LoremIpsumBody
-    }
-    
-    static func estimatedHeight() -> CGFloat? {
-        return 500
     }
 }

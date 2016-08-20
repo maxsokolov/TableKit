@@ -59,11 +59,11 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
     }
     
     public var estimatedHeight: CGFloat? {
-        return CellType.estimatedHeight()
+        return CellType.estimatedHeight
     }
     
     public var defaultHeight: CGFloat? {
-        return CellType.defaultHeight()
+        return CellType.defaultHeight
     }
     
     public var cellType: AnyClass {
