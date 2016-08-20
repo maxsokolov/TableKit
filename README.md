@@ -140,8 +140,8 @@ class StringTableViewCell: UITableViewCell, ConfigurableCell {
 
 	// ...
 
-	static func estimatedHeight() -> CGFloat {
-        return 44
+	static var estimatedHeight: CGFloat? {
+        return 255
     }
 }
 ```
