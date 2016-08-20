@@ -12,7 +12,7 @@
 TableKit is a super lightweight yet powerful generic library that allows you to build complex table views in a declarative type-safe manner.
 It hides a complexity of `UITableViewDataSource` and `UITableViewDelegate` methods behind the scene, so your code will be look clean, easy to read and nice to maintain.
 
-## Features
+# Features
 
 - [x] Type-safe generic cells
 - [x] Functional programming style friendly
@@ -26,11 +26,11 @@ It hides a complexity of `UITableViewDataSource` and `UITableViewDelegate` metho
 - [x] No need to subclass
 - [x] Extensibility
 
-## Getting Started
+# Getting Started
 
 An [example app](Demo) is included demonstrating TableKit's functionality.
 
-#### Basic usage
+## Basic usage
 
 Create your rows:
 ```swift
@@ -72,7 +72,7 @@ class UserTableViewCell: UITableViewCell, ConfigurableCell {
 ```
 You could have as many rows and sections as you need.
 
-#### Row actions
+## Row actions
 
 It nice to have some actions that related to your cells:
 ```swift
@@ -99,9 +99,9 @@ let row = TableRow<String, StringTableViewCell>(item: "some")
 ```
 You could find all available actions [here](Sources/TableRowAction.swift).
 
-## Advanced
+# Advanced
 
-#### Cell height calculating strategy
+## Cell height calculating strategy
 By default TableKit relies on <a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/WorkingwithSelf-SizingTableViewCells.html" target="_blank">self-sizing cells</a>. In that case you have to provide an estimated height for your cells:
 ```swift
 class StringTableViewCell: UITableViewCell, ConfigurableCell {
@@ -149,24 +149,24 @@ tableDirector += rows
 ```
 Done, your table is ready. It's just awesome!
 
-## Installation
+# Installation
 
-#### CocoaPods
+## CocoaPods
 To integrate TableKit into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
 pod 'TableKit'
 ```
-#### Carthage
+## Carthage
 Add the line `github "maxsokolov/tablekit"` to your `Cartfile`.
-#### Manual
+## Manual
 Clone the repo and drag files from `Sources` folder into your Xcode project.
 
-## Requirements
+# Requirements
 
 - iOS 8.0+
 - Xcode 7.0+
 
-## License
+# License
 
 TableKit is available under the MIT license. See LICENSE for details.
