@@ -4,7 +4,7 @@
 	<a href="https://travis-ci.org/maxsokolov/TableKit"><img src="https://api.travis-ci.org/maxsokolov/TableKit.svg" alt="Build Status" /></a>
 	<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift_2.2-compatible-4BC51D.svg?style=flat" alt="Swift 2.2 compatible" /></a>
 	<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible" /></a>
-	<a href="https://cocoapods.org/pods/tablekit"><img src="https://img.shields.io/badge/pod-0.9.3-blue.svg" alt="CocoaPods compatible" /></a>
+	<a href="https://cocoapods.org/pods/tablekit"><img src="https://img.shields.io/badge/pod-1.0.0-blue.svg" alt="CocoaPods compatible" /></a>
 	<img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
 	<a href="https://raw.githubusercontent.com/maxsokolov/tablekit/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License: MIT" /></a>
 </p>
@@ -17,7 +17,7 @@ It hides a complexity of `UITableViewDataSource` and `UITableViewDelegate` metho
 - [x] Type-safe generic cells
 - [x] Functional programming style friendly
 - [x] The easiest way to map your models or view models to cells
-- [x] Automatic cell registration
+- [x] Automatic cell registration*
 - [x] Correctly handles autolayout cells with multiline labels
 - [x] Chainable cell actions (select/deselect etc.)
 - [x] Support cells created from code, xib, or storyboard
@@ -36,7 +36,7 @@ Create your rows:
 ```swift
 let row1 = TableRow<String, StringTableViewCell>(item: "1")
 let row2 = TableRow<Int, IntTableViewCell>(item: 2)
-let row3 = TableRow<Float, FloatTableViewCell>(item: 3.0)
+let row3 = TableRow<User, UserTableViewCell>(item: User(name: "John Doe", rating: 5))
 ```
 Put rows into section:
 ```swift
@@ -47,19 +47,27 @@ And setup your table:
 let tableDirector = TableDirector(tableView: tableView)
 tableDirector += section
 ```
-Done. Your table is ready. You may want to look at your cell. It has to conform to `ConfigurableCell` protocol:
+Done. Your table is ready. Your cells have to conform to `ConfigurableCell` protocol:
 ```swift
 class StringTableViewCell: UITableViewCell, ConfigurableCell {
 
-	typealias T = String
+	func configure(with string: String) {
+		
+		textLabel?.text = string
+	}
+}
 
-	func configure(string: T, isPrototype: Bool) {
-		titleLabel.text = string
+class UserTableViewCell: UITableViewCell, ConfigurableCell {
+
+	static var estimatedHeight: CGFloat? {
+		return 100
 	}
 
-	static func estimatedHeight() -> CGFloat {
-        return 44
-    }
+	func configure(with user: User) {
+		
+		textLabel?.text = user.name
+		detailTextLabel?.text = "Rating: \(user.rating)"
+	}
 }
 ```
 You could have as many rows and sections as you need.
@@ -74,7 +82,7 @@ let action = TableRowAction<String, StringTableViewCell>(.click) { (data) in
 
 	// data.cell - StringTableViewCell?
 	// data.item - String
-	// data.path - NSIndexPath
+	// data.indexPath - NSIndexPath
 }
 
 let row = TableRow<String, StringTableViewCell>(item: "some", actions: [action])
@@ -82,12 +90,12 @@ let row = TableRow<String, StringTableViewCell>(item: "some", actions: [action])
 Or, using nice chaining approach:
 ```swift
 let row = TableRow<String, StringTableViewCell>(item: "some")
-	.action(TableRowAction(.click) { (data) in
+	.action(.click) { (data) in
 	
-	})
-	.action(TableRowAction(.shouldHighlight) { (data) -> Bool in
+	}
+	.action(.shouldHighlight) { (data) -> Bool in
 		return false
-	})
+	}
 ```
 You could find all available actions [here](Sources/TableRowAction.swift).
 
