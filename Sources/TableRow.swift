@@ -27,6 +27,9 @@ public protocol RowConfigurable {
 
 public protocol RowActionable {
     
+    var editingActions: [UITableViewRowAction]? { get }
+    func isEditingAllowed(forIndexPath indexPath: NSIndexPath) -> Bool
+    
     func invoke(action: TableRowActionType, cell: UITableViewCell?, path: NSIndexPath) -> Any?
     func hasAction(action: TableRowActionType) -> Bool
 }
@@ -49,6 +52,7 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
     
     public let item: ItemType
     private lazy var actions = [String: TableRowAction<ItemType, CellType>]()
+    private(set) public var editingActions: [UITableViewRowAction]?
     
     public var hashValue: Int {
         return ObjectIdentifier(self).hashValue
@@ -70,9 +74,10 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
         return CellType.self
     }
     
-    public init(item: ItemType, actions: [TableRowAction<ItemType, CellType>]? = nil) {
+    public init(item: ItemType, actions: [TableRowAction<ItemType, CellType>]? = nil, editingActions: [UITableViewRowAction]? = nil) {
         
         self.item = item
+        self.editingActions = editingActions
         actions?.forEach { self.actions[$0.type.key] = $0 }
     }
     
@@ -90,6 +95,14 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
     
     public func hasAction(action: TableRowActionType) -> Bool {
         return actions[action.key] != nil
+    }
+    
+    public func isEditingAllowed(forIndexPath indexPath: NSIndexPath) -> Bool {
+        
+        if actions[TableRowActionType.canEdit.key] != nil {
+            return invoke(.canEdit, cell: nil, path: indexPath) as? Bool ?? false
+        }
+        return editingActions?.isEmpty == false || actions[TableRowActionType.clickDelete.key] != nil
     }
     
     // MARK: - actions -

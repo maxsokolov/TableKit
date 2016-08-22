@@ -24,7 +24,7 @@ public class TableSection {
     
     weak var tableDirector: TableDirector?
     
-    public private(set) var items = [Row]()
+    public private(set) var rows = [Row]()
     
     public var headerTitle: String?
     public var footerTitle: String?
@@ -36,17 +36,17 @@ public class TableSection {
     public var footerHeight: CGFloat? = nil
     
     public var numberOfRows: Int {
-        return items.count
+        return rows.count
     }
     
     public var isEmpty: Bool {
-        return items.isEmpty
+        return rows.isEmpty
     }
     
     public init(rows: [Row]? = nil) {
         
         if let initialRows = rows {
-            items.appendContentsOf(initialRows)
+            self.rows.appendContentsOf(initialRows)
         }
     }
     
@@ -67,7 +67,7 @@ public class TableSection {
     // MARK: - Public -
     
     public func clear() {
-        items.removeAll()
+        rows.removeAll()
     }
     
     public func append(row row: Row) {
@@ -75,14 +75,14 @@ public class TableSection {
     }
     
     public func append(rows rows: [Row]) {
-        items.appendContentsOf(rows)
+        self.rows.appendContentsOf(rows)
     }
     
     public func insert(row row: Row, atIndex index: Int) {
-        items.insert(row, atIndex: index)
+        rows.insert(row, atIndex: index)
     }
     
     public func delete(index index: Int) {
-        items.removeAtIndex(index)
+        rows.removeAtIndex(index)
     }
 }
