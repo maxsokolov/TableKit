@@ -70,7 +70,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     // MARK: Public
     
     public func invoke(action action: TableRowActionType, cell: UITableViewCell?, indexPath: NSIndexPath) -> Any? {
-        return sections[indexPath.section].items[indexPath.row].invoke(action, cell: cell, path: indexPath)
+        return sections[indexPath.section].rows[indexPath.row].invoke(action, cell: cell, path: indexPath)
     }
     
     public override func respondsToSelector(selector: Selector) -> Bool {
@@ -84,7 +84,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     // MARK: - Internal -
     
     func hasAction(action: TableRowActionType, atIndexPath indexPath: NSIndexPath) -> Bool {
-        return sections[indexPath.section].items[indexPath.row].hasAction(action)
+        return sections[indexPath.section].rows[indexPath.row].hasAction(action)
     }
     
     func didReceiveAction(notification: NSNotification) {
@@ -97,13 +97,13 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        let row = sections[indexPath.section].items[indexPath.row]
+        let row = sections[indexPath.section].rows[indexPath.row]
         return row.estimatedHeight ?? heightStrategy?.estimatedHeight(row, path: indexPath) ?? UITableViewAutomaticDimension
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        let row = sections[indexPath.section].items[indexPath.row]
+        let row = sections[indexPath.section].rows[indexPath.row]
         let rowHeight = invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat
         
         return rowHeight ?? row.defaultHeight ?? heightStrategy?.height(row, path: indexPath) ?? UITableViewAutomaticDimension
@@ -121,7 +121,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let row = sections[indexPath.section].items[indexPath.row]
+        let row = sections[indexPath.section].rows[indexPath.row]
         
         cellManager?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
         
