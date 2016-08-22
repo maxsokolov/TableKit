@@ -23,12 +23,14 @@ import UIKit
 public enum TableRowActionType {
     
     case click
+    case clickDelete
     case select
     case deselect
     case willSelect
     case willDisplay
     case shouldHighlight
     case height
+    case canEdit
     case configure
     case custom(String)
     
