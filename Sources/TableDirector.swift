@@ -203,6 +203,23 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         return indexPath
     }
     
+    // MARK: - Row editing -
+    
+    public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return sections[indexPath.section].rows[indexPath.row].isEditingAllowed(forIndexPath: indexPath)
+    }
+    
+    public func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        return sections[indexPath.section].rows[indexPath.row].editingActions
+    }
+    
+    public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if editingStyle == .Delete {
+            invoke(action: .clickDelete, cell: tableView.cellForRowAtIndexPath(indexPath), indexPath: indexPath)
+        }
+    }
+    
     // MARK: - Sections manipulation -
     
     public func append(section section: TableSection) -> Self {
