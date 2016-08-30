@@ -21,9 +21,7 @@
 import UIKit
 
 public class TableSection {
-    
-    weak var tableDirector: TableDirector?
-    
+
     public private(set) var rows = [Row]()
     
     public var headerTitle: String?
@@ -78,8 +76,12 @@ public class TableSection {
         self.rows.appendContentsOf(rows)
     }
     
-    public func insert(row row: Row, atIndex index: Int) {
+    public func insert(row row: Row, at index: Int) {
         rows.insert(row, atIndex: index)
+    }
+    
+    public func insert(rows rows: [Row], at index: Int) {
+        self.rows.insertContentsOf(rows, at: index)
     }
     
     public func delete(index index: Int) {
