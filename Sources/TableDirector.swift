@@ -230,7 +230,6 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     
     public func append(sections sections: [TableSection]) -> Self {
         
-        sections.forEach { $0.tableDirector = self }
         self.sections.appendContentsOf(sections)
         return self
     }
