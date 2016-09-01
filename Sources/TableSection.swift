@@ -61,7 +61,7 @@ public class TableSection {
         self.headerView = headerView
         self.footerView = footerView
     }
-    
+
     // MARK: - Public -
     
     public func clear() {
@@ -82,6 +82,15 @@ public class TableSection {
     
     public func insert(rows rows: [Row], at index: Int) {
         self.rows.insertContentsOf(rows, at: index)
+    }
+
+    public func replace(rowAt index: Int, with row: Row) -> Bool {
+        
+        if index > 0 && index < rows.count {
+            rows[index] = row
+            return true
+        }
+        return false
     }
     
     public func delete(index index: Int) {
