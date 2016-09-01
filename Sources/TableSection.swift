@@ -86,7 +86,7 @@ public class TableSection {
 
     public func replace(rowAt index: Int, with row: Row) -> Bool {
         
-        if index > 0 && index < rows.count {
+        if index >= 0 && index < rows.count {
             rows[index] = row
             return true
         }
