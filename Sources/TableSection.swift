@@ -84,13 +84,8 @@ public class TableSection {
         self.rows.insertContentsOf(rows, at: index)
     }
 
-    public func replace(rowAt index: Int, with row: Row) -> Bool {
-        
-        if index >= 0 && index < rows.count {
-            rows[index] = row
-            return true
-        }
-        return false
+    public func replace(rowAt index: Int, with row: Row) {
+        rows[index] = row
     }
     
     public func delete(index index: Int) {
