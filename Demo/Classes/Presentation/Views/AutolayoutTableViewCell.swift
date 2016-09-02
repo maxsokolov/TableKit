@@ -20,12 +20,19 @@ class AutolayoutTableViewCell: UITableViewCell, ConfigurableCell {
     @IBOutlet var subtitleLabel: UILabel!
     
     static var estimatedHeight: CGFloat? {
-        return 500
+        return 700
     }
     
     func configure(with string: T) {
         
         titleLabel.text = LoremIpsumTitle
         subtitleLabel.text = LoremIpsumBody
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        titleLabel.preferredMaxLayoutWidth = titleLabel.bounds.size.width
+        subtitleLabel.preferredMaxLayoutWidth = subtitleLabel.bounds.size.width
     }
 }

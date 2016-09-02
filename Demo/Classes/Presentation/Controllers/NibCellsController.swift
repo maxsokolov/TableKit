@@ -19,6 +19,7 @@ class NibCellsController: UITableViewController {
         title = "Nib cells"
         
         tableDirector = TableDirector(tableView: tableView)
+        //tableDirector.shouldUsePrototypeCellHeightCalculation = true
         
         let numbers = [1000, 2000, 3000, 4000, 5000]
         

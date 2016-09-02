@@ -14,6 +14,7 @@ class AutolayoutCellsController: UIViewController {
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableDirector = TableDirector(tableView: tableView)
+            tableDirector.shouldUsePrototypeCellHeightCalculation = true
         }
     }
     var tableDirector: TableDirector!
@@ -26,7 +27,7 @@ class AutolayoutCellsController: UIViewController {
         let section = TableSection()
         
         var rows = 0
-        while rows <= 10 {
+        while rows <= 1000 {
             rows += 1
             
             let row = TableRow<Void, AutolayoutTableViewCell>(item: ())

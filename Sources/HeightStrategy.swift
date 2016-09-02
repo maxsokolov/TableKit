@@ -59,7 +59,7 @@ public class PrototypeHeightStrategy: CellHeightCalculatable {
         guard let cell = prototypeCell else { return 0 }
 
         cell.bounds = CGRectMake(0, 0, tableView.bounds.size.width, cell.bounds.height)
-
+        
         row.configure(cell)
 
         cell.setNeedsLayout()
