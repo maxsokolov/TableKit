@@ -20,8 +20,8 @@
 
 import UIKit
 
-class TableCellManager {
-    
+class TableCellRegisterer {
+
     private var registeredIds = Set<String>()
     private weak var tableView: UITableView?
     

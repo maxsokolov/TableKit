@@ -30,7 +30,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     
     private weak var scrollDelegate: UIScrollViewDelegate?
     private var heightStrategy: CellHeightCalculatable?
-    private var cellManager: TableCellManager?
+    private var cellRegisterer: TableCellRegisterer?
     
     public var shouldUsePrototypeCellHeightCalculation: Bool = false {
         didSet {
@@ -48,7 +48,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         super.init()
         
         if shouldUseAutomaticCellRegistration {
-            self.cellManager = TableCellManager(tableView: tableView)
+            self.cellRegisterer = TableCellRegisterer(tableView: tableView)
         }
         
         self.scrollDelegate = scrollDelegate
@@ -123,7 +123,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         
         let row = sections[indexPath.section].rows[indexPath.row]
         
-        cellManager?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
+        cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
         
         let cell = tableView.dequeueReusableCellWithIdentifier(row.reuseIdentifier, forIndexPath: indexPath)
         
