@@ -57,11 +57,10 @@ public class PrototypeHeightStrategy: CellHeightCalculatable {
         }
 
         guard let cell = prototypeCell else { return 0 }
-
-        cell.bounds = CGRectMake(0, 0, tableView.bounds.size.width, cell.bounds.height)
         
         row.configure(cell)
-
+        
+        cell.bounds = CGRectMake(0, 0, tableView.bounds.size.width, cell.bounds.height)
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
 
@@ -74,10 +73,19 @@ public class PrototypeHeightStrategy: CellHeightCalculatable {
 
     public func estimatedHeight(row: Row, path: NSIndexPath) -> CGFloat {
 
-        if let estimatedHeight = row.estimatedHeight where estimatedHeight > 0 {
-           return estimatedHeight
+        guard let tableView = tableView else { return 0 }
+
+        let hash = row.hashValue ^ Int(tableView.bounds.size.width).hashValue
+
+        if let height = cachedHeights[hash] {
+            return height
         }
-        return height(row, path: path)
+
+        if let estimatedHeight = row.estimatedHeight where estimatedHeight > 0 {
+            return estimatedHeight
+        }
+
+        return UITableViewAutomaticDimension
     }
 
     public func invalidate() {
