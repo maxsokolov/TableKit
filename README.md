@@ -25,6 +25,7 @@ It hides a complexity of `UITableViewDataSource` and `UITableViewDelegate` metho
 - [x] Support portrait and landscape orientations
 - [x] No need to subclass
 - [x] Extensibility
+- [x] Swift 3
 
 # Getting Started
 
@@ -36,9 +37,9 @@ Create your rows:
 ```swift
 import TableKit
 
-let row1 = TableRow<String, StringTableViewCell>(item: "1")
-let row2 = TableRow<Int, IntTableViewCell>(item: 2)
-let row3 = TableRow<User, UserTableViewCell>(item: User(name: "John Doe", rating: 5))
+let row1 = TableRow<StringTableViewCell>(item: "1")
+let row2 = TableRow<IntTableViewCell>(item: 2)
+let row3 = TableRow<UserTableViewCell>(item: User(name: "John Doe", rating: 5))
 ```
 Put rows into section:
 ```swift
@@ -84,7 +85,7 @@ You could have as many rows and sections as you need.
 
 It nice to have some actions that related to your cells:
 ```swift
-let action = TableRowAction<String, StringTableViewCell>(.click) { (data) in
+let action = TableRowAction<StringTableViewCell>(.click) { (data) in
 
 	// you could access any useful information that relates to the action
 
@@ -93,11 +94,11 @@ let action = TableRowAction<String, StringTableViewCell>(.click) { (data) in
 	// data.indexPath - NSIndexPath
 }
 
-let row = TableRow<String, StringTableViewCell>(item: "some", actions: [action])
+let row = TableRow<StringTableViewCell>(item: "some", actions: [action])
 ```
 Or, using nice chaining approach:
 ```swift
-let row = TableRow<String, StringTableViewCell>(item: "some")
+let row = TableRow<StringTableViewCell>(item: "some")
 	.action(.click) { (data) in
 	
 	}
@@ -126,7 +127,7 @@ class MyTableViewCell: UITableViewCell, ConfigurableCell {
 ```
 And handle them accordingly:
 ```swift
-let myAction = TableRowAction<Void, MyTableViewCell>(.custom(MyActions.ButtonClicked)) { (data) in
+let myAction = TableRowAction<MyTableViewCell>(.custom(MyActions.ButtonClicked)) { (data) in
 
 }
 ```
@@ -173,11 +174,11 @@ It's never been so easy to deal with table views.
 ```swift
 let users = /* some users array */
 
-let click = TableRowAction<String, UserTableViewCell>(.click) {
+let click = TableRowAction<UserTableViewCell>(.click) {
 
 }
 
-let rows: [Row] = users.filter({ $0.state == .active }).map({ TableRow<String, UserTableViewCell>(item: $0.name, actions: [click]) })
+let rows: [Row] = users.filter({ $0.state == .active }).map({ TableRow<UserTableViewCell>(item: $0.name, actions: [click]) })
 
 tableDirector += rows
 ```
@@ -213,7 +214,7 @@ Clone the repo and drag files from `Sources` folder into your Xcode project.
 # Requirements
 
 - iOS 8.0+
-- Xcode 7.0+
+- Xcode 8.0+
 
 # License
 
