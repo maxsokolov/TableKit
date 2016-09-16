@@ -22,24 +22,24 @@ import UIKit
 
 public protocol CellHeightCalculatable {
 
-    func height(row: Row, path: NSIndexPath) -> CGFloat
-    func estimatedHeight(row: Row, path: NSIndexPath) -> CGFloat
+    func height(_ row: Row, path: IndexPath) -> CGFloat
+    func estimatedHeight(_ row: Row, path: IndexPath) -> CGFloat
     
     func invalidate()
 }
 
-public class PrototypeHeightStrategy: CellHeightCalculatable {
+open class PrototypeHeightStrategy: CellHeightCalculatable {
 
-    private weak var tableView: UITableView?
-    private var prototypes = [String: UITableViewCell]()
-    private var cachedHeights = [Int: CGFloat]()
-    private var separatorHeight = 1 / UIScreen.mainScreen().scale
+    fileprivate weak var tableView: UITableView?
+    fileprivate var prototypes = [String: UITableViewCell]()
+    fileprivate var cachedHeights = [Int: CGFloat]()
+    fileprivate var separatorHeight = 1 / UIScreen.main.scale
     
     init(tableView: UITableView?) {
         self.tableView = tableView
     }
     
-    public func height(row: Row, path: NSIndexPath) -> CGFloat {
+    open func height(_ row: Row, path: IndexPath) -> CGFloat {
 
         guard let tableView = tableView else { return 0 }
 
@@ -52,7 +52,7 @@ public class PrototypeHeightStrategy: CellHeightCalculatable {
         var prototypeCell = prototypes[row.reuseIdentifier]
         if prototypeCell == nil {
 
-            prototypeCell = tableView.dequeueReusableCellWithIdentifier(row.reuseIdentifier)
+            prototypeCell = tableView.dequeueReusableCell(withIdentifier: row.reuseIdentifier)
             prototypes[row.reuseIdentifier] = prototypeCell
         }
 
@@ -60,18 +60,18 @@ public class PrototypeHeightStrategy: CellHeightCalculatable {
         
         row.configure(cell)
         
-        cell.bounds = CGRectMake(0, 0, tableView.bounds.size.width, cell.bounds.height)
+        cell.bounds = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: cell.bounds.height)
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
 
-        let height = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height + (tableView.separatorStyle != .None ? separatorHeight : 0)
+        let height = cell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height + (tableView.separatorStyle != .none ? separatorHeight : 0)
 
         cachedHeights[hash] = height
 
         return height
     }
 
-    public func estimatedHeight(row: Row, path: NSIndexPath) -> CGFloat {
+    open func estimatedHeight(_ row: Row, path: IndexPath) -> CGFloat {
 
         guard let tableView = tableView else { return 0 }
 
@@ -81,14 +81,14 @@ public class PrototypeHeightStrategy: CellHeightCalculatable {
             return height
         }
 
-        if let estimatedHeight = row.estimatedHeight where estimatedHeight > 0 {
+        if let estimatedHeight = row.estimatedHeight , estimatedHeight > 0 {
             return estimatedHeight
         }
 
         return UITableViewAutomaticDimension
     }
 
-    public func invalidate() {
+    open func invalidate() {
         cachedHeights.removeAll()
     }
 }

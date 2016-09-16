@@ -45,15 +45,13 @@ public enum TableRowActionType {
     }
 }
 
-public class TableRowActionData<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell> {
-
-    public let item: ItemType
+public class TableRowActionData<CellType: ConfigurableCell> where CellType: UITableViewCell {
+    public let item: CellType.ItemType
     public let cell: CellType?
-    public let indexPath: NSIndexPath
-    public let userInfo: [NSObject: AnyObject]?
+    public let indexPath: IndexPath
+    public let userInfo: [AnyHashable: Any]?
 
-    init(item: ItemType, cell: CellType?, path: NSIndexPath, userInfo: [NSObject: AnyObject]?) {
-
+    init(item: CellType.ItemType, cell: CellType?, path: IndexPath, userInfo: [AnyHashable: Any]?) {
         self.item = item
         self.cell = cell
         self.indexPath = path
@@ -61,24 +59,17 @@ public class TableRowActionData<ItemType, CellType: ConfigurableCell where CellT
     }
 }
 
-public class TableRowAction<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell> {
-
+public class TableRowAction<CellType: ConfigurableCell> where CellType: UITableViewCell {
+  
     public let type: TableRowActionType
-    private let handler: ((data: TableRowActionData<ItemType, CellType>) -> Any?)
+    fileprivate let handler: ((_ data: TableRowActionData<CellType>) -> Any?)
 
-    public init(_ type: TableRowActionType, handler: (data: TableRowActionData<ItemType, CellType>) -> Void) {
-
-        self.type = type
-        self.handler = handler
-    }
-    
-    public init<T>(_ type: TableRowActionType, handler: (data: TableRowActionData<ItemType, CellType>) -> T) {
-
+    public init<T>(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<CellType>) -> T) {
         self.type = type
         self.handler = handler
     }
 
-    func invoke(item item: ItemType, cell: UITableViewCell?, path: NSIndexPath) -> Any? {
-        return handler(data: TableRowActionData(item: item, cell: cell as? CellType, path: path, userInfo: nil))
+    func invoke(item: CellType.ItemType, cell: UITableViewCell?, path: IndexPath) -> Any? {
+        return handler(TableRowActionData(item: item, cell: cell as? CellType, path: path, userInfo: nil))
     }
 }
