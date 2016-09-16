@@ -20,102 +20,100 @@
 
 import UIKit
 
+
 public protocol RowConfigurable {
-    
-    func configure(cell: UITableViewCell)
+  func configure(_ cell: UITableViewCell)
 }
+
 
 public protocol RowActionable {
-    
-    var editingActions: [UITableViewRowAction]? { get }
-    func isEditingAllowed(forIndexPath indexPath: NSIndexPath) -> Bool
-    
-    func invoke(action: TableRowActionType, cell: UITableViewCell?, path: NSIndexPath) -> Any?
-    func hasAction(action: TableRowActionType) -> Bool
+  var editingActions: [UITableViewRowAction]? { get }
+  func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool
+  
+  func invoke(_ action: TableRowActionType, cell: UITableViewCell?, path: IndexPath) -> Any?
+  func hasAction(_ action: TableRowActionType) -> Bool
 }
+
 
 public protocol RowHashable {
-    
-    var hashValue: Int { get }
+  var hashValue: Int { get }
 }
+
 
 public protocol Row: RowConfigurable, RowActionable, RowHashable {
-    
-    var reuseIdentifier: String { get }
-    var cellType: AnyClass { get }
-    
-    var estimatedHeight: CGFloat? { get }
-    var defaultHeight: CGFloat? { get }
+  var reuseIdentifier: String { get }
+  var cellType: AnyClass { get }
+  
+  var estimatedHeight: CGFloat? { get }
+  var defaultHeight: CGFloat? { get }
 }
 
-public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>: Row {
+
+open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableViewCell {
     
-    public let item: ItemType
-    private lazy var actions = [String: TableRowAction<ItemType, CellType>]()
-    private(set) public var editingActions: [UITableViewRowAction]?
-    
-    public var hashValue: Int {
-        return ObjectIdentifier(self).hashValue
-    }
-    
-    public var reuseIdentifier: String {
-        return CellType.reuseIdentifier
-    }
-    
-    public var estimatedHeight: CGFloat? {
-        return CellType.estimatedHeight
-    }
-    
-    public var defaultHeight: CGFloat? {
-        return CellType.defaultHeight
-    }
-    
-    public var cellType: AnyClass {
-        return CellType.self
-    }
-    
-    public init(item: ItemType, actions: [TableRowAction<ItemType, CellType>]? = nil, editingActions: [UITableViewRowAction]? = nil) {
-        
-        self.item = item
-        self.editingActions = editingActions
-        actions?.forEach { self.actions[$0.type.key] = $0 }
-    }
-    
-    // MARK: - RowConfigurable -
-    
-    public func configure(cell: UITableViewCell) {
-        (cell as? CellType)?.configure(with: item)
-    }
-    
-    // MARK: - RowActionable -
-    
-    public func invoke(action: TableRowActionType, cell: UITableViewCell?, path: NSIndexPath) -> Any? {
-        return actions[action.key]?.invoke(item: item, cell: cell, path: path)
-    }
-    
-    public func hasAction(action: TableRowActionType) -> Bool {
-        return actions[action.key] != nil
-    }
-    
-    public func isEditingAllowed(forIndexPath indexPath: NSIndexPath) -> Bool {
-        
-        if actions[TableRowActionType.canEdit.key] != nil {
-            return invoke(.canEdit, cell: nil, path: indexPath) as? Bool ?? false
-        }
-        return editingActions?.isEmpty == false || actions[TableRowActionType.clickDelete.key] != nil
-    }
-    
-    // MARK: - actions -
-    
-    public func action(action: TableRowAction<ItemType, CellType>) -> Self {
-        
-        actions[action.type.key] = action
-        return self
-    }
-    
-    public func action<T>(type: TableRowActionType, handler: (data: TableRowActionData<ItemType, CellType>) -> T) -> Self {
-        
-        actions[type.key] = TableRowAction(type, handler: handler)
-        return self
-    }
+  open let item: CellType.ItemType
+  fileprivate lazy var actions = [String: TableRowAction<CellType>]()
+  fileprivate(set) open var editingActions: [UITableViewRowAction]?
+  
+  open var hashValue: Int {
+    return ObjectIdentifier(self).hashValue
+  }
+  
+  open var reuseIdentifier: String {
+    return CellType.reuseIdentifier
+  }
+  
+  open var estimatedHeight: CGFloat? {
+    return CellType.estimatedHeight
+  }
+  
+  open var defaultHeight: CGFloat? {
+      return CellType.defaultHeight
+  }
+  
+  open var cellType: AnyClass {
+      return CellType.self
+  }
+  
+  public init(item: CellType.ItemType, actions: [TableRowAction<CellType>]? = nil, editingActions: [UITableViewRowAction]? = nil) {
+      self.item = item
+      self.editingActions = editingActions
+      actions?.forEach { self.actions[$0.type.key] = $0 }
+  }
+  
+  // MARK: - RowConfigurable -
+  
+  open func configure(_ cell: UITableViewCell) {
+      (cell as? CellType)?.configure(with: item)
+  }
+  
+  // MARK: - RowActionable -
+  
+  open func invoke(_ action: TableRowActionType, cell: UITableViewCell?, path: IndexPath) -> Any? {
+      return actions[action.key]?.invoke(item: item, cell: cell, path: path)
+  }
+  
+  open func hasAction(_ action: TableRowActionType) -> Bool {
+      return actions[action.key] != nil
+  }
+  
+  open func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool {
+      
+      if actions[TableRowActionType.canEdit.key] != nil {
+          return invoke(.canEdit, cell: nil, path: indexPath) as? Bool ?? false
+      }
+      return editingActions?.isEmpty == false || actions[TableRowActionType.clickDelete.key] != nil
+  }
+  
+  // MARK: - actions -
+  
+  open func action(_ action: TableRowAction<CellType>) -> Self {
+      actions[action.type.key] = action
+      return self
+  }
+  
+  open func action<T>(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<CellType>) -> T) -> Self {
+      actions[type.key] = TableRowAction<CellType>(type, handler: handler)
+      return self
+  }
 }
