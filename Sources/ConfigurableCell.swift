@@ -42,7 +42,7 @@ public extension ConfigurableCell where Self: UITableViewCell {
     
     static var estimatedHeight: CGFloat? {
         get {
-            return UITableViewAutomaticDimension
+            return nil
         }
         
     }

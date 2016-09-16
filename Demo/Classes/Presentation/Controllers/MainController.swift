@@ -34,7 +34,7 @@ class MainController: UIViewController {
                 break
             }
         }
-        
+
         let rows: [Row] = [
 
             TableRow<String, ConfigurableTableViewCell>(item: "Autolayout cells", actions: [clickAction]),

@@ -49,12 +49,18 @@ public class PrototypeHeightStrategy: CellHeightCalculatable {
             return height
         }
 
-        guard let cell = tableView.dequeueReusableCellWithIdentifier(row.reuseIdentifier) else { return 0 }
+        var prototypeCell = prototypes[row.reuseIdentifier]
+        if prototypeCell == nil {
 
-        cell.bounds = CGRectMake(0, 0, tableView.bounds.size.width, cell.bounds.height)
+            prototypeCell = tableView.dequeueReusableCellWithIdentifier(row.reuseIdentifier)
+            prototypes[row.reuseIdentifier] = prototypeCell
+        }
 
+        guard let cell = prototypeCell else { return 0 }
+        
         row.configure(cell)
-
+        
+        cell.bounds = CGRectMake(0, 0, tableView.bounds.size.width, cell.bounds.height)
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
 
@@ -66,6 +72,19 @@ public class PrototypeHeightStrategy: CellHeightCalculatable {
     }
 
     public func estimatedHeight(row: Row, path: NSIndexPath) -> CGFloat {
+
+        guard let tableView = tableView else { return 0 }
+
+        let hash = row.hashValue ^ Int(tableView.bounds.size.width).hashValue
+
+        if let height = cachedHeights[hash] {
+            return height
+        }
+
+        if let estimatedHeight = row.estimatedHeight where estimatedHeight > 0 {
+            return estimatedHeight
+        }
+
         return UITableViewAutomaticDimension
     }
 

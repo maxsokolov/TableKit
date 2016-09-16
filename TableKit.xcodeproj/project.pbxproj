@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		50CF6E6B1D6704FE004746FF /* TableCellManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CF6E6A1D6704FE004746FF /* TableCellManager.swift */; };
+		50CF6E6B1D6704FE004746FF /* TableCellRegisterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CF6E6A1D6704FE004746FF /* TableCellRegisterer.swift */; };
 		DA9EA7AF1D0EC2C90021F650 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7A61D0EC2C90021F650 /* ConfigurableCell.swift */; };
 		DA9EA7B01D0EC2C90021F650 /* HeightStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7A71D0EC2C90021F650 /* HeightStrategy.swift */; };
 		DA9EA7B11D0EC2C90021F650 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7A81D0EC2C90021F650 /* Operators.swift */; };
@@ -31,7 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		50CF6E6A1D6704FE004746FF /* TableCellManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellManager.swift; sourceTree = "<group>"; };
+		50CF6E6A1D6704FE004746FF /* TableCellRegisterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellRegisterer.swift; sourceTree = "<group>"; };
 		DA9EA7561D0B679A0021F650 /* TableKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TableKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA9EA7A61D0EC2C90021F650 /* ConfigurableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
 		DA9EA7A71D0EC2C90021F650 /* HeightStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightStrategy.swift; sourceTree = "<group>"; };
@@ -89,7 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				DA9EA7AA1D0EC2C90021F650 /* TableDirector.swift */,
-				50CF6E6A1D6704FE004746FF /* TableCellManager.swift */,
+				50CF6E6A1D6704FE004746FF /* TableCellRegisterer.swift */,
 				DA9EA7AB1D0EC2C90021F650 /* TableRow.swift */,
 				DA9EA7AC1D0EC2C90021F650 /* TableRowAction.swift */,
 				DA9EA7AE1D0EC2C90021F650 /* TableSection.swift */,
@@ -225,7 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50CF6E6B1D6704FE004746FF /* TableCellManager.swift in Sources */,
+				50CF6E6B1D6704FE004746FF /* TableCellRegisterer.swift in Sources */,
 				DA9EA7AF1D0EC2C90021F650 /* ConfigurableCell.swift in Sources */,
 				DA9EA7B31D0EC2C90021F650 /* TableDirector.swift in Sources */,
 				DA9EA7B71D0EC2C90021F650 /* TableSection.swift in Sources */,

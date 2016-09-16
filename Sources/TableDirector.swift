@@ -30,7 +30,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     
     private weak var scrollDelegate: UIScrollViewDelegate?
     private var heightStrategy: CellHeightCalculatable?
-    private var cellManager: TableCellManager?
+    private var cellRegisterer: TableCellRegisterer?
     
     public var shouldUsePrototypeCellHeightCalculation: Bool = false {
         didSet {
@@ -48,7 +48,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
         super.init()
         
         if shouldUseAutomaticCellRegistration {
-            self.cellManager = TableCellManager(tableView: tableView)
+            self.cellRegisterer = TableCellRegisterer(tableView: tableView)
         }
         
         self.scrollDelegate = scrollDelegate
@@ -98,14 +98,18 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         let row = sections[indexPath.section].rows[indexPath.row]
+
+        cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
+
         return row.estimatedHeight ?? heightStrategy?.estimatedHeight(row, path: indexPath) ?? UITableViewAutomaticDimension
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         let row = sections[indexPath.section].rows[indexPath.row]
+
         let rowHeight = invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat
-        
+
         return rowHeight ?? row.defaultHeight ?? heightStrategy?.height(row, path: indexPath) ?? UITableViewAutomaticDimension
     }
     
@@ -122,9 +126,6 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let row = sections[indexPath.section].rows[indexPath.row]
-        
-        cellManager?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
-        
         let cell = tableView.dequeueReusableCellWithIdentifier(row.reuseIdentifier, forIndexPath: indexPath)
         
         if cell.frame.size.width != tableView.frame.size.width {

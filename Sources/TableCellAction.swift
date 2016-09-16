@@ -26,7 +26,7 @@ struct TableKitNotifications {
 
 /**
     A custom action that you can trigger from your cell.
-    You can eacily catch actions using a chaining manner with your row builder.
+    You can easily catch actions using a chaining manner with your row.
 */
 public class TableCellAction {
 
