@@ -177,7 +177,7 @@ let click = TableRowAction<String, UserTableViewCell>(.click) {
 
 }
 
-let rows: [Row] = users.filter({ $0.state == .active }).map({ TableRow<String, UserTableViewCell>(item: $0.name, actions: [click]) })
+let rows = users.filter({ $0.state == .active }).map({ TableRow<String, UserTableViewCell>(item: $0.name, actions: [click]) })
 
 tableDirector += rows
 ```
