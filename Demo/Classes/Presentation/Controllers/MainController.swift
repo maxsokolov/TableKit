@@ -35,7 +35,7 @@ class MainController: UIViewController {
             }
         }
 
-        let rows: [Row] = [
+        let rows = [
 
             TableRow<String, ConfigurableTableViewCell>(item: "Autolayout cells", actions: [clickAction]),
             TableRow<String, ConfigurableTableViewCell>(item: "Nib cells", actions: [clickAction])
