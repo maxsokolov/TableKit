@@ -22,16 +22,16 @@ import UIKit
 
 public protocol RowConfigurable {
     
-    func configure(cell: UITableViewCell)
+    func configure(_ cell: UITableViewCell)
 }
 
 public protocol RowActionable {
     
     var editingActions: [UITableViewRowAction]? { get }
-    func isEditingAllowed(forIndexPath indexPath: NSIndexPath) -> Bool
+    func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool
     
-    func invoke(action: TableRowActionType, cell: UITableViewCell?, path: NSIndexPath) -> Any?
-    func hasAction(action: TableRowActionType) -> Bool
+    func invoke(_ action: TableRowActionType, cell: UITableViewCell?, path: IndexPath) -> Any?
+    func hasAction(_ action: TableRowActionType) -> Bool
 }
 
 public protocol RowHashable {
@@ -48,29 +48,29 @@ public protocol Row: RowConfigurable, RowActionable, RowHashable {
     var defaultHeight: CGFloat? { get }
 }
 
-public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == ItemType, CellType: UITableViewCell>: Row {
+open class TableRow<ItemType, CellType: ConfigurableCell>: Row where CellType.T == ItemType, CellType: UITableViewCell {
     
-    public let item: ItemType
-    private lazy var actions = [String: TableRowAction<ItemType, CellType>]()
-    private(set) public var editingActions: [UITableViewRowAction]?
+    open let item: ItemType
+    fileprivate lazy var actions = [String: TableRowAction<ItemType, CellType>]()
+    fileprivate(set) open var editingActions: [UITableViewRowAction]?
     
-    public var hashValue: Int {
+    open var hashValue: Int {
         return ObjectIdentifier(self).hashValue
     }
     
-    public var reuseIdentifier: String {
+    open var reuseIdentifier: String {
         return CellType.reuseIdentifier
     }
     
-    public var estimatedHeight: CGFloat? {
+    open var estimatedHeight: CGFloat? {
         return CellType.estimatedHeight
     }
     
-    public var defaultHeight: CGFloat? {
+    open var defaultHeight: CGFloat? {
         return CellType.defaultHeight
     }
     
-    public var cellType: AnyClass {
+    open var cellType: AnyClass {
         return CellType.self
     }
     
@@ -83,21 +83,21 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
     
     // MARK: - RowConfigurable -
     
-    public func configure(cell: UITableViewCell) {
+    open func configure(_ cell: UITableViewCell) {
         (cell as? CellType)?.configure(with: item)
     }
     
     // MARK: - RowActionable -
     
-    public func invoke(action: TableRowActionType, cell: UITableViewCell?, path: NSIndexPath) -> Any? {
+    open func invoke(_ action: TableRowActionType, cell: UITableViewCell?, path: IndexPath) -> Any? {
         return actions[action.key]?.invoke(item: item, cell: cell, path: path)
     }
     
-    public func hasAction(action: TableRowActionType) -> Bool {
+    open func hasAction(_ action: TableRowActionType) -> Bool {
         return actions[action.key] != nil
     }
     
-    public func isEditingAllowed(forIndexPath indexPath: NSIndexPath) -> Bool {
+    open func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool {
         
         if actions[TableRowActionType.canEdit.key] != nil {
             return invoke(.canEdit, cell: nil, path: indexPath) as? Bool ?? false
@@ -107,15 +107,15 @@ public class TableRow<ItemType, CellType: ConfigurableCell where CellType.T == I
     
     // MARK: - actions -
     
-    public func action(action: TableRowAction<ItemType, CellType>) -> Self {
+    open func action(_ action: TableRowAction<ItemType, CellType>) -> Self {
         
         actions[action.type.key] = action
         return self
     }
     
-    public func action<T>(type: TableRowActionType, handler: (data: TableRowActionData<ItemType, CellType>) -> T) -> Self {
+    open func action<T>(_ type: TableRowActionType, handler: (_ data: TableRowActionData<ItemType, CellType>) -> T) -> Self {
         
-        actions[type.key] = TableRowAction(type, handler: handler)
+        //actions[type.key] = TableRowAction(type, handler: handler)
         return self
     }
 }

@@ -20,31 +20,31 @@
 
 import UIKit
 
-public class TableSection {
+open class TableSection {
 
-    public private(set) var rows = [Row]()
+    open fileprivate(set) var rows = [Row]()
     
-    public var headerTitle: String?
-    public var footerTitle: String?
+    open var headerTitle: String?
+    open var footerTitle: String?
     
-    public var headerView: UIView?
-    public var footerView: UIView?
+    open var headerView: UIView?
+    open var footerView: UIView?
     
-    public var headerHeight: CGFloat? = nil
-    public var footerHeight: CGFloat? = nil
+    open var headerHeight: CGFloat? = nil
+    open var footerHeight: CGFloat? = nil
     
-    public var numberOfRows: Int {
+    open var numberOfRows: Int {
         return rows.count
     }
     
-    public var isEmpty: Bool {
+    open var isEmpty: Bool {
         return rows.isEmpty
     }
     
     public init(rows: [Row]? = nil) {
         
         if let initialRows = rows {
-            self.rows.appendContentsOf(initialRows)
+            self.rows.append(contentsOf: initialRows)
         }
     }
     
@@ -64,31 +64,31 @@ public class TableSection {
 
     // MARK: - Public -
     
-    public func clear() {
+    open func clear() {
         rows.removeAll()
     }
     
-    public func append(row row: Row) {
+    open func append(row: Row) {
         append(rows: [row])
     }
     
-    public func append(rows rows: [Row]) {
-        self.rows.appendContentsOf(rows)
+    open func append(rows: [Row]) {
+        self.rows.append(contentsOf: rows)
     }
     
-    public func insert(row row: Row, at index: Int) {
-        rows.insert(row, atIndex: index)
+    open func insert(row: Row, at index: Int) {
+        rows.insert(row, at: index)
     }
     
-    public func insert(rows rows: [Row], at index: Int) {
-        self.rows.insertContentsOf(rows, at: index)
+    open func insert(rows: [Row], at index: Int) {
+        self.rows.insert(contentsOf: rows, at: index)
     }
 
-    public func replace(rowAt index: Int, with row: Row) {
+    open func replace(rowAt index: Int, with row: Row) {
         rows[index] = row
     }
     
-    public func delete(index index: Int) {
-        rows.removeAtIndex(index)
+    open func delete(index: Int) {
+        rows.remove(at: index)
     }
 }

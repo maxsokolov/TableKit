@@ -13,7 +13,7 @@ class ConfigurableTableViewCell: UITableViewCell, ConfigurableCell {
     
     func configure(with text: String) {
 
-        accessoryType = .DisclosureIndicator
+        accessoryType = .disclosureIndicator
         textLabel?.text = text
     }
 }

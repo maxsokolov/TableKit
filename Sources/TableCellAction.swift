@@ -28,25 +28,25 @@ struct TableKitNotifications {
     A custom action that you can trigger from your cell.
     You can easily catch actions using a chaining manner with your row.
 */
-public class TableCellAction {
+open class TableCellAction {
 
     /// The cell that triggers an action.
-    public let cell: UITableViewCell
+    open let cell: UITableViewCell
 
     /// The action unique key.
-    public let key: String
+    open let key: String
 
     /// The custom user info.
-    public let userInfo: [NSObject: AnyObject]?
+    open let userInfo: [AnyHashable: Any]?
 
-    public init(key: String, sender: UITableViewCell, userInfo: [NSObject: AnyObject]? = nil) {
+    public init(key: String, sender: UITableViewCell, userInfo: [AnyHashable: Any]? = nil) {
 
         self.key = key
         self.cell = sender
         self.userInfo = userInfo
     }
 
-    public func invoke() {
-        NSNotificationCenter.defaultCenter().postNotificationName(TableKitNotifications.CellAction, object: self, userInfo: userInfo)
+    open func invoke() {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: TableKitNotifications.CellAction), object: self, userInfo: userInfo)
     }
 }

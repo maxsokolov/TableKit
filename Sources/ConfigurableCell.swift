@@ -35,7 +35,7 @@ public extension ConfigurableCell where Self: UITableViewCell {
     
     static var reuseIdentifier: String {
         get {
-            return String(self)
+            return String(describing: self)
         }
         
     }

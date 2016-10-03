@@ -25,11 +25,11 @@ class MainController: UIViewController {
 
         let clickAction = TableRowAction<String, ConfigurableTableViewCell>(.click) { [weak self] (data) in
             
-            switch data.indexPath.row {
+            switch (data.indexPath as NSIndexPath).row {
             case 0:
-                self?.performSegueWithIdentifier("autolayoutcells", sender: nil)
+                self?.performSegue(withIdentifier: "autolayoutcells", sender: nil)
             case 1:
-                self?.performSegueWithIdentifier("nibcells", sender: nil)
+                self?.performSegue(withIdentifier: "nibcells", sender: nil)
             default:
                 break
             }
