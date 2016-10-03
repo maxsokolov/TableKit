@@ -64,7 +64,7 @@ open class TableRowActionData<ItemType, CellType: ConfigurableCell> where CellTy
 open class TableRowAction<ItemType, CellType: ConfigurableCell> where CellType.T == ItemType, CellType: UITableViewCell {
 
     open let type: TableRowActionType
-    fileprivate let handler: ((_ data: TableRowActionData<ItemType, CellType>) -> Any?)?
+    private let handler: ((_ data: TableRowActionData<ItemType, CellType>) -> Any?)?
 
     public init(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<ItemType, CellType>) -> Void) {
 

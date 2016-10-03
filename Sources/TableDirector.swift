@@ -25,12 +25,12 @@ import UIKit
  */
 open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
-    open fileprivate(set) weak var tableView: UITableView?
-    open fileprivate(set) var sections = [TableSection]()
+    open private(set) weak var tableView: UITableView?
+    open private(set) var sections = [TableSection]()
     
-    fileprivate weak var scrollDelegate: UIScrollViewDelegate?
-    fileprivate var heightStrategy: CellHeightCalculatable?
-    fileprivate var cellRegisterer: TableCellRegisterer?
+    private weak var scrollDelegate: UIScrollViewDelegate?
+    private var heightStrategy: CellHeightCalculatable?
+    private var cellRegisterer: TableCellRegisterer?
     
     open var shouldUsePrototypeCellHeightCalculation: Bool = false {
         didSet {
@@ -90,7 +90,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     func didReceiveAction(_ notification: Notification) {
         
         guard let action = notification.object as? TableCellAction, let indexPath = tableView?.indexPath(for: action.cell) else { return }
-        invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath)
+        _ = invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath)
     }
     
     // MARK: - Height
@@ -134,7 +134,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         }
         
         row.configure(cell)
-        invoke(action: .configure, cell: cell, indexPath: indexPath)
+        _ = invoke(action: .configure, cell: cell, indexPath: indexPath)
         
         return cell
     }
@@ -180,16 +180,16 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         if invoke(action: .click, cell: cell, indexPath: indexPath) != nil {
             tableView.deselectRow(at: indexPath, animated: true)
         } else {
-            invoke(action: .select, cell: cell, indexPath: indexPath)
+            _ = invoke(action: .select, cell: cell, indexPath: indexPath)
         }
     }
     
     open func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        invoke(action: .deselect, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
+        _ = invoke(action: .deselect, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
     }
     
     open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        invoke(action: .willDisplay, cell: cell, indexPath: indexPath)
+        _ = invoke(action: .willDisplay, cell: cell, indexPath: indexPath)
     }
     
     open func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
@@ -217,7 +217,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
-            invoke(action: .clickDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
+            _ = invoke(action: .clickDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
         }
     }
     
@@ -225,7 +225,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     open func append(section: TableSection) -> Self {
         
-        append(sections: [section])
+        _ = append(sections: [section])
         return self
     }
     
@@ -237,7 +237,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     open func append(rows: [Row]) -> Self {
         
-        append(section: TableSection(rows: rows))
+        _ = append(section: TableSection(rows: rows))
         return self
     }
     

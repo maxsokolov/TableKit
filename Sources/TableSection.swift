@@ -22,7 +22,7 @@ import UIKit
 
 open class TableSection {
 
-    open fileprivate(set) var rows = [Row]()
+    open private(set) var rows = [Row]()
     
     open var headerTitle: String?
     open var footerTitle: String?

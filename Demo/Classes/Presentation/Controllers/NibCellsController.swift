@@ -28,6 +28,6 @@ class NibCellsController: UITableViewController {
 
         let rows: [Row] = numbers.map { TableRow<Int, NibTableViewCell>(item: $0, actions: [shouldHighlightAction]) }
         
-        tableDirector.append(rows: rows)
+        _ = tableDirector.append(rows: rows)
     }
 }

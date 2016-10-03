@@ -51,8 +51,8 @@ public protocol Row: RowConfigurable, RowActionable, RowHashable {
 open class TableRow<ItemType, CellType: ConfigurableCell>: Row where CellType.T == ItemType, CellType: UITableViewCell {
     
     open let item: ItemType
-    fileprivate lazy var actions = [String: TableRowAction<ItemType, CellType>]()
-    fileprivate(set) open var editingActions: [UITableViewRowAction]?
+    private lazy var actions = [String: TableRowAction<ItemType, CellType>]()
+    private(set) open var editingActions: [UITableViewRowAction]?
     
     open var hashValue: Int {
         return ObjectIdentifier(self).hashValue
@@ -113,9 +113,9 @@ open class TableRow<ItemType, CellType: ConfigurableCell>: Row where CellType.T 
         return self
     }
     
-    open func action<T>(_ type: TableRowActionType, handler: (_ data: TableRowActionData<ItemType, CellType>) -> T) -> Self {
+    open func action<T>(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<ItemType, CellType>) -> T) -> Self {
         
-        //actions[type.key] = TableRowAction(type, handler: handler)
+        actions[type.key] = TableRowAction<ItemType, CellType>(type, handler: handler)
         return self
     }
 }

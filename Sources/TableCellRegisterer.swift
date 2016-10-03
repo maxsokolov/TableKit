@@ -22,8 +22,8 @@ import UIKit
 
 class TableCellRegisterer {
 
-    fileprivate var registeredIds = Set<String>()
-    fileprivate weak var tableView: UITableView?
+    private var registeredIds = Set<String>()
+    private weak var tableView: UITableView?
     
     init(tableView: UITableView?) {
         self.tableView = tableView
