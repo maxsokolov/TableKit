@@ -2,10 +2,10 @@ Pod::Spec.new do |s|
     s.name                  = 'TableKit'
     s.module_name           = 'TableKit'
 
-    s.version               = '1.2.0'
+    s.version               = '1.3.0'
 
     s.homepage              = 'https://github.com/maxsokolov/TableKit'
-    s.summary               = 'Type-safe declarative table views. Swift 2.2 is required.'
+    s.summary               = 'Type-safe declarative table views with Swift.'
 
     s.author                = { 'Max Sokolov' => 'i@maxsokolov.net' }
     s.license               = { :type => 'MIT', :file => 'LICENSE' }

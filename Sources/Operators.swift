@@ -20,27 +20,27 @@
 
 // --
 public func +=(left: TableDirector, right: TableSection) {
-    left.append(section: right)
+    _ = left.append(section: right)
 }
 
 public func +=(left: TableDirector, right: [TableSection]) {
-    left.append(sections: right)
+    _ = left.append(sections: right)
 }
 
 // --
 public func +=(left: TableDirector, right: Row) {
-    left.append(sections: [TableSection(rows: [right])])
+    _ = left.append(sections: [TableSection(rows: [right])])
 }
 
 public func +=(left: TableDirector, right: [Row]) {
-    left.append(sections: [TableSection(rows: right)])
+    _ = left.append(sections: [TableSection(rows: right)])
 }
 
 // --
 public func +=(left: TableSection, right: Row) {
-    left.append(row: right)
+    _ = left.append(row: right)
 }
 
 public func +=(left: TableSection, right: [Row]) {
-    left.append(rows: right)
+    _ = left.append(rows: right)
 }

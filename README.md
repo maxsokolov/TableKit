@@ -2,9 +2,9 @@
 
 <p align="left">
 	<a href="https://travis-ci.org/maxsokolov/TableKit"><img src="https://api.travis-ci.org/maxsokolov/TableKit.svg" alt="Build Status" /></a>
-	<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift_2.2-compatible-4BC51D.svg?style=flat" alt="Swift 2.2 compatible" /></a>
+	<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift_3.0-compatible-4BC51D.svg?style=flat" alt="Swift 2.2 compatible" /></a>
 	<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible" /></a>
-	<a href="https://cocoapods.org/pods/tablekit"><img src="https://img.shields.io/badge/pod-1.2.0-blue.svg" alt="CocoaPods compatible" /></a>
+	<a href="https://cocoapods.org/pods/tablekit"><img src="https://img.shields.io/badge/pod-1.3.0-blue.svg" alt="CocoaPods compatible" /></a>
 	<img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
 	<a href="https://raw.githubusercontent.com/maxsokolov/tablekit/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License: MIT" /></a>
 </p>
@@ -177,7 +177,7 @@ let click = TableRowAction<String, UserTableViewCell>(.click) {
 
 }
 
-let rows: [Row] = users.filter({ $0.state == .active }).map({ TableRow<String, UserTableViewCell>(item: $0.name, actions: [click]) })
+let rows = users.filter({ $0.state == .active }).map({ TableRow<String, UserTableViewCell>(item: $0.name, actions: [click]) })
 
 tableDirector += rows
 ```
@@ -212,8 +212,8 @@ Clone the repo and drag files from `Sources` folder into your Xcode project.
 
 # Requirements
 
-- iOS 8.0+
-- Xcode 7.0+
+- iOS 8.0
+- Xcode 8.0
 
 # License
 

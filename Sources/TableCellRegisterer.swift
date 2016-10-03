@@ -29,28 +29,28 @@ class TableCellRegisterer {
         self.tableView = tableView
     }
     
-    func register(cellType cellType: AnyClass, forCellReuseIdentifier reuseIdentifier: String) {
+    func register(cellType: AnyClass, forCellReuseIdentifier reuseIdentifier: String) {
         
         if registeredIds.contains(reuseIdentifier) {
             return
         }
         
         // check if cell is already registered, probably cell has been registered by storyboard
-        if tableView?.dequeueReusableCellWithIdentifier(reuseIdentifier) != nil {
+        if tableView?.dequeueReusableCell(withIdentifier: reuseIdentifier) != nil {
             
             registeredIds.insert(reuseIdentifier)
             return
         }
         
-        let bundle = NSBundle(forClass: cellType)
+        let bundle = Bundle(for: cellType)
         
         // we hope that cell's xib file has name that equals to cell's class name
         // in that case we could register nib
-        if let _ = bundle.pathForResource(reuseIdentifier, ofType: "nib") {
-            tableView?.registerNib(UINib(nibName: reuseIdentifier, bundle: bundle), forCellReuseIdentifier: reuseIdentifier)
+        if let _ = bundle.path(forResource: reuseIdentifier, ofType: "nib") {
+            tableView?.register(UINib(nibName: reuseIdentifier, bundle: bundle), forCellReuseIdentifier: reuseIdentifier)
             // otherwise, register cell class
         } else {
-            tableView?.registerClass(cellType, forCellReuseIdentifier: reuseIdentifier)
+            tableView?.register(cellType, forCellReuseIdentifier: reuseIdentifier)
         }
         
         registeredIds.insert(reuseIdentifier)
