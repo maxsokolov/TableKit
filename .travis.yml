@@ -12,8 +12,6 @@ env:
   - PROJECT_FRAMEWORK="TableKit.xcodeproj"
 
   matrix:
-  - DESTINATION="OS=8.1,name=iPhone 4S"          SCHEME="$SCHEME_IOS"     SDK="$IOS_SDK"
-  - DESTINATION="OS=8.2,name=iPhone 5"           SCHEME="$SCHEME_IOS"     SDK="$IOS_SDK"
   - DESTINATION="OS=9.0,name=iPhone 6"           SCHEME="$SCHEME_IOS"     SDK="$IOS_SDK"
   - DESTINATION="OS=9.1,name=iPhone 6 Plus"      SCHEME="$SCHEME_IOS"     SDK="$IOS_SDK"
   - DESTINATION="OS=9.2,name=iPhone 6S"          SCHEME="$SCHEME_IOS"     SDK="$IOS_SDK"
