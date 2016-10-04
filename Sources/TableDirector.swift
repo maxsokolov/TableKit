@@ -69,6 +69,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: Public
     
+    @discardableResult
     open func invoke(action: TableRowActionType, cell: UITableViewCell?, indexPath: IndexPath) -> Any? {
         return sections[(indexPath as NSIndexPath).section].rows[(indexPath as NSIndexPath).row].invoke(action, cell: cell, path: indexPath)
     }
@@ -90,7 +91,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     func didReceiveAction(_ notification: Notification) {
         
         guard let action = notification.object as? TableCellAction, let indexPath = tableView?.indexPath(for: action.cell) else { return }
-        _ = invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath)
+        invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath)
     }
     
     // MARK: - Height
@@ -134,7 +135,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         }
         
         row.configure(cell)
-        _ = invoke(action: .configure, cell: cell, indexPath: indexPath)
+        invoke(action: .configure, cell: cell, indexPath: indexPath)
         
         return cell
     }
@@ -180,16 +181,16 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         if invoke(action: .click, cell: cell, indexPath: indexPath) != nil {
             tableView.deselectRow(at: indexPath, animated: true)
         } else {
-            _ = invoke(action: .select, cell: cell, indexPath: indexPath)
+            invoke(action: .select, cell: cell, indexPath: indexPath)
         }
     }
     
     open func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        _ = invoke(action: .deselect, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
+        invoke(action: .deselect, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
     }
     
     open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        _ = invoke(action: .willDisplay, cell: cell, indexPath: indexPath)
+        invoke(action: .willDisplay, cell: cell, indexPath: indexPath)
     }
     
     open func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
@@ -217,42 +218,48 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
-            _ = invoke(action: .clickDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
+            invoke(action: .clickDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
         }
     }
     
     // MARK: - Sections manipulation -
     
+    @discardableResult
     open func append(section: TableSection) -> Self {
         
-        _ = append(sections: [section])
+        append(sections: [section])
         return self
     }
     
+    @discardableResult
     open func append(sections: [TableSection]) -> Self {
         
         self.sections.append(contentsOf: sections)
         return self
     }
     
+    @discardableResult
     open func append(rows: [Row]) -> Self {
         
-        _ = append(section: TableSection(rows: rows))
+        append(section: TableSection(rows: rows))
         return self
     }
     
+    @discardableResult
     open func insert(section: TableSection, atIndex index: Int) -> Self {
         
         sections.insert(section, at: index)
         return self
     }
     
+    @discardableResult
     open func delete(index: Int) -> Self {
         
         sections.remove(at: index)
         return self
     }
     
+    @discardableResult
     open func clear() -> Self {
         
         sections.removeAll()

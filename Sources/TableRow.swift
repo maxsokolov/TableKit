@@ -107,12 +107,14 @@ open class TableRow<ItemType, CellType: ConfigurableCell>: Row where CellType.T 
     
     // MARK: - actions -
     
+    @discardableResult
     open func action(_ action: TableRowAction<ItemType, CellType>) -> Self {
         
         actions[action.type.key] = action
         return self
     }
     
+    @discardableResult
     open func action<T>(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<ItemType, CellType>) -> T) -> Self {
         
         actions[type.key] = TableRowAction<ItemType, CellType>(type, handler: handler)
