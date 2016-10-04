@@ -71,7 +71,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     @discardableResult
     open func invoke(action: TableRowActionType, cell: UITableViewCell?, indexPath: IndexPath) -> Any? {
-        return sections[(indexPath as NSIndexPath).section].rows[(indexPath as NSIndexPath).row].invoke(action, cell: cell, path: indexPath)
+        return sections[indexPath.section].rows[indexPath.row].invoke(action, cell: cell, path: indexPath)
     }
     
     open override func responds(to selector: Selector) -> Bool {
@@ -85,7 +85,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     // MARK: - Internal -
     
     func hasAction(_ action: TableRowActionType, atIndexPath indexPath: IndexPath) -> Bool {
-        return sections[(indexPath as NSIndexPath).section].rows[(indexPath as NSIndexPath).row].hasAction(action)
+        return sections[indexPath.section].rows[indexPath.row].hasAction(action)
     }
     
     func didReceiveAction(_ notification: Notification) {
@@ -98,7 +98,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        let row = sections[(indexPath as NSIndexPath).section].rows[(indexPath as NSIndexPath).row]
+        let row = sections[indexPath.section].rows[indexPath.row]
 
         cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
 
@@ -107,7 +107,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        let row = sections[(indexPath as NSIndexPath).section].rows[(indexPath as NSIndexPath).row]
+        let row = sections[indexPath.section].rows[indexPath.row]
 
         let rowHeight = invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat
 
@@ -126,7 +126,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let row = sections[(indexPath as NSIndexPath).section].rows[(indexPath as NSIndexPath).row]
+        let row = sections[indexPath.section].rows[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: row.reuseIdentifier, for: indexPath)
         
         if cell.frame.size.width != tableView.frame.size.width {
@@ -208,11 +208,11 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     // MARK: - Row editing -
     
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return sections[(indexPath as NSIndexPath).section].rows[(indexPath as NSIndexPath).row].isEditingAllowed(forIndexPath: indexPath)
+        return sections[indexPath.section].rows[indexPath.row].isEditingAllowed(forIndexPath: indexPath)
     }
     
     open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        return sections[(indexPath as NSIndexPath).section].rows[(indexPath as NSIndexPath).row].editingActions
+        return sections[indexPath.section].rows[indexPath.row].editingActions
     }
     
     open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
