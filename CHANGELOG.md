@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [1.4.0](https://github.com/maxsokolov/TableKit/releases/tag/1.4.0)
 Released on 2016-09-06. Breaking changes in 1.4.0:
-The signatures of `TableRow` and `TableRowAction` classes were changed from
+<br/>The signatures of `TableRow` and `TableRowAction` classes were changed from
 ```swift
 let action = TableRowAction<String, StringTableViewCell>(.click) { (data) in
 }
