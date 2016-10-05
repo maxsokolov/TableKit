@@ -215,6 +215,10 @@ Clone the repo and drag files from `Sources` folder into your Xcode project.
 - iOS 8.0
 - Xcode 8.0
 
+# Changelog
+
+Keep eye on [changes](CHANGELOG.md).
+
 # License
 
 TableKit is available under the MIT license. See LICENSE for details.
