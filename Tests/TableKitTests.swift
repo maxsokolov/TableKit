@@ -94,7 +94,7 @@ class TabletTests: XCTestCase {
         
         let data = TestData(title: "title")
 
-        let row = TableRow<TestData, TestTableViewCell>(item: data)
+        let row = TableRow<TestTableViewCell>(item: data)
         
         testController.tableDirector += row
         testController.tableView.reloadData()
@@ -111,7 +111,7 @@ class TabletTests: XCTestCase {
         
         let data = [TestData(title: "1"), TestData(title: "2"), TestData(title: "3")]
         
-        let rows: [Row] = data.map({ TableRow<TestData, TestTableViewCell>(item: $0) })
+        let rows: [Row] = data.map({ TableRow<TestTableViewCell>(item: $0) })
         
         testController.tableDirector += rows
         testController.tableView.reloadData()
@@ -129,7 +129,7 @@ class TabletTests: XCTestCase {
     
     func testTableSectionCreatesSectionWithHeaderAndFooterTitles() {
         
-        let row = TableRow<TestData, TestTableViewCell>(item: TestData(title: "title"))
+        let row = TableRow<TestTableViewCell>(item: TestData(title: "title"))
         
         let sectionHeaderTitle = "Header Title"
         let sectionFooterTitle = "Footer Title"
@@ -148,7 +148,7 @@ class TabletTests: XCTestCase {
     
     func testTableSectionCreatesSectionWithHeaderAndFooterViews() {
         
-        let row = TableRow<TestData, TestTableViewCell>(item: TestData(title: "title"))
+        let row = TableRow<TestTableViewCell>(item: TestData(title: "title"))
         
         let sectionHeaderView = UIView()
         let sectionFooterView = UIView()
@@ -170,7 +170,7 @@ class TabletTests: XCTestCase {
 
         let expectation = self.expectation(description: "cell action")
 
-        let row = TableRow<TestData, TestTableViewCell>(item: TestData(title: "title"))
+        let row = TableRow<TestTableViewCell>(item: TestData(title: "title"))
             .action(TableRowAction(.custom(TestTableViewCellOptions.CellAction)) { (data) in
                 
                 XCTAssertNotNil(data.cell, "Action data should have a cell")
