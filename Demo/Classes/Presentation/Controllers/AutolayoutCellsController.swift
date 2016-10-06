@@ -30,7 +30,7 @@ class AutolayoutCellsController: UIViewController {
         while rows <= 1000 {
             rows += 1
             
-            let row = TableRow<Void, AutolayoutTableViewCell>(item: ())
+            let row = TableRow<AutolayoutTableViewCell>(item: ())
             section += row
         }
         

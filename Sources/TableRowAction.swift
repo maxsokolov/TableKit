@@ -45,14 +45,14 @@ public enum TableRowActionType {
     }
 }
 
-open class TableRowActionData<ItemType, CellType: ConfigurableCell> where CellType.T == ItemType, CellType: UITableViewCell {
+open class TableRowActionData<CellType: ConfigurableCell> where CellType: UITableViewCell {
 
-    open let item: ItemType
+    open let item: CellType.T
     open let cell: CellType?
     open let indexPath: IndexPath
     open let userInfo: [AnyHashable: Any]?
 
-    init(item: ItemType, cell: CellType?, path: IndexPath, userInfo: [AnyHashable: Any]?) {
+    init(item: CellType.T, cell: CellType?, path: IndexPath, userInfo: [AnyHashable: Any]?) {
 
         self.item = item
         self.cell = cell
@@ -61,12 +61,12 @@ open class TableRowActionData<ItemType, CellType: ConfigurableCell> where CellTy
     }
 }
 
-private enum TableRowActionHandler<ItemType, CellType: ConfigurableCell> where CellType.T == ItemType, CellType: UITableViewCell {
+private enum TableRowActionHandler<CellType: ConfigurableCell> where CellType: UITableViewCell {
 
-    case voidAction((TableRowActionData<ItemType, CellType>) -> Void)
-    case action((TableRowActionData<ItemType, CellType>) -> Any?)
+    case voidAction((TableRowActionData<CellType>) -> Void)
+    case action((TableRowActionData<CellType>) -> Any?)
 
-    func invoke(item: ItemType, cell: UITableViewCell?, path: IndexPath) -> Any? {
+    func invoke(item: CellType.T, cell: UITableViewCell?, path: IndexPath) -> Any? {
         
         switch self {
         case .voidAction(let handler):
@@ -77,24 +77,24 @@ private enum TableRowActionHandler<ItemType, CellType: ConfigurableCell> where C
     }
 }
 
-open class TableRowAction<ItemType, CellType: ConfigurableCell> where CellType.T == ItemType, CellType: UITableViewCell {
+open class TableRowAction<CellType: ConfigurableCell> where CellType: UITableViewCell {
 
     open let type: TableRowActionType
-    private let handler: TableRowActionHandler<ItemType, CellType>
+    private let handler: TableRowActionHandler<CellType>
     
-    public init(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<ItemType, CellType>) -> Void) {
+    public init(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<CellType>) -> Void) {
 
         self.type = type
         self.handler = .voidAction(handler)
     }
     
-    public init<T>(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<ItemType, CellType>) -> T) {
+    public init<T>(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<CellType>) -> T) {
 
         self.type = type
         self.handler = .action(handler)
     }
 
-    func invoke(item: ItemType, cell: UITableViewCell?, path: IndexPath) -> Any? {
+    func invoke(item: CellType.T, cell: UITableViewCell?, path: IndexPath) -> Any? {
         return handler.invoke(item: item, cell: cell, path: path)
     }
 }

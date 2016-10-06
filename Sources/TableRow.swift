@@ -48,10 +48,10 @@ public protocol Row: RowConfigurable, RowActionable, RowHashable {
     var defaultHeight: CGFloat? { get }
 }
 
-open class TableRow<ItemType, CellType: ConfigurableCell>: Row where CellType.T == ItemType, CellType: UITableViewCell {
+open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableViewCell {
     
-    open let item: ItemType
-    private lazy var actions = [String: TableRowAction<ItemType, CellType>]()
+    open let item: CellType.T
+    private lazy var actions = [String: TableRowAction<CellType>]()
     private(set) open var editingActions: [UITableViewRowAction]?
     
     open var hashValue: Int {
@@ -74,7 +74,7 @@ open class TableRow<ItemType, CellType: ConfigurableCell>: Row where CellType.T 
         return CellType.self
     }
     
-    public init(item: ItemType, actions: [TableRowAction<ItemType, CellType>]? = nil, editingActions: [UITableViewRowAction]? = nil) {
+    public init(item: CellType.T, actions: [TableRowAction<CellType>]? = nil, editingActions: [UITableViewRowAction]? = nil) {
         
         self.item = item
         self.editingActions = editingActions
@@ -108,16 +108,16 @@ open class TableRow<ItemType, CellType: ConfigurableCell>: Row where CellType.T 
     // MARK: - actions -
     
     @discardableResult
-    open func action(_ action: TableRowAction<ItemType, CellType>) -> Self {
+    open func action(_ action: TableRowAction<CellType>) -> Self {
         
         actions[action.type.key] = action
         return self
     }
     
     @discardableResult
-    open func action<T>(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<ItemType, CellType>) -> T) -> Self {
+    open func action<T>(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<CellType>) -> T) -> Self {
         
-        actions[type.key] = TableRowAction<ItemType, CellType>(type, handler: handler)
+        actions[type.key] = TableRowAction<CellType>(type, handler: handler)
         return self
     }
 }

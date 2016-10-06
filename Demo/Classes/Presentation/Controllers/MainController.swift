@@ -23,7 +23,7 @@ class MainController: UIViewController {
         
         title = "TableKit"
 
-        let clickAction = TableRowAction<String, ConfigurableTableViewCell>(.click) { [weak self] (data) in
+        let clickAction = TableRowAction<ConfigurableTableViewCell>(.click) { [weak self] (data) in
             
             switch (data.indexPath as NSIndexPath).row {
             case 0:
@@ -37,8 +37,8 @@ class MainController: UIViewController {
 
         let rows = [
 
-            TableRow<String, ConfigurableTableViewCell>(item: "Autolayout cells", actions: [clickAction]),
-            TableRow<String, ConfigurableTableViewCell>(item: "Nib cells", actions: [clickAction])
+            TableRow<ConfigurableTableViewCell>(item: "Autolayout cells", actions: [clickAction]),
+            TableRow<ConfigurableTableViewCell>(item: "Nib cells", actions: [clickAction])
         ]
 
         // automatically creates a section, also could be used like tableDirector.append(rows: rows)
