@@ -254,7 +254,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     }
     
     public func clear() -> Self {
-        
+        heightStrategy?.invalidate()
         sections.removeAll()
         return self
     }
