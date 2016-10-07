@@ -64,6 +64,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     }
     
     public func reload() {
+        heightStrategy?.invalidate()
         tableView?.reloadData()
     }
     
