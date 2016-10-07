@@ -64,7 +64,6 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     }
     
     public func reload() {
-        heightStrategy?.invalidate()
         tableView?.reloadData()
     }
     
@@ -255,7 +254,7 @@ public class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate
     }
     
     public func clear() -> Self {
-        
+        heightStrategy?.invalidate()
         sections.removeAll()
         return self
     }
