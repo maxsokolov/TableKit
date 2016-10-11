@@ -34,22 +34,14 @@ public protocol ConfigurableCell {
 public extension ConfigurableCell where Self: UITableViewCell {
     
     static var reuseIdentifier: String {
-        get {
-            return String(describing: self)
-        }
-        
+        return String(describing: self)
     }
     
     static var estimatedHeight: CGFloat? {
-        get {
-            return nil
-        }
-        
+        return nil
     }
     
     static var defaultHeight: CGFloat? {
-        get {
-            return nil
-        }
+        return nil
     }
 }
