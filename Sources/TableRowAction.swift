@@ -45,7 +45,8 @@ private enum TableRowActionHandler<CellType: ConfigurableCell> where CellType: U
         
         switch self {
         case .voidAction(let handler):
-            return handler(actionData)
+            handler(actionData)
+            return nil
         case .action(let handler):
             return handler(actionData)
         }

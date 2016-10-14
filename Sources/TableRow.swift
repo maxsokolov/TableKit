@@ -23,7 +23,7 @@ import UIKit
 open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableViewCell {
     
     open let item: CellType.T
-    private lazy var actions = [String: RowAction]()
+    private lazy var actions = [String: [RowAction]]()
     private(set) open var editingActions: [UITableViewRowAction]?
     
     open var hashValue: Int {
@@ -46,11 +46,11 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
         return CellType.self
     }
     
-    public init(item: CellType.T, actions: [RowAction]? = nil, editingActions: [UITableViewRowAction]? = nil) {
+    public init(item: CellType.T, actions: [TableRowAction<CellType>]? = nil, editingActions: [UITableViewRowAction]? = nil) {
         
         self.item = item
         self.editingActions = editingActions
-        actions?.forEach { self.actions[$0.type.key] = $0 }
+        actions?.forEach { on($0) }
     }
     
     // MARK: - RowConfigurable -
@@ -62,7 +62,8 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     // MARK: - RowActionable -
     
     open func invoke(_ action: TableRowActionType, cell: UITableViewCell?, path: IndexPath) -> Any? {
-        return actions[action.key]?.invokeActionOn(cell: cell, item: item, path: path)
+
+        return actions[action.key]?.flatMap({ $0.invokeActionOn(cell: cell, item: item, path: path) }).last
     }
     
     open func hasAction(_ action: TableRowActionType) -> Bool {
@@ -80,17 +81,20 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     // MARK: - actions -
     
     @discardableResult
-    open func on(_ action: RowAction) -> Self {
+    open func on(_ action: TableRowAction<CellType>) -> Self {
         
-        actions[action.type.key] = action
+        if actions[action.type.key] == nil {
+            actions[action.type.key] = [RowAction]()
+        }
+        actions[action.type.key]?.append(action)
+
         return self
     }
-    
+
     @discardableResult
     open func on<T>(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<CellType>) -> T) -> Self {
         
-        actions[type.key] = TableRowAction<CellType>(type, handler: handler)
-        return self
+        return on(TableRowAction<CellType>(type, handler: handler))
     }
     
     // MARK: - deprecated actions -
@@ -98,16 +102,14 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     @available(*, deprecated, message: "Use 'on' method instead")
     @discardableResult
     open func action(_ action: TableRowAction<CellType>) -> Self {
-        
-        actions[action.type.key] = action
-        return self
+
+        return on(action)
     }
     
     @available(*, deprecated, message: "Use 'on' method instead")
     @discardableResult
     open func action<T>(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<CellType>) -> T) -> Self {
         
-        actions[type.key] = TableRowAction<CellType>(type, handler: handler)
-        return self
+        return on(TableRowAction<CellType>(type, handler: handler))
     }
 }
