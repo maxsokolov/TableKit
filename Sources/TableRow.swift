@@ -48,6 +48,36 @@ public protocol Row: RowConfigurable, RowActionable, RowHashable {
     var defaultHeight: CGFloat? { get }
 }
 
+
+
+
+
+
+public protocol RowAction {
+
+    func invokeActionOn<CellType: ConfigurableCell>(cell: CellType, item: CellType.T, path: IndexPath) -> Any? where CellType: UITableViewCell
+}
+
+
+
+
+open class TableRowActionX<ActionCellType: ConfigurableCell>: RowAction where ActionCellType: UITableViewCell {
+
+    var handler: ((TableRowActionData<ActionCellType>) -> Void)?
+    
+    public func invokeActionOn<CellType: ConfigurableCell>(cell: CellType, item: CellType.T, path: IndexPath) -> Any? where CellType: UITableViewCell {
+        
+        guard let item = item as? ActionCellType.T else { return nil }
+        
+        let x = TableRowActionData(item: item, cell: cell as? ActionCellType, path: path, userInfo: nil)
+        
+        handler?(x)
+        
+        return nil
+    }
+}
+
+
 open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableViewCell {
     
     open let item: CellType.T
