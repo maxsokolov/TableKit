@@ -20,8 +20,6 @@
 
 import UIKit
 
-
-
 open class TableRowActionData<CellType: ConfigurableCell> where CellType: UITableViewCell {
 
     open let item: CellType.T
@@ -43,18 +41,18 @@ private enum TableRowActionHandler<CellType: ConfigurableCell> where CellType: U
     case voidAction((TableRowActionData<CellType>) -> Void)
     case action((TableRowActionData<CellType>) -> Any?)
 
-    func invoke(item: CellType.T, cell: UITableViewCell?, path: IndexPath) -> Any? {
+    func invoke(withActionData actionData: TableRowActionData<CellType>) -> Any? {
         
         switch self {
         case .voidAction(let handler):
-            return handler(TableRowActionData(item: item, cell: cell as? CellType, path: path, userInfo: nil))
+            return handler(actionData)
         case .action(let handler):
-            return handler(TableRowActionData(item: item, cell: cell as? CellType, path: path, userInfo: nil))
+            return handler(actionData)
         }
     }
 }
 
-open class TableRowAction<CellType: ConfigurableCell> where CellType: UITableViewCell {
+open class TableRowAction<CellType: ConfigurableCell>: RowAction where CellType: UITableViewCell {
 
     open let type: TableRowActionType
     private let handler: TableRowActionHandler<CellType>
@@ -71,7 +69,9 @@ open class TableRowAction<CellType: ConfigurableCell> where CellType: UITableVie
         self.handler = .action(handler)
     }
 
-    func invoke(item: CellType.T, cell: UITableViewCell?, path: IndexPath) -> Any? {
-        return handler.invoke(item: item, cell: cell, path: path)
+    public func invokeActionOn(cell: UITableViewCell?, item: Any, path: IndexPath) -> Any? {
+        guard let item = item as? CellType.T else { return nil }
+
+        return handler.invoke(withActionData: TableRowActionData(item: item, cell: cell as? CellType, path: path, userInfo: nil))
     }
 }

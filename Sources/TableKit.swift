@@ -74,6 +74,8 @@ public enum TableRowActionType {
 }
 
 public protocol RowAction {
-    
-    func invokeActionOn<CellType: ConfigurableCell>(cell: CellType, item: CellType.T, path: IndexPath) -> Any? where CellType: UITableViewCell
+
+    var type: TableRowActionType { get }
+
+    func invokeActionOn(cell: UITableViewCell?, item: Any, path: IndexPath) -> Any?
 }

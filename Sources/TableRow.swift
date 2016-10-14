@@ -20,26 +20,10 @@
 
 import UIKit
 
-open class TableRowActionX<ActionCellType: ConfigurableCell>: RowAction where ActionCellType: UITableViewCell {
-
-    var handler: ((TableRowActionData<ActionCellType>) -> Void)?
-    
-    public func invokeActionOn<CellType: ConfigurableCell>(cell: CellType, item: CellType.T, path: IndexPath) -> Any? where CellType: UITableViewCell {
-        
-        guard let item = item as? ActionCellType.T else { return nil }
-        
-        let x = TableRowActionData(item: item, cell: cell as? ActionCellType, path: path, userInfo: nil)
-        
-        handler?(x)
-        
-        return nil
-    }
-}
-
 open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableViewCell {
     
     open let item: CellType.T
-    private lazy var actions = [String: TableRowAction<CellType>]()
+    private lazy var actions = [String: RowAction]()
     private(set) open var editingActions: [UITableViewRowAction]?
     
     open var hashValue: Int {
@@ -62,7 +46,7 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
         return CellType.self
     }
     
-    public init(item: CellType.T, actions: [TableRowAction<CellType>]? = nil, editingActions: [UITableViewRowAction]? = nil) {
+    public init(item: CellType.T, actions: [RowAction]? = nil, editingActions: [UITableViewRowAction]? = nil) {
         
         self.item = item
         self.editingActions = editingActions
@@ -78,7 +62,7 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     // MARK: - RowActionable -
     
     open func invoke(_ action: TableRowActionType, cell: UITableViewCell?, path: IndexPath) -> Any? {
-        return actions[action.key]?.invoke(item: item, cell: cell, path: path)
+        return actions[action.key]?.invokeActionOn(cell: cell, item: item, path: path)
     }
     
     open func hasAction(_ action: TableRowActionType) -> Bool {
@@ -96,7 +80,7 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     // MARK: - actions -
     
     @discardableResult
-    open func on(_ action: TableRowAction<CellType>) -> Self {
+    open func on(_ action: RowAction) -> Self {
         
         actions[action.type.key] = action
         return self
