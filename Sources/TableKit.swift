@@ -75,6 +75,7 @@ public enum TableRowActionType {
 
 public protocol RowAction {
 
+    var id: String? { get set }
     var type: TableRowActionType { get }
 
     func invokeActionOn(cell: UITableViewCell?, item: Any, path: IndexPath) -> Any?

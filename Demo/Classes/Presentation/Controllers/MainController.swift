@@ -25,7 +25,7 @@ class MainController: UIViewController {
 
         let clickAction = TableRowAction<ConfigurableTableViewCell>(.click) { [weak self] (data) in
             
-            switch (data.indexPath as NSIndexPath).row {
+            switch data.indexPath.row {
             case 0:
                 self?.performSegue(withIdentifier: "autolayoutcells", sender: nil)
             case 1:
