@@ -262,7 +262,9 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     @discardableResult
     open func clear() -> Self {
         
+        heightStrategy?.invalidate()
         sections.removeAll()
+
         return self
     }
 }
