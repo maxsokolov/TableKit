@@ -108,12 +108,30 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     // MARK: - actions -
     
     @discardableResult
+    open func on(_ action: TableRowAction<CellType>) -> Self {
+        
+        actions[action.type.key] = action
+        return self
+    }
+    
+    @discardableResult
+    open func on<T>(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<CellType>) -> T) -> Self {
+        
+        actions[type.key] = TableRowAction<CellType>(type, handler: handler)
+        return self
+    }
+    
+    // MARK: - deprecated actions -
+    
+    @available(*, deprecated, message: "Use 'on' method instead")
+    @discardableResult
     open func action(_ action: TableRowAction<CellType>) -> Self {
         
         actions[action.type.key] = action
         return self
     }
     
+    @available(*, deprecated, message: "Use 'on' method instead")
     @discardableResult
     open func action<T>(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<CellType>) -> T) -> Self {
         
