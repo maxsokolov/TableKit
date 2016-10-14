@@ -97,6 +97,11 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
         return on(TableRowAction<CellType>(type, handler: handler))
     }
     
+    func removeAllActions() {
+        
+        actions.removeAll()
+    }
+    
     // MARK: - deprecated actions -
     
     @available(*, deprecated, message: "Use 'on' method instead")

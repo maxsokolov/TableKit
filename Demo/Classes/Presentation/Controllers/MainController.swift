@@ -34,11 +34,16 @@ class MainController: UIViewController {
                 break
             }
         }
+        
+        let printClickAction = TableRowAction<ConfigurableTableViewCell>(.click) { (data) in
+            
+            print("click", data.indexPath)
+        }
 
         let rows = [
 
-            TableRow<ConfigurableTableViewCell>(item: "Autolayout cells", actions: [clickAction]),
-            TableRow<ConfigurableTableViewCell>(item: "Nib cells", actions: [clickAction])
+            TableRow<ConfigurableTableViewCell>(item: "Autolayout cells", actions: [clickAction, printClickAction]),
+            TableRow<ConfigurableTableViewCell>(item: "Nib cells", actions: [clickAction, printClickAction])
         ]
 
         // automatically creates a section, also could be used like tableDirector.append(rows: rows)
