@@ -20,30 +20,7 @@
 
 import UIKit
 
-public enum TableRowActionType {
-    
-    case click
-    case clickDelete
-    case select
-    case deselect
-    case willSelect
-    case willDisplay
-    case shouldHighlight
-    case height
-    case canEdit
-    case configure
-    case custom(String)
-    
-    var key: String {
-        
-        switch (self) {
-        case .custom(let key):
-            return key
-        default:
-            return "_\(self)"
-        }
-    }
-}
+
 
 open class TableRowActionData<CellType: ConfigurableCell> where CellType: UITableViewCell {
 

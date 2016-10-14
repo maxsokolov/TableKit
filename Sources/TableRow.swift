@@ -20,47 +20,6 @@
 
 import UIKit
 
-public protocol RowConfigurable {
-    
-    func configure(_ cell: UITableViewCell)
-}
-
-public protocol RowActionable {
-    
-    var editingActions: [UITableViewRowAction]? { get }
-    func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool
-    
-    func invoke(_ action: TableRowActionType, cell: UITableViewCell?, path: IndexPath) -> Any?
-    func hasAction(_ action: TableRowActionType) -> Bool
-}
-
-public protocol RowHashable {
-    
-    var hashValue: Int { get }
-}
-
-public protocol Row: RowConfigurable, RowActionable, RowHashable {
-    
-    var reuseIdentifier: String { get }
-    var cellType: AnyClass { get }
-    
-    var estimatedHeight: CGFloat? { get }
-    var defaultHeight: CGFloat? { get }
-}
-
-
-
-
-
-
-public protocol RowAction {
-
-    func invokeActionOn<CellType: ConfigurableCell>(cell: CellType, item: CellType.T, path: IndexPath) -> Any? where CellType: UITableViewCell
-}
-
-
-
-
 open class TableRowActionX<ActionCellType: ConfigurableCell>: RowAction where ActionCellType: UITableViewCell {
 
     var handler: ((TableRowActionData<ActionCellType>) -> Void)?
@@ -76,7 +35,6 @@ open class TableRowActionX<ActionCellType: ConfigurableCell>: RowAction where Ac
         return nil
     }
 }
-
 
 open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableViewCell {
     
