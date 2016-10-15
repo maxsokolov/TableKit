@@ -29,13 +29,13 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     open private(set) var sections = [TableSection]()
     
     private weak var scrollDelegate: UIScrollViewDelegate?
-    private var heightStrategy: CellHeightCalculatable?
     private var cellRegisterer: TableCellRegisterer?
+    public var rowHeightCalculator: RowHeightCalculator?
     
     open var shouldUsePrototypeCellHeightCalculation: Bool = false {
         didSet {
             if shouldUsePrototypeCellHeightCalculation {
-                heightStrategy = PrototypeHeightStrategy(tableView: tableView)
+                rowHeightCalculator = TablePrototypeCellHeightCalculator(tableView: tableView)
             }
         }
     }
@@ -102,7 +102,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
 
         cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
 
-        return row.estimatedHeight ?? heightStrategy?.estimatedHeight(row, path: indexPath) ?? UITableViewAutomaticDimension
+        return row.estimatedHeight ?? rowHeightCalculator?.estimatedHeight(forRow: row, at: indexPath) ?? UITableViewAutomaticDimension
     }
     
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -111,7 +111,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
 
         let rowHeight = invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat
 
-        return rowHeight ?? row.defaultHeight ?? heightStrategy?.height(row, path: indexPath) ?? UITableViewAutomaticDimension
+        return rowHeight ?? row.defaultHeight ?? rowHeightCalculator?.height(forRow: row, at: indexPath) ?? UITableViewAutomaticDimension
     }
     
     // MARK: UITableViewDataSource - configuration
@@ -262,7 +262,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     @discardableResult
     open func clear() -> Self {
         
-        heightStrategy?.invalidate()
+        rowHeightCalculator?.invalidate()
         sections.removeAll()
 
         return self

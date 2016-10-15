@@ -80,3 +80,11 @@ public protocol RowAction {
 
     func invokeActionOn(cell: UITableViewCell?, item: Any, path: IndexPath) -> Any?
 }
+
+public protocol RowHeightCalculator {
+    
+    func height(forRow row: Row, at indexPath: IndexPath) -> CGFloat
+    func estimatedHeight(forRow row: Row, at indexPath: IndexPath) -> CGFloat
+    
+    func invalidate()
+}
