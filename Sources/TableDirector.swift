@@ -36,6 +36,8 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         didSet {
             if shouldUsePrototypeCellHeightCalculation {
                 rowHeightCalculator = TablePrototypeCellHeightCalculator(tableView: tableView)
+            } else {
+                rowHeightCalculator = nil
             }
         }
     }
