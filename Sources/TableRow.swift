@@ -56,6 +56,7 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     // MARK: - RowConfigurable -
     
     open func configure(_ cell: UITableViewCell) {
+        
         (cell as? CellType)?.configure(with: item)
     }
     
@@ -67,6 +68,7 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     }
     
     open func hasAction(_ action: TableRowActionType) -> Bool {
+        
         return actions[action.key] != nil
     }
     
@@ -97,9 +99,18 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
         return on(TableRowAction<CellType>(type, handler: handler))
     }
     
-    func removeAllActions() {
+    open func removeAllActions() {
         
         actions.removeAll()
+    }
+    
+    open func removeAction(forActionId actionId: String) {
+
+        for (key, value) in actions {
+            if let actionIndex = value.index(where: { $0.id == actionId }) {
+                actions[key]?.remove(at: actionIndex)
+            }
+        }
     }
     
     // MARK: - deprecated actions -
