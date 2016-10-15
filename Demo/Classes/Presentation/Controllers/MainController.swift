@@ -23,9 +23,9 @@ class MainController: UIViewController {
         
         title = "TableKit"
 
-        let clickAction = TableRowAction<ConfigurableTableViewCell>(.click) { [weak self] (data) in
+        let clickAction = TableRowAction<ConfigurableTableViewCell>(.click) { [weak self] (options) in
             
-            switch data.indexPath.row {
+            switch options.indexPath.row {
             case 0:
                 self?.performSegue(withIdentifier: "autolayoutcells", sender: nil)
             case 1:
@@ -35,9 +35,9 @@ class MainController: UIViewController {
             }
         }
         
-        let printClickAction = TableRowAction<ConfigurableTableViewCell>(.click) { (data) in
+        let printClickAction = TableRowAction<ConfigurableTableViewCell>(.click) { (options) in
             
-            print("click", data.indexPath)
+            print("click", options.indexPath)
         }
 
         let rows = [

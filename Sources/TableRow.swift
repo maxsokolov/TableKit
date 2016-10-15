@@ -94,7 +94,7 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     }
 
     @discardableResult
-    open func on<T>(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<CellType>) -> T) -> Self {
+    open func on<T>(_ type: TableRowActionType, handler: @escaping (_ options: TableRowActionOptions<CellType>) -> T) -> Self {
         
         return on(TableRowAction<CellType>(type, handler: handler))
     }
@@ -124,7 +124,7 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     
     @available(*, deprecated, message: "Use 'on' method instead")
     @discardableResult
-    open func action<T>(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<CellType>) -> T) -> Self {
+    open func action<T>(_ type: TableRowActionType, handler: @escaping (_ options: TableRowActionOptions<CellType>) -> T) -> Self {
         
         return on(TableRowAction<CellType>(type, handler: handler))
     }
