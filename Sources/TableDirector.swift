@@ -71,7 +71,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     @discardableResult
     open func invoke(action: TableRowActionType, cell: UITableViewCell?, indexPath: IndexPath) -> Any? {
-        return sections[indexPath.section].rows[indexPath.row].invoke(action, cell: cell, path: indexPath)
+        return sections[indexPath.section].rows[indexPath.row].invoke(action: action, cell: cell, path: indexPath)
     }
     
     open override func responds(to selector: Selector) -> Bool {
@@ -85,7 +85,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     // MARK: - Internal -
     
     func hasAction(_ action: TableRowActionType, atIndexPath indexPath: IndexPath) -> Bool {
-        return sections[indexPath.section].rows[indexPath.row].hasAction(action)
+        return sections[indexPath.section].rows[indexPath.row].has(action: action)
     }
     
     func didReceiveAction(_ notification: Notification) {

@@ -62,12 +62,12 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     
     // MARK: - RowActionable -
     
-    open func invoke(_ action: TableRowActionType, cell: UITableViewCell?, path: IndexPath) -> Any? {
+    open func invoke(action: TableRowActionType, cell: UITableViewCell?, path: IndexPath) -> Any? {
 
         return actions[action.key]?.flatMap({ $0.invokeActionOn(cell: cell, item: item, path: path) }).last
     }
     
-    open func hasAction(_ action: TableRowActionType) -> Bool {
+    open func has(action: TableRowActionType) -> Bool {
         
         return actions[action.key] != nil
     }
@@ -75,7 +75,7 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     open func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool {
         
         if actions[TableRowActionType.canEdit.key] != nil {
-            return invoke(.canEdit, cell: nil, path: indexPath) as? Bool ?? false
+            return invoke(action: .canEdit, cell: nil, path: indexPath) as? Bool ?? false
         }
         return editingActions?.isEmpty == false || actions[TableRowActionType.clickDelete.key] != nil
     }
