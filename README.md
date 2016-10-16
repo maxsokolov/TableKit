@@ -91,6 +91,7 @@ let action = TableRowAction<StringTableViewCell>(.click) { (options) in
 	// options.cell - StringTableViewCell?
 	// options.item - String
 	// options.indexPath - IndexPath
+	// options.userInfo - [AnyHashable: Any]?
 }
 
 let row = TableRow<StringTableViewCell>(item: "some", actions: [action])
@@ -130,6 +131,24 @@ let myAction = TableRowAction<MyTableViewCell>(.custom(MyActions.ButtonClicked))
 
 }
 ```
+## Multiple actions with same type
+
+It's also possible to use multiple actions with same type:
+```swift
+let click1 = TableRowAction<StringTableViewCell>(.click) { (options) in }
+click1.id = "click1" // optional
+
+let click2 = TableRowAction<StringTableViewCell>(.click) { (options) in }
+click2.id = "click2" // optional
+
+let row = TableRow<StringTableViewCell>(item: "some", actions: [click1, click2])
+```
+Could be useful in case if you want to separate your logic somehow. Actions will be invoked in order which they were attached.
+> If you define multiple actions with same type which also return a value, only last return value will be used for table view.
+You could also remove any action by id:
+```swift
+row.removeAction(forActionId: "action_id")
+```
 
 # Advanced
 
@@ -149,7 +168,7 @@ It's enough for most cases. But you may be not happy with this. So you could use
 ```swift
 tableDirector.shouldUsePrototypeCellHeightCalculation = true
 ```
-It does all dirty work with prototypes for you [behind the scene](Sources/HeightStrategy.swift), so you don't have to worry about anything except of your cell configuration:
+It does all dirty work with prototypes for you [behind the scene](Sources/TablePrototypeCellHeightCalculator.swift), so you don't have to worry about anything except of your cell configuration:
 ```swift
 class ImageTableViewCell: UITableViewCell, ConfigurableCell {
 
