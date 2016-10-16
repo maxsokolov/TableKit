@@ -22,7 +22,7 @@ import UIKit
 
 open class TablePrototypeCellHeightCalculator: RowHeightCalculator {
 
-    private weak var tableView: UITableView?
+    private(set) weak var tableView: UITableView?
     private var prototypes = [String: UITableViewCell]()
     private var cachedHeights = [Int: CGFloat]()
     private var separatorHeight = 1 / UIScreen.main.scale
