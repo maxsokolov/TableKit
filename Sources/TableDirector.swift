@@ -72,8 +72,8 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     // MARK: Public
     
     @discardableResult
-    open func invoke(action: TableRowActionType, cell: UITableViewCell?, indexPath: IndexPath) -> Any? {
-        return sections[indexPath.section].rows[indexPath.row].invoke(action: action, cell: cell, path: indexPath)
+    open func invoke(action: TableRowActionType, cell: UITableViewCell?, indexPath: IndexPath, userInfo: [AnyHashable: Any]? = nil) -> Any? {
+        return sections[indexPath.section].rows[indexPath.row].invoke(action: action, cell: cell, path: indexPath, userInfo: userInfo)
     }
     
     open override func responds(to selector: Selector) -> Bool {
@@ -93,7 +93,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     func didReceiveAction(_ notification: Notification) {
         
         guard let action = notification.object as? TableCellAction, let indexPath = tableView?.indexPath(for: action.cell) else { return }
-        invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath)
+        invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath, userInfo: notification.userInfo)
     }
     
     // MARK: - Height

@@ -62,9 +62,9 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     
     // MARK: - RowActionable -
     
-    open func invoke(action: TableRowActionType, cell: UITableViewCell?, path: IndexPath) -> Any? {
+    open func invoke(action: TableRowActionType, cell: UITableViewCell?, path: IndexPath, userInfo: [AnyHashable: Any]? = nil) -> Any? {
 
-        return actions[action.key]?.flatMap({ $0.invokeActionOn(cell: cell, item: item, path: path) }).last
+        return actions[action.key]?.flatMap({ $0.invokeActionOn(cell: cell, item: item, path: path, userInfo: userInfo) }).last
     }
     
     open func has(action: TableRowActionType) -> Bool {
