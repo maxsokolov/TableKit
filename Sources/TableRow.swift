@@ -84,19 +84,25 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     
     @discardableResult
     open func on(_ action: TableRowAction<CellType>) -> Self {
-        
-        if actions[action.type.key] == nil {
-            actions[action.type.key] = [RowAction]()
-        }
-        actions[action.type.key]?.append(action)
 
-        return self
+        return on(anyAction: action)
     }
 
     @discardableResult
     open func on<T>(_ type: TableRowActionType, handler: @escaping (_ options: TableRowActionOptions<CellType>) -> T) -> Self {
         
         return on(TableRowAction<CellType>(type, handler: handler))
+    }
+    
+    @discardableResult
+    open func on(anyAction action: RowAction) -> Self {
+
+        if actions[action.type.key] == nil {
+            actions[action.type.key] = [RowAction]()
+        }
+        actions[action.type.key]?.append(action)
+        
+        return self
     }
     
     open func removeAllActions() {

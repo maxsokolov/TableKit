@@ -30,6 +30,7 @@ public protocol RowActionable {
     var editingActions: [UITableViewRowAction]? { get }
     func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool
     
+    func on(anyAction action: RowAction) -> Self
     func invoke(action: TableRowActionType, cell: UITableViewCell?, path: IndexPath, userInfo: [AnyHashable: Any]?) -> Any?
     func has(action: TableRowActionType) -> Bool
 }
