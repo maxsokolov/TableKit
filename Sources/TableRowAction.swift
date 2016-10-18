@@ -53,7 +53,7 @@ private enum TableRowActionHandler<CellType: ConfigurableCell> where CellType: U
     }
 }
 
-open class TableRowAction<CellType: ConfigurableCell>: RowAction where CellType: UITableViewCell {
+open class TableRowAction<CellType: ConfigurableCell> where CellType: UITableViewCell {
 
     open var id: String?
     open let type: TableRowActionType

@@ -23,7 +23,7 @@ import UIKit
 open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableViewCell {
     
     open let item: CellType.T
-    private lazy var actions = [String: [RowAction]]()
+    private lazy var actions = [String: [TableRowAction<CellType>]]()
     private(set) open var editingActions: [UITableViewRowAction]?
     
     open var hashValue: Int {
@@ -85,7 +85,12 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     @discardableResult
     open func on(_ action: TableRowAction<CellType>) -> Self {
 
-        return on(anyAction: action)
+        if actions[action.type.key] == nil {
+            actions[action.type.key] = [TableRowAction<CellType>]()
+        }
+        actions[action.type.key]?.append(action)
+        
+        return self
     }
 
     @discardableResult
@@ -93,18 +98,7 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
         
         return on(TableRowAction<CellType>(type, handler: handler))
     }
-    
-    @discardableResult
-    open func on(anyAction action: RowAction) -> Self {
 
-        if actions[action.type.key] == nil {
-            actions[action.type.key] = [RowAction]()
-        }
-        actions[action.type.key]?.append(action)
-        
-        return self
-    }
-    
     open func removeAllActions() {
         
         actions.removeAll()

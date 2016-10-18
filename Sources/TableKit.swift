@@ -20,6 +20,10 @@
 
 import UIKit
 
+struct TableKitNotifications {
+    static let CellAction = "TableKitNotificationsCellAction"
+}
+
 public protocol RowConfigurable {
     
     func configure(_ cell: UITableViewCell)
@@ -29,8 +33,7 @@ public protocol RowActionable {
     
     var editingActions: [UITableViewRowAction]? { get }
     func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool
-    
-    func on(anyAction action: RowAction) -> Self
+
     func invoke(action: TableRowActionType, cell: UITableViewCell?, path: IndexPath, userInfo: [AnyHashable: Any]?) -> Any?
     func has(action: TableRowActionType) -> Bool
 }
@@ -72,14 +75,6 @@ public enum TableRowActionType {
             return "_\(self)"
         }
     }
-}
-
-public protocol RowAction {
-
-    var id: String? { get set }
-    var type: TableRowActionType { get }
-
-    func invokeActionOn(cell: UITableViewCell?, item: Any, path: IndexPath, userInfo: [AnyHashable: Any]?) -> Any?
 }
 
 public protocol RowHeightCalculator {
