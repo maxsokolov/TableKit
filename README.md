@@ -145,6 +145,7 @@ let row = TableRow<StringTableViewCell>(item: "some", actions: [click1, click2])
 ```
 Could be useful in case if you want to separate your logic somehow. Actions will be invoked in order which they were attached.
 > If you define multiple actions with same type which also return a value, only last return value will be used for table view.
+
 You could also remove any action by id:
 ```swift
 row.removeAction(forActionId: "action_id")
