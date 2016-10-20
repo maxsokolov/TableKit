@@ -254,8 +254,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         return self
     }
     
-    @discardableResult
-    open func delete(index: Int) -> Self {
+    open func delete(sectionAt index: Int) -> Self {
         
         sections.remove(at: index)
         return self
@@ -267,6 +266,16 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         rowHeightCalculator?.invalidate()
         sections.removeAll()
 
+        return self
+    }
+    
+    // MARK: - deprecated methods -
+    
+    @available(*, deprecated, message: "Use 'delete(sectionAt:)' method instead")
+    @discardableResult
+    open func delete(index: Int) -> Self {
+        
+        sections.remove(at: index)
         return self
     }
 }
