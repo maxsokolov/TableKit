@@ -169,13 +169,13 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         let section = sections[section]
-        return section.headerHeight ?? section.headerView?.frame.size.height ?? 0
+        return section.headerHeight ?? section.headerView?.frame.size.height ?? UITableViewAutomaticDimension
     }
     
     open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
         let section = sections[section]
-        return section.footerHeight ?? section.footerView?.frame.size.height ?? 0
+        return section.footerHeight ?? section.footerView?.frame.size.height ?? UITableViewAutomaticDimension
     }
     
     // MARK: UITableViewDelegate - actions
