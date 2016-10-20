@@ -31,7 +31,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     private weak var scrollDelegate: UIScrollViewDelegate?
     private var cellRegisterer: TableCellRegisterer?
     public var rowHeightCalculator: RowHeightCalculator?
-    
+
     open var shouldUsePrototypeCellHeightCalculation: Bool = false {
         didSet {
             if shouldUsePrototypeCellHeightCalculation {
@@ -52,7 +52,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         if shouldUseAutomaticCellRegistration {
             self.cellRegisterer = TableCellRegisterer(tableView: tableView)
         }
-        
+
         self.scrollDelegate = scrollDelegate
         self.tableView = tableView
         self.tableView?.delegate = self
@@ -99,17 +99,18 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     // MARK: - Height
     
     open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        
+
         let row = sections[indexPath.section].rows[indexPath.row]
-
-        cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
-
         return row.estimatedHeight ?? rowHeightCalculator?.estimatedHeight(forRow: row, at: indexPath) ?? UITableViewAutomaticDimension
     }
     
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let row = sections[indexPath.section].rows[indexPath.row]
+        
+        if shouldUsePrototypeCellHeightCalculation {
+            cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
+        }
 
         let rowHeight = invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat
 
@@ -129,6 +130,9 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let row = sections[indexPath.section].rows[indexPath.row]
+        
+        cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: row.reuseIdentifier, for: indexPath)
         
         if cell.frame.size.width != tableView.frame.size.width {
