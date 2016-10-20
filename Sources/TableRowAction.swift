@@ -65,6 +65,12 @@ open class TableRowAction<CellType: ConfigurableCell> where CellType: UITableVie
         self.handler = .voidAction(handler)
     }
     
+    public init(_ key: String, handler: @escaping (_ options: TableRowActionOptions<CellType>) -> Void) {
+        
+        self.type = .custom(key)
+        self.handler = .voidAction(handler)
+    }
+    
     public init<T>(_ type: TableRowActionType, handler: @escaping (_ options: TableRowActionOptions<CellType>) -> T) {
 
         self.type = type
