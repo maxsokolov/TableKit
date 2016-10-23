@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 Released on 2016-10-19.
 - `action` method was deprecated on TableRow. Use `on` instead.
 - Support multiple actions with same type on row.
+- You could now build your own cell height calculating strategy. See [TablePrototypeCellHeightCalculator](Sources/TablePrototypeCellHeightCalculator.swift).
+- Default distance between sections changed to `UITableViewAutomaticDimension`. You can customize it, see [TableSection](Sources/TableSection.swift)
 
 ## [2.0.0](https://github.com/maxsokolov/TableKit/releases/tag/2.0.0)
 Released on 2016-10-06. Breaking changes in 2.0.0:
