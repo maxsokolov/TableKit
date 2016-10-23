@@ -29,13 +29,15 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     open private(set) var sections = [TableSection]()
     
     private weak var scrollDelegate: UIScrollViewDelegate?
-    private var heightStrategy: CellHeightCalculatable?
     private var cellRegisterer: TableCellRegisterer?
-    
+    public var rowHeightCalculator: RowHeightCalculator?
+
     open var shouldUsePrototypeCellHeightCalculation: Bool = false {
         didSet {
             if shouldUsePrototypeCellHeightCalculation {
-                heightStrategy = PrototypeHeightStrategy(tableView: tableView)
+                rowHeightCalculator = TablePrototypeCellHeightCalculator(tableView: tableView)
+            } else {
+                rowHeightCalculator = nil
             }
         }
     }
@@ -50,7 +52,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         if shouldUseAutomaticCellRegistration {
             self.cellRegisterer = TableCellRegisterer(tableView: tableView)
         }
-        
+
         self.scrollDelegate = scrollDelegate
         self.tableView = tableView
         self.tableView?.delegate = self
@@ -70,8 +72,8 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     // MARK: Public
     
     @discardableResult
-    open func invoke(action: TableRowActionType, cell: UITableViewCell?, indexPath: IndexPath) -> Any? {
-        return sections[indexPath.section].rows[indexPath.row].invoke(action, cell: cell, path: indexPath)
+    open func invoke(action: TableRowActionType, cell: UITableViewCell?, indexPath: IndexPath, userInfo: [AnyHashable: Any]? = nil) -> Any? {
+        return sections[indexPath.section].rows[indexPath.row].invoke(action: action, cell: cell, path: indexPath, userInfo: userInfo)
     }
     
     open override func responds(to selector: Selector) -> Bool {
@@ -85,33 +87,34 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     // MARK: - Internal -
     
     func hasAction(_ action: TableRowActionType, atIndexPath indexPath: IndexPath) -> Bool {
-        return sections[indexPath.section].rows[indexPath.row].hasAction(action)
+        return sections[indexPath.section].rows[indexPath.row].has(action: action)
     }
     
     func didReceiveAction(_ notification: Notification) {
         
         guard let action = notification.object as? TableCellAction, let indexPath = tableView?.indexPath(for: action.cell) else { return }
-        invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath)
+        invoke(action: .custom(action.key), cell: action.cell, indexPath: indexPath, userInfo: notification.userInfo)
     }
     
     // MARK: - Height
     
     open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        
+
         let row = sections[indexPath.section].rows[indexPath.row]
-
-        cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
-
-        return row.estimatedHeight ?? heightStrategy?.estimatedHeight(row, path: indexPath) ?? UITableViewAutomaticDimension
+        return row.estimatedHeight ?? rowHeightCalculator?.estimatedHeight(forRow: row, at: indexPath) ?? UITableViewAutomaticDimension
     }
     
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let row = sections[indexPath.section].rows[indexPath.row]
+        
+        if shouldUsePrototypeCellHeightCalculation {
+            cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
+        }
 
         let rowHeight = invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat
 
-        return rowHeight ?? row.defaultHeight ?? heightStrategy?.height(row, path: indexPath) ?? UITableViewAutomaticDimension
+        return rowHeight ?? row.defaultHeight ?? rowHeightCalculator?.height(forRow: row, at: indexPath) ?? UITableViewAutomaticDimension
     }
     
     // MARK: UITableViewDataSource - configuration
@@ -127,6 +130,9 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let row = sections[indexPath.section].rows[indexPath.row]
+        
+        cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: row.reuseIdentifier, for: indexPath)
         
         if cell.frame.size.width != tableView.frame.size.width {
@@ -163,13 +169,13 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         let section = sections[section]
-        return section.headerHeight ?? section.headerView?.frame.size.height ?? 0
+        return section.headerHeight ?? section.headerView?.frame.size.height ?? UITableViewAutomaticDimension
     }
     
     open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
         let section = sections[section]
-        return section.footerHeight ?? section.footerView?.frame.size.height ?? 0
+        return section.footerHeight ?? section.footerView?.frame.size.height ?? UITableViewAutomaticDimension
     }
     
     // MARK: UITableViewDelegate - actions
@@ -252,8 +258,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         return self
     }
     
-    @discardableResult
-    open func delete(index: Int) -> Self {
+    open func delete(sectionAt index: Int) -> Self {
         
         sections.remove(at: index)
         return self
@@ -262,7 +267,19 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     @discardableResult
     open func clear() -> Self {
         
+        rowHeightCalculator?.invalidate()
         sections.removeAll()
+
+        return self
+    }
+    
+    // MARK: - deprecated methods -
+    
+    @available(*, deprecated, message: "Use 'delete(sectionAt:)' method instead")
+    @discardableResult
+    open func delete(index: Int) -> Self {
+        
+        sections.remove(at: index)
         return self
     }
 }

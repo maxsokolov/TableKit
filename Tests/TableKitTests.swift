@@ -171,7 +171,7 @@ class TabletTests: XCTestCase {
         let expectation = self.expectation(description: "cell action")
 
         let row = TableRow<TestTableViewCell>(item: TestData(title: "title"))
-            .action(TableRowAction(.custom(TestTableViewCellOptions.CellAction)) { (data) in
+            .on(TableRowAction(.custom(TestTableViewCellOptions.CellAction)) { (data) in
                 
                 XCTAssertNotNil(data.cell, "Action data should have a cell")
                 

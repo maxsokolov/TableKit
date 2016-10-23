@@ -20,38 +20,10 @@
 
 import UIKit
 
-public protocol RowConfigurable {
-    
-    func configure(_ cell: UITableViewCell)
-}
-
-public protocol RowActionable {
-    
-    var editingActions: [UITableViewRowAction]? { get }
-    func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool
-    
-    func invoke(_ action: TableRowActionType, cell: UITableViewCell?, path: IndexPath) -> Any?
-    func hasAction(_ action: TableRowActionType) -> Bool
-}
-
-public protocol RowHashable {
-    
-    var hashValue: Int { get }
-}
-
-public protocol Row: RowConfigurable, RowActionable, RowHashable {
-    
-    var reuseIdentifier: String { get }
-    var cellType: AnyClass { get }
-    
-    var estimatedHeight: CGFloat? { get }
-    var defaultHeight: CGFloat? { get }
-}
-
 open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableViewCell {
     
     open let item: CellType.T
-    private lazy var actions = [String: TableRowAction<CellType>]()
+    private lazy var actions = [String: [TableRowAction<CellType>]]()
     private(set) open var editingActions: [UITableViewRowAction]?
     
     open var hashValue: Int {
@@ -78,29 +50,32 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
         
         self.item = item
         self.editingActions = editingActions
-        actions?.forEach { self.actions[$0.type.key] = $0 }
+        actions?.forEach { on($0) }
     }
     
     // MARK: - RowConfigurable -
     
     open func configure(_ cell: UITableViewCell) {
+        
         (cell as? CellType)?.configure(with: item)
     }
     
     // MARK: - RowActionable -
     
-    open func invoke(_ action: TableRowActionType, cell: UITableViewCell?, path: IndexPath) -> Any? {
-        return actions[action.key]?.invoke(item: item, cell: cell, path: path)
+    open func invoke(action: TableRowActionType, cell: UITableViewCell?, path: IndexPath, userInfo: [AnyHashable: Any]? = nil) -> Any? {
+
+        return actions[action.key]?.flatMap({ $0.invokeActionOn(cell: cell, item: item, path: path, userInfo: userInfo) }).last
     }
     
-    open func hasAction(_ action: TableRowActionType) -> Bool {
+    open func has(action: TableRowActionType) -> Bool {
+        
         return actions[action.key] != nil
     }
     
     open func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool {
         
         if actions[TableRowActionType.canEdit.key] != nil {
-            return invoke(.canEdit, cell: nil, path: indexPath) as? Bool ?? false
+            return invoke(action: .canEdit, cell: nil, path: indexPath) as? Bool ?? false
         }
         return editingActions?.isEmpty == false || actions[TableRowActionType.clickDelete.key] != nil
     }
@@ -108,16 +83,49 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     // MARK: - actions -
     
     @discardableResult
-    open func action(_ action: TableRowAction<CellType>) -> Self {
+    open func on(_ action: TableRowAction<CellType>) -> Self {
+
+        if actions[action.type.key] == nil {
+            actions[action.type.key] = [TableRowAction<CellType>]()
+        }
+        actions[action.type.key]?.append(action)
         
-        actions[action.type.key] = action
         return self
     }
-    
+
     @discardableResult
-    open func action<T>(_ type: TableRowActionType, handler: @escaping (_ data: TableRowActionData<CellType>) -> T) -> Self {
+    open func on<T>(_ type: TableRowActionType, handler: @escaping (_ options: TableRowActionOptions<CellType>) -> T) -> Self {
         
-        actions[type.key] = TableRowAction<CellType>(type, handler: handler)
-        return self
+        return on(TableRowAction<CellType>(type, handler: handler))
+    }
+
+    open func removeAllActions() {
+        
+        actions.removeAll()
+    }
+    
+    open func removeAction(forActionId actionId: String) {
+
+        for (key, value) in actions {
+            if let actionIndex = value.index(where: { $0.id == actionId }) {
+                actions[key]?.remove(at: actionIndex)
+            }
+        }
+    }
+    
+    // MARK: - deprecated actions -
+    
+    @available(*, deprecated, message: "Use 'on' method instead")
+    @discardableResult
+    open func action(_ action: TableRowAction<CellType>) -> Self {
+
+        return on(action)
+    }
+    
+    @available(*, deprecated, message: "Use 'on' method instead")
+    @discardableResult
+    open func action<T>(_ type: TableRowActionType, handler: @escaping (_ options: TableRowActionOptions<CellType>) -> T) -> Self {
+        
+        return on(TableRowAction<CellType>(type, handler: handler))
     }
 }
