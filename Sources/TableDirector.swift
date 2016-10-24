@@ -101,6 +101,11 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
 
         let row = sections[indexPath.section].rows[indexPath.row]
+        
+        if rowHeightCalculator != nil {
+            cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
+        }
+        
         return row.estimatedHeight ?? rowHeightCalculator?.estimatedHeight(forRow: row, at: indexPath) ?? UITableViewAutomaticDimension
     }
     
@@ -108,7 +113,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         
         let row = sections[indexPath.section].rows[indexPath.row]
         
-        if shouldUsePrototypeCellHeightCalculation {
+        if rowHeightCalculator != nil {
             cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
         }
 
