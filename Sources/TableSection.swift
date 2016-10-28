@@ -92,6 +92,10 @@ open class TableSection {
         rows.remove(at: index)
     }
     
+    open func remove(rowAt index: Int) {
+        rows.remove(at: index)
+    }
+    
     // MARK: - deprecated methods -
     
     @available(*, deprecated, message: "Use 'delete(rowAt:)' method instead")
