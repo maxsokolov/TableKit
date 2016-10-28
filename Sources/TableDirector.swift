@@ -263,6 +263,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         return self
     }
     
+    @discardableResult
     open func delete(sectionAt index: Int) -> Self {
         
         sections.remove(at: index)
