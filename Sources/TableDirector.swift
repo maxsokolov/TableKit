@@ -26,7 +26,7 @@ import UIKit
 open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     open private(set) weak var tableView: UITableView?
-    open private(set) var sections = [TableSection]()
+    open fileprivate(set) var sections = [TableSection]()
     
     private weak var scrollDelegate: UIScrollViewDelegate?
     private var cellRegisterer: TableCellRegisterer?
@@ -232,8 +232,10 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
             invoke(action: .clickDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
         }
     }
-    
-    // MARK: - Sections manipulation -
+}
+
+// MARK: - Sections manipulation
+extension TableDirector {
     
     @discardableResult
     open func append(section: TableSection) -> Self {
@@ -269,17 +271,22 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         sections.remove(at: index)
         return self
     }
+
+    @discardableResult
+    open func remove(sectionAt index: Int) -> Self {
+        return delete(sectionAt: index)
+    }
     
     @discardableResult
     open func clear() -> Self {
         
         rowHeightCalculator?.invalidate()
         sections.removeAll()
-
+        
         return self
     }
     
-    // MARK: - deprecated methods -
+    // MARK: - deprecated methods
     
     @available(*, deprecated, message: "Use 'delete(sectionAt:)' method instead")
     @discardableResult
