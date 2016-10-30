@@ -98,6 +98,12 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
         
         return on(TableRowAction<CellType>(type, handler: handler))
     }
+    
+    @discardableResult
+    open func on(_ key: String, handler: @escaping (_ options: TableRowActionOptions<CellType>) -> ()) -> Self {
+        
+        return on(TableRowAction<CellType>(.custom(key), handler: handler))
+    }
 
     open func removeAllActions() {
         

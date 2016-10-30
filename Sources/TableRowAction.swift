@@ -76,8 +76,7 @@ open class TableRowAction<CellType: ConfigurableCell> where CellType: UITableVie
         self.handler = .action(handler)
     }
 
-    public func invokeActionOn(cell: UITableViewCell?, item: Any, path: IndexPath, userInfo: [AnyHashable: Any]?) -> Any? {
-        guard let item = item as? CellType.T else { return nil }
+    public func invokeActionOn(cell: UITableViewCell?, item: CellType.T, path: IndexPath, userInfo: [AnyHashable: Any]?) -> Any? {
 
         return handler.invoke(withOptions: TableRowActionOptions(item: item, cell: cell as? CellType, path: path, userInfo: userInfo))
     }
