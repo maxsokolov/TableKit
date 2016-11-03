@@ -50,6 +50,7 @@ open class TablePrototypeCellHeightCalculator: RowHeightCalculator {
 
         guard let cell = prototypeCell else { return 0 }
         
+        cell.prepareForReuse()
         row.configure(cell)
         
         cell.bounds = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: cell.bounds.height)
