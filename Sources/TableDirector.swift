@@ -65,7 +65,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     public convenience init(tableView: UITableView, scrollDelegate: UIScrollViewDelegate? = nil, shouldUseAutomaticCellRegistration: Bool = true, shouldUsePrototypeCellHeightCalculation: Bool = false) {
 
-        let heightCalculator = shouldUsePrototypeCellHeightCalculation ? TablePrototypeCellHeightCalculator(tableView: tableView) : nil
+        let heightCalculator: TablePrototypeCellHeightCalculator? = shouldUsePrototypeCellHeightCalculation ? TablePrototypeCellHeightCalculator(tableView: tableView) : nil
         
         self.init(tableView: tableView, scrollDelegate: scrollDelegate, shouldUseAutomaticCellRegistration: shouldUseAutomaticCellRegistration, cellHeightCalculator: heightCalculator)
     }
