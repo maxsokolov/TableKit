@@ -54,11 +54,12 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
             self.cellRegisterer = TableCellRegisterer(tableView: tableView)
         }
         
+        self.rowHeightCalculator = cellHeightCalculator
         self.scrollDelegate = scrollDelegate
         self.tableView = tableView
         self.tableView?.delegate = self
         self.tableView?.dataSource = self
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveAction), name: NSNotification.Name(rawValue: TableKitNotifications.CellAction), object: nil)
     }
     
