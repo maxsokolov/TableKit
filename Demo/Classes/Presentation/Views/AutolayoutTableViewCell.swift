@@ -21,7 +21,7 @@ class AutolayoutTableViewCell: UITableViewCell, ConfigurableCell {
     static var estimatedHeight: CGFloat? {
         return 150
     }
-    
+
     func configure(with string: T) {
         
         titleLabel.text = LoremIpsumTitle
