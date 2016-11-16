@@ -30,7 +30,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     private weak var scrollDelegate: UIScrollViewDelegate?
     private var cellRegisterer: TableCellRegisterer?
-    public var rowHeightCalculator: RowHeightCalculator?
+    public private(set) var rowHeightCalculator: RowHeightCalculator?
 
     @available(*, deprecated, message: "Produced incorrect behaviour")
     open var shouldUsePrototypeCellHeightCalculation: Bool = false {
@@ -93,7 +93,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         return scrollDelegate?.responds(to: selector) == true ? scrollDelegate : super.forwardingTarget(for: selector)
     }
     
-    // MARK: - Internal -
+    // MARK: - Internal
     
     func hasAction(_ action: TableRowActionType, atIndexPath indexPath: IndexPath) -> Bool {
         return sections[indexPath.section].rows[indexPath.row].has(action: action)
@@ -225,7 +225,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         return indexPath
     }
     
-    // MARK: - Row editing -
+    // MARK: - Row editing
     
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return sections[indexPath.section].rows[indexPath.row].isEditingAllowed(forIndexPath: indexPath)
