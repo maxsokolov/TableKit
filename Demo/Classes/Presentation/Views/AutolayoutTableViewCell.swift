@@ -14,7 +14,7 @@ private let LoremIpsumBody = "Lorem ipsum dolor sit amet, consectetur adipisicin
 
 class AutolayoutTableViewCell: UITableViewCell, ConfigurableCell {
     
-    typealias T = Void
+    typealias T = String
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subtitleLabel: UILabel!
@@ -26,7 +26,7 @@ class AutolayoutTableViewCell: UITableViewCell, ConfigurableCell {
     func configure(with string: T) {
         
         titleLabel.text = LoremIpsumTitle
-        subtitleLabel.text = LoremIpsumBody
+        subtitleLabel.text = string
     }
     
     override func layoutSubviews() {
