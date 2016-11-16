@@ -2,7 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.1.0](https://github.com/maxsokolov/TableKit/releases/tag/1.4.0)
+## [2.3.0](https://github.com/maxsokolov/TableKit/releases/tag/2.3.0)
+Released on 2016-11-16.
+- `shouldUsePrototypeCellHeightCalculation` moved to `TableDirector(tableView: tableView, shouldUsePrototypeCellHeightCalculation: true)`
+- Prototype cell height calculation bugfixes
+
+## [2.1.0](https://github.com/maxsokolov/TableKit/releases/tag/2.1.0)
 Released on 2016-10-19.
 - `action` method was deprecated on TableRow. Use `on` instead.
 - Support multiple actions with same type on row.
