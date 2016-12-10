@@ -3,9 +3,13 @@ import UIKit
 class TableDelegate: NSObject, UITableViewDelegate {
     
     private weak var tableDirector: TableDirectorV2?
+    private weak var scrollDelegate: UIScrollViewDelegate?
+    let rowHeightCalculator: RowHeightCalculator
     
-    init(tableDirector: TableDirectorV2) {
+    init(tableDirector: TableDirectorV2, scrollDelegate: UIScrollViewDelegate?, rowHeightCalculator: RowHeightCalculator) {
         
+        self.scrollDelegate = scrollDelegate
+        self.rowHeightCalculator = rowHeightCalculator
         self.tableDirector = tableDirector
         super.init()
         self.tableDirector?.tableView?.delegate = self
@@ -14,7 +18,9 @@ class TableDelegate: NSObject, UITableViewDelegate {
     // MARK: - Cell height -
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        guard let row = tableDirector?.sections[indexPath.section].rows[indexPath.row] else { return 0 }
+        
+        return rowHeightCalculator.height(forRow: row, at: indexPath)
     }
     
     // MARK: - Actions -
@@ -69,5 +75,15 @@ class TableDelegate: NSObject, UITableViewDelegate {
         
         let section = tableDirector?.sections[section]
         return section?.footerHeight ?? section?.footerView?.frame.size.height ?? UITableViewAutomaticDimension
+    }
+    
+    // MARK: - Scroll delegate support -
+    
+    override func responds(to selector: Selector) -> Bool {
+        return super.responds(to: selector) || scrollDelegate?.responds(to: selector) == true
+    }
+    
+    override func forwardingTarget(for selector: Selector) -> Any? {
+        return scrollDelegate?.responds(to: selector) == true ? scrollDelegate : super.forwardingTarget(for: selector)
     }
 }

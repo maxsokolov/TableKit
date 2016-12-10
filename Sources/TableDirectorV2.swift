@@ -8,11 +8,11 @@ open class TableDirectorV2 {
     private var dataSource: TableDataSource?
     private var delegate: TableDelegate?
     
-    init(tableView: UITableView) {
+    public init(tableView: UITableView, scrollDelegate: UIScrollViewDelegate? = nil) {
         
         self.tableView = tableView
         self.dataSource = TableDataSource(tableDirector: self)
-        self.delegate = TableDelegate(tableDirector: self)
+        self.delegate = TableDelegate(tableDirector: self, scrollDelegate: scrollDelegate, rowHeightCalculator: TablePrototypeCellHeightCalculator(tableView: tableView))
     }
     
     // MARK: -

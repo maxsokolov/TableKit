@@ -9,14 +9,14 @@
 import UIKit
 import TableKit
 
-class AutolayoutCellsController: UIViewController {
+class AutolayoutCellsController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
-            tableDirector = TableDirector(tableView: tableView, shouldUsePrototypeCellHeightCalculation: true)
+            tableDirector = TableDirectorV2(tableView: tableView, scrollDelegate: self)
         }
     }
-    var tableDirector: TableDirector!
+    var tableDirector: TableDirectorV2!
     
     func randomString(length: Int) -> String {
         
@@ -30,6 +30,8 @@ class AutolayoutCellsController: UIViewController {
             var nextChar = letters.character(at: Int(rand))
             randomString += NSString(characters: &nextChar, length: 1) as String
         }
+        
+        randomString += "// END"
         
         return randomString
     }
@@ -53,6 +55,12 @@ class AutolayoutCellsController: UIViewController {
             section += row
         }
         
-        tableDirector += section
+        tableDirector.append(section: section)
+        //tableDirector += section
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        
+        print("begin dragging")
     }
 }
