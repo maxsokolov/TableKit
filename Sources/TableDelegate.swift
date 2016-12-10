@@ -20,23 +20,33 @@ class TableDelegate: NSObject, UITableViewDelegate {
     // MARK: - Actions -
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+    
+        let cell = tableView.cellForRow(at: indexPath)
+        if tableDirector?.invoke(action: .click, cell: cell, indexPath: indexPath) != nil {
+            tableView.deselectRow(at: indexPath, animated: true)
+        } else {
+            _ = tableDirector?.invoke(action: .select, cell: cell, indexPath: indexPath)
+        }
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-    
+        _ = tableDirector?.invoke(action: .deselect, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
+        _ = tableDirector?.invoke(action: .willDisplay, cell: cell, indexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return true
+        return tableDirector?.invoke(action: .shouldHighlight, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? true
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        return nil
+        
+        if tableDirector?.hasAction(.willSelect, atIndexPath: indexPath) == true {
+            return tableDirector?.invoke(action: .willSelect, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? IndexPath
+        }
+        return indexPath
     }
     
     // MARK: - Sections accessories -

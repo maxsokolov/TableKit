@@ -22,6 +22,10 @@ open class TableDirectorV2 {
         return sections[indexPath.section].rows[indexPath.row].invoke(action: action, cell: cell, path: indexPath, userInfo: userInfo)
     }
     
+    func hasAction(_ action: TableRowActionType, atIndexPath indexPath: IndexPath) -> Bool {
+        return sections[indexPath.section].rows[indexPath.row].has(action: action)
+    }
+    
     // MARK: -
     
     @discardableResult
