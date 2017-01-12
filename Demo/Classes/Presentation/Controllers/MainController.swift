@@ -13,10 +13,10 @@ class MainController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
-            tableDirector = TableDirector(tableView: tableView)
+            tableDirector = TableDirectorV2(tableView: tableView)
         }
     }
-    var tableDirector: TableDirector!
+    var tableDirector: TableDirectorV2!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +47,6 @@ class MainController: UIViewController {
         ]
 
         // automatically creates a section, also could be used like tableDirector.append(rows: rows)
-        tableDirector += rows
+        tableDirector.append(rows: rows)
     }
 }

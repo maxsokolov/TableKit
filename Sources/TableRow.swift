@@ -118,20 +118,4 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
             }
         }
     }
-    
-    // MARK: - deprecated actions -
-    
-    @available(*, deprecated, message: "Use 'on' method instead")
-    @discardableResult
-    open func action(_ action: TableRowAction<CellType>) -> Self {
-
-        return on(action)
-    }
-    
-    @available(*, deprecated, message: "Use 'on' method instead")
-    @discardableResult
-    open func action<T>(_ type: TableRowActionType, handler: @escaping (_ options: TableRowActionOptions<CellType>) -> T) -> Self {
-        
-        return on(TableRowAction<CellType>(type, handler: handler))
-    }
 }
