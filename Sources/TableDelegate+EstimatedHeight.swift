@@ -29,6 +29,6 @@ class TableDelegateEstimated: TableDelegate {
          cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
          }*/
         
-        return row.defaultHeight ?? row.estimatedHeight ?? rowHeightCalculator.estimatedHeight(forRow: row, at: indexPath) //?? UITableViewAutomaticDimension
+        return row.defaultHeight ?? row.estimatedHeight ?? rowHeightCalculator?.estimatedHeight(forRow: row, at: indexPath) ?? UITableViewAutomaticDimension
     }
 }

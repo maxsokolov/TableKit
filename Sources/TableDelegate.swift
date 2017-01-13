@@ -24,9 +24,9 @@ class TableDelegate: NSObject, UITableViewDelegate {
     
     private(set) weak var tableDirector: TableDirector?
     private weak var scrollDelegate: UIScrollViewDelegate?
-    let rowHeightCalculator: RowHeightCalculator
+    let rowHeightCalculator: RowHeightCalculator?
     
-    init(tableDirector: TableDirector, scrollDelegate: UIScrollViewDelegate?, rowHeightCalculator: RowHeightCalculator) {
+    init(tableDirector: TableDirector, scrollDelegate: UIScrollViewDelegate?, rowHeightCalculator: RowHeightCalculator?) {
         
         self.scrollDelegate = scrollDelegate
         self.rowHeightCalculator = rowHeightCalculator
@@ -35,7 +35,7 @@ class TableDelegate: NSObject, UITableViewDelegate {
         self.tableDirector?.tableView?.delegate = self
     }
     
-    // MARK: - Cell height -
+    // MARK: - Cell height
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let row = tableDirector?.sections[indexPath.section].rows[indexPath.row] else { return 0 }
@@ -44,10 +44,12 @@ class TableDelegate: NSObject, UITableViewDelegate {
             cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
         }*/
         
-        return rowHeightCalculator.height(forRow: row, at: indexPath)
+        let rowHeight = tableDirector?.invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat
+        
+        return rowHeight ?? row.defaultHeight ?? rowHeightCalculator?.height(forRow: row, at: indexPath) ?? UITableViewAutomaticDimension
     }
     
-    // MARK: - Actions -
+    // MARK: - Actions
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
@@ -79,7 +81,7 @@ class TableDelegate: NSObject, UITableViewDelegate {
         return indexPath
     }
     
-    // MARK: - Sections accessories -
+    // MARK: - Sections accessories
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return tableDirector?.sections[section].headerView
@@ -101,7 +103,7 @@ class TableDelegate: NSObject, UITableViewDelegate {
         return section?.footerHeight ?? section?.footerView?.frame.size.height ?? UITableViewAutomaticDimension
     }
     
-    // MARK: - Scroll delegate support -
+    // MARK: - Scroll delegate support
     
     override func responds(to selector: Selector) -> Bool {
         return super.responds(to: selector) || scrollDelegate?.responds(to: selector) == true
