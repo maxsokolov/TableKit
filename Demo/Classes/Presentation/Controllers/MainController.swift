@@ -13,10 +13,10 @@ class MainController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
-            tableDirector = TableDirectorV2(tableView: tableView)
+            tableDirector = TableDirector(tableView: tableView)
         }
     }
-    var tableDirector: TableDirectorV2!
+    var tableDirector: TableDirector!
     
     override func viewDidLoad() {
         super.viewDidLoad()

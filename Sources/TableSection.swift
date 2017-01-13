@@ -61,8 +61,6 @@ open class TableSection {
         self.headerView = headerView
         self.footerView = footerView
     }
-
-    // MARK: - Public -
     
     open func clear() {
         rows.removeAll()
@@ -93,13 +91,6 @@ open class TableSection {
     }
     
     open func remove(rowAt index: Int) {
-        rows.remove(at: index)
-    }
-    
-    // MARK: - deprecated methods -
-    
-    @available(*, deprecated, message: "Use 'delete(rowAt:)' method instead")
-    open func delete(index: Int) {
         rows.remove(at: index)
     }
 }

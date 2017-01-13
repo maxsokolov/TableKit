@@ -25,6 +25,10 @@ class TableDelegateEstimated: TableDelegate {
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let row = tableDirector?.sections[indexPath.section].rows[indexPath.row] else { return 0 }
         
+        /*if rowHeightCalculator != nil {
+         cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
+         }*/
+        
         return row.defaultHeight ?? row.estimatedHeight ?? rowHeightCalculator.estimatedHeight(forRow: row, at: indexPath) //?? UITableViewAutomaticDimension
     }
 }

@@ -22,9 +22,9 @@ import UIKit
 
 class TableDataSource: NSObject, UITableViewDataSource {
     
-    private weak var tableDirector: TableDirectorV2?
+    private weak var tableDirector: TableDirector?
     
-    init(tableDirector: TableDirectorV2) {
+    init(tableDirector: TableDirector) {
         
         self.tableDirector = tableDirector
         super.init()

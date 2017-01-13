@@ -13,10 +13,10 @@ class AutolayoutCellsController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
-            tableDirector = TableDirectorV2(tableView: tableView, scrollDelegate: self)
+            tableDirector = TableDirector(tableView: tableView, scrollDelegate: self)
         }
     }
-    var tableDirector: TableDirectorV2!
+    var tableDirector: TableDirector!
     
     func randomString(length: Int) -> String {
         

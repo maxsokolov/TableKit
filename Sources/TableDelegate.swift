@@ -22,11 +22,11 @@ import UIKit
 
 class TableDelegate: NSObject, UITableViewDelegate {
     
-    private(set) weak var tableDirector: TableDirectorV2?
+    private(set) weak var tableDirector: TableDirector?
     private weak var scrollDelegate: UIScrollViewDelegate?
     let rowHeightCalculator: RowHeightCalculator
     
-    init(tableDirector: TableDirectorV2, scrollDelegate: UIScrollViewDelegate?, rowHeightCalculator: RowHeightCalculator) {
+    init(tableDirector: TableDirector, scrollDelegate: UIScrollViewDelegate?, rowHeightCalculator: RowHeightCalculator) {
         
         self.scrollDelegate = scrollDelegate
         self.rowHeightCalculator = rowHeightCalculator
