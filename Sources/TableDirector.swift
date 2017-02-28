@@ -275,6 +275,15 @@ extension TableDirector {
     }
     
     @discardableResult
+    open func replaceSection(at index: Int, with section: TableSection) -> Self {
+        
+        if index < sections.count {
+            sections[index] = section
+        }
+        return self
+    }
+    
+    @discardableResult
     open func delete(sectionAt index: Int) -> Self {
         
         sections.remove(at: index)
