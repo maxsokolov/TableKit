@@ -26,6 +26,7 @@ open class TableSection {
     
     open var headerTitle: String?
     open var footerTitle: String?
+    open var indexTitle: String?
     
     open var headerView: UIView?
     open var footerView: UIView?

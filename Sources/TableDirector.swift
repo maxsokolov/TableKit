@@ -31,8 +31,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     private weak var scrollDelegate: UIScrollViewDelegate?
     private var cellRegisterer: TableCellRegisterer?
     public private(set) var rowHeightCalculator: RowHeightCalculator?
-    public var sectionIndexTitles: [String]?
-    public var onSectionForIndex: ((_ title: String, _ index: Int) -> Int)?
+    private var sectionsIndex = [Int]()
     
     @available(*, deprecated, message: "Produced incorrect behaviour")
     open var shouldUsePrototypeCellHeightCalculation: Bool = false {
@@ -197,13 +196,21 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     // MARK: UITableViewDataSource - Index
     
     public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return sectionIndexTitles
+        
+        var indexTitles = [String]()
+        sectionsIndex = []
+        sections.enumerated().forEach { index, section in
+            
+            if let title = section.indexTitle {
+                indexTitles.append(title)
+                sectionsIndex.append(index)
+            }
+        }
+        return indexTitles.isEmpty ? nil : indexTitles
     }
     
     public func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
-        guard let onSectionForIndex = onSectionForIndex else { return 0 }
-        
-        return onSectionForIndex(title, index)
+        return sectionsIndex[index]
     }
     
     // MARK: UITableViewDelegate - actions
