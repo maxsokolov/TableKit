@@ -20,10 +20,6 @@
 
 import UIKit
 
-struct TableKitNotifications {
-    static let CellAction = "TableKitNotificationsCellAction"
-}
-
 /**
     A custom action that you can trigger from your cell.
     You can easily catch actions using a chaining manner with your row.

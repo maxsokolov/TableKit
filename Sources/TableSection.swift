@@ -26,6 +26,7 @@ open class TableSection {
     
     open var headerTitle: String?
     open var footerTitle: String?
+    open var indexTitle: String?
     
     open var headerView: UIView?
     open var footerView: UIView?
@@ -88,6 +89,17 @@ open class TableSection {
         rows[index] = row
     }
     
+    open func delete(rowAt index: Int) {
+        rows.remove(at: index)
+    }
+    
+    open func remove(rowAt index: Int) {
+        rows.remove(at: index)
+    }
+    
+    // MARK: - deprecated methods -
+    
+    @available(*, deprecated, message: "Use 'delete(rowAt:)' method instead")
     open func delete(index: Int) {
         rows.remove(at: index)
     }

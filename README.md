@@ -4,7 +4,7 @@
 	<a href="https://travis-ci.org/maxsokolov/TableKit"><img src="https://api.travis-ci.org/maxsokolov/TableKit.svg" alt="Build Status" /></a>
 	<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift_3.0-compatible-4BC51D.svg?style=flat" alt="Swift 3.0 compatible" /></a>
 	<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible" /></a>
-	<a href="https://cocoapods.org/pods/tablekit"><img src="https://img.shields.io/badge/pod-2.0.0-blue.svg" alt="CocoaPods compatible" /></a>
+	<a href="https://cocoapods.org/pods/tablekit"><img src="https://img.shields.io/badge/pod-2.3.1-blue.svg" alt="CocoaPods compatible" /></a>
 	<img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
 	<a href="https://raw.githubusercontent.com/maxsokolov/tablekit/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License: MIT" /></a>
 </p>
@@ -84,13 +84,14 @@ You could have as many rows and sections as you need.
 
 It nice to have some actions that related to your cells:
 ```swift
-let action = TableRowAction<StringTableViewCell>(.click) { (data) in
+let action = TableRowAction<StringTableViewCell>(.click) { (options) in
 
 	// you could access any useful information that relates to the action
 
-	// data.cell - StringTableViewCell?
-	// data.item - String
-	// data.indexPath - IndexPath
+	// options.cell - StringTableViewCell?
+	// options.item - String
+	// options.indexPath - IndexPath
+	// options.userInfo - [AnyHashable: Any]?
 }
 
 let row = TableRow<StringTableViewCell>(item: "some", actions: [action])
@@ -98,10 +99,10 @@ let row = TableRow<StringTableViewCell>(item: "some", actions: [action])
 Or, using nice chaining approach:
 ```swift
 let row = TableRow<StringTableViewCell>(item: "some")
-	.action(.click) { (data) in
+	.on(.click) { (options) in
 	
 	}
-	.action(.shouldHighlight) { (data) -> Bool in
+	.on(.shouldHighlight) { (options) -> Bool in
 		return false
 	}
 ```
@@ -126,9 +127,28 @@ class MyTableViewCell: UITableViewCell, ConfigurableCell {
 ```
 And handle them accordingly:
 ```swift
-let myAction = TableRowAction<MyTableViewCell>(.custom(MyActions.ButtonClicked)) { (data) in
+let myAction = TableRowAction<MyTableViewCell>(.custom(MyActions.ButtonClicked)) { (options) in
 
 }
+```
+## Multiple actions with same type
+
+It's also possible to use multiple actions with same type:
+```swift
+let click1 = TableRowAction<StringTableViewCell>(.click) { (options) in }
+click1.id = "click1" // optional
+
+let click2 = TableRowAction<StringTableViewCell>(.click) { (options) in }
+click2.id = "click2" // optional
+
+let row = TableRow<StringTableViewCell>(item: "some", actions: [click1, click2])
+```
+Could be useful in case if you want to separate your logic somehow. Actions will be invoked in order which they were attached.
+> If you define multiple actions with same type which also return a value, only last return value will be used for table view.
+
+You could also remove any action by id:
+```swift
+row.removeAction(forActionId: "action_id")
 ```
 
 # Advanced
@@ -147,9 +167,9 @@ class StringTableViewCell: UITableViewCell, ConfigurableCell {
 ```
 It's enough for most cases. But you may be not happy with this. So you could use a prototype cell to calculate cells heights. To enable this feature simply use this property:
 ```swift
-tableDirector.shouldUsePrototypeCellHeightCalculation = true
+let tableDirector = TableDirector(tableView: tableView, shouldUsePrototypeCellHeightCalculation: true)
 ```
-It does all dirty work with prototypes for you [behind the scene](Sources/HeightStrategy.swift), so you don't have to worry about anything except of your cell configuration:
+It does all dirty work with prototypes for you [behind the scene](Sources/TablePrototypeCellHeightCalculator.swift), so you don't have to worry about anything except of your cell configuration:
 ```swift
 class ImageTableViewCell: UITableViewCell, ConfigurableCell {
 

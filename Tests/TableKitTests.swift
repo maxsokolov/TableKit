@@ -171,7 +171,7 @@ class TabletTests: XCTestCase {
         let expectation = self.expectation(description: "cell action")
 
         let row = TableRow<TestTableViewCell>(item: TestData(title: "title"))
-            .action(TableRowAction(.custom(TestTableViewCellOptions.CellAction)) { (data) in
+            .on(TableRowAction(.custom(TestTableViewCellOptions.CellAction)) { (data) in
                 
                 XCTAssertNotNil(data.cell, "Action data should have a cell")
                 
@@ -190,4 +190,54 @@ class TabletTests: XCTestCase {
 
         waitForExpectations(timeout: 1.0, handler: nil)
     }
+    
+    func testReplaceSectionOnExistingIndex() {
+        
+        let row1 = TableRow<TestTableViewCell>(item: TestData(title: "title1"))
+        let row2 = TableRow<TestTableViewCell>(item: TestData(title: "title2"))
+    
+        let section1 = TableSection(headerView: nil, footerView: nil, rows: nil)
+        section1 += row1
+        
+        let section2 = TableSection(headerView: nil, footerView: nil, rows: nil)
+        section2 += row2
+        
+        testController.tableDirector += section1
+        testController.tableView.reloadData()
+        
+        let cell = testController.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TestTableViewCell
+        XCTAssertTrue(cell?.textLabel?.text == "title1")
+        
+        testController.tableDirector.replaceSection(at: 0, with: section2)
+        testController.tableView.reloadData()
+        
+       let cell1 = testController.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TestTableViewCell
+        XCTAssertTrue(cell1?.textLabel?.text == "title2")
+    }
+    
+    
+    func testReplaceSectionOnWrongIndex() {
+        
+        let row1 = TableRow<TestTableViewCell>(item: TestData(title: "title1"))
+        let row2 = TableRow<TestTableViewCell>(item: TestData(title: "title2"))
+        
+        let section1 = TableSection(headerView: nil, footerView: nil, rows: nil)
+        section1 += row1
+        
+        let section2 = TableSection(headerView: nil, footerView: nil, rows: nil)
+        section2 += row2
+        
+        testController.tableDirector += section1
+        testController.tableView.reloadData()
+        
+        let cell = testController.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TestTableViewCell
+        XCTAssertTrue(cell?.textLabel?.text == "title1")
+        
+        testController.tableDirector.replaceSection(at: 33, with: section2)
+        testController.tableView.reloadData()
+        
+        let cell1 = testController.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TestTableViewCell
+        XCTAssertTrue(cell1?.textLabel?.text == "title1")
+    }
+    
 }

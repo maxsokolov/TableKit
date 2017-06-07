@@ -20,26 +20,18 @@
 
 import UIKit
 
-public protocol CellHeightCalculatable {
+open class TablePrototypeCellHeightCalculator: RowHeightCalculator {
 
-    func height(_ row: Row, path: IndexPath) -> CGFloat
-    func estimatedHeight(_ row: Row, path: IndexPath) -> CGFloat
-    
-    func invalidate()
-}
-
-open class PrototypeHeightStrategy: CellHeightCalculatable {
-
-    private weak var tableView: UITableView?
+    private(set) weak var tableView: UITableView?
     private var prototypes = [String: UITableViewCell]()
     private var cachedHeights = [Int: CGFloat]()
     private var separatorHeight = 1 / UIScreen.main.scale
     
-    init(tableView: UITableView?) {
+    public init(tableView: UITableView?) {
         self.tableView = tableView
     }
     
-    open func height(_ row: Row, path: IndexPath) -> CGFloat {
+    open func height(forRow row: Row, at indexPath: IndexPath) -> CGFloat {
 
         guard let tableView = tableView else { return 0 }
 
@@ -58,6 +50,7 @@ open class PrototypeHeightStrategy: CellHeightCalculatable {
 
         guard let cell = prototypeCell else { return 0 }
         
+        cell.prepareForReuse()
         row.configure(cell)
         
         cell.bounds = CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: cell.bounds.height)
@@ -71,7 +64,7 @@ open class PrototypeHeightStrategy: CellHeightCalculatable {
         return height
     }
 
-    open func estimatedHeight(_ row: Row, path: IndexPath) -> CGFloat {
+    open func estimatedHeight(forRow row: Row, at indexPath: IndexPath) -> CGFloat {
 
         guard let tableView = tableView else { return 0 }
 
