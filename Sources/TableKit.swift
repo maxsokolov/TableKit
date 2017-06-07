@@ -60,6 +60,7 @@ public enum TableRowActionType {
     case deselect
     case willSelect
     case willDisplay
+    case didEndDisplaying
     case shouldHighlight
     case height
     case canEdit

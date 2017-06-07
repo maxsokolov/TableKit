@@ -215,7 +215,6 @@ class TabletTests: XCTestCase {
         XCTAssertTrue(cell1?.textLabel?.text == "title2")
     }
     
-    
     func testReplaceSectionOnWrongIndex() {
         
         let row1 = TableRow<TestTableViewCell>(item: TestData(title: "title1"))
