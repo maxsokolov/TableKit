@@ -251,10 +251,6 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         }
         return indexPath
     }
-    
-    open func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        invoke(action: .didEndDisplaying, cell: cell, indexPath: indexPath)
-    }
 
     // MARK: - Row editing
     
