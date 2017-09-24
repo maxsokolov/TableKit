@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.5.0](https://github.com/maxsokolov/TableKit/releases/tag/2.5.0)
+Released on 2017-09-24.
+- Swift 4.0 support.
+
 ## [2.3.0](https://github.com/maxsokolov/TableKit/releases/tag/2.3.0)
 Released on 2016-11-16.
 - `shouldUsePrototypeCellHeightCalculation` moved to `TableDirector(tableView: tableView, shouldUsePrototypeCellHeightCalculation: true)`
