@@ -2,7 +2,7 @@
 
 <p align="left">
 	<a href="https://travis-ci.org/maxsokolov/TableKit"><img src="https://api.travis-ci.org/maxsokolov/TableKit.svg" alt="Build Status" /></a>
-	<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift_3.0-compatible-4BC51D.svg?style=flat" alt="Swift 4.0 compatible" /></a>
+	<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift_4.0-compatible-4BC51D.svg?style=flat" alt="Swift 4.0 compatible" /></a>
 	<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible" /></a>
 	<a href="https://cocoapods.org/pods/tablekit"><img src="https://img.shields.io/badge/pod-2.5.0-blue.svg" alt="CocoaPods compatible" /></a>
 	<img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
@@ -53,29 +53,29 @@ Done. Your table is ready. Your cells have to conform to `ConfigurableCell` prot
 ```swift
 class StringTableViewCell: UITableViewCell, ConfigurableCell {
 
-	func configure(with string: String) {
+    func configure(with string: String) {
 		
-		textLabel?.text = string
-	}
+        textLabel?.text = string
+    }
 }
 
 class UserTableViewCell: UITableViewCell, ConfigurableCell {
 
-	static var estimatedHeight: CGFloat? {
-		return 100
-	}
-
-	// is not required to be implemented
-	// by default reuse id is equal to cell's class name
-	static var reuseIdentifier: String {
-		return "my id"
+    static var estimatedHeight: CGFloat? {
+        return 100
     }
 
-	func configure(with user: User) {
+    // is not required to be implemented
+    // by default reuse id is equal to cell's class name
+    static var reuseIdentifier: String {
+        return "my id"
+    }
+
+    func configure(with user: User) {
 		
-		textLabel?.text = user.name
-		detailTextLabel?.text = "Rating: \(user.rating)"
-	}
+        textLabel?.text = user.name
+        detailTextLabel?.text = "Rating: \(user.rating)"
+    }
 }
 ```
 You could have as many rows and sections as you need.
@@ -86,12 +86,12 @@ It nice to have some actions that related to your cells:
 ```swift
 let action = TableRowAction<StringTableViewCell>(.click) { (options) in
 
-	// you could access any useful information that relates to the action
+    // you could access any useful information that relates to the action
 
-	// options.cell - StringTableViewCell?
-	// options.item - String
-	// options.indexPath - IndexPath
-	// options.userInfo - [AnyHashable: Any]?
+    // options.cell - StringTableViewCell?
+    // options.item - String
+    // options.indexPath - IndexPath
+    // options.userInfo - [AnyHashable: Any]?
 }
 
 let row = TableRow<StringTableViewCell>(item: "some", actions: [action])
@@ -99,12 +99,12 @@ let row = TableRow<StringTableViewCell>(item: "some", actions: [action])
 Or, using nice chaining approach:
 ```swift
 let row = TableRow<StringTableViewCell>(item: "some")
-	.on(.click) { (options) in
+    .on(.click) { (options) in
 	
-	}
-	.on(.shouldHighlight) { (options) -> Bool in
-		return false
-	}
+    }
+    .on(.shouldHighlight) { (options) -> Bool in
+        return false
+    }
 ```
 You could find all available actions [here](Sources/TableRowAction.swift).
 
@@ -119,10 +119,10 @@ struct MyActions {
 
 class MyTableViewCell: UITableViewCell, ConfigurableCell {
 
-	@IBAction func myButtonClicked(sender: UIButton) {
+    @IBAction func myButtonClicked(sender: UIButton) {
 	
-		TableCellAction(key: MyActions.ButtonClicked, sender: self).invoke()
-	}
+        TableCellAction(key: MyActions.ButtonClicked, sender: self).invoke()
+    }
 }
 ```
 And handle them accordingly:
@@ -158,9 +158,9 @@ By default TableKit relies on <a href="https://developer.apple.com/library/ios/d
 ```swift
 class StringTableViewCell: UITableViewCell, ConfigurableCell {
 
-	// ...
+    // ...
 
-	static var estimatedHeight: CGFloat? {
+    static var estimatedHeight: CGFloat? {
         return 255
     }
 }
@@ -173,16 +173,16 @@ It does all dirty work with prototypes for you [behind the scene](Sources/TableP
 ```swift
 class ImageTableViewCell: UITableViewCell, ConfigurableCell {
 
-	func configure(with url: NSURL) {
+    func configure(with url: NSURL) {
 		
-		loadImageAsync(url: url, imageView: imageView)
-	}
+        loadImageAsync(url: url, imageView: imageView)
+    }
 
-	override func layoutSubviews() {
-		super.layoutSubviews()
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
-		contentView.layoutIfNeeded()
-		multilineLabel.preferredMaxLayoutWidth = multilineLabel.bounds.size.width
+        contentView.layoutIfNeeded()
+        multilineLabel.preferredMaxLayoutWidth = multilineLabel.bounds.size.width
     }
 }
 ```
