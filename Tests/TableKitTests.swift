@@ -66,7 +66,7 @@ class TestTableViewCell: UITableViewCell, ConfigurableCell {
     }
 }
 
-class TabletTests: XCTestCase {
+class TableKitTests: XCTestCase {
 
     var testController: TestController!
 
