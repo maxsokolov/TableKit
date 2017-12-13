@@ -43,7 +43,9 @@ class AutolayoutCellsController: UIViewController {
         
         title = "Autolayout cells"
         
-        let section = TableSection()
+        let header = AutolayoutSectionHeaderView.loadFromNib()
+        let section = TableSection(headerView: header, footerView: nil)
+        section.headerHeight = getViewHeight(view: header, width: UIScreen.main.bounds.width)
         
         var rows = 0
         while rows <= 20 {
@@ -54,5 +56,14 @@ class AutolayoutCellsController: UIViewController {
         }
         
         tableDirector += section
+    }
+    
+    func getViewHeight(view: UIView, width: CGFloat) -> CGFloat {
+        
+        view.frame = CGRect(x: 0, y: 0, width: width, height: view.frame.size.height)
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+        
+        return view.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
     }
 }

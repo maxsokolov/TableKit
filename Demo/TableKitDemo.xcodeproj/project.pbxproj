@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5079ADE31FE1BF1B000CC345 /* AutolayoutSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5079ADE21FE1BF1B000CC345 /* AutolayoutSectionHeaderView.swift */; };
+		5079ADE61FE1BF65000CC345 /* AutolayoutSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5079ADE51FE1BF65000CC345 /* AutolayoutSectionHeaderView.xib */; };
 		DA08A0531CF4E9B500BBF1F8 /* AutolayoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08A0521CF4E9B500BBF1F8 /* AutolayoutTableViewCell.swift */; };
 		DA55465D1D1569CC00AA83EE /* AutolayoutCellsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA55465C1D1569CC00AA83EE /* AutolayoutCellsController.swift */; };
 		DA5546601D156A4F00AA83EE /* ConfigurableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA55465F1D156A4F00AA83EE /* ConfigurableTableViewCell.swift */; };
@@ -61,6 +63,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5079ADE21FE1BF1B000CC345 /* AutolayoutSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutolayoutSectionHeaderView.swift; sourceTree = "<group>"; };
+		5079ADE51FE1BF65000CC345 /* AutolayoutSectionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AutolayoutSectionHeaderView.xib; sourceTree = "<group>"; };
 		DA08A0521CF4E9B500BBF1F8 /* AutolayoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutolayoutTableViewCell.swift; sourceTree = "<group>"; };
 		DA55465C1D1569CC00AA83EE /* AutolayoutCellsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutolayoutCellsController.swift; sourceTree = "<group>"; };
 		DA55465F1D156A4F00AA83EE /* ConfigurableTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableTableViewCell.swift; sourceTree = "<group>"; };
@@ -194,6 +198,8 @@
 				DA08A0521CF4E9B500BBF1F8 /* AutolayoutTableViewCell.swift */,
 				DA5546631D15762000AA83EE /* NibTableViewCell.swift */,
 				DA5546651D15765900AA83EE /* NibTableViewCell.xib */,
+				5079ADE21FE1BF1B000CC345 /* AutolayoutSectionHeaderView.swift */,
+				5079ADE51FE1BF65000CC345 /* AutolayoutSectionHeaderView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -284,6 +290,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAC2D5CF1C9D30A7009E9C19 /* Main.storyboard in Resources */,
+				5079ADE61FE1BF65000CC345 /* AutolayoutSectionHeaderView.xib in Resources */,
 				DA5546661D15765900AA83EE /* NibTableViewCell.xib in Resources */,
 				DAC2D5D01C9D30A7009E9C19 /* LaunchScreen.storyboard in Resources */,
 				DAC2D69C1C9E75E3009E9C19 /* Assets.xcassets in Resources */,
@@ -301,6 +308,7 @@
 				DA55465D1D1569CC00AA83EE /* AutolayoutCellsController.swift in Sources */,
 				DA5546681D15771D00AA83EE /* NibCellsController.swift in Sources */,
 				DAC2D5CA1C9D303E009E9C19 /* AppDelegate.swift in Sources */,
+				5079ADE31FE1BF1B000CC345 /* AutolayoutSectionHeaderView.swift in Sources */,
 				DA5546641D15762000AA83EE /* NibTableViewCell.swift in Sources */,
 				DA5546601D156A4F00AA83EE /* ConfigurableTableViewCell.swift in Sources */,
 				DA08A0531CF4E9B500BBF1F8 /* AutolayoutTableViewCell.swift in Sources */,
