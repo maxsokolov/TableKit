@@ -240,6 +240,10 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         invoke(action: .willDisplay, cell: cell, indexPath: indexPath)
     }
+
+    public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        invoke(action: .didEndDisplaying, cell: cell, indexPath: indexPath)
+    }
     
     open func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return invoke(action: .shouldHighlight, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? true
