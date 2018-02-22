@@ -89,6 +89,10 @@ open class TableSection {
         rows[index] = row
     }
     
+    open func swap(from: Int, to: Int) {
+        rows.swapAt(from, to)
+    }
+    
     open func delete(rowAt index: Int) {
         rows.remove(at: index)
     }
