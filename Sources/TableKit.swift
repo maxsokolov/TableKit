@@ -22,6 +22,7 @@ import UIKit
 
 struct TableKitNotifications {
     static let CellAction = "TableKitNotificationsCellAction"
+    static let CellMoveDestinationIndexPath = "TableKitCellMoveDestinationIndexPath"
 }
 
 public protocol RowConfigurable {
@@ -65,6 +66,7 @@ public enum TableRowActionType {
     case height
     case canEdit
     case configure
+    case move
     case custom(String)
     
     var key: String {

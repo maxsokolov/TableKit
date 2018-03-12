@@ -273,6 +273,10 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
             invoke(action: .clickDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
         }
     }
+    
+    open func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        invoke(action: .move, cell: tableView.cellForRow(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [TableKitNotifications.CellMoveDestinationIndexPath: destinationIndexPath])
+    }
 }
 
 // MARK: - Sections manipulation
