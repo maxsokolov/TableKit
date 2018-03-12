@@ -22,7 +22,10 @@ import UIKit
 
 struct TableKitNotifications {
     static let CellAction = "TableKitNotificationsCellAction"
-    static let CellMoveDestinationIndexPath = "TableKitCellMoveDestinationIndexPath"
+}
+
+public struct TableKitUserInfoKeys {
+    public static let CellMoveDestinationIndexPath = "TableKitCellMoveDestinationIndexPath"
 }
 
 public protocol RowConfigurable {
