@@ -83,7 +83,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     @discardableResult
     open func invoke(action: TableRowActionType, cell: UITableViewCell?, indexPath: IndexPath, userInfo: [AnyHashable: Any]? = nil) -> Any? {
-        return sections[indexPath.section].rows[indexPath.row].invoke(action: action, cell: cell, path: indexPath, userInfo: userInfo)
+        return sections[safe: indexPath.section]?.rows[safe: indexPath.row]?.invoke(action: action, cell: cell, path: indexPath, userInfo: userInfo)
     }
     
     open override func responds(to selector: Selector) -> Bool {
@@ -349,4 +349,13 @@ extension TableDirector {
         sections.remove(at: index)
         return self
     }
+}
+
+// MARK: -
+fileprivate extension Collection {
+  
+  /// Returns the element at the specified index iff it is within bounds, otherwise nil.
+  subscript (safe index: Index) -> Element? {
+    return indices.contains(index) ? self[index] : nil
+  }
 }
