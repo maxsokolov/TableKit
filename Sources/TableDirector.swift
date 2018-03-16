@@ -48,7 +48,12 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         return sections.isEmpty
     }
     
-    public init(tableView: UITableView, scrollDelegate: UIScrollViewDelegate? = nil, shouldUseAutomaticCellRegistration: Bool = true, cellHeightCalculator: RowHeightCalculator?) {
+    public init(
+        tableView: UITableView,
+        scrollDelegate: UIScrollViewDelegate? = nil,
+        shouldUseAutomaticCellRegistration: Bool = true,
+        cellHeightCalculator: RowHeightCalculator?)
+    {
         super.init()
         
         if shouldUseAutomaticCellRegistration {
@@ -64,11 +69,22 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveAction), name: NSNotification.Name(rawValue: TableKitNotifications.CellAction), object: nil)
     }
     
-    public convenience init(tableView: UITableView, scrollDelegate: UIScrollViewDelegate? = nil, shouldUseAutomaticCellRegistration: Bool = true, shouldUsePrototypeCellHeightCalculation: Bool = false) {
-
-        let heightCalculator: TablePrototypeCellHeightCalculator? = shouldUsePrototypeCellHeightCalculation ? TablePrototypeCellHeightCalculator(tableView: tableView) : nil
+    public convenience init(
+        tableView: UITableView,
+        scrollDelegate: UIScrollViewDelegate? = nil,
+        shouldUseAutomaticCellRegistration: Bool = true,
+        shouldUsePrototypeCellHeightCalculation: Bool = false)
+    {
+        let heightCalculator: TablePrototypeCellHeightCalculator? = shouldUsePrototypeCellHeightCalculation
+            ? TablePrototypeCellHeightCalculator(tableView: tableView)
+            : nil
         
-        self.init(tableView: tableView, scrollDelegate: scrollDelegate, shouldUseAutomaticCellRegistration: shouldUseAutomaticCellRegistration, cellHeightCalculator: heightCalculator)
+        self.init(
+            tableView: tableView,
+            scrollDelegate: scrollDelegate,
+            shouldUseAutomaticCellRegistration: shouldUseAutomaticCellRegistration,
+            cellHeightCalculator: heightCalculator
+        )
     }
     
     deinit {
@@ -80,10 +96,18 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     // MARK: Public
-    
     @discardableResult
-    open func invoke(action: TableRowActionType, cell: UITableViewCell?, indexPath: IndexPath, userInfo: [AnyHashable: Any]? = nil) -> Any? {
-        return sections[indexPath.section].rows[indexPath.row].invoke(action: action, cell: cell, path: indexPath, userInfo: userInfo)
+    open func invoke(
+        action: TableRowActionType,
+        cell: UITableViewCell?, indexPath: IndexPath,
+        userInfo: [AnyHashable: Any]? = nil) -> Any?
+    {
+        return sections[indexPath.section].rows[indexPath.row].invoke(
+            action: action,
+            cell: cell,
+            path: indexPath,
+            userInfo: userInfo
+        )
     }
     
     open override func responds(to selector: Selector) -> Bool {
@@ -91,11 +115,12 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     open override func forwardingTarget(for selector: Selector) -> Any? {
-        return scrollDelegate?.responds(to: selector) == true ? scrollDelegate : super.forwardingTarget(for: selector)
+        return scrollDelegate?.responds(to: selector) == true
+            ? scrollDelegate
+            : super.forwardingTarget(for: selector)
     }
     
     // MARK: - Internal
-    
     func hasAction(_ action: TableRowActionType, atIndexPath indexPath: IndexPath) -> Bool {
         return sections[indexPath.section].rows[indexPath.row].has(action: action)
     }
@@ -108,7 +133,6 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     // MARK: - Height
-    
     open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
 
         let row = sections[indexPath.section].rows[indexPath.row]
@@ -117,7 +141,10 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
             cellRegisterer?.register(cellType: row.cellType, forCellReuseIdentifier: row.reuseIdentifier)
         }
         
-        return row.defaultHeight ?? row.estimatedHeight ?? rowHeightCalculator?.estimatedHeight(forRow: row, at: indexPath) ?? UITableViewAutomaticDimension
+        return row.defaultHeight
+            ?? row.estimatedHeight
+            ?? rowHeightCalculator?.estimatedHeight(forRow: row, at: indexPath)
+            ?? UITableViewAutomaticDimension
     }
     
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -130,11 +157,13 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
 
         let rowHeight = invoke(action: .height, cell: nil, indexPath: indexPath) as? CGFloat
 
-        return rowHeight ?? row.defaultHeight ?? rowHeightCalculator?.height(forRow: row, at: indexPath) ?? UITableViewAutomaticDimension
+        return rowHeight
+            ?? row.defaultHeight
+            ?? rowHeightCalculator?.height(forRow: row, at: indexPath)
+            ?? UITableViewAutomaticDimension
     }
     
     // MARK: UITableViewDataSource - configuration
-    
     open func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
@@ -163,7 +192,6 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     // MARK: UITableViewDataSource - section setup
-    
     open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section].headerTitle
     }
@@ -173,7 +201,6 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     // MARK: UITableViewDelegate - section setup
-    
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return sections[section].headerView
     }
@@ -191,11 +218,12 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
         let section = sections[section]
-        return section.footerHeight ?? section.footerView?.frame.size.height ?? UITableViewAutomaticDimension
+        return section.footerHeight
+            ?? section.footerView?.frame.size.height
+            ?? UITableViewAutomaticDimension
     }
     
     // MARK: UITableViewDataSource - Index
-    
     public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         
         var indexTitles = [String]()
@@ -216,12 +244,15 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         return nil
     }
     
-    public func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+    public func tableView(
+        _ tableView: UITableView,
+        sectionForSectionIndexTitle title: String,
+        at index: Int) -> Int
+    {
         return sectionsIndexTitlesIndexes?[index] ?? 0
     }
     
     // MARK: UITableViewDelegate - actions
-    
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let cell = tableView.cellForRow(at: indexPath)
@@ -258,7 +289,6 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
 
     // MARK: - Row editing
-    
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return sections[indexPath.section].rows[indexPath.row].isEditingAllowed(forIndexPath: indexPath)
     }
@@ -341,7 +371,6 @@ extension TableDirector {
     }
     
     // MARK: - deprecated methods
-    
     @available(*, deprecated, message: "Use 'delete(sectionAt:)' method instead")
     @discardableResult
     open func delete(index: Int) -> Self {
