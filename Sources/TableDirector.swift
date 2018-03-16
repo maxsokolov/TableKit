@@ -102,12 +102,15 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         cell: UITableViewCell?, indexPath: IndexPath,
         userInfo: [AnyHashable: Any]? = nil) -> Any?
     {
-        return sections[indexPath.section].rows[indexPath.row].invoke(
-            action: action,
-            cell: cell,
-            path: indexPath,
-            userInfo: userInfo
-        )
+        if indexPath.section < sections.count && indexPath.row < sections[indexPath.section].rows.count {
+            return sections[indexPath.section].rows[indexPath.row].invoke(
+                action: action,
+                cell: cell,
+                path: indexPath,
+                userInfo: userInfo
+            )
+        }
+        return nil
     }
     
     open override func responds(to selector: Selector) -> Bool {
