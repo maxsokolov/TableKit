@@ -1,11 +1,3 @@
-//
-//  AutolayoutSectionHeaderView.swift
-//  TableKitDemo
-//
-//  Created by Max on 13/12/2017.
-//  Copyright © 2017 Tablet. All rights reserved.
-//
-
 import UIKit
 
 final class AutolayoutSectionHeaderView: UIView {

@@ -48,7 +48,7 @@ class TableCellRegisterer {
         // in that case we could register nib
         if let _ = bundle.path(forResource: reuseIdentifier, ofType: "nib") {
             tableView?.register(UINib(nibName: reuseIdentifier, bundle: bundle), forCellReuseIdentifier: reuseIdentifier)
-            // otherwise, register cell class
+        // otherwise, register cell class
         } else {
             tableView?.register(cellType, forCellReuseIdentifier: reuseIdentifier)
         }

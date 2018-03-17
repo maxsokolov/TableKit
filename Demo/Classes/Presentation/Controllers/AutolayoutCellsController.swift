@@ -1,11 +1,3 @@
-//
-//  AutolayoutCellsController.swift
-//  TableKitDemo
-//
-//  Created by Max Sokolov on 18/06/16.
-//  Copyright © 2016 Tablet. All rights reserved.
-//
-
 import UIKit
 import TableKit
 
@@ -56,6 +48,15 @@ class AutolayoutCellsController: UIViewController {
         }
         
         tableDirector += section
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Clear", style: .done, target: self, action: #selector(clear))
+    }
+    
+    @objc
+    func clear() {
+        
+        tableDirector.clear()
+        tableDirector.reload()
     }
     
     func getViewHeight(view: UIView, width: CGFloat) -> CGFloat {

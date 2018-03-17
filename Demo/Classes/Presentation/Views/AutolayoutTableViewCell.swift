@@ -1,11 +1,3 @@
-//
-//  AutolayoutTableViewCell.swift
-//  TabletDemo
-//
-//  Created by Max Sokolov on 24/05/16.
-//  Copyright © 2016 Tablet. All rights reserved.
-//
-
 import UIKit
 import TableKit
 
