@@ -74,6 +74,7 @@ public enum TableRowActionType {
     case height
     case canEdit
     case configure
+    case canMove
     case move
     case custom(String)
     
