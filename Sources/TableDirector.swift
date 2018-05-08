@@ -257,7 +257,6 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: UITableViewDelegate - actions
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let cell = tableView.cellForRow(at: indexPath)
         
         if invoke(action: .click, cell: cell, indexPath: indexPath) != nil {
@@ -284,10 +283,10 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     open func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        
         if hasAction(.willSelect, atIndexPath: indexPath) {
             return invoke(action: .willSelect, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? IndexPath
         }
+        
         return indexPath
     }
 
@@ -300,15 +299,22 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         return sections[indexPath.section].rows[indexPath.row].editingActions
     }
     
-    open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        if invoke(action: .canDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? false {
+            return UITableViewCellEditingStyle.delete
+        }
         
+        return UITableViewCellEditingStyle.none
+    }
+    
+    open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             invoke(action: .clickDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
         }
     }
     
     open func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return invoke(action: .canMove, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? true
+        return invoke(action: .canMove, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? false
     }
     
     open func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
