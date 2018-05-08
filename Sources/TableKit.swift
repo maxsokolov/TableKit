@@ -26,6 +26,7 @@ struct TableKitNotifications {
 
 public struct TableKitUserInfoKeys {
     public static let CellMoveDestinationIndexPath = "TableKitCellMoveDestinationIndexPath"
+    public static let CellCanMoveProposedIndexPath = "CellCanMoveProposedIndexPath"
 }
 
 public protocol RowConfigurable {
@@ -74,7 +75,9 @@ public enum TableRowActionType {
     case height
     case canEdit
     case configure
+    case canDelete
     case canMove
+    case canMoveTo
     case move
     case custom(String)
     
