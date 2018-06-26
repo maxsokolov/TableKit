@@ -22,12 +22,12 @@ import UIKit
 
 open class TableRowActionOptions<CellType: ConfigurableCell> where CellType: UITableViewCell {
 
-    open let item: CellType.T
+    open let item: CellType.CellData
     open let cell: CellType?
     open let indexPath: IndexPath
     open let userInfo: [AnyHashable: Any]?
 
-    init(item: CellType.T, cell: CellType?, path: IndexPath, userInfo: [AnyHashable: Any]?) {
+    init(item: CellType.CellData, cell: CellType?, path: IndexPath, userInfo: [AnyHashable: Any]?) {
 
         self.item = item
         self.cell = cell
@@ -76,7 +76,7 @@ open class TableRowAction<CellType: ConfigurableCell> where CellType: UITableVie
         self.handler = .action(handler)
     }
 
-    public func invokeActionOn(cell: UITableViewCell?, item: CellType.T, path: IndexPath, userInfo: [AnyHashable: Any]?) -> Any? {
+    public func invokeActionOn(cell: UITableViewCell?, item: CellType.CellData, path: IndexPath, userInfo: [AnyHashable: Any]?) -> Any? {
 
         return handler.invoke(withOptions: TableRowActionOptions(item: item, cell: cell as? CellType, path: path, userInfo: userInfo))
     }
