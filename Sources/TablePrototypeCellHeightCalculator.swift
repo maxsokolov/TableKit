@@ -57,7 +57,7 @@ open class TablePrototypeCellHeightCalculator: RowHeightCalculator {
         cell.setNeedsLayout()
         cell.layoutIfNeeded()
 
-        let height = cell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height + (tableView.separatorStyle != .none ? separatorHeight : 0)
+        let height = cell.contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height + (tableView.separatorStyle != .none ? separatorHeight : 0)
 
         cachedHeights[hash] = height
 
@@ -78,7 +78,7 @@ open class TablePrototypeCellHeightCalculator: RowHeightCalculator {
             return estimatedHeight
         }
 
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
 
     open func invalidate() {

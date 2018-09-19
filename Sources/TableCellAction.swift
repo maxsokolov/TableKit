@@ -27,13 +27,13 @@ import UIKit
 open class TableCellAction {
 
     /// The cell that triggers an action.
-    open let cell: UITableViewCell
+    public let cell: UITableViewCell
 
     /// The action unique key.
-    open let key: String
+    public let key: String
 
     /// The custom user info.
-    open let userInfo: [AnyHashable: Any]?
+    public let userInfo: [AnyHashable: Any]?
 
     public init(key: String, sender: UITableViewCell, userInfo: [AnyHashable: Any]? = nil) {
 

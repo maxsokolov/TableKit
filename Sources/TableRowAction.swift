@@ -22,10 +22,10 @@ import UIKit
 
 open class TableRowActionOptions<CellType: ConfigurableCell> where CellType: UITableViewCell {
 
-    open let item: CellType.CellData
-    open let cell: CellType?
-    open let indexPath: IndexPath
-    open let userInfo: [AnyHashable: Any]?
+    public let item: CellType.CellData
+    public let cell: CellType?
+    public let indexPath: IndexPath
+    public let userInfo: [AnyHashable: Any]?
 
     init(item: CellType.CellData, cell: CellType?, path: IndexPath, userInfo: [AnyHashable: Any]?) {
 
@@ -55,7 +55,7 @@ private enum TableRowActionHandler<CellType: ConfigurableCell> where CellType: U
 open class TableRowAction<CellType: ConfigurableCell> where CellType: UITableViewCell {
 
     open var id: String?
-    open let type: TableRowActionType
+    public let type: TableRowActionType
     private let handler: TableRowActionHandler<CellType>
     
     public init(_ type: TableRowActionType, handler: @escaping (_ options: TableRowActionOptions<CellType>) -> Void) {
