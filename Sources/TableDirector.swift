@@ -147,7 +147,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         return row.defaultHeight
             ?? row.estimatedHeight
             ?? rowHeightCalculator?.estimatedHeight(forRow: row, at: indexPath)
-            ?? UITableViewAutomaticDimension
+            ?? UITableView.automaticDimension
     }
     
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -163,7 +163,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         return rowHeight
             ?? row.defaultHeight
             ?? rowHeightCalculator?.height(forRow: row, at: indexPath)
-            ?? UITableViewAutomaticDimension
+            ?? UITableView.automaticDimension
     }
     
     // MARK: UITableViewDataSource - configuration
@@ -215,7 +215,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         let section = sections[section]
-        return section.headerHeight ?? section.headerView?.frame.size.height ?? UITableViewAutomaticDimension
+        return section.headerHeight ?? section.headerView?.frame.size.height ?? UITableView.automaticDimension
     }
     
     open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -223,7 +223,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         let section = sections[section]
         return section.footerHeight
             ?? section.footerView?.frame.size.height
-            ?? UITableViewAutomaticDimension
+            ?? UITableView.automaticDimension
     }
     
     // MARK: UITableViewDataSource - Index
@@ -299,12 +299,12 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         return sections[indexPath.section].rows[indexPath.row].editingActions
     }
     
-    open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         if invoke(action: .canDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? false {
-            return UITableViewCellEditingStyle.delete
+            return UITableViewCell.EditingStyle.delete
         }
         
-        return UITableViewCellEditingStyle.none
+        return UITableViewCell.EditingStyle.none
     }
     
     public func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
@@ -315,7 +315,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         return invoke(action: .canMoveTo, cell: tableView.cellForRow(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [TableKitUserInfoKeys.CellCanMoveProposedIndexPath: proposedDestinationIndexPath]) as? IndexPath ?? proposedDestinationIndexPath
     }
     
-    open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             invoke(action: .clickDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
         }
