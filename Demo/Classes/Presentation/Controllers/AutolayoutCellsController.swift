@@ -65,6 +65,6 @@ class AutolayoutCellsController: UIViewController {
         view.setNeedsLayout()
         view.layoutIfNeeded()
         
-        return view.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+        return view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
     }
 }
