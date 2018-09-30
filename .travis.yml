@@ -17,7 +17,7 @@ env:
   - DESTINATION="OS=9.2,name=iPhone 6S"          SCHEME="$SCHEME_IOS"     SDK="$IOS_SDK"
   - DESTINATION="OS=9.3,name=iPhone 6S Plus"     SCHEME="$SCHEME_IOS"     SDK="$IOS_SDK"
   - DESTINATION="OS=10.0,name=iPhone 5"          SCHEME="$SCHEME_IOS"     SDK="$IOS_SDK"
-  - DESTINATION="OS=10.0,name=iPhone 7 Plus"     SCHEME="$SCHEME_IOS"     SDK="$IOS_SDK"
+  - DESTINATION="OS=12.0,name=iPhone 7 Plus"     SCHEME="$SCHEME_IOS"     SDK="$IOS_SDK"
 
 script:
   - set -o pipefail
