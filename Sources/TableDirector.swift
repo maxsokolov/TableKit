@@ -95,6 +95,14 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         tableView?.reloadData()
     }
     
+    // MARK: - Private
+    private func row(at indexPath: IndexPath) -> Row? {
+        if indexPath.section < sections.count && indexPath.row < sections[indexPath.section].rows.count {
+            return sections[indexPath.section].rows[indexPath.row]
+        }
+        return nil
+    }
+    
     // MARK: Public
     @discardableResult
     open func invoke(
@@ -102,15 +110,13 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         cell: UITableViewCell?, indexPath: IndexPath,
         userInfo: [AnyHashable: Any]? = nil) -> Any?
     {
-        if indexPath.section < sections.count && indexPath.row < sections[indexPath.section].rows.count {
-            return sections[indexPath.section].rows[indexPath.row].invoke(
-                action: action,
-                cell: cell,
-                path: indexPath,
-                userInfo: userInfo
-            )
-        }
-        return nil
+        guard let row = row(at: indexPath) else { return nil }
+        return row.invoke(
+            action: action,
+            cell: cell,
+            path: indexPath,
+            userInfo: userInfo
+        )
     }
     
     open override func responds(to selector: Selector) -> Bool {
@@ -125,7 +131,8 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Internal
     func hasAction(_ action: TableRowActionType, atIndexPath indexPath: IndexPath) -> Bool {
-        return sections[indexPath.section].rows[indexPath.row].has(action: action)
+        guard let row = row(at: indexPath) else { return false }
+        return row.has(action: action)
     }
     
     @objc
@@ -172,6 +179,8 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard section < sections.count else { return 0 }
+        
         return sections[section].numberOfRows
     }
     
@@ -196,29 +205,39 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: UITableViewDataSource - section setup
     open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard section < sections.count else { return nil }
+        
         return sections[section].headerTitle
     }
     
     open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        guard section < sections.count else { return nil }
+        
         return sections[section].footerTitle
     }
     
     // MARK: UITableViewDelegate - section setup
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard section < sections.count else { return nil }
+        
         return sections[section].headerView
     }
     
     open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        guard section < sections.count else { return nil }
+        
         return sections[section].footerView
     }
     
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard section < sections.count else { return 0 }
         
         let section = sections[section]
         return section.headerHeight ?? section.headerView?.frame.size.height ?? UITableView.automaticDimension
     }
     
     open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        guard section < sections.count else { return 0 }
         
         let section = sections[section]
         return section.footerHeight
