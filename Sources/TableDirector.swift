@@ -309,6 +309,14 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         return indexPath
     }
 
+    open func tableView(_ tableView: UITableView, willDeselectRowAt indexPath: IndexPath) -> IndexPath? {
+        if hasAction(.willDeselect, atIndexPath: indexPath) {
+            return invoke(action: .willDeselect, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? IndexPath
+        }
+
+        return indexPath
+    }
+
     // MARK: - Row editing
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return sections[indexPath.section].rows[indexPath.row].isEditingAllowed(forIndexPath: indexPath)
