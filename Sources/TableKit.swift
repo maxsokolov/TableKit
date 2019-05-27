@@ -80,6 +80,7 @@ public enum TableRowActionType {
     case canMove
     case canMoveTo
     case move
+    case accessoryButtonTap
     case custom(String)
     
     var key: String {
