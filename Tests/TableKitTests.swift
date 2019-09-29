@@ -74,7 +74,10 @@ class TableKitTests: XCTestCase {
         super.setUp()
 
         testController = TestController()
-        testController.view.isHidden = false
+        testController.tableView.frame = UIScreen.main.bounds
+        testController.tableView.isHidden = false
+        testController.tableView.setNeedsLayout()
+        testController.tableView.layoutIfNeeded()
     }
 
     override func tearDown() {
