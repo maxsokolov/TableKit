@@ -12,7 +12,7 @@ env:
   - PROJECT_FRAMEWORK="TableKit.xcodeproj"
 
   matrix:
-  - DESTINATION="OS=10.0,name=iPhone 5"          SCHEME="$SCHEME_IOS"     SDK="$IOS_SDK"
+  - DESTINATION="OS=10.3.1,name=iPhone 5"        SCHEME="$SCHEME_IOS"     SDK="$IOS_SDK"
   - DESTINATION="OS=11.1,name=iPhone 6"          SCHEME="$SCHEME_IOS"     SDK="$IOS_SDK"
   - DESTINATION="OS=12.0,name=iPhone 7 Plus"     SCHEME="$SCHEME_IOS"     SDK="$IOS_SDK"
   - DESTINATION="OS=13.0,name=iPhone 11"         SCHEME="$SCHEME_IOS"     SDK="$IOS_SDK"
