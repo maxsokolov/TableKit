@@ -204,7 +204,7 @@ tableDirector += rows
 Done, your table is ready.
 ## Automatic cell registration
 
-TableKit can register your cells in a table view automatically. In case if your reusable cell id mathces cell's xib name:
+TableKit can register your cells in a table view automatically. In case if your reusable cell id matches cell's xib name:
 
 ```ruby
 MyTableViewCell.swift
