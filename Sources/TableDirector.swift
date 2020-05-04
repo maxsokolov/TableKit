@@ -317,6 +317,31 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         return indexPath
     }
 
+    @available(iOS 13.0, *)
+    open func tableView(
+        _ tableView: UITableView,
+        shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool
+    {
+        invoke(action: .shouldBeginMultipleSelection, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? false
+    }
+
+    @available(iOS 13.0, *)
+    open func tableView(
+        _ tableView: UITableView,
+        didBeginMultipleSelectionInteractionAt indexPath: IndexPath)
+    {
+        invoke(action: .didBeginMultipleSelection, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
+    }
+    
+    @available(iOS 13.0, *)
+    open func tableView(
+        _ tableView: UITableView,
+        contextMenuConfigurationForRowAt indexPath: IndexPath,
+        point: CGPoint) -> UIContextMenuConfiguration?
+    {
+        invoke(action: .showContextMenu, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath, userInfo: [TableKitUserInfoKeys.ContextMenuInvokePoint: point]) as? UIContextMenuConfiguration
+    }
+
     // MARK: - Row editing
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return sections[indexPath.section].rows[indexPath.row].isEditingAllowed(forIndexPath: indexPath)
