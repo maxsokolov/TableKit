@@ -220,20 +220,23 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section < sections.count else { return nil }
         
-		return sections[section].headerView ?? sections[section].headerViewHandler?(section)
+		return sections[section].headerView ?? sections[section].headerViewHandler?()
     }
     
     open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         guard section < sections.count else { return nil }
         
-		return sections[section].footerView ?? sections[section].footerViewHandler?(section)
+		return sections[section].footerView ?? sections[section].footerViewHandler?()
     }
     
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard section < sections.count else { return 0 }
         
         let section = sections[section]
-        return section.headerHeight ?? section.headerView?.frame.size.height ?? UITableView.automaticDimension
+		return section.headerHeight
+			?? section.headerView?.frame.size.height
+			?? section.headerViewHandler?()?.frame.size.height
+			?? UITableView.automaticDimension
     }
     
     open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -242,6 +245,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         let section = sections[section]
         return section.footerHeight
             ?? section.footerView?.frame.size.height
+			?? section.footerViewHandler?()?.frame.size.height
             ?? UITableView.automaticDimension
     }
     

@@ -31,8 +31,8 @@ open class TableSection {
     open var headerView: UIView?
     open var footerView: UIView?
 	
-	open var headerViewHandler: ((Int) -> UIView?)?
-	open var footerViewHandler: ((Int) -> UIView?)?
+	open var headerViewHandler: (() -> UIView?)?
+	open var footerViewHandler: (() -> UIView?)?
     
     open var headerHeight: CGFloat? = nil
     open var footerHeight: CGFloat? = nil

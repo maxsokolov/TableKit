@@ -177,12 +177,8 @@ class TableKitTests: XCTestCase {
         let sectionFooterView = UIView()
         
         let section = TableSection(rows: nil)
-		section.headerViewHandler = { sectionNumber in
-			return sectionHeaderView
-		}
-		section.footerViewHandler = { sectionNumber in
-			return sectionFooterView
-		}
+		section.headerViewHandler = { sectionHeaderView}
+		section.footerViewHandler = { sectionFooterView }
         section += row
         
         testController.tableDirector += section
