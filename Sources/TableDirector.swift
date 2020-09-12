@@ -220,13 +220,13 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section < sections.count else { return nil }
         
-        return sections[section].headerView
+		return sections[section].headerView ?? sections[section].headerViewHandler?(section)
     }
     
     open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         guard section < sections.count else { return nil }
         
-        return sections[section].footerView
+		return sections[section].footerView ?? sections[section].footerViewHandler?(section)
     }
     
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

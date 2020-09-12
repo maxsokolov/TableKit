@@ -30,6 +30,9 @@ open class TableSection {
     
     open var headerView: UIView?
     open var footerView: UIView?
+	
+	open var headerViewHandler: ((Int) -> UIView?)?
+	open var footerViewHandler: ((Int) -> UIView?)?
     
     open var headerHeight: CGFloat? = nil
     open var footerHeight: CGFloat? = nil
@@ -62,7 +65,7 @@ open class TableSection {
         self.headerView = headerView
         self.footerView = footerView
     }
-
+	
     // MARK: - Public -
     
     open func clear() {
