@@ -168,6 +168,28 @@ class TableKitTests: XCTestCase {
         XCTAssertTrue(testController.tableView.delegate?.tableView?(testController.tableView, viewForHeaderInSection: 0) == sectionHeaderView)
         XCTAssertTrue(testController.tableView.delegate?.tableView?(testController.tableView, viewForFooterInSection: 0) == sectionFooterView)
     }
+	
+	func testTableSectionCreatesSectionWithHeaderAndFooterViewsCallbacks() {
+        
+        let row = TableRow<TestTableViewCell>(item: TestData(title: "title"))
+        
+        let sectionHeaderView = UIView()
+        let sectionFooterView = UIView()
+        
+        let section = TableSection(rows: nil)
+		section.headerViewHandler = { sectionHeaderView}
+		section.footerViewHandler = { sectionFooterView }
+        section += row
+        
+        testController.tableDirector += section
+        testController.tableView.reloadData()
+        
+        XCTAssertTrue(testController.tableView.dataSource?.numberOfSections?(in: testController.tableView) == 1, "Table view should have a section")
+        XCTAssertTrue(testController.tableView.dataSource?.tableView(testController.tableView, numberOfRowsInSection: 0) == 1, "Table view should have certain number of rows in a section")
+        
+        XCTAssertTrue(testController.tableView.delegate?.tableView?(testController.tableView, viewForHeaderInSection: 0) == sectionHeaderView)
+        XCTAssertTrue(testController.tableView.delegate?.tableView?(testController.tableView, viewForFooterInSection: 0) == sectionFooterView)
+    }
 
     func testRowBuilderCustomActionInvokedAndSentUserInfo() {
 
