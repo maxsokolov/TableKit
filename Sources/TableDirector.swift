@@ -343,6 +343,8 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
 
     // MARK: - Row editing
+    
+    @available(iOS, deprecated: 11, message: "Use leadingSwipeActionsConfigurationForRowAt(:_) and trailingSwipeActionsConfigurationForRowAt(:_) instead")
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return sections[indexPath.section].rows[indexPath.row].isEditingAllowed(forIndexPath: indexPath)
     }
@@ -351,6 +353,28 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         return sections[indexPath.section].rows[indexPath.row].editingActions
     }
     
+    @available(iOS 11, *)
+    open func tableView(_ tableView: UITableView,
+                        leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let currentRow = sections[indexPath.section].rows[indexPath.row]
+        let configuration = UISwipeActionsConfiguration(actions: currentRow.leadingContextualActions)
+        
+        configuration.performsFirstActionWithFullSwipe = currentRow.performsFirstActionWithFullSwipe
+        
+        return configuration
+    }
+    
+    @available(iOS 11, *)
+    open func tableView(_ tableView: UITableView,
+                        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let currentRow = sections[indexPath.section].rows[indexPath.row]
+        let configuration = UISwipeActionsConfiguration(actions: currentRow.trailingContextualActions)
+        
+        configuration.performsFirstActionWithFullSwipe = currentRow.performsFirstActionWithFullSwipe
+        
+        return configuration
+    }
+
     open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         if invoke(action: .canDelete, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? false {
             return UITableViewCell.EditingStyle.delete
@@ -380,10 +404,10 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     open func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         invoke(action: .move, cell: tableView.cellForRow(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [TableKitUserInfoKeys.CellMoveDestinationIndexPath: destinationIndexPath])
     }
-  
+    
     open func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-      let cell = tableView.cellForRow(at: indexPath)
-      invoke(action: .accessoryButtonTap, cell: cell, indexPath: indexPath)
+        let cell = tableView.cellForRow(at: indexPath)
+        invoke(action: .accessoryButtonTap, cell: cell, indexPath: indexPath)
     }
 }
 
