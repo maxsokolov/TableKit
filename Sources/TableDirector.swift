@@ -343,8 +343,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
 
     // MARK: - Row editing
-    
-    @available(iOS, deprecated: 11, message: "Use leadingSwipeActionsConfigurationForRowAt(:_) and trailingSwipeActionsConfigurationForRowAt(:_) instead")
+
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return sections[indexPath.section].rows[indexPath.row].isEditingAllowed(forIndexPath: indexPath)
     }
@@ -367,6 +366,11 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     @available(iOS 11, *)
     open func tableView(_ tableView: UITableView,
                         trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard let editingActions = sections[indexPath.section].rows[indexPath.row].editingActions,
+              editingActions.isEmpty else {
+            return nil
+        }
+        
         let currentRow = sections[indexPath.section].rows[indexPath.row]
         let configuration = UISwipeActionsConfiguration(actions: currentRow.trailingContextualActions)
         

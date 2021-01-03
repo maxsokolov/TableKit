@@ -63,7 +63,7 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
         return CellType.self
     }
     
-    @available(iOS, deprecated: 11, message: "Use leadingContextualActions, trailingContextualActions instead")
+    @available(iOS, deprecated: 11, message: "Use init(item:_, actions:_) instead")
     public init(item: CellType.CellData, actions: [TableRowAction<CellType>]? = nil, editingActions: [UITableViewRowAction]? = nil) {
         
         self.item = item
@@ -71,11 +71,9 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
         actions?.forEach { on($0) }
     }
 
-    @available(iOS 11, *)
     public init(item: CellType.CellData, actions: [TableRowAction<CellType>]? = nil) {
         
         self.item = item
-        
         actions?.forEach { on($0) }
     }
 
@@ -105,7 +103,8 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
         }
 
         if #available(iOS 11, *) {
-            return !leadingContextualActions.isEmpty
+            return editingActions?.isEmpty == false 
+                || !leadingContextualActions.isEmpty
                 || !trailingContextualActions.isEmpty
                 || actions[TableRowActionType.clickDelete.key] != nil
         } else {
