@@ -24,7 +24,24 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     
     public let item: CellType.CellData
     private lazy var actions = [String: [TableRowAction<CellType>]]()
-    private(set) open var editingActions: [UITableViewRowAction]?
+   
+    @available(iOS, deprecated: 11, message: "Use leadingContextualActions, trailingContextualActions instead")
+    open private(set) var editingActions: [UITableViewRowAction]?
+    
+    @available(iOS 11, *)
+    open var leadingContextualActions: [UIContextualAction] {
+        []
+    }
+    
+    @available(iOS 11, *)
+    open var trailingContextualActions: [UIContextualAction] {
+        []
+    }
+    
+    @available(iOS 11, *)
+    open var performsFirstActionWithFullSwipe: Bool {
+        false
+    }
     
     open var hashValue: Int {
         return ObjectIdentifier(self).hashValue
@@ -46,13 +63,20 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
         return CellType.self
     }
     
+    @available(iOS, deprecated: 11, message: "Use init(item:_, actions:_) with leadingContextualActions, trailingContextualActions instead")
     public init(item: CellType.CellData, actions: [TableRowAction<CellType>]? = nil, editingActions: [UITableViewRowAction]? = nil) {
         
         self.item = item
         self.editingActions = editingActions
         actions?.forEach { on($0) }
     }
-    
+
+    public init(item: CellType.CellData, actions: [TableRowAction<CellType>]? = nil) {
+        
+        self.item = item
+        actions?.forEach { on($0) }
+    }
+
     // MARK: - RowConfigurable -
     
     open func configure(_ cell: UITableViewCell) {
@@ -77,7 +101,15 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
         if actions[TableRowActionType.canEdit.key] != nil {
             return invoke(action: .canEdit, cell: nil, path: indexPath) as? Bool ?? false
         }
-        return editingActions?.isEmpty == false || actions[TableRowActionType.clickDelete.key] != nil
+
+        if #available(iOS 11, *) {
+            return editingActions?.isEmpty == false 
+                || !leadingContextualActions.isEmpty
+                || !trailingContextualActions.isEmpty
+                || actions[TableRowActionType.clickDelete.key] != nil
+        } else {
+            return editingActions?.isEmpty == false || actions[TableRowActionType.clickDelete.key] != nil
+        }
     }
     
     // MARK: - actions -

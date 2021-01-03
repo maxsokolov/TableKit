@@ -36,8 +36,18 @@ public protocol RowConfigurable {
 }
 
 public protocol RowActionable {
-    
+
+    @available(iOS 11, *)
+    var leadingContextualActions: [UIContextualAction] { get }
+
+    @available(iOS 11, *)
+    var trailingContextualActions: [UIContextualAction] { get }
+
+    @available(iOS 11, *)
+    var performsFirstActionWithFullSwipe: Bool { get }
+
     var editingActions: [UITableViewRowAction]? { get }
+
     func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool
 
     func invoke(
