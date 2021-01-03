@@ -63,7 +63,7 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
         return CellType.self
     }
     
-    @available(iOS, deprecated: 11, message: "Use init(item:_, actions:_) instead")
+    @available(iOS, deprecated: 11, message: "Use init(item:_, actions:_) with leadingContextualActions, trailingContextualActions instead")
     public init(item: CellType.CellData, actions: [TableRowAction<CellType>]? = nil, editingActions: [UITableViewRowAction]? = nil) {
         
         self.item = item
