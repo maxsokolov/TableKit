@@ -5,13 +5,17 @@ import PackageDescription
 
 let package = Package(
     name: "TableKit",
-
+    
+    platforms: [
+        .iOS(.v9)
+    ],
+    
     products: [
         .library(
             name: "TableKit",
             targets: ["TableKit"]),
     ],
-
+    
     targets: [
         .target(
             name: "TableKit",
