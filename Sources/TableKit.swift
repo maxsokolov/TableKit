@@ -46,7 +46,6 @@ public protocol RowActionable {
     @available(iOS 11, *)
     var performsFirstActionWithFullSwipe: Bool { get }
 
-    @available(iOS, deprecated: 11, message: "Use leadingContextualActions, trailingContextualActions instead")
     var editingActions: [UITableViewRowAction]? { get }
 
     func isEditingAllowed(forIndexPath indexPath: IndexPath) -> Bool

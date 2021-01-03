@@ -353,8 +353,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     @available(iOS 11, *)
-    open func tableView(_ tableView: UITableView,
-                        leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    open func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let currentRow = sections[indexPath.section].rows[indexPath.row]
         let configuration = UISwipeActionsConfiguration(actions: currentRow.leadingContextualActions)
         
@@ -364,10 +363,8 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     @available(iOS 11, *)
-    open func tableView(_ tableView: UITableView,
-                        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let editingActions = sections[indexPath.section].rows[indexPath.row].editingActions,
-              editingActions.isEmpty else {
+    open func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard sections[indexPath.section].rows[indexPath.row].editingActions?.isEmpty ?? true else {
             return nil
         }
         
@@ -408,7 +405,7 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     open func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         invoke(action: .move, cell: tableView.cellForRow(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [TableKitUserInfoKeys.CellMoveDestinationIndexPath: destinationIndexPath])
     }
-    
+
     open func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         invoke(action: .accessoryButtonTap, cell: cell, indexPath: indexPath)

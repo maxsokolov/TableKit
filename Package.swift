@@ -15,7 +15,7 @@ let package = Package(
             name: "TableKit",
             targets: ["TableKit"]),
     ],
-    
+
     targets: [
         .target(
             name: "TableKit",
