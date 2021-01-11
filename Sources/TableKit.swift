@@ -28,6 +28,7 @@ public struct TableKitUserInfoKeys {
     public static let CellMoveDestinationIndexPath = "TableKitCellMoveDestinationIndexPath"
     public static let CellCanMoveProposedIndexPath = "CellCanMoveProposedIndexPath"
     public static let ContextMenuInvokePoint = "ContextMenuInvokePoint"
+    public static let ContextMenuConfiguration = "ContextMenuConfiguration"
 }
 
 public protocol RowConfigurable {
@@ -84,6 +85,8 @@ public enum TableRowActionType {
     case canMoveTo
     case move
     case showContextMenu
+    case previewForHighlightingContextMenu
+    case previewForDismissingContextMenu
     case accessoryButtonTap
     case custom(String)
     

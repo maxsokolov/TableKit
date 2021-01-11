@@ -341,6 +341,34 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     {
         invoke(action: .showContextMenu, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath, userInfo: [TableKitUserInfoKeys.ContextMenuInvokePoint: point]) as? UIContextMenuConfiguration
     }
+    
+    @available(iOS 13.0, *)
+    open func tableView(_ tableView: UITableView,
+                        previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        
+        if let indexPath = configuration.identifier as? IndexPath {
+            
+            return invoke(action: .previewForHighlightingContextMenu,
+                          cell: tableView.cellForRow(at: indexPath),
+                          indexPath: indexPath,
+                          userInfo: [TableKitUserInfoKeys.ContextMenuConfiguration: configuration]) as? UITargetedPreview
+        }
+        return nil
+    }
+    
+    @available(iOS 13.0, *)
+    open func tableView(_ tableView: UITableView,
+                        previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        
+        if let indexPath = configuration.identifier as? IndexPath {
+            
+            return invoke(action: .previewForDismissingContextMenu,
+                          cell: tableView.cellForRow(at: indexPath),
+                          indexPath: indexPath,
+                          userInfo: [TableKitUserInfoKeys.ContextMenuConfiguration: configuration]) as? UITargetedPreview
+        }
+        return nil
+    }
 
     // MARK: - Row editing
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
