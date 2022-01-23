@@ -95,6 +95,14 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         tableView?.reloadData()
     }
     
+    // MARK: - Private
+    private func row(at indexPath: IndexPath) -> Row? {
+        if indexPath.section < sections.count && indexPath.row < sections[indexPath.section].rows.count {
+            return sections[indexPath.section].rows[indexPath.row]
+        }
+        return nil
+    }
+    
     // MARK: Public
     @discardableResult
     open func invoke(
@@ -102,15 +110,13 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         cell: UITableViewCell?, indexPath: IndexPath,
         userInfo: [AnyHashable: Any]? = nil) -> Any?
     {
-        if indexPath.section < sections.count && indexPath.row < sections[indexPath.section].rows.count {
-            return sections[indexPath.section].rows[indexPath.row].invoke(
-                action: action,
-                cell: cell,
-                path: indexPath,
-                userInfo: userInfo
-            )
-        }
-        return nil
+        guard let row = row(at: indexPath) else { return nil }
+        return row.invoke(
+            action: action,
+            cell: cell,
+            path: indexPath,
+            userInfo: userInfo
+        )
     }
     
     open override func responds(to selector: Selector) -> Bool {
@@ -125,7 +131,8 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Internal
     func hasAction(_ action: TableRowActionType, atIndexPath indexPath: IndexPath) -> Bool {
-        return sections[indexPath.section].rows[indexPath.row].has(action: action)
+        guard let row = row(at: indexPath) else { return false }
+        return row.has(action: action)
     }
     
     @objc
@@ -172,6 +179,8 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard section < sections.count else { return 0 }
+        
         return sections[section].numberOfRows
     }
     
@@ -196,29 +205,39 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: UITableViewDataSource - section setup
     open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard section < sections.count else { return nil }
+        
         return sections[section].headerTitle
     }
     
     open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        guard section < sections.count else { return nil }
+        
         return sections[section].footerTitle
     }
     
     // MARK: UITableViewDelegate - section setup
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard section < sections.count else { return nil }
+        
         return sections[section].headerView
     }
     
     open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        guard section < sections.count else { return nil }
+        
         return sections[section].footerView
     }
     
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard section < sections.count else { return 0 }
         
         let section = sections[section]
         return section.headerHeight ?? section.headerView?.frame.size.height ?? UITableView.automaticDimension
     }
     
     open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        guard section < sections.count else { return 0 }
         
         let section = sections[section]
         return section.footerHeight
@@ -290,6 +309,39 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         return indexPath
     }
 
+    open func tableView(_ tableView: UITableView, willDeselectRowAt indexPath: IndexPath) -> IndexPath? {
+        if hasAction(.willDeselect, atIndexPath: indexPath) {
+            return invoke(action: .willDeselect, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? IndexPath
+        }
+
+        return indexPath
+    }
+
+    @available(iOS 13.0, *)
+    open func tableView(
+        _ tableView: UITableView,
+        shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool
+    {
+        invoke(action: .shouldBeginMultipleSelection, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath) as? Bool ?? false
+    }
+
+    @available(iOS 13.0, *)
+    open func tableView(
+        _ tableView: UITableView,
+        didBeginMultipleSelectionInteractionAt indexPath: IndexPath)
+    {
+        invoke(action: .didBeginMultipleSelection, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
+    }
+    
+    @available(iOS 13.0, *)
+    open func tableView(
+        _ tableView: UITableView,
+        contextMenuConfigurationForRowAt indexPath: IndexPath,
+        point: CGPoint) -> UIContextMenuConfiguration?
+    {
+        invoke(action: .showContextMenu, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath, userInfo: [TableKitUserInfoKeys.ContextMenuInvokePoint: point]) as? UIContextMenuConfiguration
+    }
+
     // MARK: - Row editing
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return sections[indexPath.section].rows[indexPath.row].isEditingAllowed(forIndexPath: indexPath)
@@ -327,6 +379,11 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     open func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         invoke(action: .move, cell: tableView.cellForRow(at: sourceIndexPath), indexPath: sourceIndexPath, userInfo: [TableKitUserInfoKeys.CellMoveDestinationIndexPath: destinationIndexPath])
+    }
+  
+    open func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+      let cell = tableView.cellForRow(at: indexPath)
+      invoke(action: .accessoryButtonTap, cell: cell, indexPath: indexPath)
     }
 }
 

@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.10.0](https://github.com/maxsokolov/TableKit/releases/tag/2.10.0)
+Released on 2019-09-29.
+- Swift 5.1 support.
+
+## [2.9.0](https://github.com/maxsokolov/TableKit/releases/tag/2.9.0)
+Released on 2019-04-04.
+- Swift 5.0 support.
+
 ## [2.8.0](https://github.com/maxsokolov/TableKit/releases/tag/2.8.0)
 Released on 2018-09-30.
 - Swift 4.2 support.
