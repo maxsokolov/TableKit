@@ -20,6 +20,32 @@
 
 import UIKit
 
+internal struct TableSectionUpdates {
+    var insertRowPaths: [IndexPath]?
+    var deleteRowPaths: [IndexPath]?
+    var reloadRowPaths: [IndexPath]?
+    
+    func apply(on tableView: UITableView?) {
+        guard let tableView = tableView else {
+            return
+        }
+
+        tableView.performBatchUpdates({
+            if let deleteRowPaths = deleteRowPaths {
+                tableView.deleteRows(at: deleteRowPaths, with: .automatic)
+            }
+            if let insertRowPaths = insertRowPaths {
+                tableView.insertRows(at: insertRowPaths, with: .automatic)
+            }
+        }, completion: {
+            _ in
+            if let reloadRowPaths = reloadRowPaths {
+                tableView.reloadRows(at: reloadRowPaths, with: .automatic)
+            }
+        })
+    }
+}
+
 open class TableSection {
 
     open private(set) var rows = [Row]()
@@ -33,6 +59,8 @@ open class TableSection {
     
     open var headerHeight: CGFloat? = nil
     open var footerHeight: CGFloat? = nil
+    
+    internal var modifications: TableSectionUpdates? = nil
     
     open var numberOfRows: Int {
         return rows.count
@@ -101,6 +129,30 @@ open class TableSection {
         rows.remove(at: index)
     }
     
+    // MARK: - Section changes -
+    
+    open func performUpdates(reloadRows: Bool = false, _ updates: @autoclosure () -> Void) {
+        modifications = nil
+        let oldRowsCount = rows.count
+        updates()
+        let newRowsCount = rows.count
+        
+        modifications = TableSectionUpdates()
+        let reloadRowsPaths = (0..<min(oldRowsCount, newRowsCount)).map {
+            IndexPath(row: $0, section: 0)
+        }
+        let insertOrDeletePaths = (min(oldRowsCount, newRowsCount)..<max(oldRowsCount, newRowsCount)).map {
+            IndexPath(row: $0, section: 0)
+        }
+        if oldRowsCount > newRowsCount {
+            modifications?.deleteRowPaths = insertOrDeletePaths
+        } else {
+            modifications?.insertRowPaths = insertOrDeletePaths
+        }
+
+        modifications?.reloadRowPaths = reloadRows ? reloadRowsPaths : nil
+    }
+
     // MARK: - deprecated methods -
     
     @available(*, deprecated, message: "Use 'delete(rowAt:)' method instead")

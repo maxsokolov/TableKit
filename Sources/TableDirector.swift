@@ -92,9 +92,18 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     open func reload() {
-        tableView?.reloadData()
+        reload(animated: false)
     }
-    
+
+    open func reload(animated: Bool = false) {
+        guard animated else {
+            tableView?.reloadData()
+            return
+        }
+        
+        sections.forEach({ $0.modifications?.apply(on: self.tableView) })
+    }
+
     // MARK: - Private
     private func row(at indexPath: IndexPath) -> Row? {
         if indexPath.section < sections.count && indexPath.row < sections[indexPath.section].rows.count {
