@@ -92,16 +92,13 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     open func reload() {
-        reload(animated: false)
+        tableView?.reloadData()
     }
 
-    open func reload(animated: Bool = false) {
-        guard animated else {
-            tableView?.reloadData()
-            return
+    open func applyUpdates() {
+        sections.forEach {
+            $0.applyUpdates(on: tableView)
         }
-        
-        sections.forEach({ $0.modifications?.apply(on: self.tableView) })
     }
 
     // MARK: - Private
@@ -393,6 +390,46 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     open func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
       let cell = tableView.cellForRow(at: indexPath)
       invoke(action: .accessoryButtonTap, cell: cell, indexPath: indexPath)
+    }
+}
+
+// MARK: - Rows update
+extension TableDirector {
+    
+    open func registerUpdates(in section: TableSection, reloadRows: Bool = false, _ updatesBlock: @autoclosure () -> Void) {
+        guard let index = sections.firstIndex(where: { $0 === section }) else {
+            return
+        }
+        
+        registerUpdates(inSectionAt: index, reloadRows: reloadRows, updatesBlock())
+    }
+    
+    open func registerUpdates(inSectionAt index: Int, reloadRows: Bool = false, _ updatesBlock: @autoclosure () -> Void) {
+        guard index < sections.count else {
+            return
+        }
+        
+        let section = sections[index]
+        
+        section.updates = TableSectionUpdates()
+        
+        let oldRowsCount = section.numberOfRows
+        updatesBlock()
+        let newRowsCount = section.numberOfRows
+
+        let reloadRowsPaths = (0..<min(oldRowsCount, newRowsCount)).map {
+            IndexPath(row: $0, section: index)
+        }
+        let insertOrDeletePaths = (min(oldRowsCount, newRowsCount)..<max(oldRowsCount, newRowsCount)).map {
+            IndexPath(row: $0, section: index)
+        }
+        if oldRowsCount > newRowsCount {
+            section.updates?.deleteRowPaths = insertOrDeletePaths
+        } else {
+            section.updates?.insertRowPaths = insertOrDeletePaths
+        }
+
+        section.updates?.reloadRowPaths = reloadRows ? reloadRowsPaths : nil
     }
 }
 

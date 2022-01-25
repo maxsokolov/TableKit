@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		50CF6E6B1D6704FE004746FF /* TableCellRegisterer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CF6E6A1D6704FE004746FF /* TableCellRegisterer.swift */; };
 		50E858581DB153F500A9AA55 /* TableKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E858571DB153F500A9AA55 /* TableKit.swift */; };
+		94488E5A27A02BE90056FE31 /* TableSectionUpdates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94488E5927A02BE90056FE31 /* TableSectionUpdates.swift */; };
 		DA9EA7AF1D0EC2C90021F650 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7A61D0EC2C90021F650 /* ConfigurableCell.swift */; };
 		DA9EA7B01D0EC2C90021F650 /* TablePrototypeCellHeightCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7A71D0EC2C90021F650 /* TablePrototypeCellHeightCalculator.swift */; };
 		DA9EA7B11D0EC2C90021F650 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9EA7A81D0EC2C90021F650 /* Operators.swift */; };
@@ -34,6 +35,7 @@
 /* Begin PBXFileReference section */
 		50CF6E6A1D6704FE004746FF /* TableCellRegisterer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellRegisterer.swift; sourceTree = "<group>"; };
 		50E858571DB153F500A9AA55 /* TableKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableKit.swift; sourceTree = "<group>"; };
+		94488E5927A02BE90056FE31 /* TableSectionUpdates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSectionUpdates.swift; sourceTree = "<group>"; };
 		DA9EA7561D0B679A0021F650 /* TableKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TableKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA9EA7A61D0EC2C90021F650 /* ConfigurableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
 		DA9EA7A71D0EC2C90021F650 /* TablePrototypeCellHeightCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TablePrototypeCellHeightCalculator.swift; sourceTree = "<group>"; };
@@ -90,16 +92,17 @@
 		DA9EA7A51D0EC2B90021F650 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				50E858571DB153F500A9AA55 /* TableKit.swift */,
-				DA9EA7AA1D0EC2C90021F650 /* TableDirector.swift */,
+				DA9EA7A61D0EC2C90021F650 /* ConfigurableCell.swift */,
+				DA9EA7A81D0EC2C90021F650 /* Operators.swift */,
+				DA9EA7A91D0EC2C90021F650 /* TableCellAction.swift */,
 				50CF6E6A1D6704FE004746FF /* TableCellRegisterer.swift */,
+				DA9EA7AA1D0EC2C90021F650 /* TableDirector.swift */,
+				50E858571DB153F500A9AA55 /* TableKit.swift */,
+				DA9EA7A71D0EC2C90021F650 /* TablePrototypeCellHeightCalculator.swift */,
 				DA9EA7AB1D0EC2C90021F650 /* TableRow.swift */,
 				DA9EA7AC1D0EC2C90021F650 /* TableRowAction.swift */,
 				DA9EA7AE1D0EC2C90021F650 /* TableSection.swift */,
-				DA9EA7A91D0EC2C90021F650 /* TableCellAction.swift */,
-				DA9EA7A71D0EC2C90021F650 /* TablePrototypeCellHeightCalculator.swift */,
-				DA9EA7A61D0EC2C90021F650 /* ConfigurableCell.swift */,
-				DA9EA7A81D0EC2C90021F650 /* Operators.swift */,
+				94488E5927A02BE90056FE31 /* TableSectionUpdates.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 				DA9EA7B71D0EC2C90021F650 /* TableSection.swift in Sources */,
 				DA9EA7B01D0EC2C90021F650 /* TablePrototypeCellHeightCalculator.swift in Sources */,
 				DA9EA7B51D0EC2C90021F650 /* TableRowAction.swift in Sources */,
+				94488E5A27A02BE90056FE31 /* TableSectionUpdates.swift in Sources */,
 				DA9EA7B21D0EC2C90021F650 /* TableCellAction.swift in Sources */,
 				DA9EA7B11D0EC2C90021F650 /* Operators.swift in Sources */,
 				DA9EA7B41D0EC2C90021F650 /* TableRow.swift in Sources */,
