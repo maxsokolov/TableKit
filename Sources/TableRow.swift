@@ -41,6 +41,10 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
     open var defaultHeight: CGFloat? {
         return CellType.defaultHeight
     }
+
+    open var layoutType: LayoutType {
+        return CellType.layoutType
+    }
     
     open var cellType: AnyClass {
         return CellType.self
@@ -59,7 +63,7 @@ open class TableRow<CellType: ConfigurableCell>: Row where CellType: UITableView
         
         (cell as? CellType)?.configure(with: item)
     }
-    
+   
     // MARK: - RowActionable -
     
     open func invoke(action: TableRowActionType, cell: UITableViewCell?, path: IndexPath, userInfo: [AnyHashable: Any]? = nil) -> Any? {

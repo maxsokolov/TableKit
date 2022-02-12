@@ -33,6 +33,7 @@ public struct TableKitUserInfoKeys {
 public protocol RowConfigurable {
     
     func configure(_ cell: UITableViewCell)
+
 }
 
 public protocol RowActionable {
@@ -58,7 +59,8 @@ public protocol Row: RowConfigurable, RowActionable, RowHashable {
     
     var reuseIdentifier: String { get }
     var cellType: AnyClass { get }
-    
+
+    var layoutType: LayoutType { get }
     var estimatedHeight: CGFloat? { get }
     var defaultHeight: CGFloat? { get }
 }
