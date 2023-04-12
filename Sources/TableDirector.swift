@@ -341,6 +341,11 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     {
         invoke(action: .showContextMenu, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath, userInfo: [TableKitUserInfoKeys.ContextMenuInvokePoint: point]) as? UIContextMenuConfiguration
     }
+    
+    @available(iOS 13.0, *)
+    open func tableView(_ tableView: UITableView, willEndContextMenuInteraction configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
+        reload()
+    }
 
     // MARK: - Row editing
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
