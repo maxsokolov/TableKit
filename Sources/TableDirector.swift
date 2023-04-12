@@ -344,7 +344,12 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     @available(iOS 13.0, *)
     open func tableView(_ tableView: UITableView, willEndContextMenuInteraction configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
-        reload()
+        if tableView.hasActiveDrag || tableView.hasActiveDrop {
+               return
+        } else {
+            tableView.reloadData()
+            
+        }
     }
 
     // MARK: - Row editing
