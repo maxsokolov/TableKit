@@ -84,7 +84,6 @@ public enum TableRowActionType {
     case canMoveTo
     case move
     case showContextMenu
-    case willEndContextMenuInteraction
     case accessoryButtonTap
     case custom(String)
     
