@@ -333,13 +333,24 @@ open class TableDirector: NSObject, UITableViewDataSource, UITableViewDelegate {
         invoke(action: .didBeginMultipleSelection, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
     }
     
+    private var contextMenuSelectedCellIndexPath: IndexPath?
     @available(iOS 13.0, *)
     open func tableView(
         _ tableView: UITableView,
         contextMenuConfigurationForRowAt indexPath: IndexPath,
         point: CGPoint) -> UIContextMenuConfiguration?
-    {
-        invoke(action: .showContextMenu, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath, userInfo: [TableKitUserInfoKeys.ContextMenuInvokePoint: point]) as? UIContextMenuConfiguration
+    {  contextMenuSelectedCellIndexPath = indexPath
+       return invoke(action: .showContextMenu, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath, userInfo: [TableKitUserInfoKeys.ContextMenuInvokePoint: point]) as? UIContextMenuConfiguration
+    }
+    
+    @available(iOS 13.0, *)
+    open func tableView(_ tableView: UITableView, willEndContextMenuInteraction configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
+        if tableView.hasActiveDrag || tableView.hasActiveDrop {
+               return
+        } else {
+            guard let indexPath = contextMenuSelectedCellIndexPath else { return }
+            invoke(action: .willEndContextMenuInteraction, cell: tableView.cellForRow(at: indexPath), indexPath: indexPath)
+        }
     }
 
     // MARK: - Row editing
